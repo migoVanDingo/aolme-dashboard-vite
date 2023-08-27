@@ -1,0 +1,110 @@
+import React, { useState } from "react"
+import styled from "styled-components"
+import { SFlexCol, SFlexRow } from "../common/containers/FlexContainers"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faPlus, faChevronDown, faBookBookmark, faDatabase, faBuilding } from "@fortawesome/free-solid-svg-icons"
+
+const SContainer = styled(SFlexRow)`
+  border: 1px solid ${({ theme }) => theme.header.buttonColor};
+
+  height: 20px;
+    padding: 3px;
+  border-radius: 4px;
+  align-items: center;
+
+
+  &:hover {
+    border: 1px solid ${({ theme }) => theme.header.buttonColorHover};
+    cursor: pointer;
+  }
+`
+
+const SButtonContainer = styled(SFlexCol)`
+  margin-left: auto;
+  position: relative;
+  box-sizing: border-box;
+
+  `
+
+const SIcon = styled(FontAwesomeIcon)`
+  height: 13px;
+  width: 13px;
+  color: ${({ theme }) => theme.header.buttonColor};
+  padding: 3px 3px 3px 0;
+
+  &.hover {
+    color: ${({ theme }) => theme.header.buttonColorHover};
+  }
+
+  &.dropdown{
+
+  }
+`
+
+const SMenu = styled.ul`
+    width: 160px;
+    position: absolute;
+    top: 28px;
+    right: 0;
+    background-color: ${({theme}) => theme.color.color_6};
+    padding:5px;
+    border-radius: ${({ theme }) => theme.container.borderRadius.md};
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    box-sizing: border-box;
+    box-shadow: 2px 2px 6px ${({theme}) => theme.color.color_4};
+`
+
+const SListItem = styled.li`
+
+    width: 100%;
+    list-style: none;
+    padding: 7px 15px;
+    font-size: 0.8rem;
+    box-sizing: border-box;
+    &:hover{
+        background-color: ${({ theme }) => theme.color.color_3};
+        color:  ${({ theme }) => theme.text.contrast};
+        cursor: pointer;
+    }
+`
+
+const CreateNew = () => {
+  const [hover, setHover] = useState<boolean>(false)
+  const [isMenuActive, setMenuActive] = useState<boolean>(false)
+
+  const handleHover = () => {
+    setHover(true)
+  }
+  const cancelHover = () => {
+    setHover(false)
+  }
+
+  const handleClickCreateNew = () => {
+    setMenuActive(!isMenuActive)
+  }
+
+  return (
+    <SButtonContainer>
+      <SContainer onMouseOver={handleHover} onMouseOut={cancelHover} onClick={handleClickCreateNew}>
+        <SIcon className={hover ? "hover" : ""} icon={faPlus} />
+        <SIcon className={hover ? "hover" : ""} icon={faChevronDown} />
+      </SContainer>
+      {
+        isMenuActive && (
+            <SMenu>
+                <SListItem><SIcon icon={faBookBookmark}/>New Repository</SListItem>
+                <SListItem><SIcon icon={faDatabase}/>New Dataset</SListItem>
+                <SListItem><SIcon icon={faBuilding}/>New Organization</SListItem>
+                
+            </SMenu>
+        )
+      }
+
+    </SButtonContainer>
+  )
+}
+
+export default CreateNew
