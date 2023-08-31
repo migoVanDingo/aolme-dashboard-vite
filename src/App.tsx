@@ -92,7 +92,7 @@ function App() {
 
             <Route path="/settings" element={<Settings />} />
 
-            <Route path="/repository" element={<Repository />} />
+            <Route path="/repository/:projectId" element={<Repository />} />
 
             <Route path="/repository/create" element={<CreateRepository />} />
           </Routes>

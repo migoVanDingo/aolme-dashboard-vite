@@ -23,11 +23,11 @@ export class ProjectAPI {
 
     }
 
-   /*  const getProjectById = (projectId: string) => {
-
+    public static getProjectById = (projectId: string) => {
+        return Requests.doGet('/repo/project/' + projectId)
     }
 
-    const deleteProject = (projectId: string) => {
+   /*  const deleteProject = (projectId: string) => {
 
     } */
     

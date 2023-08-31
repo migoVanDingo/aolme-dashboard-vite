@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { SFlexCol, SFlexRowWrap } from "../../common/containers/FlexContainers"
+import { useNavigate } from "react-router-dom"
 
 const SContainer = styled(SFlexCol)`
   align-items: flex-start;
@@ -28,11 +29,17 @@ const SCardBottom = styled(SFlexCol)`
 `
 
 const SRepoName = styled.p`
-  color: #35beec;
+  color: #2c91b2;
   padding: 0;
   margin: 0;
   font-size: 1rem;
   font-weight: 500;
+
+  &:hover{
+    color: #00bfff;
+    cursor: pointer;
+  }
+
 `
 
 const SLastUpdated = styled.p`
@@ -66,12 +73,17 @@ const STag = styled(SFlexCol)`
 `
 
 const RepoCard = ({ data }: any) => {
-  const { name, description } = data
+  const { id, name, description } = data
+  const navigate = useNavigate()
+
+  const handleSelectRepo = (id: any) => {
+    navigate("/repository/"+id)
+  }
 
   return (
     <SContainer>
       <SCardTop>
-        <SRepoName>{name}</SRepoName>
+        <SRepoName onClick={() => handleSelectRepo(id)}>{name}</SRepoName>
         <SLastUpdated>{"2 months ago"}</SLastUpdated>
       </SCardTop>
       <SCardBottom>

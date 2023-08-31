@@ -67,14 +67,14 @@ const link1 = "connected to "
 const link2 = "www.yumama.com"
 
 
-const RepoTitle = () => {
+const RepoTitle = ({ owner, projectName }: any) => {
   return (
     <SContainer>
         <STitleContainer>
             <SIcon icon={faBook}/>
-            <STitle className={"accent"} >{username} </STitle> 
+            <STitle className={"accent"} >{owner} </STitle> 
             <STitle>{" / "}</STitle>
-            <STitle className={"accent"} > {repo}</STitle>
+            <STitle className={"accent"} > {projectName}</STitle>
         </STitleContainer>
         <SLinkContainer>
             <SLink >{link1}</SLink>
