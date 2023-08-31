@@ -1,8 +1,8 @@
 import axios from "axios"
 import { FormDataClient } from "./http-common"
-import { IProject } from "../utility/interface/project"
+import { ICreateProject } from "../utility/interface/project"
 
-const handleFileUpload = async (files: any[], data: IProject,  onUploadProgress: any) => {
+const handleFileUpload = async (files: any[], data: ICreateProject,  onUploadProgress: any) => {
 
   const { name, description, owner } = data
 

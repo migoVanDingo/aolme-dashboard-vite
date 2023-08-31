@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import RepoCard from './RepoCard'
 import { SFlexRowWrap } from '../../common/containers/FlexContainers'
+import { ProjectAPI } from '../../../api/ProjectAPI'
+import { preprocessCSS } from 'vite'
 
 
 const repos = [
@@ -28,12 +30,33 @@ const SContainer = styled(SFlexRowWrap)`
 
 
 const RepoProfileDeck = () => {
+
+  const [projectList, setProjectList] = useState<any[]>([])
+
+
+  useEffect(() => {
+
+    const getProjects = () => {
+      ProjectAPI.getProjectList()
+      .then((result: any) => {
+        setProjectList(result.data)
+      })
+      .catch((err: any) => console.error(err))
+    }
+
+    return getProjects()
+      
+
+  }, [])
+
+
+
   return (
     <SContainer>
       {
-        repos && repos.map((repo: any) => {
+        projectList && projectList.map((project: any, index: number) => {
           return(
-            <RepoCard data={repo} />
+            <RepoCard key={index} data={project} />
           )
         })
       }

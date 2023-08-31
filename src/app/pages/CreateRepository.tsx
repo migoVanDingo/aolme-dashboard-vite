@@ -11,7 +11,8 @@ import Button from "../components/common/buttons/Button"
 import UploadService from "../services/FileUploadService"
 import axios from "axios"
 import { JSONTest } from "../services/http-common"
-import { IProject } from "../utility/interface/project"
+import { ICreateProject } from "../utility/interface/project"
+import { ProjectAPI } from "../api/ProjectAPI"
 
 const SContainer = styled(SFlexCol)`
   width: 650px;
@@ -61,15 +62,11 @@ const CreateRepository = () => {
     e.preventDefault()
     setLoading(true)
 
-    const project: IProject = {
-      name: projectName,
-      description: projectDescription,
-      owner: projectOwner
-    }
-    
-    UploadService.handleFileUpload(selectedFiles, project,  (e: any) => {
+    const response = ProjectAPI.createProject(projectName, projectDescription, projectOwner)
+    console.log("client response: ", response)
+    /* UploadService.handleFileUpload(selectedFiles, project,  (e: any) => {
       setProgress(Math.round((100 * e.loaded) / e.total))
-    })
+    }) */
 
     setLoading(false)
     

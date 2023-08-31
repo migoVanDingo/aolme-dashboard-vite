@@ -13,6 +13,8 @@ const SBody = styled.div`
   color:${({ theme }) => theme.text.color};
   width: 100vw;
 
+  height: 100%;
+
 
   position: absolute;
   top:0;

@@ -66,23 +66,23 @@ const STag = styled(SFlexCol)`
 `
 
 const RepoCard = ({ data }: any) => {
-  const { name, lastUpdated, description, tags } = data
+  const { name, description } = data
 
   return (
     <SContainer>
       <SCardTop>
         <SRepoName>{name}</SRepoName>
-        <SLastUpdated>{lastUpdated}</SLastUpdated>
+        <SLastUpdated>{"2 months ago"}</SLastUpdated>
       </SCardTop>
       <SCardBottom>
 
         <SDescription>{description}</SDescription>
         <STagContainer>
      
-          {tags &&
-            tags.map((tag: any) => {
-              return <STag>{tag}</STag>
-            })}
+          {/* {tags &&
+            tags.map((tag: any, index: number) => {
+              return <STag key={index}>{tag}</STag>
+            })} */}
         </STagContainer>
       </SCardBottom>
     </SContainer>
