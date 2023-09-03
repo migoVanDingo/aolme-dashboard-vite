@@ -63,7 +63,18 @@ const CreateRepository = () => {
     setLoading(true)
 
     const response = ProjectAPI.createProject(projectName, projectDescription, projectOwner)
-    console.log("client response: ", response)
+    .then((res: any) => {
+      console.log("res: " ,res)
+      UploadService.handleFileUpload(selectedFiles,res.data.id, (e: any) => {setProgress(Math.round((100 * e.loaded) / e.total))
+    })})
+    .catch((err: any) => console.error("foc: ", err))
+    // const fulResponse = UploadService.handleFileUpload(selectedFiles, null ,response.id, (e: any) => {
+    //   setProgress(Math.round((100 * e.loaded) / e.total))
+    // })
+   
+
+    
+    
     /* UploadService.handleFileUpload(selectedFiles, project,  (e: any) => {
       setProgress(Math.round((100 * e.loaded) / e.total))
     }) */

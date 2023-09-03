@@ -2,38 +2,31 @@ import axios from "axios"
 import { FormDataClient } from "./http-common"
 import { ICreateProject } from "../utility/interface/project"
 
-const handleFileUpload = async (files: any[], data: ICreateProject,  onUploadProgress: any) => {
+const handleFileUpload = async (files: any[], /* data: ICreateProject, */ projectId: string,  onUploadProgress: any) => {
 
-  const { name, description, owner } = data
+  //const { name, description, owner } = data
 
   const formData = new FormData()
 
   for( let i = 0; i < files.length; i++){
     formData.append("file", files[i])
   }
-  
+  //formData.append("project_id", name)
 
-  formData.append("project_name", name)
+  /* formData.append("project_name", name)
   formData.append("project_description", description)
   formData.append("project_owner", owner)
 
-  console.log("from data: ", formData)
+  console.log("from data: ", formData) */
 
 
-  return await axios.post("http://localhost:5000/upload", formData, {
+  return await axios.post("http://localhost:5000/files/"+projectId, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
       onUploadProgress,
     })
-    .then((response) => {
-      console.log("rere: ", response)
-    })
-    .catch((error) => {
-      
-      console.error(error)
-      console.log('foc')
-    })
+    
 }
 
 const upload = (file: any, onUploadProgress: any) => {

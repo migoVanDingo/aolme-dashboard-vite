@@ -21,7 +21,6 @@ const Repository = () => {
       if (projectId !== null && projectId !== undefined) {
         ProjectAPI.getProjectById(projectId)
           .then((result: any) => {
-            console.log(result.data)
             setProject(result.data[0])
           })
           .catch((err: any) => console.error(err))

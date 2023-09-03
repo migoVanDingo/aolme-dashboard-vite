@@ -1,17 +1,23 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { SFlexCol, SFlexRow } from "../common/containers/FlexContainers"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faPlus, faChevronDown, faBookBookmark, faDatabase, faBuilding } from "@fortawesome/free-solid-svg-icons"
+import {
+  faPlus,
+  faChevronDown,
+  faBookBookmark,
+  faDatabase,
+  faBuilding,
+} from "@fortawesome/free-solid-svg-icons"
+import { useNavigate } from "react-router-dom"
 
 const SContainer = styled(SFlexRow)`
   border: 1px solid ${({ theme }) => theme.header.buttonColor};
 
   height: 20px;
-    padding: 3px;
+  padding: 3px;
   border-radius: 4px;
   align-items: center;
-
 
   &:hover {
     border: 1px solid ${({ theme }) => theme.header.buttonColorHover};
@@ -23,8 +29,7 @@ const SButtonContainer = styled(SFlexCol)`
   margin-left: auto;
   position: relative;
   box-sizing: border-box;
-
-  `
+`
 
 const SIcon = styled(FontAwesomeIcon)`
   height: 13px;
@@ -36,44 +41,45 @@ const SIcon = styled(FontAwesomeIcon)`
     color: ${({ theme }) => theme.header.buttonColorHover};
   }
 
-  &.dropdown{
-
+  &.dropdown {
   }
 `
 
 const SMenu = styled.ul`
-    width: 160px;
-    position: absolute;
-    top: 28px;
-    right: 0;
-    background-color: ${({theme}) => theme.color.color_6};
-    padding:5px;
-    border-radius: ${({ theme }) => theme.container.borderRadius.md};
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0;
-    box-sizing: border-box;
-    box-shadow: 2px 2px 6px ${({theme}) => theme.color.color_4};
+  width: 160px;
+  position: absolute;
+  top: 28px;
+  right: 0;
+  background-color: ${({ theme }) => theme.color.color_6};
+  padding: 5px;
+  border-radius: ${({ theme }) => theme.container.borderRadius.md};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  box-sizing: border-box;
+  box-shadow: 2px 2px 6px ${({ theme }) => theme.color.color_4};
 `
 
 const SListItem = styled.li`
-
-    width: 100%;
-    list-style: none;
-    padding: 7px 15px;
-    font-size: 0.8rem;
-    box-sizing: border-box;
-    &:hover{
-        background-color: ${({ theme }) => theme.color.color_3};
-        color:  ${({ theme }) => theme.text.contrast};
-        cursor: pointer;
-    }
+  width: 100%;
+  list-style: none;
+  padding: 7px 15px;
+  font-size: 0.8rem;
+  box-sizing: border-box;
+  &:hover {
+    background-color: ${({ theme }) => theme.color.color_3};
+    color: ${({ theme }) => theme.text.contrast};
+    cursor: pointer;
+  }
 `
 
 const CreateNew = () => {
+  const navigate = useNavigate()
+
   const [hover, setHover] = useState<boolean>(false)
   const [isMenuActive, setMenuActive] = useState<boolean>(false)
+  
 
   const handleHover = () => {
     setHover(true)
@@ -83,26 +89,47 @@ const CreateNew = () => {
   }
 
   const handleClickCreateNew = () => {
+    
     setMenuActive(!isMenuActive)
+    
   }
 
-  return (
-    <SButtonContainer>
-      <SContainer onMouseOver={handleHover} onMouseOut={cancelHover} onClick={handleClickCreateNew}>
-        <SIcon className={hover ? "hover" : ""} icon={faPlus} />
-        <SIcon className={hover ? "hover" : ""} icon={faChevronDown} />
-      </SContainer>
-      {
-        isMenuActive && (
-            <SMenu>
-                <SListItem><SIcon icon={faBookBookmark}/>New Repository</SListItem>
-                <SListItem><SIcon icon={faDatabase}/>New Dataset</SListItem>
-                <SListItem><SIcon icon={faBuilding}/>New Organization</SListItem>
-                
-            </SMenu>
-        )
-      }
+  const handleNavigateNewRepo = () => {
+    setMenuActive(false)
+    navigate("/repository/create")
+  }
 
+  
+
+  return (
+    <SButtonContainer id="header-dropdown-menu">
+      <SContainer
+        onMouseOver={handleHover}
+        onMouseOut={cancelHover}
+        onClick={handleClickCreateNew}
+      >
+        <SIcon className={hover ? "hover drop-down-child" : "drop-down-child"} icon={faPlus} />
+        <SIcon className={hover ? "hover drop-down-child" : "drop-down-child"} icon={faChevronDown} />
+      </SContainer>
+      {isMenuActive && (
+        <SMenu>
+          <SListItem
+            className="drop-down-child"
+            onClick={handleNavigateNewRepo}
+          >
+            <SIcon icon={faBookBookmark} />
+            New Repository
+          </SListItem>
+          <SListItem className="drop-down-child">
+            <SIcon icon={faDatabase} />
+            New Dataset
+          </SListItem>
+          <SListItem className="drop-down-child">
+            <SIcon icon={faBuilding} />
+            New Organization
+          </SListItem>
+        </SMenu>
+      )}
     </SButtonContainer>
   )
 }

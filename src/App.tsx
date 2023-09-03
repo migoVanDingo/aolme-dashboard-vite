@@ -29,6 +29,8 @@ const SBody = styled.div`
   margin: 0;
   padding: 0;
   transition: all 0.2s ease;
+
+  overflow-y: scroll;
   
 
 `
