@@ -57,6 +57,11 @@ const CreateRepository = () => {
     setSelectedFiles(e.target.files)
   }
 
+  const uploadFiles = (res: any) => {
+    
+    return UploadService.handleFileUpload(selectedFiles, res.data, res.data['project_id'], (e: any) => {setProgress(Math.round((100 * e.loaded) / e.total))})
+  }
+
   const handleFormSubmit = async (e: any) => {
     console.log("Submitted.....")
     e.preventDefault()
@@ -65,8 +70,16 @@ const CreateRepository = () => {
     const response = ProjectAPI.createProject(projectName, projectDescription, projectOwner)
     .then((res: any) => {
       console.log("res: " ,res)
-      UploadService.handleFileUpload(selectedFiles,res.data.id, (e: any) => {setProgress(Math.round((100 * e.loaded) / e.total))
-    })})
+      console.log("files length: " ,selectedFiles)
+      if(selectedFiles.length !== 0){
+        console.log("AQUI ")
+        const r = uploadFiles(res)
+        r.then((res: any) => {
+          console.log("upload response: ", res)
+        })
+      }
+        
+    })
     .catch((err: any) => console.error("foc: ", err))
     // const fulResponse = UploadService.handleFileUpload(selectedFiles, null ,response.id, (e: any) => {
     //   setProgress(Math.round((100 * e.loaded) / e.total))

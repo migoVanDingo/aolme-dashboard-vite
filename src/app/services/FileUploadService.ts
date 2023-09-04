@@ -1,8 +1,8 @@
 import axios from "axios"
 import { FormDataClient } from "./http-common"
-import { ICreateProject } from "../utility/interface/project"
+import { ICreateProject, ISyncImportStorage } from "../utility/interface/project"
 
-const handleFileUpload = async (files: any[], /* data: ICreateProject, */ projectId: string,  onUploadProgress: any) => {
+const handleFileUpload = async (files: any[], data: ISyncImportStorage, projectId: string,  onUploadProgress: any) => {
 
   //const { name, description, owner } = data
 
@@ -11,7 +11,8 @@ const handleFileUpload = async (files: any[], /* data: ICreateProject, */ projec
   for( let i = 0; i < files.length; i++){
     formData.append("file", files[i])
   }
-  //formData.append("project_id", name)
+  formData.append("project_id", data['project_id'])
+  formData.append("local_storage_id", data['local_storage_id'])
 
   /* formData.append("project_name", name)
   formData.append("project_description", description)
