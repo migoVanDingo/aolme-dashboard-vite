@@ -33,7 +33,7 @@ const handleFileUpload = async (files: any[], data: ISyncImportStorage, projectI
 const upload = (file: any, onUploadProgress: any) => {
   let formData = new FormData()
 
-  console.log("filename: " + file.name)
+
   formData.append("file", file, file.name)
 
   return FormDataClient.post("/upload", formData, {

@@ -12,7 +12,7 @@ export class ProjectAPI {
             last_updated_by: "migo"
           }
 
-          console.log("payload: ", project)
+         
           
           const response = await Requests.doPost(project, '/repo/project/create')
           return response

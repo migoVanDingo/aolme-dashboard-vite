@@ -13,6 +13,7 @@ import axios from "axios"
 import { JSONTest } from "../services/http-common"
 import { ICreateProject } from "../utility/interface/project"
 import { ProjectAPI } from "../api/ProjectAPI"
+import { useNavigate } from "react-router-dom"
 
 const SContainer = styled(SFlexCol)`
   width: 650px;
@@ -52,6 +53,7 @@ const CreateRepository = () => {
   const [projectDescription, setProjectDescription] = useState<string>('')
 
  
+  const navigate = useNavigate()
 
   const handleFileChange = (e: any) => {
     setSelectedFiles(e.target.files)
@@ -63,19 +65,22 @@ const CreateRepository = () => {
   }
 
   const handleFormSubmit = async (e: any) => {
-    console.log("Submitted.....")
+
     e.preventDefault()
     setLoading(true)
 
     const response = ProjectAPI.createProject(projectName, projectDescription, projectOwner)
     .then((res: any) => {
-      console.log("res: " ,res)
-      console.log("files length: " ,selectedFiles)
+
       if(selectedFiles.length !== 0){
-        console.log("AQUI ")
+
         const r = uploadFiles(res)
+
         r.then((res: any) => {
-          console.log("upload response: ", res)
+          if(res.status === 200 ){
+            console.log(res)
+            navigate('/repository/'+res.data['project_id'])
+          }
         })
       }
         
