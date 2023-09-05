@@ -18,13 +18,13 @@ export class ProjectAPI {
           return response
     }
 
-    public static getProjectList() {
-        return Requests.doGet('/repo/project/list')
+    public static async getProjectList() {
+        return await Requests.doGet('/repo/project/list')
 
     }
 
-    public static getProjectById = (projectId: string) => {
-        return Requests.doGet('/repo/project/' + projectId)
+    public static async getProjectById(projectId: string) {
+        return await Requests.doGet('/repo/project/' + projectId)
     }
 
    /*  const deleteProject = (projectId: string) => {

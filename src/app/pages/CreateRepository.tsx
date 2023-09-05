@@ -14,6 +14,8 @@ import { JSONTest } from "../services/http-common"
 import { ICreateProject } from "../utility/interface/project"
 import { ProjectAPI } from "../api/ProjectAPI"
 import { useNavigate } from "react-router-dom"
+import { setCurrentProjectId, setCurrentProjectOwner, setCurrentProjectCreatedAt, setCurrentProjectCreatedBy, setCurrentProjectDescription, setCurrentProjectLastUpdatedAt, setCurrentProjectLastUpdatedBy, setCurrentProjectName } from "../actions"
+import { store } from "../store"
 
 const SContainer = styled(SFlexCol)`
   width: 650px;
@@ -74,11 +76,27 @@ const CreateRepository = () => {
 
       if(selectedFiles.length !== 0){
 
-        const r = uploadFiles(res)
-
-        r.then((res: any) => {
+        uploadFiles(res).then((res: any) => {
+          console.log("response: ", res)
           if(res.status === 200 ){
-            console.log(res)
+            const currentProject = ProjectAPI.getProjectById(res.data['project_id'])
+            .then((project: any) => {
+              console.log("project data: ", project)
+
+              const data = project.data[0]
+
+              store.dispatch(setCurrentProjectId(data['project_id']))
+              store.dispatch(setCurrentProjectOwner(data['owner'])) 
+              store.dispatch(setCurrentProjectCreatedAt(data['created_at'])) 
+              store.dispatch(setCurrentProjectCreatedBy(data['created_by']) )
+              store.dispatch(setCurrentProjectDescription(data['description'])) 
+              store.dispatch(setCurrentProjectLastUpdatedAt(data['updated_at']))
+              store.dispatch(setCurrentProjectLastUpdatedBy(data['updated_by'])) 
+              store.dispatch(setCurrentProjectName(data['name']))
+             
+            })
+            .catch((err: any) => console.error(err))
+        
             navigate('/repository/'+res.data['project_id'])
           }
         })

@@ -13,6 +13,6 @@ export class Requests {
   }
 
   public static async doGet(endpoint: string) {
-    return axios.get("http://localhost:5000" + endpoint)
+    return await axios.get("http://localhost:5000" + endpoint)
   }
 }

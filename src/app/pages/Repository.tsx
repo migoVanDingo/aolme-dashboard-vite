@@ -6,13 +6,14 @@ import RepoContent from "../components/repository/content/RepoContent"
 import RepoReadMe from "../components/repository/content/readme/RepoReadMe"
 import { useParams } from "react-router-dom"
 import { ProjectAPI } from "../api/ProjectAPI"
+import { connect } from "react-redux"
 
 const SContainer = styled(SFlexCol)`
   width: 100%;
   box-sizing: border-box;
 `
 
-const Repository = () => {
+const Repository = ({owner, name, description}: any) => {
   const { projectId } = useParams()
   const [project, setProject] = useState<any>()
 
@@ -34,11 +35,17 @@ const Repository = () => {
 
   return (
     <SContainer>
-      {project && (<RepoHeader owner={project.owner} projectName={project.name}/>)}
+      {project && (<RepoHeader owner={owner} projectName={name}/>)}
       <RepoContent />
       <RepoReadMe />
     </SContainer>
   )
 }
 
-export default Repository
+const mapStoreStateToProps = (state: any) => {
+  return {
+    ...state
+  }
+}
+
+export default connect(mapStoreStateToProps)(Repository) 
