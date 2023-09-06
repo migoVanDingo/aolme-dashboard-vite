@@ -79,25 +79,7 @@ const CreateRepository = () => {
         uploadFiles(res).then((res: any) => {
           console.log("response: ", res)
           if(res.status === 200 ){
-            const currentProject = ProjectAPI.getProjectById(res.data['project_id'])
-            .then((project: any) => {
-              console.log("project data: ", project)
-
-              const data = project.data[0]
-
-              store.dispatch(setCurrentProjectId(data['project_id']))
-              store.dispatch(setCurrentProjectOwner(data['owner'])) 
-              store.dispatch(setCurrentProjectCreatedAt(data['created_at'])) 
-              store.dispatch(setCurrentProjectCreatedBy(data['created_by']) )
-              store.dispatch(setCurrentProjectDescription(data['description'])) 
-              store.dispatch(setCurrentProjectLastUpdatedAt(data['updated_at']))
-              store.dispatch(setCurrentProjectLastUpdatedBy(data['updated_by'])) 
-              store.dispatch(setCurrentProjectName(data['name']))
-             
-            })
-            .catch((err: any) => console.error(err))
-        
-            navigate('/repository/'+res.data['project_id'])
+            navigate('/project/'+res.data['project_id'])
           }
         })
       }

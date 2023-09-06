@@ -7,35 +7,55 @@ import RepoReadMe from "../components/repository/content/readme/RepoReadMe"
 import { useParams } from "react-router-dom"
 import { ProjectAPI } from "../api/ProjectAPI"
 import { connect } from "react-redux"
+import { store } from "../store"
+import {
+  setCurrentProjectCreatedAt,
+  setCurrentProjectCreatedBy,
+  setCurrentProjectDescription,
+  setCurrentProjectId,
+  setCurrentProjectLastUpdatedAt,
+  setCurrentProjectLastUpdatedBy,
+  setCurrentProjectName,
+  setCurrentProjectOwner,
+} from "../actions"
 
 const SContainer = styled(SFlexCol)`
   width: 100%;
   box-sizing: border-box;
 `
 
-const Repository = ({owner, name, description}: any) => {
+const Repository = ({ owner, name, description }: any) => {
   const { projectId } = useParams()
   const [project, setProject] = useState<any>()
 
   useEffect(() => {
     const project = () => {
+
       if (projectId !== null && projectId !== undefined) {
-        ProjectAPI.getProjectById(projectId)
-          .then((result: any) => {
-            setProject(result.data[0])
+        const currentProject = ProjectAPI.getProjectById(projectId)
+          .then((project: any) => {
+            const data = project.data[0]
+
+            store.dispatch(setCurrentProjectId(data["project_id"]))
+            store.dispatch(setCurrentProjectOwner(data["owner"]))
+            store.dispatch(setCurrentProjectCreatedAt(data["created_at"]))
+            store.dispatch(setCurrentProjectCreatedBy(data["created_by"]))
+            store.dispatch(setCurrentProjectDescription(data["description"]))
+            store.dispatch(setCurrentProjectLastUpdatedAt(data["updated_at"]))
+            store.dispatch(setCurrentProjectLastUpdatedBy(data["updated_by"]))
+            store.dispatch(setCurrentProjectName(data["name"]))
+            setProject(data)
           })
           .catch((err: any) => console.error(err))
       }
     }
 
     return project()
-
   }, [projectId])
-
 
   return (
     <SContainer>
-      {project && (<RepoHeader owner={owner} projectName={name}/>)}
+      {project && <RepoHeader owner={owner} projectName={name} />}
       <RepoContent />
       <RepoReadMe />
     </SContainer>
@@ -44,8 +64,8 @@ const Repository = ({owner, name, description}: any) => {
 
 const mapStoreStateToProps = (state: any) => {
   return {
-    ...state
+    ...state,
   }
 }
 
-export default connect(mapStoreStateToProps)(Repository) 
+export default connect(mapStoreStateToProps)(Repository)

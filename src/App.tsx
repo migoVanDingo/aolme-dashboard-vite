@@ -94,9 +94,9 @@ function App() {
 
             <Route path="/settings" element={<Settings />} />
 
-            <Route path="/repository/:projectId" element={<Repository />} />
+            <Route path="/project/:projectId" element={<Repository />} />
 
-            <Route path="/repository/create" element={<CreateRepository />} />
+            <Route path="/project/create" element={<CreateRepository />} />
           </Routes>
         </SBody>
       </ThemeProvider>

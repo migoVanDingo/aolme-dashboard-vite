@@ -1,8 +1,9 @@
-import React from "react"
+import React, { useEffect } from "react"
 import styled from "styled-components"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faFile, faFolder } from "@fortawesome/free-solid-svg-icons"
 import { SFlexRow } from "../../../common/containers/FlexContainers"
+import { connect } from "react-redux"
 
 const SRow = styled(SFlexRow)`
   align-items: center;
@@ -111,14 +112,24 @@ const folders = [
   },
 ]
 
-const BranchContent = () => {
+const BranchContent = ({ projectId }: any) => {
+
+  useEffect(() => {
+
+    const getProjectFiles = (projectId: string) => {
+      const response = 
+    }
+
+    return getProjectFiles(projectId)
+  }, [])
+
   const handleContentClick = (e: any) => {
     console.log(e.target["data-name"])
   }
 
   return (
     <>
-      {folders &&
+      {/* {folders &&
         folders.map((folder: any, index: number) => {
           return (
             <SRow
@@ -135,7 +146,7 @@ const BranchContent = () => {
               <SLastUpdate>{folder.last_updated}</SLastUpdate>
             </SRow>
           )
-        })}
+        })} */}
       {files &&
         files.map((file: any, index: number) => {
           return (
@@ -158,4 +169,10 @@ const BranchContent = () => {
   )
 }
 
-export default BranchContent
+const mapStoreStateToProps = (state: any) => {
+  return {
+    ...state,
+  }
+}
+
+export default connect(mapStoreStateToProps)(BranchContent)
