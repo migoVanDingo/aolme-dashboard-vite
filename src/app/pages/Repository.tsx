@@ -36,7 +36,7 @@ const Repository = ({ owner, name, description }: any) => {
           .then((project: any) => {
             const data = project.data[0]
 
-            store.dispatch(setCurrentProjectId(data["project_id"]))
+            store.dispatch(setCurrentProjectId(data["ls_project_id"]))
             store.dispatch(setCurrentProjectOwner(data["owner"]))
             store.dispatch(setCurrentProjectCreatedAt(data["created_at"]))
             store.dispatch(setCurrentProjectCreatedBy(data["created_by"]))
@@ -55,8 +55,13 @@ const Repository = ({ owner, name, description }: any) => {
 
   return (
     <SContainer>
-      {project && <RepoHeader owner={owner} projectName={name} />}
+      {project && (
+        <>
+      <RepoHeader owner={owner} projectName={name} />
       <RepoContent />
+      </>
+      )}
+      
       <RepoReadMe />
     </SContainer>
   )

@@ -11,8 +11,13 @@ const handleFileUpload = async (files: any[], data: ISyncImportStorage, projectI
   for( let i = 0; i < files.length; i++){
     formData.append("file", files[i])
   }
-  formData.append("project_id", data['project_id'])
-  formData.append("local_storage_id", data['local_storage_id'])
+
+  formData.append("project_id", data['project_id'].toString())
+  formData.append("title", data['title'])
+  formData.append("description", data['description'])
+  formData.append("path", data['path'])
+ 
+
 
   /* formData.append("project_name", name)
   formData.append("project_description", description)

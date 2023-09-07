@@ -1,13 +1,15 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faFile, faFolder } from "@fortawesome/free-solid-svg-icons"
 import { SFlexRow } from "../../../common/containers/FlexContainers"
 import { connect } from "react-redux"
+import { FilesAPI } from "../../../../api/FileAPI"
 
 const SRow = styled(SFlexRow)`
   align-items: center;
   width: 100%;
+  height: 40px;
 
   background-color: ${({ theme }) => theme.color.color_1};
   border-bottom: 1px solid ${({ theme }) => theme.button.branch.border};
@@ -15,21 +17,21 @@ const SRow = styled(SFlexRow)`
   padding: 5px 15px;
   box-sizing: border-box;
 
-  &.last{
+  &.last {
     border-bottom: none;
   }
 
-  &.first{
+  &.first {
     border-top: 1px solid ${({ theme }) => theme.button.branch.border};
   }
 `
 
 const SContentLink = styled(SFlexRow)`
-  width: 150px;
-  
+  width: 300px;
+
   cursor: pointer;
 
-  &:hover{
+  &:hover {
     color: ${({ theme }) => theme.accent.color_2};
   }
 `
@@ -41,6 +43,8 @@ const SIcon = styled(FontAwesomeIcon)`
 const SLine = styled.p`
   margin: 0;
   padding: 0;
+  width: 100%;
+
 `
 
 const SCommit = styled.p`
@@ -51,7 +55,7 @@ const SCommit = styled.p`
   margin: 0 0 0 40px;
   padding: 5px 12px;
   color: ${({ theme }) => theme.button.text.neutral};
-  background-color: ${({theme}) => theme.color.color_3};
+  background-color: ${({ theme }) => theme.color.color_3};
 `
 
 const SCommitMsg = styled.p`
@@ -67,60 +71,28 @@ const SLastUpdate = styled.p`
   padding: 5px 0;
 `
 
-const files = [
-  {
-    filename: "file_1.js",
-    extension: ".js",
-    commit: "dk9385juem3",
-    commit_message: "new commit",
-    last_updated: "1 year ago",
-  },
-  {
-    filename: "file_2.js",
-    extension: ".js",
-    commit: "dk9385juem3",
-    commit_message: "new commit",
-    last_updated: "1 year ago",
-  },
-  {
-    filename: "file_3.js",
-    extension: ".js",
-    commit: "dk9385juem3",
-    commit_message: "new commit",
-    last_updated: "1 year ago",
-  },
-]
-
-const folders = [
-  {
-    name: "folder_1",
-    commit: "dk9385juem3",
-    commit_message: "new commit",
-    last_updated: "1 year ago",
-  },
-  {
-    name: "folder_2",
-    commit: "jky928ski4kks3",
-    commit_message: "old commit",
-    last_updated: "3 year ago",
-  },
-  {
-    name: "folder_3",
-    commit: "dk9385juem3",
-    commit_message: "new commit",
-    last_updated: "1 year ago",
-  },
-]
 
 const BranchContent = ({ projectId }: any) => {
 
-  useEffect(() => {
+  const [files, setFiles] = useState<any[]>([])
+  const [stopSwitch, setStopSwitch] = useState<boolean>(false)
 
-    const getProjectFiles = (projectId: string) => {
-      const response = 
+  useEffect(() => {
+    const getProjectFiles = (projectId: number) => {
+      console.log(projectId)
+      if (projectId !== undefined && stopSwitch === false) {
+        setStopSwitch(true)
+        const response = FilesAPI.getProjectFiles(projectId)
+          .then((res: any) => {
+            console.log("files : ", res.data)
+            setFiles(res.data)
+            
+          })
+          .catch((err: any) => console.error(err))
+      }
     }
 
-    return getProjectFiles(projectId)
+    return getProjectFiles(parseInt(projectId))
   }, [])
 
   const handleContentClick = (e: any) => {
@@ -152,11 +124,11 @@ const BranchContent = ({ projectId }: any) => {
           return (
             <SRow
               key={index}
-              className={index === folders.length - 1 ? "last" : index === 0 ? "first" : ""}
+              className=''
             >
               <SContentLink onClick={handleContentClick}>
-                <SIcon  icon={faFile} />
-                <SLine >{file.filename}</SLine>
+                <SIcon icon={faFile} />
+                <SLine>{file.name + "." +file.extension}</SLine>
               </SContentLink>
 
               <SCommit>{file.commit}</SCommit>

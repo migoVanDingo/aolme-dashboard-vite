@@ -73,12 +73,13 @@ const CreateRepository = () => {
 
     const response = ProjectAPI.createProject(projectName, projectDescription, projectOwner)
     .then((res: any) => {
-
+      console.log("res: ",res)
       if(selectedFiles.length !== 0){
 
-        uploadFiles(res).then((res: any) => {
-          console.log("response: ", res)
-          if(res.status === 200 ){
+        console.log('int: ', res.data['project_id'])
+        uploadFiles(res).then((r: any) => {
+          console.log("response: ", r)
+          if(r.status === 200 ){
             navigate('/project/'+res.data['project_id'])
           }
         })
