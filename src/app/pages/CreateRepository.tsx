@@ -83,6 +83,8 @@ const CreateRepository = () => {
             navigate('/project/'+res.data['project_id'])
           }
         })
+      } else {
+        navigate('/project/'+res.data['project_id'])
       }
         
     })
