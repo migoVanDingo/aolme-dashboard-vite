@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react"
-import styled from "styled-components"
+import styled, { keyframes } from "styled-components"
 import { SFlexCol } from "../components/common/containers/FlexContainers"
 import Heading from "../components/common/Heading"
 import Message from "../components/common/Message"
@@ -14,7 +14,16 @@ import { JSONTest } from "../services/http-common"
 import { ICreateProject } from "../utility/interface/project"
 import { ProjectAPI } from "../api/ProjectAPI"
 import { useNavigate } from "react-router-dom"
-import { setCurrentProjectId, setCurrentProjectOwner, setCurrentProjectCreatedAt, setCurrentProjectCreatedBy, setCurrentProjectDescription, setCurrentProjectLastUpdatedAt, setCurrentProjectLastUpdatedBy, setCurrentProjectName } from "../actions"
+import {
+  setCurrentProjectId,
+  setCurrentProjectOwner,
+  setCurrentProjectCreatedAt,
+  setCurrentProjectCreatedBy,
+  setCurrentProjectDescription,
+  setCurrentProjectLastUpdatedAt,
+  setCurrentProjectLastUpdatedBy,
+  setCurrentProjectName,
+} from "../actions"
 import { store } from "../store"
 
 const SContainer = styled(SFlexCol)`
@@ -22,6 +31,11 @@ const SContainer = styled(SFlexCol)`
   height: calc(100vh - ${({ theme }) => theme.header.height});
   align-items: baseline;
   padding: 40px 10px;
+
+  &.loading {
+    align-items: center;
+    justify-content: center;
+  }
 `
 const SButton = styled(Button)`
   width: 150px;
@@ -36,8 +50,68 @@ const SButton = styled(Button)`
   &:hover {
     background-color: ${({ theme }) => theme.color.color_6};
   }
-  
 `
+
+const SLoadingContainer = styled(SFlexCol)`
+  
+  width: 500px;
+  height: 350px;
+  border-radius:${({ theme }) => theme.container.borderRadius.lg};
+  background-color: ${({ theme }) => theme.color.color_3};
+  
+  padding-top: 50px;
+  box-sizing: border-box;
+`
+
+const SLoadingHeading = styled.p`
+  font-size: 2rem;
+  color: ${({ theme }) => theme.accent.color_1};
+  font-weight: 700;
+  text-shadow: 2px 2px 4px black;
+`
+const myAnimation = keyframes`
+  
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+
+`
+const SSpinner = styled.div`
+  &.lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+
+  &.lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border: 8px solid ${({ theme }) => theme.accent.color_1};
+    border-radius: 50%;
+    animation: ${myAnimation} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: ${({ theme }) => theme.accent.color_1} transparent transparent transparent;
+  }
+  &.lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+  }
+  &.lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+  }
+  &.lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+  }
+`
+
+
+
 const users = ["Miguel", "Wenjing", "Venkatesh", "Sebastian"]
 
 const CreateRepository = () => {
@@ -51,10 +125,9 @@ const CreateRepository = () => {
   const [fileInfos, setFileInfos] = useState([])
 
   const [projectOwner, setProjectOwner] = useState<string>(users[0])
-  const [projectName, setProjectName] = useState<string>('')
-  const [projectDescription, setProjectDescription] = useState<string>('')
+  const [projectName, setProjectName] = useState<string>("")
+  const [projectDescription, setProjectDescription] = useState<string>("")
 
- 
   const navigate = useNavigate()
 
   const handleFileChange = (e: any) => {
@@ -62,76 +135,99 @@ const CreateRepository = () => {
   }
 
   const uploadFiles = (res: any) => {
-    
-    return UploadService.handleFileUpload(selectedFiles, res.data, res.data['project_id'], (e: any) => {setProgress(Math.round((100 * e.loaded) / e.total))})
+    return UploadService.handleFileUpload(
+      selectedFiles,
+      res.data,
+      res.data["project_id"],
+      (e: any) => {
+        setProgress(Math.round((100 * e.loaded) / e.total))
+      },
+    )
   }
 
-  const handleFormSubmit = async (e: any) => {
-
-    e.preventDefault()
-    setLoading(true)
-
-    const response = ProjectAPI.createProject(projectName, projectDescription, projectOwner)
-    .then((res: any) => {
-      console.log("res: ",res)
-      if(selectedFiles.length !== 0){
-
-        console.log('int: ', res.data['project_id'])
-        uploadFiles(res).then((r: any) => {
-          console.log("response: ", r)
-          if(r.status === 200 ){
-            navigate('/project/'+res.data['project_id'])
-          }
-        })
-      } else {
-        navigate('/project/'+res.data['project_id'])
-      }
-        
-    })
-    .catch((err: any) => console.error("foc: ", err))
+  const createProject = async (e: any) => {
+    const response = await ProjectAPI.createProject(
+      projectName,
+      projectDescription,
+      projectOwner,
+    )
+      .then((res: any) => {
+        console.log("res: ", res)
+        if (selectedFiles.length !== 0) {
+          console.log("int: ", res.data["project_id"])
+          uploadFiles(res).then((r: any) => {
+            console.log("response: ", r)
+            if (r.status === 200) {
+              navigate("/project/" + res.data["project_id"])
+            }
+          })
+        } else {
+          navigate("/project/" + res.data["project_id"])
+        }
+      })
+      .catch((err: any) => console.error("foc: ", err))
     // const fulResponse = UploadService.handleFileUpload(selectedFiles, null ,response.id, (e: any) => {
     //   setProgress(Math.round((100 * e.loaded) / e.total))
     // })
-   
 
-    
-    
     /* UploadService.handleFileUpload(selectedFiles, project,  (e: any) => {
       setProgress(Math.round((100 * e.loaded) / e.total))
     }) */
 
-    setLoading(false)
-    
+  }
+
+  const handleFormSubmit = async (e: any) => {
+    e.preventDefault()
+    setLoading(true)
+    console.log("loading...")
+    await createProject(e)
+    //setLoading(false)
   }
 
   return (
-    <SContainer>
-      <Heading heading={"Create Repository"} size={"md"} />
-      <Message
-        text={"Required fields are marked with an asterisk (*)."}
-        size={"sm"}
-        italic={"italic"}
-      />
-      <UserDropdown setProjectOwner={setProjectOwner} projectOwner={projectOwner} 
-      users={users}/>
-      <form
-        encType="multipart/form-data"
-        id="ful-form"
-        onSubmit={handleFormSubmit}
-      >
-        <TextInput setProjectName={setProjectName} projectName={projectName}/>
-        <TextArea projectDescription={projectDescription} setProjectDescription={setProjectDescription}/>
-        <FileUpload handleFileChange={handleFileChange} />
-      
-      <SButton type="submit" innerHtml={"Create Repository"} />
-      </form>
+    <SContainer className={isLoading ? "loading" : ""}>
+      {!isLoading ? (
+        <>
+          <Heading heading={"Create Repository"} size={"md"} />
+          <Message
+            text={"Required fields are marked with an asterisk (*)."}
+            size={"sm"}
+            italic={"italic"}
+          />
+          <UserDropdown
+            setProjectOwner={setProjectOwner}
+            projectOwner={projectOwner}
+            users={users}
+          />
+          <form
+            encType="multipart/form-data"
+            id="ful-form"
+            onSubmit={handleFormSubmit}
+          >
+            <TextInput
+              setProjectName={setProjectName}
+              projectName={projectName}
+            />
+            <TextArea
+              projectDescription={projectDescription}
+              setProjectDescription={setProjectDescription}
+            />
+            <FileUpload handleFileChange={handleFileChange} />
+
+            <SButton type="submit" innerHtml={"Create Repository"} />
+          </form>
+        </>
+      ) : (
+        <SLoadingContainer>
+          <SLoadingHeading>Initializing Project...</SLoadingHeading>
+          <SSpinner className="lds-ring"><div></div><div></div><div></div><div></div></SSpinner>
+        </SLoadingContainer>
+      )}
     </SContainer>
   )
 }
 
 export default CreateRepository
-
-
 
 /* const upload = (fileName: string) => {
   let uploadFile = selectedFiles[0]

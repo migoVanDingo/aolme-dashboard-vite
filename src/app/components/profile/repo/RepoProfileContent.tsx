@@ -23,13 +23,14 @@ const repos = [
 
 const SContainer = styled(SFlexRowWrap)`
   width: 100%;
-  height: 100%;
-  justify-content: space-between;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
 
 `
 
 
-const RepoProfileDeck = () => {
+const RepoProfileContent = () => {
 
   const [projectList, setProjectList] = useState<any[]>([])
 
@@ -64,4 +65,4 @@ const RepoProfileDeck = () => {
   )
 }
 
-export default RepoProfileDeck
+export default RepoProfileContent

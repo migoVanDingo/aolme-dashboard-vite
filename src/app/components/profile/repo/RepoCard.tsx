@@ -6,11 +6,15 @@ import { useNavigate } from "react-router-dom"
 const SContainer = styled(SFlexCol)`
   align-items: flex-start;
   height: 150px;
-  width: 340px;
+  width:48%;
   border: 1px solid ${({ theme }) => theme.color.color_4};
   border-radius: ${({ theme }) => theme.container.borderRadius.lg};
   overflow: hidden;
   box-shadow: 2px 2px 6px ${({ theme }) => theme.color.color_4};
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
 `
 
 const SCardTop = styled(SFlexCol)`
@@ -73,17 +77,17 @@ const STag = styled(SFlexCol)`
 `
 
 const RepoCard = ({ data }: any) => {
-  const { id, name, description } = data
+  const { id, name, description, ls_project_id } = data
   const navigate = useNavigate()
 
-  const handleSelectRepo = (id: any) => {
-    navigate("/repository/"+id)
+  const handleSelectRepo = (ls_project_id: any) => {
+    navigate("/project/"+ls_project_id)
   }
 
   return (
     <SContainer>
       <SCardTop>
-        <SRepoName onClick={() => handleSelectRepo(id)}>{name}</SRepoName>
+        <SRepoName onClick={() => handleSelectRepo(ls_project_id)}>{name}</SRepoName>
         <SLastUpdated>{"2 months ago"}</SLastUpdated>
       </SCardTop>
       <SCardBottom>

@@ -7,14 +7,14 @@ import Tabs from '../components/common/Tabs'
 import { faFolder, faClockRotateLeft} from '@fortawesome/free-solid-svg-icons'
 import UsernameTag from '../components/common/UsernameTag'
 import Button from '../components/common/buttons/Button'
-import RepoProfileDeck from '../components/profile/repo/RepoProfileContent'
+import RepoProfileContent from '../components/profile/repo/RepoProfileContent'
 import ActivityProfileContent from '../components/profile/activity/ActivityProfileContent'
 
 const username = "yumamaloca"
 
 const tabs = [
   {
-    title: "Repository",
+    title: "Projects",
     action: ""
   },
   {
@@ -48,7 +48,7 @@ const Profile = () => {
   const theme = useTheme()
 
   //State
-  const [content, setContent] = useState<any>()
+  const [content, setContent] = useState<any>("Projects")
 
   const handleEditProfile = () => {
     console.log("yoseph!")
@@ -64,8 +64,8 @@ const Profile = () => {
       </Card>
       <Tabs tabs={tabs} setContent={setContent} iconArr={[faFolder, faClockRotateLeft]}/>
       {
-        content === "Repository" ? (
-          <RepoProfileDeck />
+        content === "Projects" ? (
+          <RepoProfileContent />
         ) : content === "Public activity" ? (
           <ActivityProfileContent />
         ) : ""
