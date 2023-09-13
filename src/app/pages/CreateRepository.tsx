@@ -31,6 +31,7 @@ const SContainer = styled(SFlexCol)`
   height: calc(100vh - ${({ theme }) => theme.header.height});
   align-items: baseline;
   padding: 40px 10px;
+  
 
   &.loading {
     align-items: center;
@@ -39,16 +40,18 @@ const SContainer = styled(SFlexCol)`
 `
 const SButton = styled(Button)`
   width: 150px;
-  height: 30px;
+  height: 40px;
   border: none;
   border-radius: ${({ theme }) => theme.container.borderRadius.sm};
 
-  background-color: ${({ theme }) => theme.color.color_3};
-  color: ${({ theme }) => theme.color.contrast.color_1};
+  background-color: ${({ theme }) => theme.color.color_2};
+  color: ${({ theme }) => theme.color.color_6};
+  box-shadow: 2px 2px 8px ${({ theme }) => theme.color.shadow.dark};
   margin-top: 10px;
   cursor: pointer;
   &:hover {
-    background-color: ${({ theme }) => theme.color.color_6};
+    background-color: ${({ theme }) => theme.color.color_4};
+    color: ${({ theme }) => theme.color.color_8};
   }
 `
 
@@ -57,7 +60,8 @@ const SLoadingContainer = styled(SFlexCol)`
   width: 500px;
   height: 350px;
   border-radius:${({ theme }) => theme.container.borderRadius.lg};
-  background-color: ${({ theme }) => theme.color.color_3};
+  background-color: ${({ theme }) => theme.color.color_2};
+  box-shadow: ${({ theme }) => theme.color.shadow.dark};
   
   padding-top: 50px;
   box-sizing: border-box;
@@ -65,6 +69,7 @@ const SLoadingContainer = styled(SFlexCol)`
 
 const SLoadingHeading = styled.p`
   font-size: 2rem;
+  font-family: "Raleway", sans-serif;
   color: ${({ theme }) => theme.accent.color_1};
   font-weight: 700;
   text-shadow: 2px 2px 4px black;

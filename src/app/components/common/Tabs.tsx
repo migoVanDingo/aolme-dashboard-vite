@@ -14,7 +14,7 @@ const SContainer = styled(SFlexRow)`
   margin-left: 0;
   box-sizing: border-box;
 
-  border-bottom: 1px solid ${({ theme }) => theme.header.buttonColor};
+  border-bottom: 1px solid ${({ theme }) => theme.color.color_5};
 `
 const STab = styled(SFlexRow)`
   box-sizing: content-box;
@@ -26,7 +26,7 @@ const STab = styled(SFlexRow)`
   font-weight: 200;
   font-size: 0.8rem;
 
-  color: ${({ theme }) => theme.text.color};
+  color: ${({ theme }) => theme.color.color_7};
   gap: 5px;
   border-radius: 6px;
 
@@ -36,9 +36,9 @@ const STab = styled(SFlexRow)`
 
 
   &.active {
-    background-color: ${({ theme }) => theme.header.backgroundColor};
+    background-color: ${({ theme }) => theme.color.color_2};
     font-weight: 500;
-    box-shadow: 1px 2px 4px ${({ theme }) => theme.header.boxShadow}
+    box-shadow: 1px 2px 4px ${({ theme }) => theme.color.shadow.dark}
   }
 `
 

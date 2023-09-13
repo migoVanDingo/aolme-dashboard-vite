@@ -14,8 +14,8 @@ const SHeading = styled(SFlexRow)`
   font-size: 0.9rem;
   font-weight: 600;
   align-items: center;
-  color: ${({ theme }) => theme.text.contrast};
-  border-bottom: 1px solid ${({ theme }) => theme.button.branch.border};
+  color: ${({ theme }) => theme.color.color_5};
+  border-bottom: 1px solid ${({ theme }) => theme.color.color_5};
   padding-bottom: 5px;
   
 `
@@ -34,6 +34,7 @@ const SUser = styled(SFlexRow)`
   font-size: 0.8rem;
   margin-left: 40px;
   gap: 5px;
+  color: ${({ theme }) => theme.color.color_5};
 `
 const count = 3
 

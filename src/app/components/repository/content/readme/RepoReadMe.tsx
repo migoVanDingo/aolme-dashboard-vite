@@ -7,7 +7,7 @@ import ReadmeContent from './ReadmeContent'
 
 const SContainer = styled(SFlexCol)`
 
-    border: 1px solid ${({theme}) => theme.button.branch.border};
+    border: 1px solid ${({theme}) => theme.color.color_5};
     border-radius: ${({theme}) => theme.container.borderRadius.md};
     margin: 10px 200px 10px 0;
     overflow: hidden;

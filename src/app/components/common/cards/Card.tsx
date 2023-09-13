@@ -17,7 +17,7 @@ const SContainer = styled(SFlexCol)<IContainer>`
     height: ${p => p.style.height};
     border: ${p => p.style.border};
     border-radius: ${p => p.style.borderRadius};
-    background-color: ${({theme}) => theme.header.backgroundColor};
+    background-color: ${({theme}) => theme.color.color_1};
 
     grid-area: profile;
 

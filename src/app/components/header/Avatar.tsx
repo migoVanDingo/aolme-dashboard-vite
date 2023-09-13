@@ -5,7 +5,7 @@ const SAvatarContainer = styled.div`
     height: 30px;
     width: 30px;
     border-radius: 30px;
-    border: 1px solid ${({theme}) => theme.header.buttonColor};
+    border: 1px solid ${({theme}) => theme.color.color_5};
 
     &.small{
       height: 15px;
@@ -14,7 +14,7 @@ const SAvatarContainer = styled.div`
     }
 
     &:hover{
-        border: 1px solid ${({theme}) => theme.header.buttonColorHover};
+        border: 1px solid ${({theme}) => theme.color.color_7};
         cursor: pointer;
     }
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import styled, { ThemeProvider } from "styled-components"
-import { light, dark } from "./app/theme/ThemeConfig"
+import { light, dark, dark_grey_1, light_grey_1 } from "./app/theme/ThemeConfig"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Repository from "./app/pages/Repository"
 import Settings from "./app/pages/Settings"
@@ -9,8 +9,8 @@ import Header from "./app/components/header/Header"
 import CreateRepository from "./app/pages/CreateRepository"
 
 const SBody = styled.div`
-  background-color: ${({ theme }) => theme.body.backgroundColor};
-  color:${({ theme }) => theme.text.color};
+  background-color: ${({ theme }) => theme.color.color_1};
+  color:${({ theme }) => theme.color.color_4};
   width: 100vw;
 
   height: 100%;
@@ -37,7 +37,7 @@ const SBody = styled.div`
 const SButton = styled.button`
   height: 20px;
   width: 20px;
-  background-color: ${({ theme }) => theme.color.color_1};
+  background-color: ${({ theme }) => theme.color.color_2};
 
   z-index: 1000;
 
@@ -46,28 +46,28 @@ const SButton = styled.button`
 `
 
 function App() {
-  const [theme, setTheme] = useState<object>(dark)
+  const [theme, setTheme] = useState<object>(dark_grey_1)
 
   function selectTheme(e: any) {
     switch (e.target.value) {
       case "dark":
-        setTheme(dark)
+        setTheme(dark_grey_1)
         break
       case "light":
-        setTheme(light)
+        setTheme(light_grey_1)
         break
 
       default:
-        setTheme(dark)
+        setTheme(dark_grey_1)
         break
     }
   }
 
   const handleThemeChange = () => {
-    if(theme === dark)
-      setTheme(light)
+    if(theme === dark_grey_1)
+      setTheme(light_grey_1)
     else 
-      setTheme(dark)
+      setTheme(dark_grey_1)
   }
   return (
     <Router>

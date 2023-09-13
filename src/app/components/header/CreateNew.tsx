@@ -12,7 +12,7 @@ import {
 import { useNavigate } from "react-router-dom"
 
 const SContainer = styled(SFlexRow)`
-  border: 1px solid ${({ theme }) => theme.header.buttonColor};
+  border: 1px solid ${({ theme }) => theme.color.color_5};
 
   height: 20px;
   padding: 3px;
@@ -20,7 +20,7 @@ const SContainer = styled(SFlexRow)`
   align-items: center;
 
   &:hover {
-    border: 1px solid ${({ theme }) => theme.header.buttonColorHover};
+    border: 1px solid ${({ theme }) => theme.color.color_7};
     cursor: pointer;
   }
 `
@@ -34,11 +34,11 @@ const SButtonContainer = styled(SFlexCol)`
 const SIcon = styled(FontAwesomeIcon)`
   height: 13px;
   width: 13px;
-  color: ${({ theme }) => theme.header.buttonColor};
+  color: ${({ theme }) => theme.color.color_5};
   padding: 3px 3px 3px 0;
 
   &.hover {
-    color: ${({ theme }) => theme.header.buttonColorHover};
+    color: ${({ theme }) => theme.color.color_7};
   }
 
   &.dropdown {
@@ -50,7 +50,7 @@ const SMenu = styled.ul`
   position: absolute;
   top: 28px;
   right: 0;
-  background-color: ${({ theme }) => theme.color.color_6};
+  background-color: ${({ theme }) => theme.color.color_2};
   padding: 5px;
   border-radius: ${({ theme }) => theme.container.borderRadius.md};
   display: flex;
@@ -58,7 +58,7 @@ const SMenu = styled.ul`
   align-items: center;
   margin: 0;
   box-sizing: border-box;
-  box-shadow: 2px 2px 6px ${({ theme }) => theme.color.color_4};
+  box-shadow: 2px 2px 6px ${({ theme }) => theme.color.shadow.dark};
 `
 
 const SListItem = styled.li`
@@ -67,9 +67,10 @@ const SListItem = styled.li`
   padding: 7px 15px;
   font-size: 0.8rem;
   box-sizing: border-box;
+  color: ${({ theme }) => theme.color.color_5};
   &:hover {
     background-color: ${({ theme }) => theme.color.color_3};
-    color: ${({ theme }) => theme.text.contrast};
+    color: ${({ theme }) => theme.color.color_7};
     cursor: pointer;
   }
 `

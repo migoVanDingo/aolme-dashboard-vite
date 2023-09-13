@@ -6,9 +6,10 @@ import { faBookOpen } from '@fortawesome/free-solid-svg-icons'
 
 const SContainer = styled(SFlexRow)`
     width: 100%;
-    border-bottom: 1px solid ${({ theme }) => theme.button.branch.border};
+    border-bottom: 1px solid ${({ theme }) => theme.color.color_5};
     padding: 10px 15px;
-    background-color: ${({theme}) => theme.color.color_3};
+    background-color: ${({theme}) => theme.color.color_1};
+    color: ${({ theme }) => theme.color.color_6};
 `
 
 const SIcon = styled(FontAwesomeIcon)`

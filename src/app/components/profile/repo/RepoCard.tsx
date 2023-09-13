@@ -7,10 +7,10 @@ const SContainer = styled(SFlexCol)`
   align-items: flex-start;
   height: 150px;
   width:48%;
-  border: 1px solid ${({ theme }) => theme.color.color_4};
+  border: 1px solid ${({ theme }) => theme.color.color_3};
   border-radius: ${({ theme }) => theme.container.borderRadius.lg};
   overflow: hidden;
-  box-shadow: 2px 2px 6px ${({ theme }) => theme.color.color_4};
+  box-shadow: 2px 2px 10px ${({ theme }) => theme.color.shadow.dark};
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -18,14 +18,14 @@ const SContainer = styled(SFlexCol)`
 `
 
 const SCardTop = styled(SFlexCol)`
-  background-color: ${({ theme }) => theme.color.color_3};
+  background-color: ${({ theme }) => theme.color.color_2};
   width: 100%;
   height: 100%;
   align-items: baseline;
   padding: 20px;
 `
 const SCardBottom = styled(SFlexCol)`
-  background-color: ${({ theme }) => theme.color.color_2};
+  background-color: ${({ theme }) => theme.color.color_2_5};
   width: 100%;
   height: 100%;
   align-items: baseline;
@@ -51,13 +51,16 @@ const SLastUpdated = styled.p`
   margin: 0;
   font-size: 0.8rem;
   font-weight: 200;
+  color: ${({ theme }) => theme.color.color_5};
 `
 
 const SDescription = styled.p`
   padding: 0;
   margin: 0;
   font-size: 0.9rem;
-  font-weight: 200;
+  font-weight: 400;
+  color: ${({ theme }) => theme.color.color_5};
+
 `
 
 const STagContainer = styled(SFlexRowWrap)`
@@ -69,7 +72,7 @@ const STag = styled(SFlexCol)`
   height: 20px;
   border-radius: ${({ theme }) => theme.container.borderRadius.sm};
   overflow: hidden;
-  background-color: ${({ theme }) => theme.color.color_4};
+  background-color: ${({ theme }) => theme.color.color_3};
   font-size: 0.7rem;
   font-weight: 100;
   justify-content: center;

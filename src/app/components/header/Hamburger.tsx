@@ -8,12 +8,12 @@ import { faBars } from '@fortawesome/free-solid-svg-icons'
 const SHamburger = styled.button`
     width: 30px;
     height: 30px;
-    border: 1px solid ${({theme}) => theme.header.buttonColor};
+    border: 1px solid ${({theme}) => theme.color.color_5};
     background-color: transparent;
     border-radius: 4px;
 
     &:hover{
-      border-color: ${({theme}) => theme.header.buttonColorHover};
+      border-color: ${({theme}) => theme.color.color_7};
       cursor: pointer;
     }
 
@@ -22,10 +22,10 @@ const SHamburger = styled.button`
 const SIcon = styled(FontAwesomeIcon)`
     width: 100%;
     height: 100%;
-    color: ${({theme}) => theme.header.buttonColor};
+    color: ${({theme}) => theme.color.color_5};
 
     &.hover{
-      color: ${({theme}) => theme.header.buttonColorHover};
+      color: ${({theme}) => theme.color.color_7};
     }
     
 `

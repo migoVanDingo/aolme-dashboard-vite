@@ -11,7 +11,7 @@ const SContainer = styled(SFlexCol)`
   align-items: baseline;
 `
 const SInnerContainer = styled(SFlexRow)`
-  background-color: ${({ theme }) => theme.color.color_3};
+  background-color: ${({ theme }) => theme.color.color_2};
   font-size: 1.2rem;
   width: 500px;
   height: 30px;
@@ -21,7 +21,7 @@ const SInnerContainer = styled(SFlexRow)`
   cursor: pointer;
 
   &:hover {
-    background-color: ${({ theme }) => theme.color.color_4};
+    background-color: ${({ theme }) => theme.color.color_3};
   }
 `
 const SButtonContainer = styled(SFlexRow)`
@@ -40,7 +40,7 @@ const SInput = styled.input`
 
   &::file-selector-button {
     border: none;
-    color: ${({ theme }) => theme.text.color};
+    color: ${({ theme }) => theme.color.color_6};
     background-color: transparent;
     border-right: 2px solid ${({ theme }) => theme.color.color_1};
     height: 100%;
@@ -55,7 +55,7 @@ const SButton = styled(Button)`
     border-radius: ${({ theme }) => theme.container.borderRadius.sm};
 
     background-color:${({ theme }) => theme.color.color_3};
-    color: ${({ theme }) => theme.color.contrast.color_1};
+    color: ${({ theme }) => theme.color.color_6};
     margin-top: 10px;
     cursor: pointer;
     &:hover{

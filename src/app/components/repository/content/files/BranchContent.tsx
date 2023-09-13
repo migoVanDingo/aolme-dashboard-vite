@@ -11,8 +11,8 @@ const SRow = styled(SFlexRow)`
   width: 100%;
   height: 40px;
 
-  background-color: ${({ theme }) => theme.color.color_1};
-  border-bottom: 1px solid ${({ theme }) => theme.button.branch.border};
+  background-color: ${({ theme }) => theme.color.color_2_5};
+  border-bottom: 1px solid ${({ theme }) => theme.color.color_5};
   font-size: 0.8rem;
   padding: 5px 15px;
   box-sizing: border-box;
@@ -22,7 +22,7 @@ const SRow = styled(SFlexRow)`
   }
 
   &.first {
-    border-top: 1px solid ${({ theme }) => theme.button.branch.border};
+    border-top: 1px solid ${({ theme }) => theme.color.color_5};
   }
 `
 
@@ -44,6 +44,10 @@ const SLine = styled.p`
   margin: 0;
   padding: 0;
   width: 100%;
+  color: ${({ theme }) => theme.color.color_5};
+  &:hover {
+    color: ${({ theme }) => theme.accent.color_2};
+  }
 
 `
 
@@ -54,8 +58,8 @@ const SCommit = styled.p`
   font-size: 0.8rem;
   margin: 0 0 0 40px;
   padding: 5px 12px;
-  color: ${({ theme }) => theme.button.text.neutral};
-  background-color: ${({ theme }) => theme.color.color_3};
+  color: ${({ theme }) => theme.color.color_5};
+  background-color: ${({ theme }) => theme.color.color_1};
 `
 
 const SCommitMsg = styled.p`

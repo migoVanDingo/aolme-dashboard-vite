@@ -9,7 +9,7 @@ const SButton = styled.button`
     height: 30px;
     background-color: ${({theme}) => theme.accent.color_1_dim};
     border-radius: ${({theme}) => theme.container.borderRadius.md};
-    color: ${({theme}) => theme.button.text.contrast};
+    color: ${({theme}) => theme.color.color_8};
     font-size: 0.7rem;
     border: none;
     gap: 3px;

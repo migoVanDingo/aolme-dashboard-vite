@@ -5,24 +5,24 @@ import styled from "styled-components"
 import { SFlexRow } from "../common/containers/FlexContainers"
 
 const SContainer = styled(SFlexRow)`
-  border: 1px solid ${({ theme }) => theme.header.buttonColor};
+  border: 1px solid ${({ theme }) => theme.color.color_5};
   height: 20px;
   padding: 3px 5px;
   border-radius: 4px;
   align-items: center;
 
   &:hover {
-    border: 1px solid ${({ theme }) => theme.header.buttonColorHover};
+    border: 1px solid ${({ theme }) => theme.color.color_7};
     cursor: pointer;
   }
 
 `
 
 const SIcon = styled(FontAwesomeIcon)`
-  color: ${({ theme }) => theme.header.buttonColor};
+  color: ${({ theme }) => theme.color.color_5};
 
   &.hover {
-    color: ${({ theme }) => theme.header.buttonColorHover};
+    color: ${({ theme }) => theme.color.color_7};
   }
 `
 

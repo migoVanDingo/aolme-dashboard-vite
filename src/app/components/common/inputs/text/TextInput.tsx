@@ -15,7 +15,9 @@ const STextInput = styled.input`
   border-radius: ${({theme}) => theme.container.borderRadius.md};
   padding: 0px 7px;
   font-size: 1rem;
-  background-color: ${({theme}) => theme.color.contrast.color_2};
+  background-color: ${({theme}) => theme.color.color_6};
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
 `
 
 const SLabel = styled.label`

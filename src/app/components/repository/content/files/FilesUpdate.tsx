@@ -6,19 +6,20 @@ import { faUser, faClockRotateLeft } from '@fortawesome/free-solid-svg-icons'
 
 
 const SContainer = styled(SFlexRow)`
-    border-bottom: 1px solid ${({theme}) => theme.button.branch.border};
+    border-bottom: 1px solid ${({theme}) => theme.color.color_5};
     box-sizing: border-box;
     width: 100%;
     padding: 5px 15px;
     font-size: 0.8rem;
     gap: 15px;
-    background-color: ${({theme}) => theme.color.color_3};
+    background-color: ${({theme}) => theme.color.color_2};
 `
 
 const SUser = styled(SFlexRow)`
     gap: 7px;
     justify-content: baseline;
     align-items: center;
+    color:  ${({theme}) => theme.color.color_6};
     
 `
 const SIcon = styled(FontAwesomeIcon)`
@@ -31,7 +32,7 @@ const SCommit = styled.p`
     font-size: 0.8rem;
     margin: 0;
     padding: 5px 12px;
-    color:  ${({theme}) => theme.button.text.neutral};
+    color:  ${({theme}) => theme.color.color_6};
     background-color: ${({theme}) => theme.color.color_1};
 `
 
@@ -39,6 +40,7 @@ const SCommitMsg = styled.p`
     font-size: 0.8rem;
     margin: 0;
     padding: 5px 0;
+    color:  ${({theme}) => theme.color.color_6};
 `
 
 const SLastUpdate = styled.p`
@@ -46,12 +48,14 @@ const SLastUpdate = styled.p`
     margin: 0;
     margin-left: auto;
     padding: 5px 0;
+    color:  ${({theme}) => theme.color.color_6};
 `
 
 const SNumCommits = styled.p`
     font-size: 0.8rem;
     margin: 0;
     padding: 5px 0;
+    color:  ${({theme}) => theme.color.color_6};
 `
 
 const username = "Migo"

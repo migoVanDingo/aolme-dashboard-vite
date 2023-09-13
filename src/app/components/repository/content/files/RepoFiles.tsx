@@ -7,7 +7,7 @@ import BranchContent from './BranchContent'
 
 const SContainer = styled(SFlexCol)`
     grid-area: files;
-    border: 1px solid ${({theme}) => theme.button.branch.border};
+    border: 1px solid ${({theme}) => theme.color.color_5};
     border-radius: ${({theme}) => theme.container.borderRadius.md};
     margin: 10px 0;
     overflow: hidden;

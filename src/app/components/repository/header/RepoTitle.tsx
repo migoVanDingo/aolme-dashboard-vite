@@ -33,7 +33,7 @@ const STitle = styled.p`
     padding: 0;
     margin: 0;
 
-
+    color: ${({theme}) => theme.color.color_5};
 
     &.accent {
         color: ${({theme}) => theme.accent.color_1};
@@ -52,6 +52,7 @@ const SLink = styled.p`
     font-size: 0.7rem;
     padding: 0;
     margin:0;
+    color: ${({theme}) => theme.color.color_5};
 
     &.sub{
         color: ${({theme}) => theme.accent.color_1};

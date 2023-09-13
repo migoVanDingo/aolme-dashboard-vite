@@ -20,10 +20,10 @@ const SLabel = styled.label`
 const SSelectOwner = styled(SFlexRow)`
   width: 140px;
   height: 30px;
-  background: ${({ theme }) => theme.color.color_3};
-  box-shadow: 1px 1px 2px ${({ theme }) => theme.color.color_4};
+  background: ${({ theme }) => theme.color.color_2};
+  box-shadow: 1px 1px 2px ${({ theme }) => theme.color.shadow.dark};
   align-items: center;
-  color: ${({ theme }) => theme.text.contrast2};
+  color: ${({ theme }) => theme.color.color_6};
   justify-content: space-around;
   border-radius: ${({ theme }) => theme.container.borderRadius.md};
   font-size: 0.8rem;
@@ -31,7 +31,7 @@ const SSelectOwner = styled(SFlexRow)`
   position: relative;
 
   &:hover {
-    background: ${({ theme }) => theme.color.color_1};
+    background: ${({ theme }) => theme.color.color_3};
   }
 `
 
@@ -40,7 +40,7 @@ const SImageContainer = styled.div`
   height: 20px;
   width: 20px;
   overflow: hidden;
-  border: 1px solid ${({ theme }) => theme.text.contrast2};
+  border: 1px solid ${({ theme }) => theme.color.color_6};
 `
 
 const SImage = styled.img`
@@ -50,7 +50,7 @@ const SImage = styled.img`
 `
 
 const SIcon = styled(FontAwesomeIcon)`
-  ${({ theme }) => theme.text.contrast2}
+  ${({ theme }) => theme.color.color_6}
 `
 
 const SMenu = styled.ul`
@@ -58,7 +58,7 @@ const SMenu = styled.ul`
   position: absolute;
   top: 53px;
   right: 0;
-  background: ${({ theme }) => theme.color.color_4};
+  background: ${({ theme }) => theme.color.color_2};
   padding: 5px;
   border-radius: ${({ theme }) => theme.container.borderRadius.md};
   display: flex;
@@ -66,7 +66,7 @@ const SMenu = styled.ul`
   align-items: center;
   margin: 0;
   box-sizing: border-box;
-  box-shadow: 2px 2px 6px ${({ theme }) => theme.color.color_6};
+  box-shadow: 2px 2px 6px ${({ theme }) => theme.color.shadow.dark};
   z-index: 1000;
 `
 
@@ -80,9 +80,10 @@ const SListItem = styled.li`
   flex-direction: row;
   align-items: center;
   gap: 5px;
+  color: ${({ theme }) => theme.color.color_5};
   &:hover {
     background-color: ${({ theme }) => theme.color.color_3};
-    color: ${({ theme }) => theme.text.contrast};
+    color: ${({ theme }) => theme.color.color_8};
     cursor: pointer;
   }
 `

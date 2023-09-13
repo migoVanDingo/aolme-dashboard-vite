@@ -17,7 +17,7 @@ const SContainer = styled.div`
     "tabs   blank";
 
     padding: 15px 0 0 0;
-    background-color: ${({theme}) => theme.color.color_2};
+    background-color: ${({theme}) => theme.color.color_2_5};
 `
 
 export const RepoHeader = ({ owner, projectName }: any) => {

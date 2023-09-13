@@ -10,7 +10,7 @@ const SContainer = styled(SFlexCol)`
     background-color: ${({ theme }) => theme.color.color_2};
     border-radius: ${({ theme }) => theme.container.borderRadius.md};
     box-sizing: border-box;
-    box-shadow: 3px 3px 4px ${({ theme }) => theme.color.color_4};
+    box-shadow: 3px 3px 4px ${({ theme }) => theme.color.shadow.dark};
     
 
 `

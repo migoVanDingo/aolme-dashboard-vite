@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { SFlexCol } from "../../containers/FlexContainers"
+import "../../../../../styles/fonts.css"
 
 const SContainer = styled(SFlexCol)`
   align-items: baseline;
@@ -15,7 +16,10 @@ const STextArea = styled.textarea`
   border-radius: ${({theme}) => theme.container.borderRadius.md};
   padding: 0px 7px;
   font-size: 1rem;
-  background-color: ${({theme}) => theme.color.contrast.color_2};
+  background-color: ${({theme}) => theme.color.color_6};
+  border-color: ${({theme}) => theme.color.color_6};
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
 `
 
 const SLabel = styled.label`

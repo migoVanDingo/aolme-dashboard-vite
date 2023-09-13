@@ -170,3 +170,197 @@ export const dark = {
 
 }
 
+
+
+export const dark_grey_1 = {
+    color: {
+        color_0: "black",
+        color_1: "#121212",
+        color_2_5: "#1c1c1c",
+        color_2: "#242424",
+        color_3: "#3b3b3b",
+        color_4: "#636363",
+        color_5: "#8a8a8a",
+        color_6: "#b0b0b0",
+        color_7: "#cccccc",
+        color_8: "#e0e0e0",
+        shadow: {
+            dark: "black",
+        },
+        contrast: {
+            color_1: "#adadad",
+            color_2: "#bababa",
+            color_3: "#c9c9c9"
+        }
+        
+    },
+    header:{
+        backgroundColor: "#1a1a1a",
+        boxShadow: "#0a0a0a",
+        buttonColor: "#8a8a8a",
+        buttonColorHover:"#e3e3e3",
+        height: "40px"
+    },
+    body:{
+        backgroundColor:"#2e2e2e"
+    },
+    text:{
+        color:"#8a8a8a",
+        colorHover: "#e3e3e3",
+        contrast: "#e3e3e3",
+        contrast2: "#c9c9c9"
+    },
+    spacing:{
+        edges: "30px"
+    },
+    profile:{
+        card:{
+            width: "300px",
+            height:"400px",
+            border: "1px solid #8a8a8a",
+            borderRadius: "12px" 
+        }
+    },
+    accent:{
+        color_1: "#21b57c",
+        color_1_dim: "#15a36d",
+        color_2: "#35beec",
+    },
+    container: {
+        borderRadius:{
+            sm:"4px",
+            md: "8px",
+            lg: "12px",
+            xlg: "20px"
+        }
+    },
+    button: {
+        branch: {
+            neutral: "#2e2e2e",
+            hover: "#262626",
+            active: "",
+            border:"#8a8a8a",
+            borderHover:"#e3e3e3",
+        },
+        text: {
+            neutral:"#8a8a8a",
+            hover:"#e3e3e3",
+            contrast: "#e3e3e3"
+        }
+    }, 
+    input:{
+        text:{
+            height:{
+                sm:"",
+                md:"",
+                lg:"",
+            },
+            width:{
+                sm:"",
+                md:"",
+                lg:"",
+            },
+            padding:"",
+            margin:""
+
+        }
+    }
+    
+
+}
+
+export const light_grey_1 = {
+    color: {
+        color_9: "black",
+        color_8: "#121212",
+        color_7: "#242424",
+        color_6: "#383838",
+        color_5: "#5c5c5c",
+        color_4: "#ededed",
+        color_3: "#ededed",
+        color_2_5: "#ededed",
+        color_2: "#ededed",
+        color_1: "#f5f5f5",
+        color_0: "white",
+        shadow: {
+            dark: "#ababab",
+        },
+        contrast: {
+            color_1: "#adadad",
+            color_2: "#bababa",
+            color_3: "#c9c9c9"
+        }
+        
+    },
+    header:{
+        backgroundColor: "#1a1a1a",
+        boxShadow: "#0a0a0a",
+        buttonColor: "#8a8a8a",
+        buttonColorHover:"#e3e3e3",
+        height: "40px"
+    },
+    body:{
+        backgroundColor:"#2e2e2e"
+    },
+    text:{
+        color:"#8a8a8a",
+        colorHover: "#e3e3e3",
+        contrast: "#e3e3e3",
+        contrast2: "#c9c9c9"
+    },
+    spacing:{
+        edges: "30px"
+    },
+    profile:{
+        card:{
+            width: "300px",
+            height:"400px",
+            border: "1px solid #8a8a8a",
+            borderRadius: "12px" 
+        }
+    },
+    accent:{
+        color_1: "#21b57c",
+        color_1_dim: "#15a36d",
+        color_2: "#35beec",
+    },
+    container: {
+        borderRadius:{
+            sm:"4px",
+            md: "8px",
+            lg: "12px",
+            xlg: "20px"
+        }
+    },
+    button: {
+        branch: {
+            neutral: "#2e2e2e",
+            hover: "#262626",
+            active: "",
+            border:"#8a8a8a",
+            borderHover:"#e3e3e3",
+        },
+        text: {
+            neutral:"#8a8a8a",
+            hover:"#e3e3e3",
+            contrast: "#e3e3e3"
+        }
+    }, 
+    input:{
+        text:{
+            height:{
+                sm:"",
+                md:"",
+                lg:"",
+            },
+            width:{
+                sm:"",
+                md:"",
+                lg:"",
+            },
+            padding:"",
+            margin:""
+
+        }
+    }
+}
