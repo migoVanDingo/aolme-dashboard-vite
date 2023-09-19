@@ -43,7 +43,9 @@ const STab = styled(SFlexRow)`
 const SIcon = styled(FontAwesomeIcon)``
 
 const RepoTabs = ({ activeTab, setActiveTab, projectId, name }: any) => {
+  
   const nav = useNavigate()
+
   const initializeLabelStudio = () => {
     console.log("name: ", name)
     console.log("projectId: ", projectId)
@@ -51,9 +53,12 @@ const RepoTabs = ({ activeTab, setActiveTab, projectId, name }: any) => {
     .then((res: any) => {
       console.log("res: ", res)
       //nav('')
-      if(res.status === 204)
+      if(res.status === 204){
+        setInterval(()=>{}, 3000)
         console.log("response 204 aww yiss")
         nav("http://localhost:8080/projects/" + projectId + "/data?tab=83")
+      }
+        
     })
     .catch((err: any) => console.error(err))
     

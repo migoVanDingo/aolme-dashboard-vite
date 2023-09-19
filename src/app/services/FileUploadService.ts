@@ -11,11 +11,14 @@ const handleFileUpload = async (files: any[], data: ISyncImportStorage, projectI
   for( let i = 0; i < files.length; i++){
     formData.append("file", files[i])
   }
+  console.log("proejct_ID: ",data['project_id'] )
 
   formData.append("project_id", data['project_id'].toString())
   formData.append("title", data['title'])
   formData.append("description", data['description'])
-  formData.append("path", data['path'])
+  formData.append("path", '/Users/bubz/Developer/master-project/aolme-backend/local-storage/' + projectId)
+
+  console.log('files length: ', files.length)
  
 
 

@@ -8,14 +8,7 @@ export class ProcessAPI {
         const data = {
             project_name: projectName
         }
-        Requests.doPost(data ,'/subprocess/label-studio')
-        .then((result) => {
-            console.log("FUNCTION: launchLabelStudio()")
-            return result
-        })
-        .catch((err) => console.error("launchLabelStudio(): ",err))
-
-
+        return Requests.doPost(data ,'/subprocess/label-studio')
         
     }
 }
