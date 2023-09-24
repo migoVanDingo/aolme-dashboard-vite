@@ -224,7 +224,7 @@ const CreateRepository = () => {
         </>
       ) : (
         <SLoadingContainer>
-          <SLoadingHeading>Initializing Project...</SLoadingHeading>
+          <SLoadingHeading>Initializing Project</SLoadingHeading>
           <SSpinner className="lds-ring"><div></div><div></div><div></div><div></div></SSpinner>
         </SLoadingContainer>
       )}
