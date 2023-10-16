@@ -9,6 +9,8 @@ const initState: object = {
   updatedAt: "",
   createdBy: "",
   createdAt: "",
+  userId:"",
+  username:""
 }
 
 
@@ -60,6 +62,17 @@ const reducer = (state = initState, action: any) => {
       return {
         ...state,
         updatedAt: action.updatedAt,
+      }
+    case ACTIONS.SET_USER_ID:
+      return {
+        ...state,
+        userId: action.userId
+      }
+
+    case ACTIONS.SET_USERNAME:
+      return {
+        ...state,
+        username: action.username
       }
   }
 }

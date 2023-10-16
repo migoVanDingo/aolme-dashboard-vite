@@ -69,10 +69,10 @@ const SLoadingContainer = styled(SFlexCol)`
 
 const SLoadingHeading = styled.p`
   font-size: 2rem;
-  font-family: "Raleway", sans-serif;
+  font-family: "Helvetica", sans-serif;
   color: ${({ theme }) => theme.accent.color_1};
   font-weight: 700;
-  text-shadow: 2px 2px 4px black;
+
 `
 const myAnimation = keyframes`
   
@@ -212,6 +212,7 @@ const CreateRepository = () => {
             <TextInput
               setProjectName={setProjectName}
               projectName={projectName}
+              label={"Give your Repo a Name"}
             />
             <TextArea
               projectDescription={projectDescription}
@@ -233,37 +234,3 @@ const CreateRepository = () => {
 }
 
 export default CreateRepository
-
-/* const upload = (fileName: string) => {
-  let uploadFile = selectedFiles[0]
-
-  const renamedFile = new File([uploadFile], fileName, {
-    type: uploadFile.type,
-    lastModified: uploadFile.lastModified,
-  })
-
-  setProgress(0)
-  setCurrentFile(renamedFile)
-
-  UploadService.upload(renamedFile, (event: any) => {
-    setProgress(Math.round((100 * event.loaded) / event.total))
-  })
-    .then((response) => {
-      setMessage(response.data.message)
-      console.log(response.data.message)
-      console.log("right here")
-      return JSON.stringify(response)
-    })
-     .then((files) => {
-      setFileInfos(files.data)
-    }) 
-    .catch((err) => {
-      setProgress(0)
-      console.error(err)
-      console.log("Could not upload file")
-      setMessage("Could not upload the file!")
-      setCurrentFile(undefined)
-    })
-
-  setSelectedFiles([])
-} */

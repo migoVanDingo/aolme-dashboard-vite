@@ -15,8 +15,8 @@ const STextInput = styled.input`
   border-radius: ${({theme}) => theme.container.borderRadius.md};
   padding: 0px 7px;
   font-size: 1rem;
-  background-color: ${({theme}) => theme.color.color_6};
-  font-family: 'Raleway', sans-serif;
+  background-color: #dedede;
+  font-family: 'Helvetica', sans-serif;
   font-weight: 500;
 `
 
@@ -26,7 +26,7 @@ const SLabel = styled.label`
   font-weight: 200;
 `
 
-const TextInput = ({ projectName, setProjectName }: any) => {
+const TextInput = ({ projectName, setProjectName, label }: any) => {
 
   const handleInput = (e: any) => {
     setProjectName(e.target.value)
@@ -35,7 +35,7 @@ const TextInput = ({ projectName, setProjectName }: any) => {
 
   return (
     <SContainer>
-      <SLabel> Give your Repo a Name</SLabel>
+      <SLabel>{label}</SLabel>
       <STextInput onChange={handleInput} value={projectName}/>
     </SContainer>
   )

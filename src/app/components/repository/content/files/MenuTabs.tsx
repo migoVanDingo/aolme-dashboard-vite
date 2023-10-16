@@ -12,7 +12,7 @@ import dvcImg from "../../../../../assets/dvc.jpeg"
 import gitImg from "../../../../../assets/git.png"
 
 const SContainer = styled(SFlexRow)`
-  background-color: ${({ theme }) => theme.color.color_2};
+  background-color: ${({ theme }) => theme.color.color_0};
   gap: 10px;
   width: 100%;
   border-bottom: 1px solid ${({theme}) => theme.color.color_5};

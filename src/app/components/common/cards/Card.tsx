@@ -29,7 +29,8 @@ const SContainer = styled(SFlexCol)<IContainer>`
 
 const SImage = styled.img`
     width: 100%;
-    object-fit: contain;
+    object-fit: cover;
+    height: 60%;
     
     
 `

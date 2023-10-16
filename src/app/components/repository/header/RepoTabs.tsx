@@ -6,6 +6,7 @@ import {
   faServer,
   faFlask,
   faVectorSquare,
+  faCode
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { connect } from "react-redux"
@@ -63,6 +64,16 @@ const RepoTabs = ({ activeTab, setActiveTab, projectId, name }: any) => {
     .catch((err: any) => console.error(err))
     
   }
+
+  const initializeJupyterNotebook = () => {
+    ProcessAPI.launchJupyterNotebook(projectId)
+    .then((res:any) => {
+
+      console.log("launching jupyter notebook...")
+    })
+    .catch((err: any) => console.error(err))
+  }
+
   const tabs = [
     {
       title: "Files",
@@ -84,6 +95,11 @@ const RepoTabs = ({ activeTab, setActiveTab, projectId, name }: any) => {
       title: "Annotate",
       callback: initializeLabelStudio,
       icon: faVectorSquare,
+    },
+    {
+      title: "Notebook",
+      callback: initializeJupyterNotebook,
+      icon: faCode,
     },
   ]
 

@@ -11,7 +11,7 @@ const SRow = styled(SFlexRow)`
   width: 100%;
   height: 40px;
 
-  background-color: ${({ theme }) => theme.color.color_2_5};
+  background-color: ${({ theme }) => theme.color.color_0};
   border-bottom: 1px solid ${({ theme }) => theme.color.color_5};
   font-size: 0.8rem;
   padding: 5px 15px;
@@ -38,17 +38,17 @@ const SContentLink = styled(SFlexRow)`
 
 const SIcon = styled(FontAwesomeIcon)`
   margin: 0 10px 0 0;
+  color: ${({ theme }) => theme.color.color_8};
 `
 
 const SLine = styled.p`
   margin: 0;
   padding: 0;
   width: 100%;
-  color: ${({ theme }) => theme.color.color_5};
+  color: ${({ theme }) => theme.color.color_8};
   &:hover {
     color: ${({ theme }) => theme.accent.color_2};
   }
-
 `
 
 const SCommit = styled.p`
@@ -75,69 +75,112 @@ const SLastUpdate = styled.p`
   padding: 5px 0;
 `
 
-
 const BranchContent = ({ projectId }: any) => {
-
   const [files, setFiles] = useState<any[]>([])
-  const [stopSwitch, setStopSwitch] = useState<boolean>(false)
+  const [folders, setFolders] = useState<any[]>([])
+  const [stopSwitchFiles, setStopSwitchFiles] = useState<boolean>(false)
+  const [stopSwitchFolders, setStopSwitchFolders] = useState<boolean>(false)
+  const [folderItemsSwitch, setFolderItemsSwitch] = useState<boolean>(false)
+  const [folderPath, setFolderPath] = useState<string[]>([])
 
+  let fp = []
   useEffect(() => {
     const getProjectFiles = (projectId: number) => {
-      console.log(projectId)
-      if (projectId !== undefined && stopSwitch === false) {
-        setStopSwitch(true)
+      if (projectId !== undefined && stopSwitchFiles === false) {
+        setStopSwitchFiles(true)
+
         const response = FilesAPI.getProjectFiles(projectId)
           .then((res: any) => {
-            console.log("files : ", res.data)
             setFiles(res.data)
-            
           })
           .catch((err: any) => console.error(err))
       }
     }
 
-    return getProjectFiles(parseInt(projectId))
+    const getProjectFolders = (projectId: number) => {
+      if (projectId !== undefined && stopSwitchFolders === false) {
+        setStopSwitchFolders(true)
+
+        const response = FilesAPI.getProjectFolders(projectId)
+          .then((res: any) => {
+            console.log("resdata: ", res.data)
+            const folderList = res.data.map((folder: any) => folder.name)
+            setFolders(folderList.sort())
+          })
+          .catch((err: any) => console.error(err))
+      }
+    }
+
+    return () => {
+      //getProjectFiles(parseInt(projectId))
+      getProjectFolders(projectId)
+    }
   }, [])
 
-  const handleContentClick = (e: any) => {
-    console.log(e.target["data-name"])
+  useEffect(() => {
+    if (folderItemsSwitch === true) {
+      console.log("folderPath: ", folderPath)
+      FilesAPI.getFolderItems(projectId, folderPath)
+        .then((result: any) => {
+          const files = result.data.filter((item: any) => item.type === "file")
+          const folders = result.data.filter(
+            (item: any) => item.type === "folder",
+          )
+
+          console.log("files: ", files)
+          console.log("folders: ", folders)
+          setFolderItemsSwitch(false)
+          setFiles(files)
+          setFolders(folders)
+        })
+        .catch((err: any) =>
+          console.error("BranchContent -- handleSelectFolder(): ", err),
+        )
+    }
+  }, [folderPath])
+
+  const handleContentClicks = () => {}
+
+  const handleSelectFolder = (e: any) => {
+    console.log("dname: ", e.target.id)
+    const fp = folderPath ? [...folderPath, e.target.id] : [e.target.id]
+    console.log("fp: ", fp)
+    setFolderPath(fp)
+    setFolderItemsSwitch(true)
   }
 
   return (
     <>
-      {/* {folders &&
+      {folders &&
         folders.map((folder: any, index: number) => {
           return (
             <SRow
               key={index}
               className={index === folders.length - 1 ? "last" : ""}
             >
-              <SContentLink onClick={handleContentClick}>
-                <SIcon data-name={folder.name} icon={faFolder} />
-                <SLine data-name={folder.name}>{folder.name}</SLine>
+              <SContentLink onClick={handleSelectFolder}>
+                <SIcon id={folder} icon={faFolder} />
+                <SLine id={folder}>{folder}</SLine>
               </SContentLink>
 
-              <SCommit>{folder.commit}</SCommit>
-              <SCommitMsg>{folder.commit_message}</SCommitMsg>
-              <SLastUpdate>{folder.last_updated}</SLastUpdate>
+              { folder.commit && <SCommit>{folder.commit}</SCommit>}
+              { folder.commit_message && <SCommitMsg>{folder.commit_message}</SCommitMsg>}
+              { folder.last_updated &&<SLastUpdate>{folder.last_updated}</SLastUpdate>}
             </SRow>
           )
-        })} */}
+        })}
       {files &&
         files.map((file: any, index: number) => {
           return (
-            <SRow
-              key={index}
-              className=''
-            >
-              <SContentLink onClick={handleContentClick}>
+            <SRow key={index} className={index === files.length - 1 ? "last" : ""}>
+              <SContentLink onClick={() => {}}>
                 <SIcon icon={faFile} />
-                <SLine>{file.name + "." +file.extension}</SLine>
+                <SLine>{file.name}</SLine>
               </SContentLink>
 
-              <SCommit>{file.commit}</SCommit>
-              <SCommitMsg>{file.commit_message}</SCommitMsg>
-              <SLastUpdate>{file.last_updated}</SLastUpdate>
+              { file.commit && <SCommit>{file.commit}</SCommit>}
+              { file.commit_message && <SCommitMsg>{file.commit_message}</SCommitMsg>}
+              { file.last_updated &&<SLastUpdate>{file.last_updated}</SLastUpdate>}
             </SRow>
           )
         })}

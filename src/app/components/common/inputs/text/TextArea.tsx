@@ -14,11 +14,11 @@ const STextArea = styled.textarea`
   width: 500px;
   height: 200px;
   border-radius: ${({theme}) => theme.container.borderRadius.md};
-  padding: 0px 7px;
+  padding: 7px;
   font-size: 1rem;
-  background-color: ${({theme}) => theme.color.color_6};
-  border-color: ${({theme}) => theme.color.color_6};
-  font-family: 'Raleway', sans-serif;
+  background-color: #dedede;
+  border-color: none;
+  font-family: 'Helvetica', sans-serif;
   font-weight: 500;
 `
 

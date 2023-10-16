@@ -7,7 +7,7 @@ const SContainer = styled(SFlexCol)`
     padding: 20px 0;
     margin-bottom: 0px;
     height: 100%;
-    background-color: ${({ theme }) => theme.color.color_2_5};
+    background-color: ${({ theme }) => theme.color.color_0};
 
   
 `

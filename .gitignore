@@ -29,3 +29,5 @@ build
 # Miscellaneous
 *.local
 package-lock.json
+src/assets
+*.txt

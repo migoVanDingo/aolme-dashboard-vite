@@ -5,4 +5,20 @@ export class FilesAPI {
         return await Requests.doGet('/files/'+projectId)
      
     }
+
+    public static async getProjectFolders(projectId: number){
+        return await Requests.doGet('/directory/project/'+projectId+'/root')
+     
+    }
+
+    public static async getFolderItems(projectId: number, folderArray: string[]){
+
+        let params = ''
+        console.log('folderArray: ', folderArray)
+        if(folderArray !== null && folderArray.length !== 0){
+            params = "?fa=" +  folderArray.toString()
+        }
+        console.log('params: ', params)
+        return await Requests.doGet('/directory/project/' + projectId + "/folder" + params )
+    }
 }

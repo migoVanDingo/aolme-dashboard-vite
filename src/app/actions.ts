@@ -10,6 +10,9 @@ export const ACTIONS = {
     SET_CURRENT_PROJECT_LAST_UPDATE_BY: "SET_CURRENT_PROJECT_LAST_UPDATE_BY",
     SET_CURRENT_PROJECT_LAST_UPDATE_AT: "SET_CURRENT_PROJECT_LAST_UPDATE_AT",
 
+    SET_USER_ID: "SET_USER_ID",
+    SET_USERNAME:"SET_USERNAME",
+
 }
 
 export const setCurrentProjectId = (projectId: number) => {
@@ -74,6 +77,21 @@ export const setCurrentProjectLastUpdatedBy= (lastUpdatedBy: string) => {
         type: ACTIONS.SET_CURRENT_PROJECT_LAST_UPDATE_BY,
         lastUpdatedBy: lastUpdatedBy
     
+    }
+}
+
+export const setUserId = (userId: string) => {
+    return {
+        type: ACTIONS.SET_USER_ID,
+        userId: userId
+    
+    }
+}
+
+export const setUsername = (username: string) => {
+    return {
+        type: ACTIONS.SET_USERNAME,
+        username: username
     }
 }
 

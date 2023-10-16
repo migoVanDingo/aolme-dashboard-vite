@@ -18,7 +18,7 @@ const SContainer = styled(SFlexCol)`
 `
 
 const SCardTop = styled(SFlexCol)`
-  background-color: ${({ theme }) => theme.color.color_2};
+  background-color: ${({ theme }) => theme.color.color_0};
   width: 100%;
   height: 100%;
   align-items: baseline;
@@ -30,6 +30,7 @@ const SCardBottom = styled(SFlexCol)`
   height: 100%;
   align-items: baseline;
   padding: 20px;
+  
 `
 
 const SRepoName = styled.p`
@@ -59,7 +60,7 @@ const SDescription = styled.p`
   margin: 0;
   font-size: 0.9rem;
   font-weight: 400;
-  color: ${({ theme }) => theme.color.color_5};
+  color: ${({ theme }) => theme.color.color_8};
 
 `
 

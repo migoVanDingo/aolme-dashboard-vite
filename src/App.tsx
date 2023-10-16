@@ -7,10 +7,12 @@ import Settings from "./app/pages/Settings"
 import Profile from "./app/pages/Profile"
 import Header from "./app/components/header/Header"
 import CreateRepository from "./app/pages/CreateRepository"
+import CreateProfile from "./app/pages/CreateProfile"
+import Login from "./app/pages/Login"
 
 const SBody = styled.div`
-  background-color: ${({ theme }) => theme.color.color_1};
-  color:${({ theme }) => theme.color.color_4};
+  background-color: ${({ theme }) => theme.color.color_0};
+  color:${({ theme }) => theme.color.color_8};
   width: 100vw;
 
   height: 100%;
@@ -90,7 +92,11 @@ function App() {
           <Routes>
             <Route path="/" element={<Profile />} />
 
+            <Route path="/login" element={<Login />} />
+
             <Route path="/profile" element={<Profile />} />
+
+            <Route path="/profile/signup" element={<CreateProfile />} />
 
             <Route path="/settings" element={<Settings />} />
 
