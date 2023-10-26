@@ -75,17 +75,7 @@ function App() {
     <Router>
       <ThemeProvider theme={theme}>
         <SButton onClick={handleThemeChange} ></SButton>
-
-      {/* <select
-          onChange={selectTheme}
-          style={{ position: "fixed", zIndex: "1000", marginLeft: "500px" }}
-        >
-          
-          <option value="dark">dark</option>
-          <option value="light">light</option>
-        </select> */}
-
-     
+        
         <SBody>
           <Header />
         

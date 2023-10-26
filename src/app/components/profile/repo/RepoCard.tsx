@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom"
 
 const SContainer = styled(SFlexCol)`
   align-items: flex-start;
-  height: 150px;
-  width:48%;
+  width: 100%;
+
   border: 1px solid ${({ theme }) => theme.color.color_3};
   border-radius: ${({ theme }) => theme.container.borderRadius.lg};
   overflow: hidden;
@@ -15,21 +15,27 @@ const SContainer = styled(SFlexCol)`
   padding: 0;
   box-sizing: border-box;
 
+  
+  
+
 `
 
 const SCardTop = styled(SFlexCol)`
   background-color: ${({ theme }) => theme.color.color_0};
   width: 100%;
-  height: 100%;
+  height: 70px;
   align-items: baseline;
   padding: 20px;
+  box-sizing: border-box;
 `
 const SCardBottom = styled(SFlexCol)`
   background-color: ${({ theme }) => theme.color.color_2_5};
   width: 100%;
-  height: 100%;
+  height: 115px;
   align-items: baseline;
   padding: 20px;
+  box-sizing: border-box;
+
   
 `
 
@@ -58,7 +64,8 @@ const SLastUpdated = styled.p`
 const SDescription = styled.p`
   padding: 0;
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  line-height: 25px;
   font-weight: 400;
   color: ${({ theme }) => theme.color.color_8};
 

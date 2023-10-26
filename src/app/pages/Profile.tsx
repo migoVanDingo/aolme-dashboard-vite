@@ -33,9 +33,11 @@ const SContainer = styled.div`
 
   display:grid;
   grid-template-columns: [left]1fr [col2] 4fr [right];
-  grid-template-rows: [top]1fr [row2] 10fr [end];
+  grid-template-rows: [top]60px [row2] 200px [row3] 200px [row4] 200px [end];
   grid-template-areas: 
     "profile tabs"
+    "profile content"
+    "profile content"
     "profile content";
 
   grid-gap: 40px;

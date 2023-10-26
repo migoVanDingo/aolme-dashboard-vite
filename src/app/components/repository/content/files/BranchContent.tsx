@@ -75,13 +75,21 @@ const SLastUpdate = styled.p`
   padding: 5px 0;
 `
 
-const BranchContent = ({ projectId }: any) => {
+const BranchContent = ({
+  folderPath,
+  setFolderPath,
+  trigger,
+  projectId,
+  stopSwitchFolders,
+  setStopSwitchFolders,
+  folderItemsSwitch, 
+  setFolderItemsSwitch
+}: any) => {
   const [files, setFiles] = useState<any[]>([])
   const [folders, setFolders] = useState<any[]>([])
   const [stopSwitchFiles, setStopSwitchFiles] = useState<boolean>(false)
-  const [stopSwitchFolders, setStopSwitchFolders] = useState<boolean>(false)
-  const [folderItemsSwitch, setFolderItemsSwitch] = useState<boolean>(false)
-  const [folderPath, setFolderPath] = useState<string[]>([])
+
+  
 
   let fp = []
   useEffect(() => {
@@ -97,7 +105,7 @@ const BranchContent = ({ projectId }: any) => {
       }
     }
 
-    const getProjectFolders = (projectId: number) => {
+    const getProjectFolders = () => {
       if (projectId !== undefined && stopSwitchFolders === false) {
         setStopSwitchFolders(true)
 
@@ -105,17 +113,22 @@ const BranchContent = ({ projectId }: any) => {
           .then((res: any) => {
             console.log("resdata: ", res.data)
             const folderList = res.data.map((folder: any) => folder.name)
-            setFolders(folderList.sort())
+            const f = folderList.sort()
+            setFolders(f)
           })
           .catch((err: any) => console.error(err))
       }
     }
 
     return () => {
-      //getProjectFiles(parseInt(projectId))
-      getProjectFolders(projectId)
+      setFolderPath([])
+
+      setFiles([])
+
+      getProjectFolders()
+      
     }
-  }, [])
+  }, [projectId, trigger])
 
   useEffect(() => {
     if (folderItemsSwitch === true) {
@@ -123,9 +136,13 @@ const BranchContent = ({ projectId }: any) => {
       FilesAPI.getFolderItems(projectId, folderPath)
         .then((result: any) => {
           const files = result.data.filter((item: any) => item.type === "file")
-          const folders = result.data.filter(
+          let folders = result.data.filter(
             (item: any) => item.type === "folder",
           )
+
+          folders = folders.map((folder: any) => folder.name)
+
+
 
           console.log("files: ", files)
           console.log("folders: ", folders)
@@ -137,7 +154,7 @@ const BranchContent = ({ projectId }: any) => {
           console.error("BranchContent -- handleSelectFolder(): ", err),
         )
     }
-  }, [folderPath])
+  }, [folderPath, folderItemsSwitch])
 
   const handleContentClicks = () => {}
 
@@ -145,14 +162,15 @@ const BranchContent = ({ projectId }: any) => {
     console.log("dname: ", e.target.id)
     const fp = folderPath ? [...folderPath, e.target.id] : [e.target.id]
     console.log("fp: ", fp)
-    setFolderPath(fp)
     setFolderItemsSwitch(true)
+    setFolderPath(fp)
   }
 
   return (
     <>
       {folders &&
         folders.map((folder: any, index: number) => {
+          console.log('folder'+ index+ ": ", folder)
           return (
             <SRow
               key={index}
@@ -163,24 +181,35 @@ const BranchContent = ({ projectId }: any) => {
                 <SLine id={folder}>{folder}</SLine>
               </SContentLink>
 
-              { folder.commit && <SCommit>{folder.commit}</SCommit>}
-              { folder.commit_message && <SCommitMsg>{folder.commit_message}</SCommitMsg>}
-              { folder.last_updated &&<SLastUpdate>{folder.last_updated}</SLastUpdate>}
+              {folder.commit && <SCommit>{folder.commit}</SCommit>}
+              {folder.commit_message && (
+                <SCommitMsg>{folder.commit_message}</SCommitMsg>
+              )}
+              {folder.last_updated && (
+                <SLastUpdate>{folder.last_updated}</SLastUpdate>
+              )}
             </SRow>
           )
         })}
       {files &&
         files.map((file: any, index: number) => {
           return (
-            <SRow key={index} className={index === files.length - 1 ? "last" : ""}>
+            <SRow
+              key={index}
+              className={index === files.length - 1 && index === 0 ? "first last" : index === files.length - 1 ? "last" : index === 0 ? "first" : ""}
+            >
               <SContentLink onClick={() => {}}>
                 <SIcon icon={faFile} />
                 <SLine>{file.name}</SLine>
               </SContentLink>
 
-              { file.commit && <SCommit>{file.commit}</SCommit>}
-              { file.commit_message && <SCommitMsg>{file.commit_message}</SCommitMsg>}
-              { file.last_updated &&<SLastUpdate>{file.last_updated}</SLastUpdate>}
+              {file.commit && <SCommit>{file.commit}</SCommit>}
+              {file.commit_message && (
+                <SCommitMsg>{file.commit_message}</SCommitMsg>
+              )}
+              {file.last_updated && (
+                <SLastUpdate>{file.last_updated}</SLastUpdate>
+              )}
             </SRow>
           )
         })}
@@ -190,7 +219,7 @@ const BranchContent = ({ projectId }: any) => {
 
 const mapStoreStateToProps = (state: any) => {
   return {
-    ...state,
+    projectId: state.projectId,
   }
 }
 

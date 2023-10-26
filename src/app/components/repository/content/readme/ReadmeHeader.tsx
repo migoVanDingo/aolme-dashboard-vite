@@ -26,7 +26,7 @@ const ReadmeHeader = () => {
   return (
     <SContainer>
         <SIcon icon={faBookOpen}/>
-        <SLine>README.md</SLine>
+        <SLine>Description</SLine>
     </SContainer>
   )
 }

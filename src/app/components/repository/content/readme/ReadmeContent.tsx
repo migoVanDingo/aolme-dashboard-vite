@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { SFlexCol } from '../../../common/containers/FlexContainers'
+import { connect } from 'react-redux'
 
 const SContainer = styled(SFlexCol)`
     width: 100%;
@@ -32,17 +33,25 @@ const SDescription = styled.p`
 
 `
 
-const desc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec finibus sem metus, et pretium neque commodo finibus. Suspendisse mollis odio quis eleifend gravida. Nunc fringilla metus vestibulum enim pellentesque euismod. Etiam non mi eu nisl scelerisque ullamcorper nec convallis purus. Nunc a nunc augue. Aliquam consectetur nisl sit amet lorem tincidunt, sed facilisis justo tristique. Mauris vitae luctus est. Phasellus ac hendrerit ligula, in dictum sapien. Cras convallis, orci id vehicula varius, dui magna venenatis metus, ac bibendum quam nulla in est. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet urna sit amet ante sagittis luctus quis eu magna. Maecenas egestas dui ut urna faucibus fringilla."
+const desc = "Add README documentation"
 
 const repoName = "Hello-World"
 
-const ReadmeContent = () => {
+const ReadmeContent = (state: any) => {
+
+  const { name, description } = state
   return (
     <SContainer>
-        <SRepoName>{repoName}</SRepoName>
-        <SDescription>{desc}</SDescription>
+        <SRepoName>{name && name}</SRepoName>
+        <SDescription>{description}</SDescription>
     </SContainer>
   )
 }
 
-export default ReadmeContent
+const mapStoreStateToProps = (state: any) => {
+  return {
+    ...state
+  }
+}
+
+export default connect(mapStoreStateToProps)(ReadmeContent)

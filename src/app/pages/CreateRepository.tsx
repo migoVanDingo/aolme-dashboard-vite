@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import styled, { keyframes } from "styled-components"
 import { SFlexCol } from "../components/common/containers/FlexContainers"
 import Heading from "../components/common/Heading"
@@ -25,6 +25,7 @@ import {
   setCurrentProjectName,
 } from "../actions"
 import { store } from "../store"
+import { connect } from "react-redux"
 
 const SContainer = styled(SFlexCol)`
   width: 650px;
@@ -119,7 +120,7 @@ const SSpinner = styled.div`
 
 const users = ["Miguel", "Wenjing", "Venkatesh", "Sebastian"]
 
-const CreateRepository = () => {
+const CreateRepository = ({ userId }: any) => {
   const [fileName, setFileName] = useState<string>("")
   const [isLoading, setLoading] = useState<boolean>(false)
   const [uploadLocalFiles, setUploadLocalFiles] = useState<any[]>([])
@@ -134,6 +135,13 @@ const CreateRepository = () => {
   const [projectDescription, setProjectDescription] = useState<string>("")
 
   const navigate = useNavigate()
+
+  useEffect(() => {
+
+      console.log("uid: ", userId)
+  
+
+  },[userId])
 
   const handleFileChange = (e: any) => {
     setSelectedFiles(e.target.files)
@@ -233,4 +241,10 @@ const CreateRepository = () => {
   )
 }
 
-export default CreateRepository
+const mapStoreStateToProps = (state: any) => {
+  return {
+    ...state
+  }
+}
+
+export default connect(mapStoreStateToProps)(CreateRepository)

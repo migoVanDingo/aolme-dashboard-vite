@@ -16,7 +16,7 @@ const SContainer = styled.div`
     grid-template-rows: 50px auto;
 
     grid-template-areas: 
-    "branch collab"
+    "branch none"
     "files  collab";
 
 `
