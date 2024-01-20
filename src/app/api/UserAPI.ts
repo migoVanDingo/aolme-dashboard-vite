@@ -4,12 +4,6 @@ import { Requests } from "./Requests"
 export class UserAPI {
 
     public static async createUser(payload: PayloadCreateUser) {
-
-        const hash = await hashed(payload.password)
-        payload.password = hash
-
-        console.log('processed: ', payload)
-
         return await Requests.doPost(payload, "/api/user")
     }
 

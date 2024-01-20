@@ -10,6 +10,7 @@ import { store } from "../store"
 import { setUserId } from "../actions"
 import { connect, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
+import { useAuth } from "../context/AuthContext"
 
 const SContainer = styled(SFlexCol)`
   align-items: baseline;
@@ -48,22 +49,22 @@ interface FormLogin {
 }
 
 const Login = () => {
-  const [username, setUsername] = useState<string>("")
+  const [email, setUsername] = useState<string>("")
   const [password, setPassword] = useState<string>("")
-  const [usernameError, setUsernameError] = useState<string>("")
+  const [emailError, setUsernameError] = useState<string>("")
   const [passwordError, setPasswordError] = useState<string>("")
+  const [loading, setLoading] = useState<boolean>(false)
 
   const navigate = useNavigate()
-
-  const [loading, setLoading] = useState<boolean>(false)
+  const { login } = useAuth()
 
   const formInputs: FormLogin[] = [
     {
       label: "Username/Email",
       type: "text",
-      inputValue: username,
+      inputValue: email,
       setInputValue: setUsername,
-      error: usernameError,
+      error: emailError,
     },
     {
       label: "Password",
@@ -78,7 +79,7 @@ const Login = () => {
     let err = false
     console.log("create profile")
 
-    if (username === "") {
+    if (email === "") {
       setUsernameError("Mandatory field")
       err = true
     }
@@ -88,43 +89,22 @@ const Login = () => {
       err = true
     }
 
-
-    
-
     if (!err) {
       setLoading(true)
-      const hash = await hashed(password)
+
       const payload: PayloadLogin = {
-        username,
-        password: hash,
+        email,
+        password,
       }
+      //AuthContext
+      login(payload)
 
-      const currentUser = UserAPI.login(payload)
-        .then((result: any) => {
-          console.log("Login.tsx HandleLogin(): ", result.data)
-          const { username, userId } = result.data
-
-          console.log('username: ', username)
-          console.log('userId: ', userId)
-          store.dispatch(setUserId(userId))
-
-          navigate('/profile')
-          setLoading(false)
-        })
-        .catch((err: any) => {
-          setLoading(false)
-          console.error(
-            "Login.tsx -- handleLogin() Error: ",
-            err,
-          )
-        })
     } else console.log("errors")
   }
 
   return (
     <SContainer>
-        
-      <SHeading>Create Profile</SHeading>
+      <SHeading>Login</SHeading>
 
       {formInputs.map((input: FormLogin, index: number) => {
         return (
@@ -147,8 +127,8 @@ const Login = () => {
 }
 
 const mapStoreStateToProps = (state: any) => {
-    return {
-      ...state,
-    }
+  return {
+    ...state,
   }
+}
 export default connect(mapStoreStateToProps)(Login)

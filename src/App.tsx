@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import styled, { ThemeProvider } from "styled-components"
 import { light, dark, dark_grey_1, light_grey_1 } from "./app/theme/ThemeConfig"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
@@ -9,18 +9,23 @@ import Header from "./app/components/header/Header"
 import CreateRepository from "./app/pages/CreateRepository"
 import CreateProfile from "./app/pages/CreateProfile"
 import Login from "./app/pages/Login"
+import PrivateRoute from "./app/components/authentication/PrivateRoute"
+import PublicRoute from "./app/components/authentication/PublicRoute"
+import { useAuth } from "./app/context/AuthContext"
+import AuthProvider from "./app/context/AuthContext"
+import { useDispatch } from "react-redux"
+import { setUserId } from "./app/actions"
 
 const SBody = styled.div`
   background-color: ${({ theme }) => theme.color.color_0};
-  color:${({ theme }) => theme.color.color_8};
+  color: ${({ theme }) => theme.color.color_8};
   width: 100vw;
 
   height: 100%;
 
-
   position: absolute;
-  top:0;
-  left:0;
+  top: 0;
+  left: 0;
 
   display: flex;
   flex-direction: column;
@@ -33,8 +38,6 @@ const SBody = styled.div`
   transition: all 0.2s ease;
 
   overflow-y: scroll;
-  
-
 `
 const SButton = styled.button`
   height: 20px;
@@ -49,6 +52,21 @@ const SButton = styled.button`
 
 function App() {
   const [theme, setTheme] = useState<object>(dark_grey_1)
+
+  const { currentUser } = useAuth()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+
+    const initIdentity = () => {
+      if(currentUser !== null && currentUser !== undefined){
+        dispatch(setUserId(currentUser.userId))
+      }
+    }
+
+    return initIdentity
+    
+  },[currentUser])
 
   function selectTheme(e: any) {
     switch (e.target.value) {
@@ -66,35 +84,70 @@ function App() {
   }
 
   const handleThemeChange = () => {
-    if(theme === dark_grey_1)
-      setTheme(light_grey_1)
-    else 
-      setTheme(dark_grey_1)
+    if (theme === dark_grey_1) setTheme(light_grey_1)
+    else setTheme(dark_grey_1)
   }
   return (
     <Router>
       <ThemeProvider theme={theme}>
-        <SButton onClick={handleThemeChange} ></SButton>
-        
+        <SButton onClick={handleThemeChange}></SButton>
+
+        <AuthProvider>
         <SBody>
           <Header />
-        
+
           <Routes>
-            <Route path="/" element={<Profile />} />
+            <Route
+              path="/"
+              element={
+                <PrivateRoute>
+                  <Profile />
+                </PrivateRoute>
+              }
+            />
 
             <Route path="/login" element={<Login />} />
 
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/signup" element={<CreateProfile />} />
 
-            <Route path="/profile/signup" element={<CreateProfile />} />
+            <Route
+              path="/settings"
+              element={
+                <PrivateRoute>
+                  <Settings />
+                </PrivateRoute>
+              }
+            />
 
-            <Route path="/settings" element={<Settings />} />
+            <Route
+              path="/profile"
+              element={
+                <PrivateRoute>
+                  <Profile />
+                </PrivateRoute>
+              }
+            />
 
-            <Route path="/project/:projectId" element={<Repository />} />
+            <Route
+              path="/project/:projectId"
+              element={
+                <PrivateRoute>
+                  <Repository />
+                </PrivateRoute>
+              }
+            />
 
-            <Route path="/project/create" element={<CreateRepository />} />
+            <Route
+              path="/project/create"
+              element={
+                <PrivateRoute>
+                  <CreateRepository />
+                </PrivateRoute>
+              }
+            />
           </Routes>
         </SBody>
+        </AuthProvider>
       </ThemeProvider>
     </Router>
   )

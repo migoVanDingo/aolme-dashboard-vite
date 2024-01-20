@@ -5,6 +5,6 @@ export interface PayloadCreateUser {
 }
 
 export interface PayloadLogin {
-    username: string,
+    email: string,
     password: string
 }

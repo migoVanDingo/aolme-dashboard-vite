@@ -8,7 +8,7 @@ export class FilesAPI {
 
     public static async getProjectFolders(projectId: number){
         console.log('get Root')
-        return await Requests.doGet('/directory/project/'+projectId+'/root')
+        return await Requests.doGet('/api/directory/project/'+projectId+'/root')
      
     }
 
@@ -19,12 +19,12 @@ export class FilesAPI {
         if(folderArray !== null && folderArray.length !== 0){
             params = "?fa=" +  folderArray.toString()
             console.log('get folder project')
-            return await Requests.doGet('/directory/project/' + projectId + "/folder" + params )
+            return await Requests.doGet('/api/directory/project/' + projectId + "/folder" + params )
         }
 
 
         console.log('get folder Root')
-        return await Requests.doGet('/directory/project/' + projectId + '/root' )
+        return await Requests.doGet('/api/directory/project/' + projectId + '/root' )
         
     
         
