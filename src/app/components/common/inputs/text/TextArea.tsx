@@ -27,17 +27,17 @@ const SLabel = styled.label`
   font-size: 0.8rem;
   font-weight: 200;
 `
-const TextArea = ({ projectDescription, setProjectDescription }: any) => {
+const TextArea = ({ description, setDescription }: any) => {
 
   const handleInput = (e: any) => {
-    setProjectDescription(e.target.value)
+    setDescription(e.target.value)
 
   }
 
   return (
     <SContainer>
       <SLabel> Description</SLabel>
-      <STextArea onChange={handleInput} value={projectDescription}/>
+      <STextArea onChange={handleInput} value={description}/>
     </SContainer>
   )
 }

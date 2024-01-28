@@ -1,9 +1,11 @@
 import React, { useContext, useState, useEffect } from "react"
 import { UserAPI } from "../api/UserAPI"
 import { store } from "../store"
-import { setUserId } from "../actions"
+import { setStoreUserEmail, setStoreUserId, setStoreUsername } from "../actions"
 import { PayloadCreateUser, PayloadLogin } from "../utility/interface/user"
 import { hashed } from "../utility/hash"
+import { useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
 
 const AuthContext = React.createContext<any | null | undefined>("")
 
@@ -12,8 +14,12 @@ export function useAuth() {
 }
 
 export default function AuthProvider({ children }: any) {
+  
+  
   const [currentUser, setCurrentUser] = useState<any>()
   const [loading, setLoading] = useState<any>(false)
+  const dispatch = useDispatch()
+  const nav = useNavigate()
 
   //const auth = getAuth()
 
@@ -38,15 +44,18 @@ export default function AuthProvider({ children }: any) {
       })
   }
 
-  function login(payload: PayloadLogin) {
+  async function login(payload: PayloadLogin) {
     UserAPI.login(payload)
       .then((result: any) => {
-        console.log("Login.tsx HandleLogin(): ", result.data)
-        const { username, userId } = result.data
+        const { username, userId, email } = result.data
 
-        store.dispatch(setUserId(userId))
+        dispatch(setStoreUserId(userId))
+        dispatch(setStoreUsername(username))
+        dispatch(setStoreUserEmail(email))
+        setCurrentUser(userId)
+        nav("/profile")
 
-        return result.data
+       
       })
       .catch((err: any) => {
         setLoading(false)
@@ -55,7 +64,7 @@ export default function AuthProvider({ children }: any) {
   }
 
   function logout() {
-    return store.dispatch(setUserId(""))
+    return store.dispatch(setStoreUserId(""))
   }
 
   function resetPassword(email: string) {

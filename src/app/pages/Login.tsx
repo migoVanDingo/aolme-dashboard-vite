@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { SFlexCol } from "../components/common/containers/FlexContainers"
 import TextInputComponent from "../components/common/inputs/text/TextInputComponent"
@@ -7,8 +7,8 @@ import { hashed } from "../utility/hash"
 import { PayloadCreateUser, PayloadLogin } from "../utility/interface/user"
 import { UserAPI } from "../api/UserAPI"
 import { store } from "../store"
-import { setUserId } from "../actions"
-import { connect, useDispatch } from "react-redux"
+import { setStoreUserEmail, setStoreUserId, setStoreUsername } from "../actions"
+import { connect, useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
 
@@ -48,7 +48,7 @@ interface FormLogin {
   setInputValue: (a: string) => void
 }
 
-const Login = () => {
+const Login = ({ userId }: any) => {
   const [email, setUsername] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const [emailError, setUsernameError] = useState<string>("")
@@ -57,6 +57,10 @@ const Login = () => {
 
   const navigate = useNavigate()
   const { login } = useAuth()
+
+  useEffect(() => {
+    console.log(userId)
+  }, [])
 
   const formInputs: FormLogin[] = [
     {
@@ -98,7 +102,7 @@ const Login = () => {
       }
       //AuthContext
       login(payload)
-
+     
     } else console.log("errors")
   }
 

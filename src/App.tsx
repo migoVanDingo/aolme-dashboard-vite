@@ -14,7 +14,10 @@ import PublicRoute from "./app/components/authentication/PublicRoute"
 import { useAuth } from "./app/context/AuthContext"
 import AuthProvider from "./app/context/AuthContext"
 import { useDispatch } from "react-redux"
-import { setUserId } from "./app/actions"
+import { setStoreUserId } from "./app/actions"
+import CreateOrganization from "./app/pages/CreateOrganization"
+import Organization from "./app/pages/Organization"
+import CreateRepositoryV2 from "./app/pages/CreateRepositoryV2"
 
 const SBody = styled.div`
   background-color: ${({ theme }) => theme.color.color_0};
@@ -56,17 +59,6 @@ function App() {
   const { currentUser } = useAuth()
   const dispatch = useDispatch()
 
-  useEffect(() => {
-
-    const initIdentity = () => {
-      if(currentUser !== null && currentUser !== undefined){
-        dispatch(setUserId(currentUser.userId))
-      }
-    }
-
-    return initIdentity
-    
-  },[currentUser])
 
   function selectTheme(e: any) {
     switch (e.target.value) {
@@ -141,10 +133,26 @@ function App() {
               path="/project/create"
               element={
                 <PrivateRoute>
-                  <CreateRepository />
+                  <CreateRepositoryV2 />
                 </PrivateRoute>
               }
             />
+
+            <Route
+              path="/organization/create"
+              element={
+                <PrivateRoute>
+                  <CreateOrganization />
+                </PrivateRoute>
+              }/>
+
+            <Route
+              path="/organization/:orgId"
+              element={
+                <PrivateRoute>
+                  <Organization />
+                </PrivateRoute>
+              }/>
           </Routes>
         </SBody>
         </AuthProvider>

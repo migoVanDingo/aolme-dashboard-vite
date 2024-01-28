@@ -12,10 +12,17 @@ export const ACTIONS = {
 
     SET_USER_ID: "SET_USER_ID",
     SET_USERNAME:"SET_USERNAME",
+    SET_USER_EMAIL:"SET_USER_EMAIL",
+
+    SET_ORGANIZATION_ID: "SET_ORGANIZATION_ID",
+    SET_ORGANIZATION_NAME: "SET_ORGANIZATION_NAME",
+    
+
+    
 
 }
 
-export const setCurrentProjectId = (projectId: number) => {
+export const setProjectId = (projectId: number) => {
     return {
         type: ACTIONS.SET_CURRENT_PROJECT_ID,
         projectId: projectId
@@ -23,7 +30,7 @@ export const setCurrentProjectId = (projectId: number) => {
     }
 }
 
-export const setCurrentProjectOwner = (owner: string) => {
+export const setProjectOwner = (owner: string) => {
     return {
         type: ACTIONS.SET_CURRENT_PROJECT_OWNER,
         owner: owner
@@ -31,7 +38,7 @@ export const setCurrentProjectOwner = (owner: string) => {
     }
 }
 
-export const setCurrentProjectDescription = (description: string) => {
+export const setProjectDescription = (description: string) => {
     return {
         type: ACTIONS.SET_CURRENT_PROJECT_DESCRIPTION,
         description: description
@@ -39,7 +46,7 @@ export const setCurrentProjectDescription = (description: string) => {
     }
 }
 
-export const setCurrentProjectName= (name: string) => {
+export const setProjectName= (name: string) => {
     return {
         type: ACTIONS.SET_CURRENT_PROJECT_NAME,
         name: name
@@ -48,7 +55,7 @@ export const setCurrentProjectName= (name: string) => {
 }
 
 
-export const setCurrentProjectCreatedAt= (createdAt: string) => {
+export const setProjectCreatedAt= (createdAt: string) => {
     return {
         type: ACTIONS.SET_CURRENT_PROJECT_CREATED_AT,
         createdAt: createdAt
@@ -56,7 +63,7 @@ export const setCurrentProjectCreatedAt= (createdAt: string) => {
     }
 }
 
-export const setCurrentProjectCreatedBy= (createdBy: string) => {
+export const setProjectCreatedBy= (createdBy: string) => {
     return {
         type: ACTIONS.SET_CURRENT_PROJECT_CREATED_BY,
         createdBy: createdBy
@@ -64,7 +71,7 @@ export const setCurrentProjectCreatedBy= (createdBy: string) => {
     }
 }
 
-export const setCurrentProjectLastUpdatedAt= (lastUpdatedAt: string) => {
+export const setProjectLastUpdatedAt= (lastUpdatedAt: string) => {
     return {
         type: ACTIONS.SET_CURRENT_PROJECT_LAST_UPDATE_AT,
         lastUpdatedAt: lastUpdatedAt
@@ -72,7 +79,7 @@ export const setCurrentProjectLastUpdatedAt= (lastUpdatedAt: string) => {
     }
 }
 
-export const setCurrentProjectLastUpdatedBy= (lastUpdatedBy: string) => {
+export const setProjectLastUpdatedBy= (lastUpdatedBy: string) => {
     return {
         type: ACTIONS.SET_CURRENT_PROJECT_LAST_UPDATE_BY,
         lastUpdatedBy: lastUpdatedBy
@@ -80,7 +87,7 @@ export const setCurrentProjectLastUpdatedBy= (lastUpdatedBy: string) => {
     }
 }
 
-export const setUserId = (userId: string) => {
+export const setStoreUserId = (userId: string) => {
     return {
         type: ACTIONS.SET_USER_ID,
         userId: userId
@@ -88,10 +95,31 @@ export const setUserId = (userId: string) => {
     }
 }
 
-export const setUsername = (username: string) => {
+export const setStoreUsername = (username: string) => {
     return {
         type: ACTIONS.SET_USERNAME,
         username: username
+    }
+}
+
+export const setStoreUserEmail = (email: string) => {
+    return {
+        type: ACTIONS.SET_USER_EMAIL,
+        email: email
+    }
+}
+
+export const setStoreOrganizationId = (orgId: string) => {
+    return {
+        type: ACTIONS.SET_ORGANIZATION_ID,
+        orgId: orgId
+    }
+}
+
+export const setStoreOrganizationName = (orgName: string) => {
+    return {
+        type: ACTIONS.SET_ORGANIZATION_NAME,
+        orgName: orgName
     }
 }
 

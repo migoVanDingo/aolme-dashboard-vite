@@ -21,6 +21,7 @@ const RepoProfileContent = () => {
   const [projectList, setProjectList] = useState<any[]>([])
 
 
+
   useEffect(() => {
 
     const getProjects = () => {
@@ -31,7 +32,7 @@ const RepoProfileContent = () => {
       .catch((err: any) => console.error(err))
     }
 
-    return getProjects()
+    //return getProjects()
       
 
   }, [])

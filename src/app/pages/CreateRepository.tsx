@@ -26,6 +26,8 @@ import {
 } from "../actions"
 import { store } from "../store"
 import { connect } from "react-redux"
+import LoadingSpinner from "../components/common/loading/LoadingSpinner"
+import { SButton } from "../components/common/styled"
 
 const SContainer = styled(SFlexCol)`
   width: 650px;
@@ -39,84 +41,6 @@ const SContainer = styled(SFlexCol)`
     justify-content: center;
   }
 `
-const SButton = styled(Button)`
-  width: 150px;
-  height: 40px;
-  border: none;
-  border-radius: ${({ theme }) => theme.container.borderRadius.sm};
-
-  background-color: ${({ theme }) => theme.color.color_2};
-  color: ${({ theme }) => theme.color.color_6};
-  box-shadow: 2px 2px 8px ${({ theme }) => theme.color.shadow.dark};
-  margin-top: 10px;
-  cursor: pointer;
-  &:hover {
-    background-color: ${({ theme }) => theme.color.color_4};
-    color: ${({ theme }) => theme.color.color_8};
-  }
-`
-
-const SLoadingContainer = styled(SFlexCol)`
-  
-  width: 500px;
-  height: 350px;
-  border-radius:${({ theme }) => theme.container.borderRadius.lg};
-  background-color: ${({ theme }) => theme.color.color_2};
-  box-shadow: ${({ theme }) => theme.color.shadow.dark};
-  
-  padding-top: 50px;
-  box-sizing: border-box;
-`
-
-const SLoadingHeading = styled.p`
-  font-size: 2rem;
-  font-family: "Helvetica", sans-serif;
-  color: ${({ theme }) => theme.accent.color_1};
-  font-weight: 700;
-
-`
-const myAnimation = keyframes`
-  
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-
-`
-const SSpinner = styled.div`
-  &.lds-ring {
-    display: inline-block;
-    position: relative;
-    width: 80px;
-    height: 80px;
-  }
-
-  &.lds-ring div {
-    box-sizing: border-box;
-    display: block;
-    position: absolute;
-    width: 64px;
-    height: 64px;
-    margin: 8px;
-    border: 8px solid ${({ theme }) => theme.accent.color_1};
-    border-radius: 50%;
-    animation: ${myAnimation} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: ${({ theme }) => theme.accent.color_1} transparent transparent transparent;
-  }
-  &.lds-ring div:nth-child(1) {
-    animation-delay: -0.45s;
-  }
-  &.lds-ring div:nth-child(2) {
-    animation-delay: -0.3s;
-  }
-  &.lds-ring div:nth-child(3) {
-    animation-delay: -0.15s;
-  }
-`
-
-
 
 const users = ["Miguel", "Wenjing", "Venkatesh", "Sebastian"]
 
@@ -218,13 +142,13 @@ const CreateRepository = ({ userId }: any) => {
             onSubmit={handleFormSubmit}
           >
             <TextInput
-              setProjectName={setProjectName}
-              projectName={projectName}
+              setName={setProjectName}
+              name={projectName}
               label={"Give your Repo a Name"}
             />
             <TextArea
-              projectDescription={projectDescription}
-              setProjectDescription={setProjectDescription}
+              description={projectDescription}
+              setDescription={setProjectDescription}
             />
             <FileUpload handleFileChange={handleFileChange} />
 
@@ -232,10 +156,7 @@ const CreateRepository = ({ userId }: any) => {
           </form>
         </>
       ) : (
-        <SLoadingContainer>
-          <SLoadingHeading>Initializing Project</SLoadingHeading>
-          <SSpinner className="lds-ring"><div></div><div></div><div></div><div></div></SSpinner>
-        </SLoadingContainer>
+        <LoadingSpinner />
       )}
     </SContainer>
   )

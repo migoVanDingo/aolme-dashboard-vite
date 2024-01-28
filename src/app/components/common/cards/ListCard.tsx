@@ -1,7 +1,9 @@
 import React from "react"
 import styled from "styled-components"
-import { SFlexCol, SFlexRowWrap } from "../../common/containers/FlexContainers"
+import { SFlexCol, SFlexRowWrap } from "../containers/FlexContainers"
 import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { setStoreOrganizationId, setStoreOrganizationName } from "../../../actions"
 
 const SContainer = styled(SFlexCol)`
   align-items: flex-start;
@@ -10,12 +12,10 @@ const SContainer = styled(SFlexCol)`
   border: 1px solid ${({ theme }) => theme.color.color_3};
   border-radius: ${({ theme }) => theme.container.borderRadius.lg};
   overflow: hidden;
-  box-shadow: 2px 2px 10px ${({ theme }) => theme.color.shadow.dark};
+  box-shadow: 0px 5px 5px ${({ theme }) => theme.color.shadow.dark};
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-
-  
   
 
 `
@@ -35,8 +35,6 @@ const SCardBottom = styled(SFlexCol)`
   align-items: baseline;
   padding: 20px;
   box-sizing: border-box;
-
-  
 `
 
 const SRepoName = styled.p`
@@ -87,19 +85,25 @@ const STag = styled(SFlexCol)`
 
 `
 
-const RepoCard = ({ data }: any) => {
-  const { id, name, description } = data
+const ListCard = ({ data }: any) => {
+  const { name, description, organization_id } = data
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-  const handleSelectRepo = () => {
-    console.log('handleSelectRepo')
+  const handleSelectCard = (organization_id: string, organization_name: string) => {
+
+    dispatch(setStoreOrganizationId(organization_id))
+    dispatch(setStoreOrganizationName(organization_name))
+    navigate("/organization/"+organization_id)
   }
+
+
 
   return (
     <SContainer>
       <SCardTop>
-        <SRepoName onClick={() => handleSelectRepo()}>{name}</SRepoName>
-        <SLastUpdated>{"2 months ago"}</SLastUpdated>
+        <SRepoName onClick={() => handleSelectCard(organization_id, name)}>{name}</SRepoName>
+        {/* <SLastUpdated>{"2 months ago"}</SLastUpdated> */}
       </SCardTop>
       <SCardBottom>
 
@@ -116,4 +120,4 @@ const RepoCard = ({ data }: any) => {
   )
 }
 
-export default RepoCard
+export default ListCard

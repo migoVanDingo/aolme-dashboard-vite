@@ -9,14 +9,14 @@ import { ProjectAPI } from "../api/ProjectAPI"
 import { connect } from "react-redux"
 import { store } from "../store"
 import {
-  setCurrentProjectCreatedAt,
-  setCurrentProjectCreatedBy,
-  setCurrentProjectDescription,
-  setCurrentProjectId,
-  setCurrentProjectLastUpdatedAt,
-  setCurrentProjectLastUpdatedBy,
-  setCurrentProjectName,
-  setCurrentProjectOwner,
+  setProjectCreatedAt,
+  setProjectCreatedBy,
+  setProjectDescription,
+  setProjectId,
+  setProjectLastUpdatedAt,
+  setProjectLastUpdatedBy,
+  setProjectName,
+  setProjectOwner,
 } from "../actions"
 
 const SContainer = styled(SFlexCol)`
@@ -36,14 +36,14 @@ const Repository = ({ owner, name, description }: any) => {
           .then((project: any) => {
             const data = project.data[0]
 
-            store.dispatch(setCurrentProjectId(data["ls_project_id"]))
-            store.dispatch(setCurrentProjectOwner(data["owner"]))
-            store.dispatch(setCurrentProjectCreatedAt(data["created_at"]))
-            store.dispatch(setCurrentProjectCreatedBy(data["created_by"]))
-            store.dispatch(setCurrentProjectDescription(data["description"]))
-            store.dispatch(setCurrentProjectLastUpdatedAt(data["updated_at"]))
-            store.dispatch(setCurrentProjectLastUpdatedBy(data["updated_by"]))
-            store.dispatch(setCurrentProjectName(data["name"]))
+            store.dispatch(setProjectId(data["ls_project_id"]))
+            store.dispatch(setProjectOwner(data["owner"]))
+            store.dispatch(setProjectCreatedAt(data["created_at"]))
+            store.dispatch(setProjectCreatedBy(data["created_by"]))
+            store.dispatch(setProjectDescription(data["description"]))
+            store.dispatch(setProjectLastUpdatedAt(data["updated_at"]))
+            store.dispatch(setProjectLastUpdatedBy(data["updated_by"]))
+            store.dispatch(setProjectName(data["name"]))
             setProject(data)
           })
           .catch((err: any) => console.error(err))

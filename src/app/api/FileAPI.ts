@@ -26,7 +26,5 @@ export class FilesAPI {
         console.log('get folder Root')
         return await Requests.doGet('/api/directory/project/' + projectId + '/root' )
         
-    
-        
     }
 }

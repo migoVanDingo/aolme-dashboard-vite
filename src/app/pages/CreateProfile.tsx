@@ -4,7 +4,7 @@ import { SFlexCol } from "../components/common/containers/FlexContainers"
 import TextInputComponent from "../components/common/inputs/text/TextInputComponent"
 import Button from "../components/common/buttons/Button"
 import { hashed } from "../utility/hash"
-import { PayloadCreateUser } from "../utility/interface/user"
+import { FormCreateProfile, PayloadCreateUser } from "../utility/interface/user"
 import { UserAPI } from "../api/UserAPI"
 import { useAuth } from "../context/AuthContext"
 import { useNavigate } from "react-router-dom"
@@ -37,13 +37,7 @@ const SButton = styled.button`
   }
 `
 
-interface FormCreateProfile {
-  label: string
-  type: string
-  inputValue: string
-  error: string
-  setInputValue: (a: string) => void
-}
+
 
 const CreateProfile = () => {
   const [username, setUsername] = useState<string>("")

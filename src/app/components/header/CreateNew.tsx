@@ -100,6 +100,11 @@ const CreateNew = () => {
     navigate("/project/create")
   }
 
+  const handlNavigateNewOrganization = () => {
+    setMenuActive(false)
+    navigate("/organization/create")
+  }
+
   
 
   return (
@@ -125,7 +130,7 @@ const CreateNew = () => {
             <SIcon icon={faDatabase} />
             New Dataset
           </SListItem>
-          <SListItem className="drop-down-child">
+          <SListItem onClick={handlNavigateNewOrganization} className="drop-down-child">
             <SIcon icon={faBuilding} />
             New Organization
           </SListItem>

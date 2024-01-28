@@ -2,15 +2,33 @@ import { ACTIONS } from "./actions"
 
 const initState: object = {
   projectId: null,
-  name: "",
-  description: "",
-  owner: "",
-  updatedBy: "",
-  updatedAt: "",
-  createdBy: "",
-  createdAt: "",
+  projectName: "",
+  projectDescription: "",
+  projectOwner: "",
+  projectUpdatedBy: "",
+  projectUpdatedAt: "",
+  projectCreatedBy: "",
+  projectCreatedAt: "",
+
   userId:"",
-  username:""
+  username:"",
+  userEmail:"",
+
+  orgId:"",
+  orgName:"",
+
+  repoId:"",
+  repoName:"",
+  repoDescription:"",
+  repoOwner:"",
+  repoPublic:"",
+  repoEntity:"",
+  repoUpdatedBy:"",
+  repoUpdatedAt:"",
+  repoCreatedBy:"",
+  repoCreatedAt:"",
+
+
 }
 
 
@@ -74,7 +92,27 @@ const reducer = (state = initState, action: any) => {
         ...state,
         username: action.username
       }
+
+    case ACTIONS.SET_USER_EMAIL:
+      return {
+        ...state,
+        email: action.email
+      }
+
+    case ACTIONS.SET_ORGANIZATION_ID:
+      return {
+        ...state,
+        orgId: action.orgId
+      }
+
+    case ACTIONS.SET_ORGANIZATION_NAME:
+      return {
+        ...state,
+        orgName: action.orgName
+      }
   }
+
+
 }
 
 export default reducer
