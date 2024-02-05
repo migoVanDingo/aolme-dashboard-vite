@@ -97,7 +97,7 @@ const CreateNew = () => {
 
   const handleNavigateNewRepo = () => {
     setMenuActive(false)
-    navigate("/project/create")
+    navigate("/repository/create")
   }
 
   const handlNavigateNewOrganization = () => {

@@ -5,59 +5,115 @@ import { RepoHeader } from "../components/repository/header/RepoHeader"
 import RepoContent from "../components/repository/content/RepoContent"
 import RepoReadMe from "../components/repository/content/readme/RepoReadMe"
 import { useParams } from "react-router-dom"
-import { ProjectAPI } from "../api/ProjectAPI"
-import { connect } from "react-redux"
-import { store } from "../store"
+import { useDispatch, useSelector } from "react-redux"
+
 import {
-  setProjectCreatedAt,
-  setProjectCreatedBy,
-  setProjectDescription,
-  setProjectId,
-  setProjectLastUpdatedAt,
-  setProjectLastUpdatedBy,
-  setProjectName,
-  setProjectOwner,
+  setRepoDescription,
+  setRepoEntity,
+  setRepoId,
+  setRepoName,
+  setRepoOwner,
 } from "../actions"
+import { RepoAPI } from "../api/RepoAPI"
+import { initializeConnect } from "react-redux/es/components/connect"
+import { OrganizationAPI } from "../api/OrganizationAPI"
 
 const SContainer = styled(SFlexCol)`
   width: 100%;
   box-sizing: border-box;
 `
 
-const Repository = ({ owner, name, description }: any) => {
-  const { projectId } = useParams()
-  const [project, setProject] = useState<any>()
+const Repository = ({}: any) => {
+  const { repoId } = useParams()
+  const { username } = useSelector((state: any) => state)
+
+  const [currentRepo, setCurrentRepo] = useState<any>()
+  const [owner, setOwner] = useState<string>("")
+  const [name, setName] = useState<string>("")
+  const [description, setDescription] = useState<string>("")
+
+  const [entityName, setEntityName] = useState<string>("")
+  const [entityId, setEntityId] = useState<string>("")
+
+  const [createdAt, setCreatedAt] = useState<string>("")
+  const [createdBy, setCreatedBy] = useState<string>("")
+  const [lastUpdatedAt, setLastUpdatedAt] = useState<string>("")
+  const [lastUpdatedBy, setLastUpdatedBy] = useState<string>("")
+
+  const [isPublic, setIsPublic] = useState<boolean>(false)
+
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
+
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+    console.log('entityId: ', entityId)
+    console.log('username', username)
+    console.log("name: ", name)
+  },[entityId, username, name])
 
   useEffect(() => {
-    const project = () => {
 
-      if (projectId !== null && projectId !== undefined) {
-        const currentProject = ProjectAPI.getProjectById(projectId)
-          .then((project: any) => {
-            const data = project.data[0]
+    const init = () => {
+      
+      if(owner !== entityId){
+        OrganizationAPI.getOrganizationById(entityId)
+        .then((res: any) => {
+          console.log("res: ", res.data)
+          setEntityName(res.data['name'])
+        })
+        .catch((err: any) => console.error(err))
+      } else {
+        setEntityName("Personal Repository")
+      }
+      
+    }
+    if(entityId !== null)
+      init()
 
-            store.dispatch(setProjectId(data["ls_project_id"]))
-            store.dispatch(setProjectOwner(data["owner"]))
-            store.dispatch(setProjectCreatedAt(data["created_at"]))
-            store.dispatch(setProjectCreatedBy(data["created_by"]))
-            store.dispatch(setProjectDescription(data["description"]))
-            store.dispatch(setProjectLastUpdatedAt(data["updated_at"]))
-            store.dispatch(setProjectLastUpdatedBy(data["updated_by"]))
-            store.dispatch(setProjectName(data["name"]))
-            setProject(data)
+  }, [entityId])
+
+
+  useEffect(() => {
+    const init = () => {
+      console.log('repoId: ', repoId)
+      if (repoId !== null && repoId !== undefined) {
+        RepoAPI.getRepoById(repoId)
+          .then((res: any) => {
+            console.log("res: ", res.data)
+
+            setCurrentRepo(res.data['repo_id'])
+            setName(res.data['name'])
+            setDescription(res.data['description'])
+            setOwner(res.data['owner'])
+            setCreatedAt(res.data['created_at'])
+            setCreatedBy(res.data['created_by'])
+            setEntityId(res.data['entity_id'])
+            setIsPublic(res.data['is_public'])
+
+            dispatch(setRepoId(res.data['repo_id']))
+            dispatch(setRepoName(res.data['name']))
+            dispatch(setRepoDescription(res.data['description']))
+            dispatch(setRepoOwner(res.data['owner']))
+            dispatch(setRepoEntity(res.data['entity_id']))
+
+            
+
+            
           })
           .catch((err: any) => console.error(err))
       }
     }
 
-    return project()
-  }, [projectId])
+    return init()
+  }, [repoId])
 
   return (
     <SContainer>
-      {project && (
+      {entityName && username && name && (
         <>
-      <RepoHeader owner={owner} projectName={name} />
+      <RepoHeader owner={username} projectName={name} entityName={entityName}/>
       <RepoContent />
       </>
       )}
@@ -67,10 +123,4 @@ const Repository = ({ owner, name, description }: any) => {
   )
 }
 
-const mapStoreStateToProps = (state: any) => {
-  return {
-    ...state,
-  }
-}
-
-export default connect(mapStoreStateToProps)(Repository)
+export default Repository

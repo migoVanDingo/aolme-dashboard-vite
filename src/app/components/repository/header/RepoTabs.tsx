@@ -77,17 +77,17 @@ const RepoTabs = ({ activeTab, setActiveTab, projectId, name }: any) => {
   const tabs = [
     {
       title: "Files",
-      callback: () => {},
+      callback: () => console.log("FILES"),
       icon: faFile,
     },
     {
       title: "Datasets",
-      callback: () => {},
+      callback: () => console.log("DATASETS"),
       icon: faServer,
     },
     {
       title: "Experiments",
-      callback: () => {},
+      callback: () => console.log("EXPERIMENTS"),
       icon: faFlask,
     },
     

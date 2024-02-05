@@ -1,36 +1,19 @@
-import React, { useEffect, useRef, useState } from "react"
-import styled, { keyframes } from "styled-components"
-import { SFlexCol } from "../components/common/containers/FlexContainers"
+import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import styled from "styled-components"
+import { RepoAPI } from "../api/RepoAPI"
 import Heading from "../components/common/Heading"
 import Message from "../components/common/Message"
 import UserDropdown from "../components/common/UserDropdown"
-import TextInput from "../components/common/inputs/text/TextInput"
+import { SFlexCol } from "../components/common/containers/FlexContainers"
 import TextArea from "../components/common/inputs/text/TextArea"
-import FileUpload from "../components/common/inputs/file-upload/FileUpload"
-import Button from "../components/common/buttons/Button"
-import UploadService from "../services/FileUploadService"
-import axios from "axios"
-import { JSONTest } from "../services/http-common"
-import { ICreateProject } from "../utility/interface/project"
-import { ProjectAPI } from "../api/ProjectAPI"
-import { useNavigate } from "react-router-dom"
-import {
-  setProjectId,
-  setProjectOwner,
-  setProjectCreatedAt,
-  setProjectCreatedBy,
-  setProjectDescription,
-  setProjectLastUpdatedAt,
-  setProjectLastUpdatedBy,
-  setProjectName,
-} from "../actions"
-import { store } from "../store"
-import { connect, useDispatch, useSelector } from "react-redux"
+import TextInput from "../components/common/inputs/text/TextInput"
+import CheckboxInput from "../components/common/inputs/toggle/CheckboxInput"
 import LoadingSpinner from "../components/common/loading/LoadingSpinner"
 import { SButton } from "../components/common/styled"
-import CheckboxInput from "../components/common/inputs/toggle/CheckboxInput"
 import { ICreateRepository } from "../utility/interface/repository"
-import { RepoAPI } from "../api/RepoAPI"
+
 
 const SContainer = styled(SFlexCol)`
   width: 650px;
@@ -58,7 +41,6 @@ const CreateRepositoryV2 = ({ }: any) => {
   const [isPublic, setIsPublic] = useState<boolean>(false)
 
   const navigate = useNavigate()
-  const dispatch = useDispatch()
 
 
   useEffect(() => {
@@ -82,6 +64,7 @@ const CreateRepositoryV2 = ({ }: any) => {
     RepoAPI.createRepo(project)
     .then((res: any) => {
         console.log("RESPONSE: " , res.data)
+        navigate(`/repository/${res.data["repo_id"]}`)
     })
     .catch((err: any) => console.error(err))
 

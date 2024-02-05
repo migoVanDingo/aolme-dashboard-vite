@@ -20,7 +20,7 @@ const SContainer = styled.div`
     background-color: ${({theme}) => theme.color.color_2_5};
 `
 
-export const RepoHeader = ({ owner, projectName }: any) => {
+export const RepoHeader = ({ owner, projectName, entityName }: any) => {
 
     const [activeTab, setActiveTab] = useState<string>('Files')
     
@@ -29,7 +29,7 @@ export const RepoHeader = ({ owner, projectName }: any) => {
 
   return (
     <SContainer>
-        <RepoTitle owner={owner} projectName={projectName}/>
+        <RepoTitle owner={owner} projectName={projectName} entityName={entityName}/>
         <RepoTabs setActiveTab={setActiveTab} activeTab={activeTab} />
     </SContainer>
   )

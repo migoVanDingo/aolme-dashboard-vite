@@ -121,19 +121,19 @@ function App() {
             />
 
             <Route
-              path="/project/:projectId"
+              path="/repository/create"
               element={
                 <PrivateRoute>
-                  <Repository />
+                  <CreateRepositoryV2 />
                 </PrivateRoute>
               }
             />
 
             <Route
-              path="/project/create"
+              path="/repository/:repoId"
               element={
                 <PrivateRoute>
-                  <CreateRepositoryV2 />
+                  <Repository />
                 </PrivateRoute>
               }
             />

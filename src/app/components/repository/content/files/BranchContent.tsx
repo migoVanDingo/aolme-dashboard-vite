@@ -75,6 +75,13 @@ const SLastUpdate = styled.p`
   padding: 5px 0;
 `
 
+const SEmptyRepo = styled(SFlexRow)`
+  padding: 60px;
+  font-size: 1.2rem;
+  color: ${({ theme }) => theme.color.color_3};
+`
+
+
 const BranchContent = ({
   folderPath,
   setFolderPath,
@@ -92,7 +99,7 @@ const BranchContent = ({
   
 
   let fp = []
-  useEffect(() => {
+  /* useEffect(() => {
     const getProjectFiles = (projectId: number) => {
       if (projectId !== undefined && stopSwitchFiles === false) {
         setStopSwitchFiles(true)
@@ -128,9 +135,9 @@ const BranchContent = ({
       getProjectFolders()
       
     }
-  }, [projectId, trigger])
+  }, [projectId, trigger]) */
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (folderItemsSwitch === true) {
       console.log("folderPath: ", folderPath)
       FilesAPI.getFolderItems(projectId, folderPath)
@@ -154,7 +161,7 @@ const BranchContent = ({
           console.error("BranchContent -- handleSelectFolder(): ", err),
         )
     }
-  }, [folderPath, folderItemsSwitch])
+  }, [folderPath, folderItemsSwitch]) */
 
   const handleContentClicks = () => {}
 
@@ -168,6 +175,9 @@ const BranchContent = ({
 
   return (
     <>
+    {
+      folders.length === 0 && files.length === 0 && (<SEmptyRepo>Empty Repo. Upload files or create modules to get started.</SEmptyRepo>)
+    }
       {folders &&
         folders.map((folder: any, index: number) => {
           console.log('folder'+ index+ ": ", folder)

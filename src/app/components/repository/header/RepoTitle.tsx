@@ -68,7 +68,7 @@ const link1 = "connected to "
 const link2 = "www.yumama.com"
 
 
-const RepoTitle = ({ owner, projectName }: any) => {
+const RepoTitle = ({ owner, projectName, entityName }: any) => {
   return (
     <SContainer>
         <STitleContainer>
@@ -79,7 +79,7 @@ const RepoTitle = ({ owner, projectName }: any) => {
         </STitleContainer>
         <SLinkContainer>
             <SLink >{link1}</SLink>
-            <SLink className={"sub"}>{link2}</SLink>
+            <SLink className={"sub"}>{entityName}</SLink>
         </SLinkContainer>
     </SContainer>
   )
