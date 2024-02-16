@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import RepoCard from './RepoCard'
 import { SFlexCol, SFlexRowWrap } from '../../common/containers/FlexContainers'
-import { ProjectAPI } from '../../../api/ProjectAPI'
+import { RepoAPI } from '../../../api/RepoAPI'
 import { preprocessCSS } from 'vite'
+import { useSelector } from 'react-redux'
 
 
 const SContainer = styled(SFlexCol)`
@@ -18,21 +19,23 @@ const SContainer = styled(SFlexCol)`
 
 const RepoProfileContent = () => {
 
-  const [projectList, setProjectList] = useState<any[]>([])
+  const [repoList, setRepoList] = useState<any[]>([])
 
-
+  const { userId } =  useSelector((state: any) => state)
 
   useEffect(() => {
 
-    const getProjects = () => {
-      ProjectAPI.getProjectList()
+    const getList = () => {
+      console.log("fire")
+      RepoAPI.getRepoByOwner(userId)
       .then((result: any) => {
-        setProjectList(result.data)
+        console.log("Repositories: ", result.data)
+        setRepoList(result.data)
       })
       .catch((err: any) => console.error(err))
     }
 
-    //return getProjects()
+    return getList()
       
 
   }, [])
@@ -42,9 +45,9 @@ const RepoProfileContent = () => {
   return (
     <SContainer>
       {
-        projectList && projectList.map((project: any, index: number) => {
+        repoList && repoList.map((repo: any, index: number) => {
           return(
-            <RepoCard key={index} data={project} />
+            <RepoCard key={index} repo={repo} />
           )
         })
       }

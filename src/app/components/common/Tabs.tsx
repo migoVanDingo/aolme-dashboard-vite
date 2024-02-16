@@ -51,6 +51,7 @@ const Tabs = ({ tabs, iconArr, setContent }: any) => {
 
   const handleClick = (index: number, tab: string) => {
     setActive(index)
+    console.log(tab)
     setContent(tab)
   }
 

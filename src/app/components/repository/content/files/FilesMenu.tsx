@@ -37,8 +37,12 @@ const FilesMenu = ({
   folderItemsSwitch, 
   setFolderItemsSwitch,
   projectId,
+  handleSelectFileMenuOption,
+  tabs,
+  activeTab,
+  setActiveTab
 }: any) => {
-  const [activeTab, setActiveTab] = useState<string>("All")
+  
   const [breadCrumbDirectory, setBreadCrumbDirectory] = useState<string[]>([])
 
   const navigate = useNavigate()
@@ -100,7 +104,7 @@ const FilesMenu = ({
   } else {
     return (
       <SContainer>
-        <MenuTabs setActiveTab={setActiveTab} activeTab={activeTab} />
+        <MenuTabs tabs={tabs} handleSelectFileMenuOption={handleSelectFileMenuOption}  setActiveTab={setActiveTab} activeTab={activeTab} />
       </SContainer>
     )
   }

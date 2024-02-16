@@ -1,11 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import {
-  faFile,
-  faHardDrive,
-  faCubes,
-  faBookOpen,
-} from "@fortawesome/free-solid-svg-icons"
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { SFlexRow } from "../../../common/containers/FlexContainers"
 import dvcImg from "../../../../../assets/dvc.jpeg"
@@ -48,44 +43,38 @@ const SImage = styled.img`
 
 const SIcon = styled(FontAwesomeIcon)``
 
-const tabs = [
-  {
-    title: "All",
-    url: "link",
-    icon: faFile,
-  },
-  {
-    title: "Data",
-    url: "link",
-    icon: faHardDrive,
-  },
-  {
-    title: "Models",
-    url: "link",
-    icon: faCubes,
-  },
-  ,
-  {
-    title: "Notebooks",
-    url: "link",
-    icon: faBookOpen,
-  },
-  {
-    title: "DVC",
-    url: "link",
-    image: dvcImg,
-  },
-  {
-    title: "Git",
-    url: "link",
-    image: gitImg,
-  },
-]
 
-const MenuTabs = ({ activeTab, setActiveTab }: any) => {
-  const handleClickTab = (e: any) => {
+
+const MenuTabs = ({ activeTab, setActiveTab, handleSelectFileMenuOption, tabs }: any) => {
+  const handleClickTab = (e: any, type: string) => {
     setActiveTab(e.target.id)
+    handleSelectFileMenuOption(type)
   }
+
+  
+  
+    
+    
+    /* {
+      title: "Notebooks",
+      url: "link",
+      type: "NOTEBOOK",
+      icon: faBookOpen,
+      callback: () => { console.log('not implemented')}
+    }, 
+    {
+      title: "DVC",
+      url: "link",
+      image: dvcImg,
+      callback: () => { console.log('not implemented')}
+    },
+    {
+      title: "Git",
+      url: "link",
+      image: gitImg,
+      callback: () => { console.log('not implemented')}
+    },*/
+  
 
   return (
     <SContainer>
@@ -95,7 +84,7 @@ const MenuTabs = ({ activeTab, setActiveTab }: any) => {
             <STab
               key={index}
               className={activeTab === tab.title ? "active" : ""}
-              onClick={handleClickTab}
+              onClick={(e: any) => handleClickTab(e, tab.type)}
               id={tab.title}
             >
               {tab.icon && <SIcon icon={tab.icon} />}

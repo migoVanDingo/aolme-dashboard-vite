@@ -1,7 +1,47 @@
 import axios from "axios"
 import { FormDataClient } from "./http-common"
 import { ICreateProject, ISyncImportStorage } from "../utility/interface/project"
+import { Requests } from "../api/Requests"
 
+const fileUpload = async (files: any[], data: any, onUploadProgress: any) => {
+  const formData = new FormData()
+  for(const field in data){
+    formData.append(field, data[field])
+  }
+
+  for(const file of files){
+    formData.append("file", file)
+  }
+
+  let url
+
+  console.log("DATUM BATCH: ", formData)
+  switch(data.type){
+    case "FILE":
+      url = "/api/files"
+      break;
+    case "DATASET":
+      url = "/api/dataset"
+      break
+    case "MODULE":
+      url = "/api/module"
+      break
+    case "CONFIG":
+      url = "/api/config"
+      break
+
+    
+    default:
+      url = ""
+      break
+  }
+
+  console.log("url: ", url)
+
+  return Requests.updloadFile(formData, url, onUploadProgress)
+
+
+}
 const handleFileUpload = async (files: any[], data: ISyncImportStorage, projectId: string,  onUploadProgress: any) => {
 
   //const { name, description, owner } = data
@@ -74,7 +114,8 @@ const getFiles = () => {
 
 export default {
   upload,
-  handleFileUpload
+  handleFileUpload,
+  fileUpload
   /* getFiles,
   convertCsv,
   getCsvTest */

@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom"
 const SContainer = styled(SFlexCol)`
   align-items: flex-start;
   width: 100%;
-
   border: 1px solid ${({ theme }) => theme.color.color_3};
   border-radius: ${({ theme }) => theme.container.borderRadius.lg};
   overflow: hidden;
@@ -87,23 +86,23 @@ const STag = styled(SFlexCol)`
 
 `
 
-const RepoCard = ({ data }: any) => {
-  const { id, name, description } = data
+const RepoCard = ({ repo }: any) => {
+  //const { id, name, description } = data
   const navigate = useNavigate()
 
   const handleSelectRepo = () => {
-    console.log('handleSelectRepo')
+    navigate(`/repository/${repo.repo_id}`)
   }
 
   return (
     <SContainer>
       <SCardTop>
-        <SRepoName onClick={() => handleSelectRepo()}>{name}</SRepoName>
+        <SRepoName onClick={handleSelectRepo}>{repo.name}</SRepoName>
         <SLastUpdated>{"2 months ago"}</SLastUpdated>
       </SCardTop>
       <SCardBottom>
 
-        <SDescription>{description}</SDescription>
+        <SDescription>{repo.description}</SDescription>
         <STagContainer>
      
           {/* {tags &&

@@ -45,8 +45,8 @@ const CreateOrganization = () => {
       name: orgName,
       description: orgDesc,
       email: orgEmail,
-      url: orgUrl,
-      user_id: !userId ? orgAdmin : userId,
+      url: "",
+      user_id: userId ? userId : orgAdmin,
     }
     OrganizationAPI.createOrganization(org)
       .then((result: any) => {
@@ -92,16 +92,12 @@ const CreateOrganization = () => {
               name={orgEmail}
               label={"Organization Email"}
             />
-            <TextInput 
-              setName={setOrgAdmin}
-              name={orgAdmin}
-              label={"Organization Admin User ID"}
-            />
-            <TextInput
+          
+            {/* <TextInput
               setName={setOrgUrl}
               name={orgUrl}
               label={"Organization Website URL"}
-            />
+            /> */}
             <TextArea description={orgDesc} setDescription={setOrgDesc} />
             <SButton type="submit" innerHtml={"Create Repository"} />
           </form>

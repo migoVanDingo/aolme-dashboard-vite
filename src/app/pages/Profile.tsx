@@ -44,7 +44,7 @@ const SContainer = styled.div`
 
   display: grid;
   grid-template-columns: [left]1fr [col2] 4fr [right];
-  grid-template-rows: [top]60px [row2] 200px [row3] 200px [row4] 200px [end];
+  grid-template-rows: [top]60px [row2] 200px [row3] 200px [row4] auto[end];
   grid-template-areas:
     "profile tabs"
     "profile content"
@@ -107,7 +107,7 @@ const Profile = (state: any) => {
   const theme = useTheme()
 
   //State
-  const [content, setContent] = useState<any>("Projects")
+  const [content, setContent] = useState<any>("Personal")
   const [username, setUsername] = useState<string>("")
   const [userId, setUserId] = useState<string>("")
   const [selectedView, setSelectedView] = useState<string>("REPO")
@@ -171,9 +171,9 @@ const Profile = (state: any) => {
           setContent={setContent}
           iconArr={[faFolder, faClockRotateLeft]}
         />
-        {content === "Projects" ? (
+        {content === "Personal" ? (
         <RepoProfileContent />
-      ) : content === "Public activity" ? (
+      ) : content === "Public" ? (
         <ActivityProfileContent />
       ) : (
         ""

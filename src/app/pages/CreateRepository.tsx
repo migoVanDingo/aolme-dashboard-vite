@@ -1,33 +1,18 @@
-import React, { useEffect, useRef, useState } from "react"
-import styled, { keyframes } from "styled-components"
-import { SFlexCol } from "../components/common/containers/FlexContainers"
+import { useEffect, useState } from "react"
+import { connect } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import styled from "styled-components"
+import { ProjectAPI } from "../api/ProjectAPI"
 import Heading from "../components/common/Heading"
 import Message from "../components/common/Message"
 import UserDropdown from "../components/common/UserDropdown"
-import TextInput from "../components/common/inputs/text/TextInput"
-import TextArea from "../components/common/inputs/text/TextArea"
+import { SFlexCol } from "../components/common/containers/FlexContainers"
 import FileUpload from "../components/common/inputs/file-upload/FileUpload"
-import Button from "../components/common/buttons/Button"
-import UploadService from "../services/FileUploadService"
-import axios from "axios"
-import { JSONTest } from "../services/http-common"
-import { ICreateProject } from "../utility/interface/project"
-import { ProjectAPI } from "../api/ProjectAPI"
-import { useNavigate } from "react-router-dom"
-import {
-  setCurrentProjectId,
-  setCurrentProjectOwner,
-  setCurrentProjectCreatedAt,
-  setCurrentProjectCreatedBy,
-  setCurrentProjectDescription,
-  setCurrentProjectLastUpdatedAt,
-  setCurrentProjectLastUpdatedBy,
-  setCurrentProjectName,
-} from "../actions"
-import { store } from "../store"
-import { connect } from "react-redux"
+import TextArea from "../components/common/inputs/text/TextArea"
+import TextInput from "../components/common/inputs/text/TextInput"
 import LoadingSpinner from "../components/common/loading/LoadingSpinner"
 import { SButton } from "../components/common/styled"
+import UploadService from "../services/FileUploadService"
 
 const SContainer = styled(SFlexCol)`
   width: 650px;

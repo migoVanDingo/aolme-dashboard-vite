@@ -54,6 +54,7 @@ const CreateRepositoryV2 = ({ }: any) => {
 
     const project: ICreateRepository = {
         owner: userId,
+        entity_type:"USER",
         entity_id: userId,
         name: repoName,
         description: repoDescription,
@@ -68,7 +69,7 @@ const CreateRepositoryV2 = ({ }: any) => {
     })
     .catch((err: any) => console.error(err))
 
-    console.log("project: ", project)
+    
 
   }
 
