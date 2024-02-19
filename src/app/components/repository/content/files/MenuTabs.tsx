@@ -47,7 +47,9 @@ const SIcon = styled(FontAwesomeIcon)``
 
 const MenuTabs = ({ activeTab, setActiveTab, handleSelectFileMenuOption, tabs }: any) => {
   const handleClickTab = (e: any, type: string) => {
-    setActiveTab(e.target.id)
+    console.log("tabe: " , e.target.id)
+    console.log("type: " , type)
+    setActiveTab(type)
     handleSelectFileMenuOption(type)
   }
 
@@ -83,7 +85,7 @@ const MenuTabs = ({ activeTab, setActiveTab, handleSelectFileMenuOption, tabs }:
           return (
             <STab
               key={index}
-              className={activeTab === tab.title ? "active" : ""}
+              className={activeTab === tab.type ? "active" : ""}
               onClick={(e: any) => handleClickTab(e, tab.type)}
               id={tab.title}
             >

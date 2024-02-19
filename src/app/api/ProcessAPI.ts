@@ -12,10 +12,9 @@ export class ProcessAPI {
         
     }
 
-    public static async launchJupyterNotebook(projectId: number){
+    public static async launchJupyterNotebook(entity_id: string){
         const data = {
-            project_id: projectId,
-            folder_name: "notebook"
+            entity_id
         }
 
         return Requests.doPost(data ,'/subprocess/jupyter')

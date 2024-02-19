@@ -1,20 +1,23 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { SFlexCol, SFlexRow } from "../../../common/containers/FlexContainers"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faUpload } from "@fortawesome/free-solid-svg-icons"
+import { faUpload, faX } from "@fortawesome/free-solid-svg-icons"
+import FileUpload from "../../../common/inputs/file-upload/FileUpload"
 
 const SContainer = styled(SFlexRow)`
   width: 100%;
-  height: 100%;
+  height: 45px;
   box-sizing: border-box;
   padding: 5px;
   background-color: ${({ theme }) => theme.color.color_0};
+  gap: 5px;
+
   
 `
 
 const SButton = styled.button`
-  height: 25px;
+  height: 35px;
   width: 35px;
   background-color: ${({ theme }) => theme.color.color_2};
   color: ${({ theme }) => theme.color.color_7};
@@ -33,12 +36,27 @@ const SButton = styled.button`
   }
 `
 
-const QuickUpload = ({ menuOption, launchModal }: any) => {
+const QuickUpload = ({ handleShow, menuOption, show, handleChange, handleFormSubmit, inputFile}: any) => {
+
+  const [buttonVisible, setButtonVisible] = useState<boolean>(false)
+
+  useEffect(() => {
+    if(menuOption === "ALL"){
+      setButtonVisible(false)
+    } else {
+      setButtonVisible(true)
+    }
+  }, [menuOption])
+
   return (
     <SContainer>
-      <SButton onClick={launchModal}>
-        <FontAwesomeIcon icon={faUpload} />
-      </SButton>
+      {
+        buttonVisible ? (<SButton onClick={handleShow}>
+          <FontAwesomeIcon icon={show ? faX : faUpload} />
+        </SButton>): <></>
+      }
+      
+      { show ? (<FileUpload id="ful-form" inputFile={inputFile} handleFileChange={handleChange} handleFormSubmit={handleFormSubmit} />) : <></> }
     </SContainer>
   )
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 import { SFlexCol } from "../../../common/containers/FlexContainers"
 import FilesUpdate from "./FilesUpdate"
@@ -14,9 +14,17 @@ import {
   faHardDrive,
   faCubes,
   faBookOpen,
+  faPencil,
+  faBullseye,
+  faBookBookmark,
+  faListCheck
 } from "@fortawesome/free-solid-svg-icons"
 import { useSelector } from "react-redux"
 import QuickUpload from "./QuickUpload"
+import AddFileModal from "../../../modal/AddFileModal"
+import { DatasetAPI } from "../../../../api/DatasetAPI"
+import { RepoAPI } from "../../../../api/RepoAPI"
+import RepoItems from "./RepoItems"
 
 const SContainer = styled(SFlexCol)`
   grid-area: files;
@@ -40,7 +48,7 @@ const tabs = [
     title: "Configs",
     url: "link",
     type: "CONFIG",
-    icon: faCubes,
+    icon: faListCheck,
     callback: () => {
       console.log("not implemented")
     },
@@ -63,9 +71,36 @@ const tabs = [
       console.log("not implemented")
     },
   },
+  {
+    title: "Notebooks",
+    url: "link",
+    type: "NOTEBOOK",
+    icon: faBookBookmark,
+    callback: () => {
+      console.log("not implemented")
+    },
+  },
+  {
+    title: "Annotations",
+    url: "link",
+    type: "ANNOTATION",
+    icon: faPencil,
+    callback: () => {
+      console.log("not implemented")
+    },
+  },
+  {
+    title: "Ground Truth",
+    url: "link",
+    type: "GROUND_TRUTH",
+    icon: faBullseye,
+    callback: () => {
+      console.log("not implemented")
+    },
+  },
 ]
 
-const RepoFiles = () => {
+const RepoFiles = ({repoId}: any) => {
   const [folderPath, setFolderPath] = useState<string[]>([])
   const [trigger, triggerRender] = useState<boolean>(false)
   const [stopSwitchFolders, setStopSwitchFolders] = useState<boolean>(false)
@@ -77,15 +112,65 @@ const RepoFiles = () => {
   const [isPublic, setIsPublic] = useState<number>(0)
   const [activeTab, setActiveTab] = useState<string>("ALL")
 
+  const [repoFiles, setRepoFiles] = useState<any[]>([])
+
+  const [tabFiles, setTabFiles] = useState<any[]>([])
+
+  const [show, setShow] = useState<boolean>(false);
+  const [triggerGetFiles, setTriggerGetFiles] = useState<boolean>(false)
+
   const { repoEntity, userId } = useSelector((state: any) => state)
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => {setShow(!show)};
+
+  
+
+  useEffect(() => {
+    const init = () => {
+      getProjectFiles()
+    }
+
+    return init()
+  }, [repoId])
+
+  useEffect(() => {
+    console.table("repofiles: ", repoFiles)
+    if(menuOption === "ALL") setTabFiles(repoFiles)
+    else {
+      const files = repoFiles.filter((file: any) => file.type === menuOption)
+      setTabFiles(files)
+    }
+  }, [repoFiles, menuOption])
+
+  const getProjectFiles = () => {
+    //Get Datasets
+    RepoAPI.getRepoItems(repoId)
+    .then((res: any) => {
+      //console.log("res files: ", res.data)
+      setRepoFiles(res.data)
+      
+    })
+    .catch((err: any) => console.error(err))
+    //Get Modules
+    //Get Configs
+  }
+
+  const inputFile = useRef(null);
+
+  const handleReset = () => {
+    if (inputFile.current) {
+        inputFile.current.value = "";
+        inputFile.current.type = "text";
+        inputFile.current.type = "file";
+    }
+}
+
 
   const handleSelectFileMenuOption = (type: string) => {
     setMenuOption(type)
+    setShow(false)
   }
-
-  useEffect(() => {
-    console.log("menuOption: ", menuOption)
-  }, [menuOption])
 
   const handleFileChange = (e: any) => {
     setSelectedFiles(e.target.files)
@@ -102,9 +187,16 @@ const RepoFiles = () => {
   }
 
   const createPayloadType = (type: string) => {
-    let payload: IModule
-    switch (type) {
-      case "DATASET":
+    let payload: IModule = {
+      entity_id: repoEntity,
+      description: description,
+      owner: userId,
+      type: type,
+      is_public: isPublic,
+    }
+    return payload
+    /* switch (type) {
+      /* case "DATASET":
         payload = {
           entity_id: repoEntity,
           description: description,
@@ -132,37 +224,38 @@ const RepoFiles = () => {
           type: "CONFIG",
           is_public: isPublic,
         }
-        break
+        break 
 
       default:
         payload = {
-          entity_id: "",
-          description: "",
-          owner: "",
-          type: "",
-          is_public: 0,
+          entity_id: repoEntity,
+          description: description,
+          owner: userId,
+          type: type,
+          is_public: isPublic,
         }
         break
-    }
+    } */
 
-    return payload
+    
   }
 
   const addFiles = async (e: any, payload: IModule) => {
+    console.log("repoId: ", repoId)
     FileUploadService.fileUpload(selectedFiles, payload, (e: any) => {
       setProgress(Math.round((100 * e.loaded) / e.total))
-    })
+    }, repoId)
       .then((res: any) => {
         console.log("FILE_UPLOAD_RESPONSE", res.data)
+        getProjectFiles()
+        handleReset()
+        
       })
       .catch((err: any) => {
         console.log("error: ", err)
       })
   }
 
-  const launchFileUploadModal = () => {
-    console.log("menuOption: ", menuOption)
-  }
 
   return (
     <SContainer>
@@ -181,9 +274,12 @@ const RepoFiles = () => {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
-      {menuOption !== "ALL" && <QuickUpload launchModal={launchFileUploadModal} menuOption={menuOption} />}
+      <QuickUpload inputFile={inputFile} handleShow={handleShow} menuOption={menuOption} show={show} handleChange={handleFileChange} handleFormSubmit={handleFormSubmit}/>
+      {/* <AddFileModal  show={show} handleClose={handleClose} handleShow={handleShow} /> */}
 
-      <BranchContent
+      <RepoItems tabFiles={tabFiles} />
+      
+      {/* <BranchContent
         folderItemsSwitch={folderItemsSwitch}
         setFolderItemsSwitch={setFolderItemsSwitch}
         stopSwitchFolders={stopSwitchFolders}
@@ -191,7 +287,7 @@ const RepoFiles = () => {
         folderPath={folderPath}
         setFolderPath={setFolderPath}
         trigger={trigger}
-      />
+      /> */}
       {/* ) : menuOption === "DATASET" ||
         menuOption === "MODULE" ||
         menuOption === "CONFIG" ? (

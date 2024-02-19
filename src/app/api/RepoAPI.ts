@@ -18,6 +18,10 @@ export class RepoAPI {
     return await Requests.doGet("/api/repository/" + repoId)
   }
 
+  public static async getRepoItems(repoId: string) { 
+    return await Requests.doGet("/api/repository/" + repoId + "/items")
+  }
+
   public static async updateRepo(repo: ICreateRepository) {
     return await Requests.doPut(repo, "/api/repository/update")
   }

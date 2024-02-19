@@ -9,9 +9,11 @@ import {
   faCode
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { connect } from "react-redux"
+import { connect, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { ProcessAPI } from "../../../api/ProcessAPI"
+import { ICreateLabelStudioProject, LabelStudioAPI } from "../../../api/LabelStudioAPI"
+import { I } from "vitest/dist/types-e3c9754d.js"
 
 const SContainer = styled(SFlexRow)`
   grid-area: tabs;
@@ -45,10 +47,25 @@ const SIcon = styled(FontAwesomeIcon)``
 
 const RepoTabs = ({ activeTab, setActiveTab, projectId, name }: any) => {
   
+  const { repoEntity, userId, repoId, repoDescription, repoName} = useSelector((state: any) => state)
+
+
   const nav = useNavigate()
 
   const initializeLabelStudio = () => {
-    console.log("name: ", name)
+    const payload: ICreateLabelStudioProject = {
+      name: repoName,
+      description: repoDescription,
+      owner: repoEntity,
+      created_by: userId,
+      repo_id: repoId
+    }
+    LabelStudioAPI.initializeLabelStudioProject(payload)
+    .then((res: any) => {
+      console.log("res: ", res)
+    })
+    .catch((err: any) => console.error(err))
+    /* console.log("name: ", name)
     console.log("projectId: ", projectId)
     ProcessAPI.launchLabelStudio(name)
     .then((res: any) => {
@@ -61,14 +78,18 @@ const RepoTabs = ({ activeTab, setActiveTab, projectId, name }: any) => {
       }
         
     })
-    .catch((err: any) => console.error(err))
+    .catch((err: any) => console.error(err)) */
     
   }
 
   const initializeJupyterNotebook = () => {
-    ProcessAPI.launchJupyterNotebook(projectId)
+    ProcessAPI.launchJupyterNotebook(repoEntity)
     .then((res:any) => {
-
+      if(repoEntity.startsWith("ORG"))
+        nav("http://localhost:8888/tree/_fs/organization"+repoEntity)
+      else if(repoEntity.startsWith("USR"))
+        nav("http://localhost:8888/tree/_fs/user/"+repoEntity)
+      else
       console.log("launching jupyter notebook...")
     })
     .catch((err: any) => console.error(err))

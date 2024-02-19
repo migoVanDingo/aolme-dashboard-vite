@@ -3,7 +3,7 @@ import { FormDataClient } from "./http-common"
 import { ICreateProject, ISyncImportStorage } from "../utility/interface/project"
 import { Requests } from "../api/Requests"
 
-const fileUpload = async (files: any[], data: any, onUploadProgress: any) => {
+const fileUpload = async (files: any[], data: any, onUploadProgress: any, repoId=null) => {
   const formData = new FormData()
   for(const field in data){
     formData.append(field, data[field])
@@ -13,9 +13,9 @@ const fileUpload = async (files: any[], data: any, onUploadProgress: any) => {
     formData.append("file", file)
   }
 
-  let url
+  let url = "/api/dataset"
 
-  console.log("DATUM BATCH: ", formData)
+  /* console.log("DATUM BATCH: ", formData)
   switch(data.type){
     case "FILE":
       url = "/api/files"
@@ -34,7 +34,11 @@ const fileUpload = async (files: any[], data: any, onUploadProgress: any) => {
     default:
       url = ""
       break
-  }
+  } */
+
+
+  if(repoId !== null)
+    url = url + "?repo_id=" + repoId
 
   console.log("url: ", url)
 

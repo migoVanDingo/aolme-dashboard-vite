@@ -114,7 +114,7 @@ const Repository = ({}: any) => {
       {entityName && username && name && (
         <>
       <RepoHeader owner={username} projectName={name} entityName={entityName}/>
-      <RepoContent />
+      <RepoContent repoId={repoId} />
       </>
       )}
       
