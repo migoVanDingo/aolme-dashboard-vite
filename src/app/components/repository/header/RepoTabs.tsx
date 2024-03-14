@@ -13,7 +13,7 @@ import { connect, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { ProcessAPI } from "../../../api/ProcessAPI"
 import { ICreateLabelStudioProject, LabelStudioAPI } from "../../../api/LabelStudioAPI"
-import { I } from "vitest/dist/types-e3c9754d.js"
+
 
 const SContainer = styled(SFlexRow)`
   grid-area: tabs;
@@ -83,13 +83,17 @@ const RepoTabs = ({ activeTab, setActiveTab, projectId, name }: any) => {
   }
 
   const initializeJupyterNotebook = () => {
-    ProcessAPI.launchJupyterNotebook(repoEntity)
+    const payload = {
+      entity_id: repoEntity,
+      description: "JUPYTER NOTEBOOK",
+      owner: userId,
+      type: "NOTEBOOK",
+      is_public: 0,
+      repo_id: repoId
+    }
+
+    ProcessAPI.launchJupyterNotebook(payload)
     .then((res:any) => {
-      if(repoEntity.startsWith("ORG"))
-        nav("http://localhost:8888/tree/_fs/organization"+repoEntity)
-      else if(repoEntity.startsWith("USR"))
-        nav("http://localhost:8888/tree/_fs/user/"+repoEntity)
-      else
       console.log("launching jupyter notebook...")
     })
     .catch((err: any) => console.error(err))

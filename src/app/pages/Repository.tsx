@@ -17,6 +17,7 @@ import {
 import { RepoAPI } from "../api/RepoAPI"
 import { initializeConnect } from "react-redux/es/components/connect"
 import { OrganizationAPI } from "../api/OrganizationAPI"
+import { FilesAPI } from "../api/FileAPI"
 
 const SContainer = styled(SFlexCol)`
   width: 100%;
@@ -43,81 +44,109 @@ const Repository = ({}: any) => {
   const [isPublic, setIsPublic] = useState<boolean>(false)
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
-
-
+  const [repoFiles, setRepoFiles] = useState<any[]>([])
+  const { repoEntity, userId } = useSelector((state: any) => state)
 
   const dispatch = useDispatch()
-  useEffect(() => {
-    console.log('entityId: ', entityId)
-    console.log('username', username)
-    console.log("name: ", name)
-  },[entityId, username, name])
 
   useEffect(() => {
-
     const init = () => {
-      
-      if(owner !== entityId){
+      if (owner !== entityId) {
         OrganizationAPI.getOrganizationById(entityId)
-        .then((res: any) => {
-          console.log("res: ", res.data)
-          setEntityName(res.data['name'])
-        })
-        .catch((err: any) => console.error(err))
+          .then((res: any) => {
+            console.log("res: ", res.data)
+            setEntityName(res.data["name"])
+          })
+          .catch((err: any) => console.error(err))
       } else {
         setEntityName("Personal Repository")
       }
-      
     }
-    if(entityId !== null)
-      init()
-
+    if (entityId !== null) init()
   }, [entityId])
-
 
   useEffect(() => {
     const init = () => {
-      console.log('repoId: ', repoId)
+      console.log("repoId: ", repoId)
       if (repoId !== null && repoId !== undefined) {
         RepoAPI.getRepoById(repoId)
           .then((res: any) => {
             console.log("res: ", res.data)
 
-            setCurrentRepo(res.data['repo_id'])
-            setName(res.data['name'])
-            setDescription(res.data['description'])
-            setOwner(res.data['owner'])
-            setCreatedAt(res.data['created_at'])
-            setCreatedBy(res.data['created_by'])
-            setEntityId(res.data['entity_id'])
-            setIsPublic(res.data['is_public'])
+            setCurrentRepo(res.data["repo_id"])
+            setName(res.data["name"])
+            setDescription(res.data["description"])
+            setOwner(res.data["owner"])
+            setCreatedAt(res.data["created_at"])
+            setCreatedBy(res.data["created_by"])
+            setEntityId(res.data["entity_id"])
+            setIsPublic(res.data["is_public"])
 
-            dispatch(setRepoId(res.data['repo_id']))
-            dispatch(setRepoName(res.data['name']))
-            dispatch(setRepoDescription(res.data['description']))
-            dispatch(setRepoOwner(res.data['owner']))
-            dispatch(setRepoEntity(res.data['entity_id']))
-
-            
-
-            
+            dispatch(setRepoId(res.data["repo_id"]))
+            dispatch(setRepoName(res.data["name"]))
+            dispatch(setRepoDescription(res.data["description"]))
+            dispatch(setRepoOwner(res.data["owner"]))
+            dispatch(setRepoEntity(res.data["entity_id"]))
           })
+/*           .then(() => {
+            checkForNotebookFiles()
+          })
+          .then(() => {
+            getProjectFiles()
+          }) */
           .catch((err: any) => console.error(err))
       }
     }
 
     return init()
   }, [repoId])
+  
+
+  const checkForNotebookFiles = () => {
+    if (
+      repoId !== null &&
+      repoId !== undefined &&
+      userId !== null &&
+      userId !== undefined &&
+      repoEntity !== null &&
+      repoEntity !== undefined
+    ) {
+      FilesAPI.getDirectoryItems(repoEntity, "notebook", userId, repoId)
+        .then((res: any) => {
+          console.log("NOTEBOOK FILES: ", res.data)
+        })
+        .catch((err: any) => console.error(err))
+    }
+  }
+
+  const getProjectFiles = () => {
+    //Get Datasets
+    if (repoId !== null && repoId !== undefined) {
+      RepoAPI.getRepoItems(repoId)
+        .then((res: any) => {
+          //console.log("res files: ", res.data)
+          setRepoFiles(res.data)
+        })
+        .catch((err: any) => console.error(err))
+    }
+
+    //Get Modules
+    //Get Configs
+  }
 
   return (
     <SContainer>
       {entityName && username && name && (
         <>
-      <RepoHeader owner={username} projectName={name} entityName={entityName}/>
-      <RepoContent repoId={repoId} />
-      </>
+          <RepoHeader
+            owner={username}
+            projectName={name}
+            entityName={entityName}
+          />
+          <RepoContent repoId={repoId} repoFiles={repoFiles}/>
+        </>
       )}
-      
+
       <RepoReadMe />
     </SContainer>
   )

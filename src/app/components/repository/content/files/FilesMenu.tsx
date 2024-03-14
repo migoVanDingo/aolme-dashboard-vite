@@ -91,7 +91,7 @@ const FilesMenu = ({
    
   }
 
-  if (folderPath !== null && folderPath.length > 0) {
+  /* if (folderPath !== null && folderPath.length > 0) {
     return (
       <SContainer>
         <SCrumb>Directory:</SCrumb>
@@ -101,13 +101,13 @@ const FilesMenu = ({
         {breadCrumbDirectory}
       </SContainer>
     )
-  } else {
+  } else { */
     return (
       <SContainer>
-        <MenuTabs tabs={tabs} handleSelectFileMenuOption={handleSelectFileMenuOption}  setActiveTab={setActiveTab} activeTab={activeTab} />
+        <MenuTabs tabs={tabs} handleSelectFileMenuOption={handleSelectFileMenuOption}  setActiveTab={setActiveTab} setFolderPath={setFolderPath} activeTab={activeTab} />
       </SContainer>
     )
-  }
+ /*  } */
 }
 const mapStoreStateToProps = (state: any) => {
   return {

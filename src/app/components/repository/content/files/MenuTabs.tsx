@@ -45,18 +45,16 @@ const SIcon = styled(FontAwesomeIcon)``
 
 
 
-const MenuTabs = ({ activeTab, setActiveTab, handleSelectFileMenuOption, tabs }: any) => {
+const MenuTabs = ({ activeTab, setActiveTab, handleSelectFileMenuOption, tabs, setFolderPath }: any) => {
   const handleClickTab = (e: any, type: string) => {
     console.log("tabe: " , e.target.id)
     console.log("type: " , type)
     setActiveTab(type)
+    setFolderPath([type.toLowerCase()])
     handleSelectFileMenuOption(type)
   }
 
   
-  
-    
-    
     /* {
       title: "Notebooks",
       url: "link",
