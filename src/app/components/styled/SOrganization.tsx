@@ -14,17 +14,22 @@ export const SUserRow = styled(SFlexRow)`
     background-color: ${({ theme }) => theme.color.color_2_5};
     border-top: 1px solid ${({ theme }) => theme.color.color_2};
     font-weight: 500;
+    border-bottom: 1px solid ${({ theme }) => theme.color.color_1};
   }
 `
 
 export const SUserCol = styled(SFlexCol)`
   width: 200px;
   align-items: baseline;
+  padding: 0 10px;
+  &.long{
+    width: 300px;
+  }
 `
 
 export const SContent = styled.div`
   height: 100%;
   width: 100%;
   grid-area: content;
-  background-color: ${({ theme }) => theme.color.color_3};
+  background-color: ${({ theme }) => theme.color.color_2};
 `

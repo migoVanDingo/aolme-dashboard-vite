@@ -14,6 +14,7 @@ import { useLocation, useParams } from "react-router-dom"
 import { connect, useSelector } from "react-redux"
 import { useAuth } from "../context/AuthContext"
 import ProfileOrgListModule from "../components/profile/org/ProfileOrgListModule"
+import EntityUserAPI from "../api/EntityUserAPI"
 
 //const username = "Miguel"
 
@@ -26,6 +27,7 @@ const tabs = [
     title: "Public",
     action: "",
   },
+  
 ]
 
 const views = [
@@ -112,6 +114,8 @@ const Profile = (state: any) => {
   const [userId, setUserId] = useState<string>("")
   const [selectedView, setSelectedView] = useState<string>("REPO")
   const [selectedIndex, setSelectedIndex] = useState<number>(0)
+  const [organizations, setOrganizations] = useState<any>([])
+
 
   const handleEditProfile = () => {
     console.log("yoseph!")
@@ -133,6 +137,24 @@ const Profile = (state: any) => {
     setSelectedIndex(index)
     setSelectedView(entity)
   }
+
+  useEffect(() => {
+
+    const getUserOrgs = (userId: string) => {
+      
+      EntityUserAPI.getEntityListByUserId(userId)
+      .then((res: any) => {
+        console.log("ENTITIES: ",res.data)
+        setOrganizations(res.data)
+      })
+      .catch((err: any) => {
+        console.error(err)
+      })  
+    }
+
+    //console.log(userId ? userId : "No user id")
+    return getUserOrgs(userId)
+  }, [selectedView, userId])
 
   return (
     <SContainer>
@@ -181,7 +203,7 @@ const Profile = (state: any) => {
 
       </>
       ) : selectedView === "ORG" ? (
-        <ProfileOrgListModule userId={userId} />
+        organizations.length > 0 && (<ProfileOrgListModule userId={userId} organizations={organizations} />)
       ) : (
         ""
       )}

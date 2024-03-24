@@ -1,10 +1,10 @@
 import React from "react"
 import styled from "styled-components"
 import { SFlexCol } from "../../containers/FlexContainers"
-import { SContainer, SLabel, STextInput} from "../../../styled/Inputs"
+import { SContainer, SLabel, STextInput} from "../../../styled/SInputs"
 
 
-const TextInput = ({ name, setName, label }: any) => {
+const TextInput = ({ name, setName, label, type }: any) => {
 
   const handleInput = (e: any) => {
     setName(e.target.value)
@@ -14,7 +14,7 @@ const TextInput = ({ name, setName, label }: any) => {
   return (
     <SContainer>
       <SLabel>{label}</SLabel>
-      <STextInput onChange={handleInput} value={name}/>
+      <STextInput type={type} onChange={handleInput} value={name}/>
     </SContainer>
   )
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { SContainer, SLabel, SCheckbox } from '../../../styled/Inputs'
+import { SContainer, SLabel, SCheckbox } from '../../../styled/SInputs'
 
 const CheckboxInput = ({ checked, setChecked, label }: any) => {
 

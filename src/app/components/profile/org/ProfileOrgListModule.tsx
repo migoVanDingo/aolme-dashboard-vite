@@ -22,33 +22,19 @@ const SHeading = styled.h2`
 
 `
 
-const ProfileOrgListModule = ({ userId }: any) => {
+const ProfileOrgListModule = ({ userId, organizations }: any) => {
 
-  const [organizations, setOrganizations] = useState<any>([])
 
   useEffect(() => {
-
-    const getUserOrgs = () => {
-      
-      EntityUserAPI.getEntityListByUserId(userId)
-      .then((res: any) => {
-        console.log("ENTITIES: ",res.data)
-        setOrganizations(res.data)
-      })
-      .catch((err: any) => {
-        console.error(err)
-      })  
-    }
-
-    console.log(userId ? userId : "No user id")
-    return getUserOrgs
-  }, [userId])
+    console.log("ORGANIZATIONS: ", organizations)
+  }, [organizations])
+  
 
 
   return (
     <SContainer>
       <SHeading>Organizations</SHeading>
-      <OrgList organizations={organizations}/>
+      <OrgList organizations={organizations && organizations}/>
       
 
     </SContainer>

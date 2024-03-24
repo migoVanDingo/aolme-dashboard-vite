@@ -13,4 +13,8 @@ export class LabelStudioAPI {
     public static async initializeLabelStudioProject(payload: ICreateLabelStudioProject) {
         return await Requests.doPost(payload, '/api/label_studio/project');
     }
+
+    public static async getLabelStudioProjectByRepoId(repoId: string) {
+        return await Requests.doGet('/api/label_studio/repo/' + repoId);
+    }
 }

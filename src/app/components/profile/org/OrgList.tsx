@@ -4,6 +4,7 @@ import { SFlexCol } from '../../common/containers/FlexContainers'
 import ListCard from '../../common/cards/ListCard'
 
 const SContainer = styled(SFlexCol)`
+    width: 100%;
     gap: 10px;
 `
 
@@ -12,8 +13,10 @@ const OrgList = ({ organizations }: any) => {
 
     useEffect(() => {
         const init = () => {
+            //console.log("ORGANIZATIONS: ", organizations)
             setOrgs(organizations)
         }
+
 
         return init()
     }, [organizations])

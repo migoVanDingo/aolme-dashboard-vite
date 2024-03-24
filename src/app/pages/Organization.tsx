@@ -7,7 +7,11 @@ import {
 import { useParams } from "react-router-dom"
 import { useSelector } from "react-redux"
 import EntityUserAPI from "../api/EntityUserAPI"
-import { SContent, SUserCol, SUserRow} from "../components/styled/Organization"
+import {
+  SContent,
+  SUserCol,
+  SUserRow,
+} from "../components/styled/SOrganization"
 import OrgUsers from "../components/organization/OrgUsers"
 
 const SContainer = styled(SFlexCol)`
@@ -49,14 +53,13 @@ const SHeader = styled.div`
   padding-left: 20px;
 `
 
-
 const SSidebar = styled.div`
   height: 100%;
   width: 100%;
   grid-area: sidebar;
   background-color: ${({ theme }) => theme.color.color_1};
   padding: 0;
-  margin: 0;
+  margin: 130px 0;
 `
 
 const SOrgToolbar = styled.ul`
@@ -67,7 +70,7 @@ const SOrgToolbar = styled.ul`
   overflow: hidden;
 `
 
-const STooblarItem = styled.li`
+const SToolbarItem = styled.li`
   width: 100%;
   padding: 10px 20px;
   font-family: Arial, sans-serif;
@@ -85,44 +88,60 @@ const STooblarItem = styled.li`
   }
 `
 
-
-
 const Organization = () => {
-  const { orgId } = useParams<{ orgId: string }>()
-  const { orgName } = useSelector((state: any) => state)
+  const { orgName, orgId } = useSelector((state: any) => state)
 
   const [organizationName, setOrganizationName] = useState<string>("")
   const [organizationId, setOrganizationId] = useState<string>("")
   const [userList, setUserList] = useState<any>([])
   const [selected, setSelected] = useState<string>("USERS")
+  const [edit, setEdit] = useState<boolean>(false)
+
+  const [triggerGetUserList, setTriggerGetUserList] = useState<boolean>(false)
+
+  const trigger = () => {
+    setEdit(false)
+    setTriggerGetUserList(!triggerGetUserList)
+  }
 
   useEffect(() => {
     const init = () => {
+      console.log("orgIdYO", orgId)
+      console.log("orgName", orgName)
       if (orgId !== null && orgId !== undefined && orgId !== "") {
-        console.log('running...')
+        console.log("running...")
         setOrganizationId(orgId)
         setOrganizationName(orgName)
-        loadOrgUsers(orgId)
       }
     }
 
-    return init
-  }, [orgId, orgName])
-
-  const loadOrgUsers = (orgId : string) => {
-    
-    if(userList === null || userList === undefined || userList.length === 0){
-      EntityUserAPI.getUserListByEntityId(orgId)
-      .then((res: any) => {
-        console.log("ENTITY_USERS: ", res.data)
-        setSelected("USERS")
-        setUserList(res.data)
-      })
-      .catch((err: any) =>
-        console.error("Organization::getUserListByEntityId:", err),
-      )
+    if (orgId === "" || orgName === "") {
+      setInterval(() => {
+        console.log("waiting...")
+      }, 500)
+    } else {
+      return init()
     }
-    
+  }, [])
+
+  useEffect(() => {
+    loadOrgUsers(organizationId)
+    console.log("organizationId", organizationId)
+  }, [organizationId, triggerGetUserList])
+
+  const loadOrgUsers = (oid: string) => {
+ /*    if (userList === null || userList === undefined || userList.length === 0) { */
+      console.log("oid", oid)
+      EntityUserAPI.getUserListByEntityId(oid)
+        .then((res: any) => {
+          console.log("ENTITY_USERS: ", res.data)
+          setSelected("USERS")
+          setUserList(res.data)
+        })
+        .catch((err: any) =>
+          console.error("Organization::getUserListByEntityId:", err),
+        )
+    /* } */
   }
   const loadOrgRepositories = () => {
     setSelected("REPO")
@@ -197,20 +216,24 @@ const Organization = () => {
             {toolbarOptions &&
               toolbarOptions.map((option: any, index: number) => {
                 return (
-                  <STooblarItem
+                  <SToolbarItem
                     className={selected === option.type ? "selected" : ""}
                     key={index}
-                    onClick={() => selectToolbarOption(option.type, option.callback)}
+                    onClick={() =>
+                      selectToolbarOption(option.type, option.callback)
+                    }
                   >
                     <a>{option.option}</a>
-                  </STooblarItem>
+                  </SToolbarItem>
                 )
               })}
           </SOrgToolbar>
         </SSidebar>
-       {
-          userList !== null && selected === "USERS" ? (<OrgUsers userList={userList}/>) : ""
-       }
+        {userList !== null && selected === "USERS" ? (
+          <OrgUsers userList={userList} trigger={trigger} edit={edit} setEdit={setEdit} />
+        ) : (
+          ""
+        )}
       </SOrgDashboard>
     </SContainer>
   )

@@ -1,5 +1,5 @@
 import React from 'react'
-import { SContent, SUserCol, SUserRow } from '../styled/Organization'
+import { SContent, SUserCol, SUserRow } from '../styled/SOrganization'
 
 const OrgRepos = ({ list }: any) => {
     return (

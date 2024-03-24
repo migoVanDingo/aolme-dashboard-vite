@@ -60,11 +60,27 @@ const RepoTabs = ({ activeTab, setActiveTab, projectId, name }: any) => {
       created_by: userId,
       repo_id: repoId
     }
-    LabelStudioAPI.initializeLabelStudioProject(payload)
+    LabelStudioAPI.getLabelStudioProjectByRepoId(repoId)
+    .then((res: any) => { 
+      console.log("res: ", res)
+      if(res.data && res.data.length > 0){
+        window.open('http://localhost:8080','_blank')
+      } else {
+        LabelStudioAPI.initializeLabelStudioProject(payload)
+        .then((res: any) => {
+          console.log("res: ", res)
+          window.open('http://localhost:8080','_blank')
+        })
+        .catch((err: any) => console.error(err))
+      }
+    })
+    .catch((err: any) => console.error(err))
+    //window.open('http://localhost:8080/projects/' + projectId + '/data?tab=83','_blank')
+    /* LabelStudioAPI.initializeLabelStudioProject(payload)
     .then((res: any) => {
       console.log("res: ", res)
     })
-    .catch((err: any) => console.error(err))
+    .catch((err: any) => console.error(err)) */
     /* console.log("name: ", name)
     console.log("projectId: ", projectId)
     ProcessAPI.launchLabelStudio(name)
@@ -99,6 +115,10 @@ const RepoTabs = ({ activeTab, setActiveTab, projectId, name }: any) => {
     .catch((err: any) => console.error(err))
   }
 
+  const initializeMLFlow = () => {
+    window.open('http://localhost:9000','_blank')
+  }
+
   const tabs = [
     {
       title: "Files",
@@ -111,12 +131,6 @@ const RepoTabs = ({ activeTab, setActiveTab, projectId, name }: any) => {
       icon: faServer,
     },
     {
-      title: "Experiments",
-      callback: () => console.log("EXPERIMENTS"),
-      icon: faFlask,
-    },
-    
-    {
       title: "Annotate",
       callback: initializeLabelStudio,
       icon: faVectorSquare,
@@ -125,6 +139,11 @@ const RepoTabs = ({ activeTab, setActiveTab, projectId, name }: any) => {
       title: "Notebook",
       callback: initializeJupyterNotebook,
       icon: faCode,
+    },
+    {
+      title: "Experiments",
+      callback: initializeMLFlow,
+      icon: faFlask,
     },
   ]
 
