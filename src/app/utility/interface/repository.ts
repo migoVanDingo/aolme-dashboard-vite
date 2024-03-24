@@ -7,3 +7,21 @@ export interface ICreateRepository {
     is_public: boolean
     created_by: string
 }
+
+export interface FormCreateRepo {
+    label: string
+    type: string
+    inputValue: string
+    error: string
+    setInputValue: (a: string) => void
+}
+
+export interface FormEditRepo {
+    label: string
+    type: string
+    inputValue: string
+    error: string
+    setInputValue: (a: string) => void
+}
+
+

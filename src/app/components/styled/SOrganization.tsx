@@ -22,6 +22,7 @@ export const SUserCol = styled(SFlexCol)`
   width: 200px;
   align-items: baseline;
   padding: 0 10px;
+  font-size: 0.9rem;
   &.long{
     width: 300px;
   }

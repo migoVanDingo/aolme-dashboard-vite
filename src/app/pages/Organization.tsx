@@ -12,7 +12,9 @@ import {
   SUserCol,
   SUserRow,
 } from "../components/styled/SOrganization"
-import OrgUsers from "../components/organization/OrgUsers"
+import OrgUsers from "../components/organization/user/OrgUsers"
+import OrgRepos from "../components/organization/repo/OrgRepos"
+import { RepoAPI } from "../api/RepoAPI"
 
 const SContainer = styled(SFlexCol)`
   height: calc(100vh - ${({ theme }) => theme.header.height});
@@ -93,15 +95,25 @@ const Organization = () => {
 
   const [organizationName, setOrganizationName] = useState<string>("")
   const [organizationId, setOrganizationId] = useState<string>("")
+
   const [userList, setUserList] = useState<any>([])
+  const [repoList, setRepoList] = useState<any>([])
+
   const [selected, setSelected] = useState<string>("USERS")
-  const [edit, setEdit] = useState<boolean>(false)
+  const [editUser, setEditUser] = useState<boolean>(false)
+  const [editRepo, setEditRepo] = useState<boolean>(false)
 
   const [triggerGetUserList, setTriggerGetUserList] = useState<boolean>(false)
+  const [triggerGetRepoList, setTriggerGetRepoList] = useState<boolean>(false)
 
-  const trigger = () => {
-    setEdit(false)
+  const userTrigger = () => {
+    setEditUser(false)
     setTriggerGetUserList(!triggerGetUserList)
+  }
+
+  const repoTrigger = () => {
+    setEditRepo(false)
+    setTriggerGetRepoList(!triggerGetRepoList)
   }
 
   useEffect(() => {
@@ -127,10 +139,25 @@ const Organization = () => {
   useEffect(() => {
     loadOrgUsers(organizationId)
     console.log("organizationId", organizationId)
-  }, [organizationId, triggerGetUserList])
+  }, [organizationId])
+
+  useEffect(() => {
+    refreshOrgUsers(organizationId)
+  }, [triggerGetUserList])
+
+  useEffect(() => {
+    loadOrgRepositories(organizationId)
+  }, [organizationId])
+
+  useEffect(() => {
+    console.log("triggerGetRepoList", triggerGetRepoList)
+    refreshOrgRepositories(organizationId)
+  }, [triggerGetRepoList])
+
+
 
   const loadOrgUsers = (oid: string) => {
- /*    if (userList === null || userList === undefined || userList.length === 0) { */
+    if (userList === null || userList === undefined || userList.length === 0) {
       console.log("oid", oid)
       EntityUserAPI.getUserListByEntityId(oid)
         .then((res: any) => {
@@ -141,12 +168,48 @@ const Organization = () => {
         .catch((err: any) =>
           console.error("Organization::getUserListByEntityId:", err),
         )
-    /* } */
+    }
   }
-  const loadOrgRepositories = () => {
-    setSelected("REPO")
-    console.log("loadOrgDatasets")
+
+  const refreshOrgUsers = (oid: string) => {
+    EntityUserAPI.getUserListByEntityId(oid)
+      .then((res: any) => {
+        console.log("ENTITY_USERS: ", res.data)
+        setSelected("USERS")
+        setUserList(res.data)
+      })
+      .catch((err: any) =>
+        console.error("Organization::getUserListByEntityId:", err),
+      )
   }
+
+  const loadOrgRepositories = (orgId: string) => {
+    if(repoList === null || repoList === undefined || repoList.length === 0){
+      RepoAPI.getRepoByEntity(orgId)
+      .then((res: any) => {
+        setSelected("REPO")
+        console.log("REPOS: ", res.data)
+        setRepoList(res.data)
+      })
+      .catch((err: any) =>
+        console.error("Organization::getRepositoriesByEntityId:", err),
+      )
+    }
+  }
+
+  const refreshOrgRepositories = (orgId: string) => {
+
+    RepoAPI.getRepoByEntity(orgId)
+    .then((res: any) => {
+      setSelected("REPO")
+      console.log("REPOS: ", res.data)
+      setRepoList(res.data)
+    })
+    .catch((err: any) =>
+      console.error("Organization::getRepositoriesByEntityId:", err),
+    )
+  }
+
   const loadOrgDatasets = () => {
     setSelected("DATASET")
     console.log("loadOrgDatasets")
@@ -230,9 +293,21 @@ const Organization = () => {
           </SOrgToolbar>
         </SSidebar>
         {userList !== null && selected === "USERS" ? (
-          <OrgUsers userList={userList} trigger={trigger} edit={edit} setEdit={setEdit} />
+          <OrgUsers
+            userList={userList}
+            trigger={userTrigger}
+            editUser={editUser}
+            setEditUser={setEditUser}
+          />
+        ) : selected === "REPO" ? (
+          <OrgRepos
+            repoList={repoList}
+            trigger={repoTrigger}
+            editRepo={editRepo}
+            setEditRepo={setEditRepo}
+          />
         ) : (
-          ""
+          <></>
         )}
       </SOrgDashboard>
     </SContainer>

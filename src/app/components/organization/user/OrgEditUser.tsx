@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react"
 import { EditUser, FormEditUser } from "../../../utility/interface/user"
 import styled from "styled-components"
-import { SFlexCol } from "../../common/containers/FlexContainers"
+import { SFlexCol, SFlexRow } from "../../common/containers/FlexContainers"
 import TextInputComponent from "../../common/inputs/text/TextInputComponent"
 import SelectInput from "../../common/inputs/select/SelectInput"
 import { UserAPI } from "../../../api/UserAPI"
 import { useDispatch } from "react-redux"
 import { setStoreUserEmail, setStoreUsername } from "../../../actions"
+
+const SButtonContainer = styled(SFlexRow)`
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+`
 
 const SContainer = styled(SFlexCol)`
   align-items: baseline;
@@ -18,14 +24,14 @@ const SHeading = styled.p`
   font-weight: 700;
 `
 const SButton = styled.button`
-  width: 150px;
+  width: 130px;
   height: 40px;
   border: none;
   border-radius: ${({ theme }) => theme.container.borderRadius.sm};
 
-  background-color: ${({ theme }) => theme.color.color_2};
+  background-color: ${({ theme }) => theme.color.color_2_5};
   color: ${({ theme }) => theme.color.color_6};
-  box-shadow: 2px 2px 2px ${({ theme }) => theme.color.color_1};
+  box-shadow: 0px 2px 4px ${({ theme }) => theme.color.color_1};
   margin-top: 10px;
   cursor: pointer;
   &:hover {
@@ -38,7 +44,7 @@ const SButton = styled.button`
   }
 `
 
-const OrgEditUser = ({ user, trigger }: any) => {
+const OrgEditUser = ({ user, trigger, hideEdit }: any) => {
   const [username, setUsername] = useState<string>(user.username)
   const [email, setEmail] = useState<string>(user.email)
   const [role, setRole] = useState<string>(user.roles)
@@ -88,33 +94,26 @@ const OrgEditUser = ({ user, trigger }: any) => {
   ]
 
   const handleSaveUserUpdate = async () => {
-    let err = false
-    console.log("Update profile")
-
     const updatePayload: EditUser = {
-        user_id: user.user_id,
-        roles: role,
-        email: email,
-        username: username,
-        user_status: status,
-        entity_user_id: user.entity_user_id
-
+      user_id: user.user_id,
+      roles: role,
+      email: email,
+      username: username,
+      user_status: status,
+      entity_user_id: user.entity_user_id,
     }
 
     console.log("Update Payload: ", updatePayload)
 
     UserAPI.updateUser(updatePayload, user.user_id)
-        .then((result: any) => {
-            console.log(result.data)
-            //dispatch(setStoreUsername(username))
-            //dispatch(setStoreUserEmail(email))
-            trigger()
-        })
-        .catch((err: any) => {
-            console.error("CreateProfile.tsx -- handleCreateProfile() Error:", err)
-        })
-
-
+      .then((result: any) => {
+        console.log(result.data)
+        trigger()
+        hideEdit()
+      })
+      .catch((err: any) => {
+        console.error("CreateProfile.tsx -- handleCreateProfile() Error:", err)
+      })
   }
 
   return (
@@ -134,9 +133,14 @@ const OrgEditUser = ({ user, trigger }: any) => {
         )
       })}
 
-      <SButton onClick={handleSaveUserUpdate} type="button">
-        {"Save Changes"}
-      </SButton>
+      <SButtonContainer>
+        <SButton onClick={handleSaveUserUpdate} type="button">
+          {"Save Changes"}
+        </SButton>
+        <SButton onClick={handleSaveUserUpdate} type="button">
+          {"Cancel"}
+        </SButton>
+      </SButtonContainer>
     </SContainer>
   )
 }

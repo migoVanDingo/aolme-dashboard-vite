@@ -2,6 +2,8 @@ import React from "react"
 import styled from "styled-components"
 import { SFlexCol, SFlexRowWrap } from "../../common/containers/FlexContainers"
 import { useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { setRepoId } from "../../../actions"
 
 const SContainer = styled(SFlexCol)`
   align-items: flex-start;
@@ -89,9 +91,14 @@ const STag = styled(SFlexCol)`
 const RepoCard = ({ repo }: any) => {
   //const { id, name, description } = data
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
 
   const handleSelectRepo = () => {
+
+    dispatch(setRepoId(repo.repo_id))
     navigate(`/repository/${repo.repo_id}`)
+
   }
 
   return (

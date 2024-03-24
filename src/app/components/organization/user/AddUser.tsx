@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import { SFlexCol } from "../../common/containers/FlexContainers"
+import { SFlexCol, SFlexRow } from "../../common/containers/FlexContainers"
 import {
   EditUser,
   FormEditUser,
@@ -22,8 +22,14 @@ const SHeading = styled.p`
   font-size: 2rem;
   font-weight: 700;
 `
+
+const SButtonContainer = styled(SFlexRow)`
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+`
 const SButton = styled.button`
-  width: 150px;
+  width: 130px;
   height: 40px;
   border: none;
   border-radius: ${({ theme }) => theme.container.borderRadius.sm};
@@ -42,7 +48,7 @@ const SButton = styled.button`
     color: ${({ theme }) => theme.color.color_8};
   }
 `
-const AddUser = ({ trigger }: any) => {
+const AddUser = ({ trigger, hideCreateNew }: any) => {
   const { orgId, userId } = useSelector((state: any) => state)
 
   const [username, setUsername] = useState<string>("")
@@ -97,6 +103,7 @@ const AddUser = ({ trigger }: any) => {
     const updatePayload: PayloadCreateUser = {
       username,
       email,
+      roles: role,
       created_by: userId,
     }
 
@@ -105,8 +112,9 @@ const AddUser = ({ trigger }: any) => {
     UserAPI.createOrgUser(updatePayload, orgId)
       .then((result: any) => {
         console.log(result.data)
-      
+        
         trigger()
+        hideCreateNew()
       })
       .catch((err: any) => {
         console.error("CreateProfile.tsx -- handleCreateProfile() Error:", err)
@@ -133,9 +141,14 @@ const AddUser = ({ trigger }: any) => {
         )
       })}
 
+<SButtonContainer>
       <SButton onClick={handleSaveUserUpdate} type="button">
         {"Save Changes"}
       </SButton>
+      <SButton onClick={hideCreateNew} type="button">
+        {"Cancel"}
+      </SButton>
+      </SButtonContainer>
     </SContainer>
   )
 }

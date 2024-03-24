@@ -25,8 +25,8 @@ const SContainer = styled(SFlexCol)`
 `
 
 const Repository = ({}: any) => {
-  const { repoId } = useParams()
-  const { username } = useSelector((state: any) => state)
+
+  const { username, repoId, repoEntity, userId } = useSelector((state: any) => state)
 
   const [currentRepo, setCurrentRepo] = useState<any>()
   const [owner, setOwner] = useState<string>("")
@@ -45,7 +45,7 @@ const Repository = ({}: any) => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [repoFiles, setRepoFiles] = useState<any[]>([])
-  const { repoEntity, userId } = useSelector((state: any) => state)
+
 
   const dispatch = useDispatch()
 
