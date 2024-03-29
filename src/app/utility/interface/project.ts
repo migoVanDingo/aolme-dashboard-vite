@@ -12,4 +12,5 @@ export interface ISyncImportStorage {
     description: string
     path: string
     use_blob_urls: boolean
+    repoId: string
 }

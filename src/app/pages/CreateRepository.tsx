@@ -57,14 +57,14 @@ const CreateRepository = ({ userId }: any) => {
   }
 
   const uploadFiles = (res: any) => {
-    return UploadService.handleFileUpload(
+    /* return UploadService.handleFileUpload(
       selectedFiles,
       res.data,
       res.data["project_id"],
       (e: any) => {
         setProgress(Math.round((100 * e.loaded) / e.total))
       },
-    )
+    ) */
   }
 
   const createProject = async (e: any) => {

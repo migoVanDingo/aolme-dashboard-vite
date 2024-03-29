@@ -15,6 +15,7 @@ import {
 import OrgUsers from "../components/organization/user/OrgUsers"
 import OrgRepos from "../components/organization/repo/OrgRepos"
 import { RepoAPI } from "../api/RepoAPI"
+import OrgDataset from "../components/organization/dataset/OrgDataset"
 
 const SContainer = styled(SFlexCol)`
   height: calc(100vh - ${({ theme }) => theme.header.height});
@@ -306,9 +307,9 @@ const Organization = () => {
             editRepo={editRepo}
             setEditRepo={setEditRepo}
           />
-        ) : (
-          <></>
-        )}
+        ) : selected === "DATASET" ? (
+          <OrgDataset />
+        ): (<></>)}
       </SOrgDashboard>
     </SContainer>
   )

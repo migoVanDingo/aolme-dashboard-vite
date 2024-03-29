@@ -46,7 +46,7 @@ const fileUpload = async (files: any[], data: any, onUploadProgress: any, repoId
 
 
 }
-const handleFileUpload = async (files: any[], data: ISyncImportStorage, projectId: string,  onUploadProgress: any) => {
+const handleFileUpload = async (files: any[], data: ISyncImportStorage, projectId: string, fileSetId: string, onUploadProgress: any) => {
 
   //const { name, description, owner } = data
 
@@ -55,12 +55,14 @@ const handleFileUpload = async (files: any[], data: ISyncImportStorage, projectI
   for( let i = 0; i < files.length; i++){
     formData.append("file", files[i])
   }
-  console.log("proejct_ID: ",data['project_id'] )
+  //console.log("proejct_ID: ",data['project_id'] )
+  //console.log("fileset_id: ", fileSetId)
 
-  formData.append("project_id", data['project_id'].toString())
+  formData.append("project_id", projectId)
   formData.append("title", data['title'])
   formData.append("description", data['description'])
-  formData.append("path", '/Users/bubz/Developer/master-project/aolme-backend/project/' + projectId  + '/local-storage')
+  formData.append("repo_id", data['repoId'])
+  formData.append("path", '/Users/bubz/Developer/master-project/aolme-backend/_fs/repository/RPSRX342696AGOCBH9773KOY9/local-storage')
 
   console.log('files length: ', files.length)
  
@@ -73,7 +75,7 @@ const handleFileUpload = async (files: any[], data: ISyncImportStorage, projectI
   console.log("from data: ", formData) */
 
 
-  return await axios.post("http://localhost:5000/files/"+projectId, formData, {
+  return await axios.post("http://localhost:5000/files/"+projectId+"/"+fileSetId, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
