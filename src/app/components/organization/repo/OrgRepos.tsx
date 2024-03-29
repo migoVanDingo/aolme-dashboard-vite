@@ -17,14 +17,26 @@ const SContainer = styled(SFlexCol)`
 
 const SCreateNew = styled(SFlexRow)`
   width: 100%;
-  height: 100px;
+  
 
   color: ${({ theme }) => theme.color.color_6};
-  font-size: 1.3rem;
+  
   font-weight: 200;
-  padding: 20px;
+  
   align-items: center;
   box-sizing: border-box;
+
+  &.sm{
+    height: 35px;
+    font-size: 0.8rem;
+    padding: 10px
+  }
+
+  &.lg{
+    height: 100px;
+    font-size: 1.3rem;
+    padding: 20px;
+  }
 `
 
 const SDashedBox = styled(SFlexRow)`
@@ -74,12 +86,14 @@ const OrgRepos = ({ repoList, trigger, edit, setEdit }: any) => {
     <SContainer>
       {createNew === true ? (
         <AddRepo trigger={trigger} hideCreateNew={hideCreateNew} />
-      ) : repos.length > 0 ? (
+      ) : repos.length > 0 && (
         repos.map((repo: any, index: number) => {
           return <RepoCard key={repo.repo_id} repo={repo} />
         })
-      ) : (
+      )}
+
         <SCreateNew
+          className={createNew === true ? "sm" : "lg"}
           onMouseOver={showHover}
           onMouseOut={hideHover}
           onClick={showCreateNew}
@@ -88,7 +102,6 @@ const OrgRepos = ({ repoList, trigger, edit, setEdit }: any) => {
             + Create Org Repository
           </SDashedBox>{" "}
         </SCreateNew>
-      )}
     </SContainer>
   )
 }
