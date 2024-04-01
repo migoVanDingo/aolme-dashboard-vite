@@ -57,7 +57,26 @@ const TextInputComponent = ({
       <SLabel>{label}</SLabel>
       {inputType === "select" ? (
         <SelectInput defaultValue={inputValue} label={label.toUpperCase()} setInputValue={setInputValue} handleInput={handleInput}/>
-      ) : (
+      ) : inputType === "text-area" ? (
+        <textarea
+          style={{
+            width: "300px",
+            height: "100px",
+            borderRadius: "5px",
+            padding: "4px 7px",
+            fontSize: "1rem",
+            backgroundColor: "#dedede",
+            fontFamily: "Helvetica, sans-serif",
+            fontWeight: "500",
+            border: "none",
+            boxSizing: "border-box",
+            margin: "0",
+          }}
+          onChange={handleInput}
+          value={inputValue}
+        />
+      ) 
+      : (
         <STextInput
           type={inputType}
           onChange={handleInput}

@@ -24,6 +24,8 @@ const SContainer = styled(SFlexCol)`
   padding: 0px 10px;
   box-sizing: border-box;
 
+
+
   &.loading {
     align-items: center;
     justify-content: center;
@@ -35,6 +37,9 @@ const SOrgDashboard = styled.div`
   height: 100%;
   background-color: ${({ theme }) => theme.color.color_1};
   display: grid;
+  position: relative; 
+  padding: 0;
+  margin: 0;
   grid-template-columns: 200px repeat(4, 1fr);
   grid-template-rows: 50px repeat(4, 1fr);
   grid-template-areas:
@@ -54,23 +59,28 @@ const SHeader = styled.div`
   color: ${({ theme }) => theme.color.color_6};
   font-weight: 200;
   padding-left: 20px;
+  display:fixed;
 `
 
 const SSidebar = styled.div`
-  height: 100%;
+  height: auto;
   width: 100%;
   grid-area: sidebar;
   background-color: ${({ theme }) => theme.color.color_1};
   padding: 0;
   margin: 130px 0;
+
 `
 
 const SOrgToolbar = styled.ul`
   list-style: none;
+  height: auto;
   width: 100%;
   margin: 0;
   padding: 0;
   overflow: hidden;
+  display: fixed;
+
 `
 
 const SToolbarItem = styled.li`

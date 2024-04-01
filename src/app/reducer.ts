@@ -16,6 +16,10 @@ const initState: object = {
   repoOwner:"",
   repoEntity:"",
 
+  datasetId:"",
+  datasetName:"",
+  datasetDescription:"",
+
 
 
 
@@ -83,6 +87,26 @@ const reducer = (state = initState, action: any) => {
         ...state,
         repoEntity: action.repoEntity
       }
+
+    case ACTIONS.SET_DATASET_ID:
+      return {
+        ...state,
+        datasetId: action.datasetId
+      }
+
+    case ACTIONS.SET_DATASET_NAME:
+      return {
+        ...state,
+        datasetName: action.datasetName
+      }
+
+    case ACTIONS.SET_DATASET_DESCRIPTION:
+      return {
+        ...state,
+        datasetDescription: action.datasetDescription
+      }
+
+    
 
     default:
       break;

@@ -8,31 +8,33 @@ import RepoCard from "../../profile/repo/RepoCard"
 
 const SContainer = styled(SFlexCol)`
   width: 100%;
+  height: calc(calc(100% - 50px) - - ${({ theme }) => theme.header.height});
   gap: 10px;
   grid-area: content;
   box-sizing: border-box;
-
   background-color: ${({ theme }) => theme.color.color_2};
+  overflow: hidden;
+  overflow-y: scroll;
+  padding: 30px 50px;
 `
 
 const SCreateNew = styled(SFlexRow)`
   width: 100%;
-  
 
   color: ${({ theme }) => theme.color.color_6};
-  
+
   font-weight: 200;
-  
+
   align-items: center;
   box-sizing: border-box;
 
-  &.sm{
+  &.sm {
     height: 35px;
     font-size: 0.8rem;
-    padding: 10px
+    padding: 10px;
   }
 
-  &.lg{
+  &.lg {
     height: 100px;
     font-size: 1.3rem;
     padding: 20px;
@@ -42,6 +44,7 @@ const SCreateNew = styled(SFlexRow)`
 const SDashedBox = styled(SFlexRow)`
   width: 100%;
   height: 100%;
+  min-height: 70px;
   border: 2px dashed ${({ theme }) => theme.color.color_6};
   align-items: center;
   justify-content: center;
@@ -86,14 +89,16 @@ const OrgRepos = ({ repoList, trigger, edit, setEdit }: any) => {
     <SContainer>
       {createNew === true ? (
         <AddRepo trigger={trigger} hideCreateNew={hideCreateNew} />
-      ) : repos.length > 0 && (
+      ) : (
+        repos.length > 0 &&
         repos.map((repo: any, index: number) => {
           return <RepoCard key={repo.repo_id} repo={repo} />
         })
       )}
 
-        <SCreateNew
-          className={createNew === true ? "sm" : "lg"}
+      {
+        createNew === false && (<SCreateNew
+          className={"lg"}
           onMouseOver={showHover}
           onMouseOut={hideHover}
           onClick={showCreateNew}
@@ -101,7 +106,10 @@ const OrgRepos = ({ repoList, trigger, edit, setEdit }: any) => {
           <SDashedBox className={hover ? "hover" : ""}>
             + Create Org Repository
           </SDashedBox>{" "}
-        </SCreateNew>
+        </SCreateNew>)
+      }
+
+      
     </SContainer>
   )
 }

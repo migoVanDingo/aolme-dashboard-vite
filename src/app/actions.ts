@@ -15,6 +15,11 @@ export const ACTIONS = {
     SET_REPO_DESCRIPTION: "SET_REPO_DESCRIPTION",
     SET_REPO_OWNER: "SET_REPO_OWNER",
     SET_REPO_ENTITY: "SET_REPO_ENTITY",
+
+    SET_DATASET_ID: "SET_DATASET_ID",
+    SET_DATASET_NAME: "SET_DATASET_NAME",
+    SET_DATASET_DESCRIPTION: "SET_DATASET_DESCRIPTION",
+    
     
 }
 
@@ -89,6 +94,29 @@ export const setRepoEntity = (repoEntity: string) => {
         repoEntity: repoEntity
     }
 }
+
+export const setDatasetId = (datasetId: string) => {
+    return {
+        type: ACTIONS.SET_DATASET_ID,
+        datasetId: datasetId
+    }
+}
+
+export const setDatasetName = (datasetName: string) => {
+    return {
+        type: ACTIONS.SET_DATASET_NAME,
+        datasetName: datasetName
+    }
+}
+
+export const setDatasetDescription = (datasetDescription: string) => {
+    return {
+        type: ACTIONS.SET_DATASET_DESCRIPTION,
+        datasetDescription: datasetDescription
+    }
+}
+
+
 
 
 

@@ -29,7 +29,7 @@ export const RepoHeader = ({ owner, projectName, entityName }: any) => {
 
   return (
     <SContainer>
-        <RepoTitle owner={owner} projectName={projectName} entityName={entityName}/>
+        <RepoTitle owner={owner} projectName={projectName} entityName={entityName} />
         <RepoTabs setActiveTab={setActiveTab} activeTab={activeTab} />
     </SContainer>
   )

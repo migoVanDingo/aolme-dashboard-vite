@@ -1,14 +1,15 @@
 import React from "react"
 import styled from "styled-components"
-import { SFlexCol, SFlexRowWrap } from "../../common/containers/FlexContainers"
-import { useNavigate } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
-import { setRepoId } from "../../../actions"
+import {
+  SFlexCol,
+  SFlexRow,
+  SFlexRowWrap,
+} from "../../common/containers/FlexContainers"
 
 const SContainer = styled(SFlexCol)`
   align-items: flex-start;
-  width: 100%;
-  min-height: 160px;
+  height: 300px;
+  width: 380px;
   border: 1px solid ${({ theme }) => theme.color.color_3};
   border-radius: ${({ theme }) => theme.container.borderRadius.lg};
   overflow: hidden;
@@ -16,10 +17,7 @@ const SContainer = styled(SFlexCol)`
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-
-  
-  
-
+  overflow: hidden;
 `
 
 const SCardTop = styled(SFlexCol)`
@@ -30,34 +28,31 @@ const SCardTop = styled(SFlexCol)`
   padding: 20px;
   box-sizing: border-box;
 `
+
 const SCardBottom = styled(SFlexCol)`
   background-color: ${({ theme }) => theme.color.color_2_5};
   width: 100%;
-  height: 4fr;
+  height: 100%;
   align-items: baseline;
   padding: 20px;
   box-sizing: border-box;
-
-  
 `
-
-const SRepoName = styled.p`
+const SName = styled.p`
   color: #2c91b2;
   padding: 0;
   margin: 0;
   font-size: 1rem;
   font-weight: 500;
 
-  &:hover{
+  &:hover {
     color: #00bfff;
     cursor: pointer;
   }
-
 `
 
 const SLastUpdated = styled.p`
   padding: 0;
-  margin: 0;
+  margin: 5px 0 0 0;
   font-size: 0.8rem;
   font-weight: 200;
   color: ${({ theme }) => theme.color.color_5};
@@ -70,12 +65,11 @@ const SDescription = styled.p`
   line-height: 25px;
   font-weight: 400;
   color: ${({ theme }) => theme.color.color_8};
-
 `
 
 const STagContainer = styled(SFlexRowWrap)`
-    padding: 10px;
-    gap: 5px;
+  padding: 10px;
+  gap: 5px;
 `
 const STag = styled(SFlexCol)`
   width: 40px;
@@ -86,41 +80,23 @@ const STag = styled(SFlexCol)`
   font-size: 0.7rem;
   font-weight: 100;
   justify-content: center;
-
 `
 
-const RepoCard = ({ repo }: any) => {
-  //const { id, name, description } = data
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-
-
-  const handleSelectRepo = () => {
-
-    dispatch(setRepoId(repo.repo_id))
-    navigate(`/repository/${repo.repo_id}`)
-
-  }
-
+const DatasetCard = ({ dataset, selectDataset }: any) => {
   return (
     <SContainer>
       <SCardTop>
-        <SRepoName onClick={handleSelectRepo}>{repo.name}</SRepoName>
-        <SLastUpdated>{"2 months ago"}</SLastUpdated>
+        <SName onClick={() => selectDataset(dataset.dataset_id)}>{dataset.name}</SName>
+        <SLastUpdated>{dataset.updated_by}</SLastUpdated>
+        <SLastUpdated>{dataset.updated_at}</SLastUpdated>
       </SCardTop>
       <SCardBottom>
-
-        <SDescription>{repo.description}</SDescription>
-        <STagContainer>
-     
-          {/* {tags &&
-            tags.map((tag: any, index: number) => {
-              return <STag key={index}>{tag}</STag>
-            })} */}
-        </STagContainer>
+        <SDescription>
+          {dataset.description}
+        </SDescription>
       </SCardBottom>
     </SContainer>
   )
 }
 
-export default RepoCard
+export default DatasetCard

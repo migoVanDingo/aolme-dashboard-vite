@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { SFlexCol, SFlexRow } from '../../common/containers/FlexContainers'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBook } from '@fortawesome/free-solid-svg-icons'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 
 
@@ -57,6 +59,7 @@ const SLink = styled.p`
     &.sub{
         color: ${({theme}) => theme.accent.color_1};
         margin-left: 3px;
+        cursor: pointer;
 
     }
 
@@ -69,6 +72,15 @@ const link2 = "www.yumama.com"
 
 
 const RepoTitle = ({ owner, projectName, entityName }: any) => {
+
+    const { orgId } = useSelector((state: any) => state)
+    const nav = useNavigate()
+
+    const handleGoToEntity = () => {
+        nav(`/organization/${orgId}`)
+    }
+
+
   return (
     <SContainer>
         <STitleContainer>
@@ -79,7 +91,7 @@ const RepoTitle = ({ owner, projectName, entityName }: any) => {
         </STitleContainer>
         <SLinkContainer>
             <SLink >{link1}</SLink>
-            <SLink className={"sub"}>{entityName}</SLink>
+            <SLink className={"sub"} onClick={handleGoToEntity}>{entityName}</SLink>
         </SLinkContainer>
     </SContainer>
   )
