@@ -7,7 +7,7 @@ import BranchContent from "./BranchContent"
 import FileUpload from "../../../common/inputs/file-upload/FileUpload"
 import { SButton } from "../../../common/styled"
 import FileUploadService from "../../../../services/FileUploadService"
-import IDataset from "../../../../utility/interface/dataset"
+import {IDataset} from "../../../../utility/interface/dataset"
 import IModule from "../../../../utility/interface/module"
 import {
   faFile,

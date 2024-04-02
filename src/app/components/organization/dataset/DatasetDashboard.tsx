@@ -30,14 +30,14 @@ const SWrapContainer = styled(SFlexRowWrap)`
 
 const DatasetDashboard = () => {
 
-    const [datasets, setDatasets] = useState<any[]>()
+    const [datasets, setDatasets] = useState<any[]>([])
 
     const [hover, setHover] = useState(false)
     const [createNewActive, setCreateNewActive] = useState(false)
 
     const [viewActive, setViewActive] = useState(false)
     const [viewId, setViewId] = useState<string>("")
-    const [activeDataset, setActiveDataset] = useState<any>({})
+    const [activeDataset, setActiveDataset] = useState<any>(null)
 
     const [trigger, setTrigger] = useState(false)
 
@@ -112,7 +112,7 @@ const DatasetDashboard = () => {
                   <CreateDataset trigger={triggerRender} hideCreateNew={handleHideCreateView}/>
             </SContainer>
           )
-    } else if (viewActive && viewId !== "") {
+    } else if (viewActive && viewId !== "" && activeDataset !== null) {
 
         return(
             <SContainer>

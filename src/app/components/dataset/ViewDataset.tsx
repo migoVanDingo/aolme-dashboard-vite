@@ -1,43 +1,130 @@
-import React, { useEffect } from 'react'
-import styled from 'styled-components'
-import { SFlexCol } from '../common/containers/FlexContainers'
-import { useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from "react"
+import styled from "styled-components"
+import { SFlexCol } from "../common/containers/FlexContainers"
+import { useParams } from "react-router-dom"
+import { useSelector } from "react-redux"
+import Subset from "./subset/Subset"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
+import { DatasetAPI } from "../../api/DatasetAPI"
 
 const SContainer = styled(SFlexCol)`
-    width: 100%;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-    
+  width: 100%;
+  height: 100%;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 50px;
 `
 
 const SDsHeading = styled.h1`
-    font-size: 2rem;
-    font-weight: 200;
-    margin: 20px 0;
-    color: ${({ theme }) => theme.color.color_6};
+  font-size: 2rem;
+  font-weight: 200;
+  margin: 20px 0;
+  color: ${({ theme }) => theme.color.color_6};
 `
 
 const SPara = styled.p`
-    font-size: 1rem;
-    font-weight: 200;
-    margin: 20px 0;
-    text-align: center;
-    color: ${({ theme }) => theme.color.color_6};
+  font-size: 1rem;
+  font-weight: 200;
+  margin: 20px 0;
+  text-align: center;
+  color: ${({ theme }) => theme.color.color_6};
+`
+
+const SButton = styled.button`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  color: ${({ theme }) => theme.color.color_6};
+  border: 1px solid ${({ theme }) => theme.color.color_6};
+  border-radius: ${({ theme }) => theme.container.borderRadius.sm};
+  height: 30px;
+  width: 200px;
+  gap: 5px;
+  margin-bottom: 30px;
+
+  &.hover {
+    color: ${({ theme }) => theme.accent.color_1};
+    border-color: ${({ theme }) => theme.accent.color_1};
+    cursor: pointer;
+  }
+`
+const SIcon = styled(FontAwesomeIcon)`
+  color: ${({ theme }) => theme.color.color_6};
+
+  &.hover {
+    color: ${({ theme }) => theme.accent.color_1};
+  }
 `
 
 const ViewDataset = ({ hideView, viewId, dataset }: any) => {
-    //const { datasetId, datasetName, datasetDescription } = useSelector((state: any) => state)
+  //const { datasetId, datasetName, datasetDescription } = useSelector((state: any) => state)
 
+  const [buttonHover, setButtonHover] = useState<boolean>(false)
+  const [subsets, setSubsets] = useState<any[]>([])
 
-    
+  const hoverOn = () => setButtonHover(true)
+  const hoverOff = () => setButtonHover(false)
+
+  const [isNewSubsetActive, setNewSubsetActive] = useState<boolean>(false)
+  const [trigger, setTrigger] = useState<boolean>(false)
+  const triggerRender = () => setTrigger(!trigger)
+
+  const createViewActive = () => setNewSubsetActive(true)
+  const createViewInactive = () => setNewSubsetActive(false)
+
+  useEffect(() => {
+    const init = () => {
+      if (subsets.length === 0) {
+        loadSubsets()
+      }
+    }
+
+    return init()
+  }, [])
+
+  useEffect(() => {
+    loadSubsets()
+  }, [trigger])
+
+  const loadSubsets = () => {
+    DatasetAPI.getSubsetListByDatasetId(dataset.dataset_id)
+      .then((res: any) => {
+        console.log("SUBSETS: ", res)
+        setSubsets(res.data)
+      })
+      .catch((err: any) => console.log(err))
+  }
+
   return (
     <SContainer>
-        <SDsHeading>{dataset.name}</SDsHeading>
-        <SPara>{dataset.description}</SPara>
-        <button onClick={hideView}>Hide View</button>
+      {!isNewSubsetActive && (
+        <>
+          <SButton
+            className={buttonHover ? "hover" : ""}
+            onClick={hideView}
+            onMouseOver={hoverOn}
+            onMouseLeave={hoverOff}
+          >
+            <SIcon className={buttonHover ? "hover" : ""} icon={faArrowLeft} />
+            Back to Datasets
+          </SButton>
+          <SDsHeading>{dataset.name}</SDsHeading>
 
+          <SPara>{dataset.description}</SPara>
+        </>
+      )}
+
+      <Subset
+        isNewSubsetActive={isNewSubsetActive}
+        createViewActive={createViewActive}
+        createViewInactive={createViewInactive}
+        subsets={subsets}
+        dataset={dataset}
+        triggerRender={triggerRender}
+      />
     </SContainer>
   )
 }

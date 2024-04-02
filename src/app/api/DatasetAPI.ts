@@ -1,36 +1,59 @@
-import IDataset from "../utility/interface/dataset";
-import { Requests } from "./Requests";
+import FileUploadService from "../services/FileUploadService"
+import { IDataset } from "../utility/interface/dataset"
+import { Requests } from "./Requests"
 
 export class DatasetAPI {
   public static async createDataset(payload: IDataset) {
-    return Requests.doPost(payload, "/api/dataset");
+    return Requests.doPost(payload, "/api/dataset")
   }
 
   public static async getDatasetList() {
-    return Requests.doGet("/api/dataset");
+    return Requests.doGet("/api/dataset")
   }
 
   public static async getDatasetById(datasetId: string) {
-    return Requests.doGet("/api/dataset/" + datasetId);
+    return Requests.doGet("/api/dataset/" + datasetId)
   }
 
   public static async getDatasetByRepoId(repoId: string) {
-    console.log('NOT_IMPLEMENTED: getDatasetByRepoId')
+    console.log("NOT_IMPLEMENTED: getDatasetByRepoId")
   }
 
   public static async getDatasetListByUserId(userId: string) {
-    return Requests.doGet("/api/dataset/user/" + userId);
+    return Requests.doGet("/api/dataset/user/" + userId)
   }
 
   public static async getDatasetListByEntity(entityId: string) {
-    return Requests.doGet("/api/dataset/entity/" + entityId);
+    return Requests.doGet("/api/dataset/entity/" + entityId)
   }
 
   public static async deleteDataset(datasetId: string) {
-    return Requests.doDelete("/api/dataset/" + datasetId);
+    return Requests.doDelete("/api/dataset/" + datasetId)
   }
 
   public static async updateDataset(datasetId: string, payload: any) {
-    return Requests.doPatch("/api/dataset/" + datasetId, payload);
+    return Requests.doPatch("/api/dataset/" + datasetId, payload)
+  }
+
+  public static async createSubset(
+    payload: any,
+    files: any[],
+    onUploadProgress: any
+  ) {
+    return FileUploadService.doFu(
+      payload,
+      files,
+      "/api/dataset/subset",
+      onUploadProgress,
+     
+    )
+  }
+
+  public static async getSubsetById(subsetId: string) {
+    return Requests.doGet("/api/dataset/subset/" + subsetId)
+  }
+
+  public static async getSubsetListByDatasetId(datasetId: string) {
+    return Requests.doGet("/api/dataset/" + datasetId + "/subset")
   }
 }

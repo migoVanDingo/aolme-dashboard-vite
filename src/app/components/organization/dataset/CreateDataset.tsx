@@ -9,7 +9,7 @@ import {
   ICreateRepository,
 } from "../../../utility/interface/repository"
 import { RepoAPI } from "../../../api/RepoAPI"
-import IDataset from "../../../utility/interface/dataset"
+import {IDataset} from "../../../utility/interface/dataset"
 import SelectInput from "../../common/inputs/select/SelectInput"
 import { DatasetAPI } from "../../../api/DatasetAPI"
 import {

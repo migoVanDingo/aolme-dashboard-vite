@@ -84,6 +84,21 @@ const handleFileUpload = async (files: any[], data: ISyncImportStorage, fileSetI
     
 }
 
+const doFu = (data: any, files: any[], url: string, onUploadProgress: any) => {
+  const formData = new FormData()
+  for(const field in data){
+    formData.append(field, data[field])
+  }
+
+  for(const file of files){
+    formData.append("file", file)
+  }
+
+  return FormDataClient.post(url, formData, {
+    onUploadProgress,
+  })
+}
+
 const upload = (file: any, onUploadProgress: any) => {
   let formData = new FormData()
 
@@ -121,7 +136,8 @@ const getFiles = () => {
 export default {
   upload,
   handleFileUpload,
-  fileUpload
+  fileUpload,
+  doFu
   /* getFiles,
   convertCsv,
   getCsvTest */

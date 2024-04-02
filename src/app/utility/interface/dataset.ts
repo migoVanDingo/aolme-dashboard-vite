@@ -1,4 +1,4 @@
-export default interface IDataset {
+export interface IDataset {
     entity_id: string
     entity_type: string
     description: string
@@ -7,4 +7,12 @@ export default interface IDataset {
     type: string
     is_public: boolean
 
+}
+
+export interface ICreateSubset {
+    dataset_id: string
+    name: string
+    description: string
+    owner: string
+    is_public: boolean
 }
