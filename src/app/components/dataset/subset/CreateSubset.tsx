@@ -78,6 +78,7 @@ const SInput = styled.input`
   cursor: pointer;
   height: 100%;
   z-index: 10;
+  
   &::file-selector-button {
     border: none;
     

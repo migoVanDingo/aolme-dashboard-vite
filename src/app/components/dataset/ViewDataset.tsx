@@ -21,7 +21,7 @@ const SContainer = styled(SFlexCol)`
 const SDsHeading = styled.h1`
   font-size: 2rem;
   font-weight: 200;
-  margin: 20px 0;
+  margin: 20px 0 5px;
   color: ${({ theme }) => theme.color.color_6};
 `
 
@@ -64,6 +64,14 @@ const SIcon = styled(FontAwesomeIcon)`
   &.hover {
     color: ${({ theme }) => theme.accent.color_1};
   }
+`
+
+const SLastUpdated = styled.p`
+  padding: 0;
+  margin: 5px 0 0 0;
+  font-size: 0.8rem;
+  font-weight: 200;
+  color: ${({ theme }) => theme.color.color_5};
 `
 
 const ViewDataset = ({ hideView, viewId, dataset }: any) => {
@@ -127,6 +135,7 @@ const ViewDataset = ({ hideView, viewId, dataset }: any) => {
             Back to Datasets
           </SButton>
           <SDsHeading>{dataset.name}</SDsHeading>
+          <SLastUpdated>ID: {dataset.dataset_id}</SLastUpdated>
 
           <SPara>{dataset.description}</SPara>
         </>

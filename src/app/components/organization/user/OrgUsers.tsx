@@ -106,60 +106,65 @@ const OrgUsers = ({ userList, trigger, edit, setEdit }: any) => {
 
   return (
     <SContent>
-      {
-      createNew === true ? (<AddUser trigger={trigger} hideCreateNew={hideCreateNew} />) : 
-      (<>
-       <SUserRow className="th">
-        <SUserCol>#</SUserCol> <SUserCol>Username</SUserCol>{" "}
-        <SUserCol>Email</SUserCol>
-        <SUserCol>Role</SUserCol>
-        <SUserCol>Status</SUserCol>
-        <SUserCol>Edit</SUserCol>
-      </SUserRow>
-      {
-      userList &&
-        userList.map((user: any, index: number) => {
-          user.roles[0].replaceAll('"', "")
+      {createNew === true ? (
+        <AddUser trigger={trigger} hideCreateNew={hideCreateNew} />
+      ) : (
+        <>
+          <SUserRow className="th">
+            <SUserCol>#</SUserCol> <SUserCol>Username</SUserCol>{" "}
+            <SUserCol>Email</SUserCol>
+            <SUserCol>Role</SUserCol>
+            <SUserCol>Status</SUserCol>
+            <SUserCol>Edit</SUserCol>
+          </SUserRow>
+          {userList &&
+            userList.map((user: any, index: number) => {
+              user.roles[0].replaceAll('"', "")
 
-          if (edit === true && editUser === user.user_id) {
-            return <OrgEditUser user={user} trigger={trigger} hideEdit={hideEdit} />
-          } else if (edit !== true){
-            
-            return (
-              <SUserRowChild key={index}>
-                <SUserCol>{index + 1}</SUserCol>{" "}
-                <SUserCol>{user.username}</SUserCol>{" "}
-                <SUserCol>{user.email}</SUserCol>
-                <SUserCol>{user.roles}</SUserCol>
-                <SUserCol>{user.user_status}</SUserCol>
-                <SUserCol>
-                  <SIcon
-                    onClick={() => updateUser(user.user_id)}
-                    icon={faEdit}
+              if (edit === true && editUser === user.user_id) {
+                return (
+                  <OrgEditUser
+                    user={user}
+                    trigger={trigger}
+                    hideEdit={hideEdit}
                   />
-                </SUserCol>
-              </SUserRowChild>
-            )
-          }
-        })}
+                )
+              } else if (edit !== true) {
+                return (
+                  <SUserRowChild key={index}>
+                    <SUserCol>{index + 1}</SUserCol>{" "}
+                    <SUserCol>{user.username}</SUserCol>{" "}
+                    <SUserCol>{user.email}</SUserCol>
+                    <SUserCol>{user.roles}</SUserCol>
+                    <SUserCol>{user.user_status}</SUserCol>
+                    <SUserCol>
+                      <SIcon
+                        onClick={() => updateUser(user.user_id)}
+                        icon={faEdit}
+                      />
+                    </SUserCol>
+                  </SUserRowChild>
+                )
+              }
+            })}
 
-      { edit !== true && (
-        <SNewGuy
-          onClick={showCreateNew}
-          onMouseOver={handleHover}
-          onMouseLeave={handleLeave}
-          className={"new-guy"}
-        >
-          <SDashedBox
-            onClick={() => console.log("click")}
-            className={createNewActive ? "active" : ""}
-          >
-            + Create New Org User
-          </SDashedBox>
-        </SNewGuy>
-      )}</>)
-      }
-     
+          {edit !== true && (
+            <SNewGuy
+              onClick={showCreateNew}
+              onMouseOver={handleHover}
+              onMouseLeave={handleLeave}
+              className={"new-guy"}
+            >
+              <SDashedBox
+                onClick={() => console.log("click")}
+                className={createNewActive ? "active" : ""}
+              >
+                + Create New Org User
+              </SDashedBox>
+            </SNewGuy>
+          )}
+        </>
+      )}
     </SContent>
   )
 }
