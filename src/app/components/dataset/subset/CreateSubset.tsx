@@ -69,15 +69,20 @@ const SButtonContainer2 = styled(SFlexRow)`
 
 const SIcon = styled(FontAwesomeIcon)`
   border: none;
+  position: absolute;
+  padding-left: 5px;
 `
 
 const SInput = styled.input`
   font-size: ${({ theme }) => theme.color.color_2};
   cursor: pointer;
-  width: 3fr;
-
+  height: 100%;
+  z-index: 10;
   &::file-selector-button {
     border: none;
+    
+
+    padding-left: 30px;
     color: ${({ theme }) => theme.color.color_6};
     background-color: transparent;
     border-right: 2px solid ${({ theme }) => theme.color.color_1};
@@ -89,12 +94,13 @@ const SInput = styled.input`
 const SInnerContainer = styled(SFlexRow)`
   background-color: ${({ theme }) => theme.color.color_3};
   font-size: 1rem;
-  width: 500px;
-  height: 25px;
+  width: 300px;
+  height: 35px;
   align-items: center;
-  padding: 5px 10px;
+  
   border-radius: ${({ theme }) => theme.container.borderRadius.sm};
   cursor: pointer;
+  box-sizing: border-box;
 
   &:hover {
     background-color: ${({ theme }) => theme.color.color_3};

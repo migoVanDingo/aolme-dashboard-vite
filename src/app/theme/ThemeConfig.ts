@@ -37,6 +37,7 @@ export const light = {
         color_1: "#21b57c",
         color_1_dim: "#15a36d",
         color_2: "#35beec",
+        color_3: "#2c91b2"
         
     },
     container: {
@@ -126,6 +127,7 @@ export const dark = {
         color_1: "#21b57c",
         color_1_dim: "#15a36d",
         color_2: "#35beec",
+        color_3: "#2c91b2"
     },
     container: {
         borderRadius:{
@@ -225,6 +227,7 @@ export const dark_grey_1 = {
         color_1: "#21b57c",
         color_1_dim: "#15a36d",
         color_2: "#35beec",
+        color_3: "#2c91b2"
     },
     container: {
         borderRadius:{
@@ -323,6 +326,7 @@ export const light_grey_1 = {
         color_1: "#21b57c",
         color_1_dim: "#15a36d",
         color_2: "#35beec",
+        color_3: "#2c91b2"
     },
     container: {
         borderRadius:{

@@ -18,6 +18,7 @@ const SContainer = styled(SFlexRow)`
   padding: 3px;
   border-radius: 4px;
   align-items: center;
+  
 
   &:hover {
     border: 1px solid ${({ theme }) => theme.color.color_7};
@@ -59,6 +60,7 @@ const SMenu = styled.ul`
   margin: 0;
   box-sizing: border-box;
   box-shadow: 2px 2px 6px ${({ theme }) => theme.color.shadow.dark};
+  z-index: 10;
 `
 
 const SListItem = styled.li`

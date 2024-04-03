@@ -5,15 +5,17 @@ import { useParams } from "react-router-dom"
 import { useSelector } from "react-redux"
 import Subset from "./subset/Subset"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
+import { faAdd, faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 import { DatasetAPI } from "../../api/DatasetAPI"
 
 const SContainer = styled(SFlexCol)`
-  width: 100%;
+  width: 1100px;
   height: 100%;
   align-items: flex-start;
   justify-content: center;
   padding: 50px;
+  box-sizing: border-box;
+
 `
 
 const SDsHeading = styled.h1`
@@ -27,8 +29,9 @@ const SPara = styled.p`
   font-size: 1rem;
   font-weight: 200;
   margin: 20px 0;
-  text-align: center;
+  text-align: left;
   color: ${({ theme }) => theme.color.color_6};
+  line-height: 25px;
 `
 
 const SButton = styled.button`
@@ -44,6 +47,10 @@ const SButton = styled.button`
   width: 200px;
   gap: 5px;
   margin-bottom: 30px;
+
+  &.subset {
+    margin-left: auto;
+  }
 
   &.hover {
     color: ${({ theme }) => theme.accent.color_1};
@@ -72,8 +79,16 @@ const ViewDataset = ({ hideView, viewId, dataset }: any) => {
   const [trigger, setTrigger] = useState<boolean>(false)
   const triggerRender = () => setTrigger(!trigger)
 
-  const createViewActive = () => setNewSubsetActive(true)
+  const createViewActive = () => {
+    hoverOffButton()
+    hoverOff()
+    setNewSubsetActive(true)
+  }
   const createViewInactive = () => setNewSubsetActive(false)
+
+  const [isHoverButton, setHoverButton] = useState<boolean>(false)
+  const hoverOnButton = () => setHoverButton(true)
+  const hoverOffButton = () => setHoverButton(false)
 
   useEffect(() => {
     const init = () => {
@@ -124,6 +139,9 @@ const ViewDataset = ({ hideView, viewId, dataset }: any) => {
         subsets={subsets}
         dataset={dataset}
         triggerRender={triggerRender}
+        isHoverButton={isHoverButton}
+        hoverOnButton={hoverOnButton}
+        hoverOffButton={hoverOffButton}
       />
     </SContainer>
   )

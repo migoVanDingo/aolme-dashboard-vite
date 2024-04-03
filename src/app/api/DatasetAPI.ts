@@ -3,6 +3,10 @@ import { IDataset } from "../utility/interface/dataset"
 import { Requests } from "./Requests"
 
 export class DatasetAPI {
+
+  /* This DatasetAPI class also interacts with the Subset and Subset Item backend APIs */
+
+  //Dataset API
   public static async createDataset(payload: IDataset) {
     return Requests.doPost(payload, "/api/dataset")
   }
@@ -35,6 +39,8 @@ export class DatasetAPI {
     return Requests.doPatch("/api/dataset/" + datasetId, payload)
   }
 
+
+  //Subset API
   public static async createSubset(
     payload: any,
     files: any[],
@@ -56,4 +62,13 @@ export class DatasetAPI {
   public static async getSubsetListByDatasetId(datasetId: string) {
     return Requests.doGet("/api/dataset/" + datasetId + "/subset")
   }
+
+  public static async deleteSubset(subsetId: string) {
+    return Requests.doDelete("/api/dataset/subset/" + subsetId)
+  }
+
+  public static async getSubsetItemList(subsetId: string) {
+    return Requests.doGet("/api/dataset/subset/" + subsetId + "/item")
+  }
+
 }
