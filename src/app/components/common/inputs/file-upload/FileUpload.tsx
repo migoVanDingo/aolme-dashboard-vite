@@ -12,12 +12,12 @@ const SContainer = styled(SFlexCol)`
 `
 const SInnerContainer = styled(SFlexRow)`
   background-color: ${({ theme }) => theme.color.color_2};
-  font-size: 1.2rem;
+  font-size: 1rem;
   width: 500px;
-  height: 30px;
+  height: 25px;
   align-items: center;
   padding: 5px 10px;
-  border-radius: ${({ theme }) => theme.container.borderRadius.md};
+  border-radius: ${({ theme }) => theme.container.borderRadius.sm};
   cursor: pointer;
 
   &:hover {
@@ -25,6 +25,7 @@ const SInnerContainer = styled(SFlexRow)`
   }
 `
 const SButtonContainer = styled(SFlexRow)`
+  width: 100%;
   height: 100%;
   padding: 0;
   margin: 0;
@@ -37,6 +38,7 @@ const SIcon = styled(FontAwesomeIcon)`
 const SInput = styled.input`
   font-size: ${({ theme }) => theme.color.color_2};
   cursor: pointer;
+  width: 3fr;
 
   &::file-selector-button {
     border: none;
@@ -63,6 +65,12 @@ const SButton = styled(Button)`
     }
 `
 
+const SButton2 = styled.button`
+  width: 1fr;
+  margin-left: auto;
+
+`
+
 interface IFilePayload {
   name: string
   folderId: string
@@ -71,7 +79,7 @@ interface IFilePayload {
   ext: string
 }
 
-const FileUpload = ({ handleFileChange}: any) => {
+const FileUpload = ({ handleFileChange, handleFormSubmit, inputFile }: any) => {
   
 
   return (
@@ -80,7 +88,8 @@ const FileUpload = ({ handleFileChange}: any) => {
         
           <SButtonContainer>
             <SIcon icon={faUpload} />
-            <SInput name="files" type="file" onChange={handleFileChange} multiple/>
+            <SInput name="files" type="file" ref={inputFile} onChange={handleFileChange} multiple/>
+            <SButton2 onClick={handleFormSubmit}>Upload</SButton2>
           </SButtonContainer>
   
       </SInnerContainer>

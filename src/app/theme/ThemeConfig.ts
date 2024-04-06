@@ -27,8 +27,8 @@ export const light = {
     },
     profile:{
         card:{
-            width: "300px",
-            height:"400px",
+            width: "220px",
+            height:"300px",
             border: "1px solid #bdbdbd",
             borderRadius: "12px"  
         }
@@ -37,6 +37,7 @@ export const light = {
         color_1: "#21b57c",
         color_1_dim: "#15a36d",
         color_2: "#35beec",
+        color_3: "#2c91b2"
         
     },
     container: {
@@ -116,8 +117,8 @@ export const dark = {
     },
     profile:{
         card:{
-            width: "300px",
-            height:"400px",
+            width: "220px",
+            height:"300px",
             border: "1px solid #8a8a8a",
             borderRadius: "12px" 
         }
@@ -126,6 +127,7 @@ export const dark = {
         color_1: "#21b57c",
         color_1_dim: "#15a36d",
         color_2: "#35beec",
+        color_3: "#2c91b2"
     },
     container: {
         borderRadius:{
@@ -215,8 +217,8 @@ export const dark_grey_1 = {
     },
     profile:{
         card:{
-            width: "300px",
-            height:"400px",
+            width: "220px",
+            height:"300px",
             border: "1px solid #8a8a8a",
             borderRadius: "12px" 
         }
@@ -225,6 +227,7 @@ export const dark_grey_1 = {
         color_1: "#21b57c",
         color_1_dim: "#15a36d",
         color_2: "#35beec",
+        color_3: "#2c91b2"
     },
     container: {
         borderRadius:{
@@ -313,8 +316,8 @@ export const light_grey_1 = {
     },
     profile:{
         card:{
-            width: "300px",
-            height:"400px",
+            width: "220px",
+            height:"300px",
             border: "1px solid #8a8a8a",
             borderRadius: "12px" 
         }
@@ -323,6 +326,7 @@ export const light_grey_1 = {
         color_1: "#21b57c",
         color_1_dim: "#15a36d",
         color_2: "#35beec",
+        color_3: "#2c91b2"
     },
     container: {
         borderRadius:{

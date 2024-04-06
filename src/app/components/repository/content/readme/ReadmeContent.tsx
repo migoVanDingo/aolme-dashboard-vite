@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { SFlexCol } from '../../../common/containers/FlexContainers'
-import { connect } from 'react-redux'
+import { connect, useSelector } from 'react-redux'
 
 const SContainer = styled(SFlexCol)`
     width: 100%;
@@ -37,9 +37,17 @@ const desc = "Add README documentation"
 
 const repoName = "Hello-World"
 
-const ReadmeContent = (state: any) => {
+const ReadmeContent = () => {
 
-  const { name, description } = state
+  const { repoName, repoDescription } = useSelector((state: any) => state)
+  const [name, setName] = useState("")
+  const [description, setDescription] = useState("")
+
+  useEffect(() => {
+    
+    setName(repoName)
+    setDescription(repoDescription)
+  }, [repoName, repoDescription])
   return (
     <SContainer>
         <SRepoName>{name && name}</SRepoName>
@@ -48,10 +56,5 @@ const ReadmeContent = (state: any) => {
   )
 }
 
-const mapStoreStateToProps = (state: any) => {
-  return {
-    ...state
-  }
-}
 
-export default connect(mapStoreStateToProps)(ReadmeContent)
+export default ReadmeContent

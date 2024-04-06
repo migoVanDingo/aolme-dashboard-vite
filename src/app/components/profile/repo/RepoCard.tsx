@@ -2,11 +2,13 @@ import React from "react"
 import styled from "styled-components"
 import { SFlexCol, SFlexRowWrap } from "../../common/containers/FlexContainers"
 import { useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { setRepoId } from "../../../actions"
 
 const SContainer = styled(SFlexCol)`
   align-items: flex-start;
   width: 100%;
-
+  min-height: 160px;
   border: 1px solid ${({ theme }) => theme.color.color_3};
   border-radius: ${({ theme }) => theme.container.borderRadius.lg};
   overflow: hidden;
@@ -23,17 +25,17 @@ const SContainer = styled(SFlexCol)`
 const SCardTop = styled(SFlexCol)`
   background-color: ${({ theme }) => theme.color.color_0};
   width: 100%;
-  height: 70px;
+  height: 1fr;
   align-items: baseline;
-  padding: 20px;
+  padding: 20px 30px;
   box-sizing: border-box;
 `
 const SCardBottom = styled(SFlexCol)`
   background-color: ${({ theme }) => theme.color.color_2_5};
   width: 100%;
-  height: 115px;
+  height: 100%;
   align-items: baseline;
-  padding: 20px;
+  padding: 20px 30px;
   box-sizing: border-box;
 
   
@@ -55,7 +57,7 @@ const SRepoName = styled.p`
 
 const SLastUpdated = styled.p`
   padding: 0;
-  margin: 0;
+  margin: 5px 0 0 0;
   font-size: 0.8rem;
   font-weight: 200;
   color: ${({ theme }) => theme.color.color_5};
@@ -87,23 +89,29 @@ const STag = styled(SFlexCol)`
 
 `
 
-const RepoCard = ({ data }: any) => {
-  const { id, name, description, ls_project_id } = data
+const RepoCard = ({ repo }: any) => {
+  //const { id, name, description } = data
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-  const handleSelectRepo = (ls_project_id: any) => {
-    navigate("/project/"+ls_project_id)
+
+  const handleSelectRepo = () => {
+
+    dispatch(setRepoId(repo.repo_id))
+    navigate(`/repository/${repo.repo_id}`)
+
   }
 
   return (
     <SContainer>
       <SCardTop>
-        <SRepoName onClick={() => handleSelectRepo(ls_project_id)}>{name}</SRepoName>
-        <SLastUpdated>{"2 months ago"}</SLastUpdated>
+        <SRepoName onClick={handleSelectRepo}>{repo.name}</SRepoName>
+        <SLastUpdated>{"ID: " + repo.repo_id}</SLastUpdated>
+        <SLastUpdated>{repo.updated_at !== null ? "Last Updated: " + repo.updated_at : "Created: " + repo.created_at}</SLastUpdated>
       </SCardTop>
       <SCardBottom>
 
-        <SDescription>{description}</SDescription>
+        <SDescription>{repo.description}</SDescription>
         <STagContainer>
      
           {/* {tags &&

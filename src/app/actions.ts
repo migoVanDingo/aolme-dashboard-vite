@@ -1,86 +1,30 @@
 import { ProjectAPI } from "./api/ProjectAPI"
 
 export const ACTIONS = {
-    SET_CURRENT_PROJECT_ID: "SET_CURRENT_PROJECT_ID",
-    SET_CURRENT_PROJECT_OWNER: "SET_CURRENT_PROJECT_OWNER",
-    SET_CURRENT_PROJECT_DESCRIPTION: "SET_CURRENT_PROJECT_DESCRIPTION",
-    SET_CURRENT_PROJECT_NAME: "SET_CURRENT_PROJECT_NAME",
-    SET_CURRENT_PROJECT_CREATED_BY: "SET_CURRENT_PROJECT_CREATED_BY",
-    SET_CURRENT_PROJECT_CREATED_AT: "SET_CURRENT_PROJECT_CREATED_AT",
-    SET_CURRENT_PROJECT_LAST_UPDATE_BY: "SET_CURRENT_PROJECT_LAST_UPDATE_BY",
-    SET_CURRENT_PROJECT_LAST_UPDATE_AT: "SET_CURRENT_PROJECT_LAST_UPDATE_AT",
+ 
 
     SET_USER_ID: "SET_USER_ID",
     SET_USERNAME:"SET_USERNAME",
+    SET_USER_EMAIL:"SET_USER_EMAIL",
 
-}
+    SET_ORGANIZATION_ID: "SET_ORGANIZATION_ID",
+    SET_ORGANIZATION_NAME: "SET_ORGANIZATION_NAME",
 
-export const setCurrentProjectId = (projectId: number) => {
-    return {
-        type: ACTIONS.SET_CURRENT_PROJECT_ID,
-        projectId: projectId
+    SET_REPO_ID: "SET_REPO_ID",
+    SET_REPO_NAME: "SET_REPO_NAME",
+    SET_REPO_DESCRIPTION: "SET_REPO_DESCRIPTION",
+    SET_REPO_OWNER: "SET_REPO_OWNER",
+    SET_REPO_ENTITY: "SET_REPO_ENTITY",
 
-    }
-}
-
-export const setCurrentProjectOwner = (owner: string) => {
-    return {
-        type: ACTIONS.SET_CURRENT_PROJECT_OWNER,
-        owner: owner
+    SET_DATASET_ID: "SET_DATASET_ID",
+    SET_DATASET_NAME: "SET_DATASET_NAME",
+    SET_DATASET_DESCRIPTION: "SET_DATASET_DESCRIPTION",
     
-    }
-}
-
-export const setCurrentProjectDescription = (description: string) => {
-    return {
-        type: ACTIONS.SET_CURRENT_PROJECT_DESCRIPTION,
-        description: description
     
-    }
-}
-
-export const setCurrentProjectName= (name: string) => {
-    return {
-        type: ACTIONS.SET_CURRENT_PROJECT_NAME,
-        name: name
-    
-    }
 }
 
 
-export const setCurrentProjectCreatedAt= (createdAt: string) => {
-    return {
-        type: ACTIONS.SET_CURRENT_PROJECT_CREATED_AT,
-        createdAt: createdAt
-    
-    }
-}
-
-export const setCurrentProjectCreatedBy= (createdBy: string) => {
-    return {
-        type: ACTIONS.SET_CURRENT_PROJECT_CREATED_BY,
-        createdBy: createdBy
-    
-    }
-}
-
-export const setCurrentProjectLastUpdatedAt= (lastUpdatedAt: string) => {
-    return {
-        type: ACTIONS.SET_CURRENT_PROJECT_LAST_UPDATE_AT,
-        lastUpdatedAt: lastUpdatedAt
-    
-    }
-}
-
-export const setCurrentProjectLastUpdatedBy= (lastUpdatedBy: string) => {
-    return {
-        type: ACTIONS.SET_CURRENT_PROJECT_LAST_UPDATE_BY,
-        lastUpdatedBy: lastUpdatedBy
-    
-    }
-}
-
-export const setUserId = (userId: string) => {
+export const setStoreUserId = (userId: string) => {
     return {
         type: ACTIONS.SET_USER_ID,
         userId: userId
@@ -88,11 +32,91 @@ export const setUserId = (userId: string) => {
     }
 }
 
-export const setUsername = (username: string) => {
+export const setStoreUsername = (username: string) => {
     return {
         type: ACTIONS.SET_USERNAME,
         username: username
     }
 }
+
+export const setStoreUserEmail = (email: string) => {
+    return {
+        type: ACTIONS.SET_USER_EMAIL,
+        email: email
+    }
+}
+
+export const setStoreOrganizationId = (orgId: string) => {
+    return {
+        type: ACTIONS.SET_ORGANIZATION_ID,
+        orgId: orgId
+    }
+}
+
+export const setStoreOrganizationName = (orgName: string) => {
+    return {
+        type: ACTIONS.SET_ORGANIZATION_NAME,
+        orgName: orgName
+    }
+}
+
+export const setRepoId = (repoId: string) => {
+    return {
+        type: ACTIONS.SET_REPO_ID,
+        repoId: repoId
+    }
+}
+
+export const setRepoName = (repoName: string) => {
+    return {
+        type: ACTIONS.SET_REPO_NAME,
+        repoName: repoName
+    }
+}
+
+export const setRepoDescription = (repoDescription: string) => {
+    return {
+        type: ACTIONS.SET_REPO_DESCRIPTION,
+        repoDescription: repoDescription
+    }
+}
+
+export const setRepoOwner = (repoOwner: string) => {
+    return {
+        type: ACTIONS.SET_REPO_OWNER,
+        repoOwner: repoOwner
+    }
+}
+
+export const setRepoEntity = (repoEntity: string) => {
+    return {
+        type: ACTIONS.SET_REPO_ENTITY,
+        repoEntity: repoEntity
+    }
+}
+
+export const setDatasetId = (datasetId: string) => {
+    return {
+        type: ACTIONS.SET_DATASET_ID,
+        datasetId: datasetId
+    }
+}
+
+export const setDatasetName = (datasetName: string) => {
+    return {
+        type: ACTIONS.SET_DATASET_NAME,
+        datasetName: datasetName
+    }
+}
+
+export const setDatasetDescription = (datasetDescription: string) => {
+    return {
+        type: ACTIONS.SET_DATASET_DESCRIPTION,
+        datasetDescription: datasetDescription
+    }
+}
+
+
+
 
 

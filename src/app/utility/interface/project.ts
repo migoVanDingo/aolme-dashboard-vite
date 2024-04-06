@@ -7,9 +7,9 @@ export interface ICreateProject {
 }
 
 export interface ISyncImportStorage {
-    project_id: number
     title: string
     description: string
-    path: string
     use_blob_urls: boolean
+    repoId: string
+    entity_id: string
 }

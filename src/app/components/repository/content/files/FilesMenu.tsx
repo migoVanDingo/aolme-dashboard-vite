@@ -37,8 +37,12 @@ const FilesMenu = ({
   folderItemsSwitch, 
   setFolderItemsSwitch,
   projectId,
+  handleSelectFileMenuOption,
+  tabs,
+  activeTab,
+  setActiveTab
 }: any) => {
-  const [activeTab, setActiveTab] = useState<string>("All")
+  
   const [breadCrumbDirectory, setBreadCrumbDirectory] = useState<string[]>([])
 
   const navigate = useNavigate()
@@ -87,7 +91,7 @@ const FilesMenu = ({
    
   }
 
-  if (folderPath !== null && folderPath.length > 0) {
+  /* if (folderPath !== null && folderPath.length > 0) {
     return (
       <SContainer>
         <SCrumb>Directory:</SCrumb>
@@ -97,13 +101,13 @@ const FilesMenu = ({
         {breadCrumbDirectory}
       </SContainer>
     )
-  } else {
+  } else { */
     return (
       <SContainer>
-        <MenuTabs setActiveTab={setActiveTab} activeTab={activeTab} />
+        <MenuTabs tabs={tabs} handleSelectFileMenuOption={handleSelectFileMenuOption}  setActiveTab={setActiveTab} setFolderPath={setFolderPath} activeTab={activeTab} />
       </SContainer>
     )
-  }
+ /*  } */
 }
 const mapStoreStateToProps = (state: any) => {
   return {

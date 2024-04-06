@@ -4,8 +4,10 @@ import { SFlexCol } from "../components/common/containers/FlexContainers"
 import TextInputComponent from "../components/common/inputs/text/TextInputComponent"
 import Button from "../components/common/buttons/Button"
 import { hashed } from "../utility/hash"
-import { PayloadCreateUser } from "../utility/interface/user"
+import { FormCreateProfile, PayloadCreateUser } from "../utility/interface/user"
 import { UserAPI } from "../api/UserAPI"
+import { useAuth } from "../context/AuthContext"
+import { useNavigate } from "react-router-dom"
 
 const SContainer = styled(SFlexCol)`
   align-items: baseline;
@@ -35,13 +37,7 @@ const SButton = styled.button`
   }
 `
 
-interface FormCreateProfile {
-  label: string
-  type: string
-  inputValue: string
-  error: string
-  setInputValue: (a: string) => void
-}
+
 
 const CreateProfile = () => {
   const [username, setUsername] = useState<string>("")
@@ -55,6 +51,9 @@ const CreateProfile = () => {
   const [verifyError, setVerifyError] = useState<string>("")
 
   const [loading, setLoading] = useState<boolean>(false)
+
+  const { register } = useAuth()
+  const nav = useNavigate()
 
   const formInputs: FormCreateProfile[] = [
     {
@@ -87,7 +86,7 @@ const CreateProfile = () => {
     },
   ]
 
-  const handleCreateProfile = () => {
+  const handleCreateProfile = async () => {
     let err = false
     console.log("create profile")
 
@@ -124,18 +123,14 @@ const CreateProfile = () => {
         password,
       }
 
-      UserAPI.createUser(payload)
-        .then((result: any) => {
-          console.log(result.data)
-          setLoading(false)
-        })
-        .catch((err: any) => {
-          setLoading(false)
-          console.error(
-            "CreateProfile.tsx -- handleCreateProfile() Error: ",
-            err,
-          )
-        })
+      //AuthContext
+      const newUser = register(payload)
+      .then((result: any) => {
+        console.log("CreateProfile.tsx handleCreateProfile(): ", result)
+        nav("/login")
+      })
+      .catch((err: any) => console.error(err))
+      
     } else console.log("errors")
   }
 

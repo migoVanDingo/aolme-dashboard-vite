@@ -9,9 +9,11 @@ import {
   faCode
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { connect } from "react-redux"
+import { connect, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { ProcessAPI } from "../../../api/ProcessAPI"
+import { ICreateLabelStudioProject, LabelStudioAPI } from "../../../api/LabelStudioAPI"
+
 
 const SContainer = styled(SFlexRow)`
   grid-area: tabs;
@@ -45,10 +47,41 @@ const SIcon = styled(FontAwesomeIcon)``
 
 const RepoTabs = ({ activeTab, setActiveTab, projectId, name }: any) => {
   
+  const { repoEntity, userId, repoId, repoDescription, repoName} = useSelector((state: any) => state)
+
+
   const nav = useNavigate()
 
   const initializeLabelStudio = () => {
-    console.log("name: ", name)
+    const payload: ICreateLabelStudioProject = {
+      name: repoName,
+      description: repoDescription,
+      owner: repoEntity,
+      created_by: userId,
+      repo_id: repoId
+    }
+    LabelStudioAPI.getLabelStudioProjectByRepoId(repoId)
+    .then((res: any) => { 
+      console.log("res: ", res)
+      if(res.data && res.data.length > 0){
+        window.open('http://localhost:8080','_blank')
+      } else {
+        LabelStudioAPI.initializeLabelStudioProject(payload)
+        .then((res: any) => {
+          console.log("res: ", res)
+          window.open('http://localhost:8080','_blank')
+        })
+        .catch((err: any) => console.error(err))
+      }
+    })
+    .catch((err: any) => console.error(err))
+    //window.open('http://localhost:8080/projects/' + projectId + '/data?tab=83','_blank')
+    /* LabelStudioAPI.initializeLabelStudioProject(payload)
+    .then((res: any) => {
+      console.log("res: ", res)
+    })
+    .catch((err: any) => console.error(err)) */
+    /* console.log("name: ", name)
     console.log("projectId: ", projectId)
     ProcessAPI.launchLabelStudio(name)
     .then((res: any) => {
@@ -61,36 +94,42 @@ const RepoTabs = ({ activeTab, setActiveTab, projectId, name }: any) => {
       }
         
     })
-    .catch((err: any) => console.error(err))
+    .catch((err: any) => console.error(err)) */
     
   }
 
   const initializeJupyterNotebook = () => {
-    ProcessAPI.launchJupyterNotebook(projectId)
-    .then((res:any) => {
+    const payload = {
+      entity_id: repoEntity,
+      description: "JUPYTER NOTEBOOK",
+      owner: userId,
+      type: "NOTEBOOK",
+      is_public: 0,
+      repo_id: repoId
+    }
 
+    ProcessAPI.launchJupyterNotebook(payload)
+    .then((res:any) => {
       console.log("launching jupyter notebook...")
     })
     .catch((err: any) => console.error(err))
   }
 
+  const initializeMLFlow = () => {
+    window.open('http://localhost:9000','_blank')
+  }
+
   const tabs = [
     {
       title: "Files",
-      callback: () => {},
+      callback: () => console.log("FILES"),
       icon: faFile,
     },
     {
       title: "Datasets",
-      callback: () => {},
+      callback: () => console.log("DATASETS"),
       icon: faServer,
     },
-    {
-      title: "Experiments",
-      callback: () => {},
-      icon: faFlask,
-    },
-    
     {
       title: "Annotate",
       callback: initializeLabelStudio,
@@ -100,6 +139,11 @@ const RepoTabs = ({ activeTab, setActiveTab, projectId, name }: any) => {
       title: "Notebook",
       callback: initializeJupyterNotebook,
       icon: faCode,
+    },
+    {
+      title: "Experiments",
+      callback: initializeMLFlow,
+      icon: faFlask,
     },
   ]
 
@@ -136,11 +180,5 @@ const RepoTabs = ({ activeTab, setActiveTab, projectId, name }: any) => {
   )
 }
 
-const mapStoreStateToProps = (state: any) => {
-  return {
-    projectId: state['projectId'],
-    name: state['name']
-  }
-}
 
-export default connect(mapStoreStateToProps)(RepoTabs)
+export default RepoTabs

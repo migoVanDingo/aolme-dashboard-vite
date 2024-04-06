@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faFile, faFolder } from "@fortawesome/free-solid-svg-icons"
 import { SFlexRow } from "../../../common/containers/FlexContainers"
-import { connect } from "react-redux"
+import { connect, useSelector } from "react-redux"
 import { FilesAPI } from "../../../../api/FileAPI"
 
 const SRow = styled(SFlexRow)`
@@ -75,6 +75,13 @@ const SLastUpdate = styled.p`
   padding: 5px 0;
 `
 
+const SEmptyRepo = styled(SFlexRow)`
+  padding: 10px 60px 60px;
+  font-size: 1.2rem;
+  color: ${({ theme }) => theme.color.color_3};
+`
+
+
 const BranchContent = ({
   folderPath,
   setFolderPath,
@@ -83,16 +90,20 @@ const BranchContent = ({
   stopSwitchFolders,
   setStopSwitchFolders,
   folderItemsSwitch, 
-  setFolderItemsSwitch
+  setFolderItemsSwitch,
+  files,
+  handleTriggerRender
 }: any) => {
-  const [files, setFiles] = useState<any[]>([])
+  //const [files, setFiles] = useState<any[]>([])
   const [folders, setFolders] = useState<any[]>([])
   const [stopSwitchFiles, setStopSwitchFiles] = useState<boolean>(false)
+
+  const { repoEntity } = useSelector((state: any) => state)
 
   
 
   let fp = []
-  useEffect(() => {
+  /* useEffect(() => {
     const getProjectFiles = (projectId: number) => {
       if (projectId !== undefined && stopSwitchFiles === false) {
         setStopSwitchFiles(true)
@@ -128,33 +139,34 @@ const BranchContent = ({
       getProjectFolders()
       
     }
-  }, [projectId, trigger])
+  }, [projectId, trigger]) */
 
-  useEffect(() => {
+ /*  useEffect(() => {
     if (folderItemsSwitch === true) {
       console.log("folderPath: ", folderPath)
-      FilesAPI.getFolderItems(projectId, folderPath)
+      FilesAPI.getFolderItems(repoEntity, folderPath)
         .then((result: any) => {
           const files = result.data.filter((item: any) => item.type === "file")
+          
           let folders = result.data.filter(
             (item: any) => item.type === "folder",
           )
 
-          folders = folders.map((folder: any) => folder.name)
+          //folders = folders.map((folder: any) => folder.name)
 
 
 
           console.log("files: ", files)
-          console.log("folders: ", folders)
+          //console.log("folders: ", folders)
           setFolderItemsSwitch(false)
           setFiles(files)
-          setFolders(folders)
+          //setFolders(folders)
         })
         .catch((err: any) =>
           console.error("BranchContent -- handleSelectFolder(): ", err),
         )
     }
-  }, [folderPath, folderItemsSwitch])
+  }, [folderPath, folderItemsSwitch]) */
 
   const handleContentClicks = () => {}
 
@@ -168,7 +180,10 @@ const BranchContent = ({
 
   return (
     <>
-      {folders &&
+    {
+      folders.length === 0 && files.length === 0 && (<SEmptyRepo>Empty Repo. Upload files or create modules to get started.</SEmptyRepo>)
+    }
+     {/*  {folders &&
         folders.map((folder: any, index: number) => {
           console.log('folder'+ index+ ": ", folder)
           return (
@@ -190,7 +205,7 @@ const BranchContent = ({
               )}
             </SRow>
           )
-        })}
+        })} */}
       {files &&
         files.map((file: any, index: number) => {
           return (
@@ -217,10 +232,5 @@ const BranchContent = ({
   )
 }
 
-const mapStoreStateToProps = (state: any) => {
-  return {
-    projectId: state.projectId,
-  }
-}
 
-export default connect(mapStoreStateToProps)(BranchContent)
+export default BranchContent

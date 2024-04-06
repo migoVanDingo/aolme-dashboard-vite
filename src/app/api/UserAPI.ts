@@ -1,16 +1,14 @@
 import { hashed } from "../utility/hash";
-import { PayloadCreateUser, PayloadLogin } from "../utility/interface/user";
+import { EditUser, PayloadCreateUser, PayloadLogin } from "../utility/interface/user";
 import { Requests } from "./Requests"
 export class UserAPI {
 
     public static async createUser(payload: PayloadCreateUser) {
-
-        const hash = await hashed(payload.password)
-        payload.password = hash
-
-        console.log('processed: ', payload)
-
         return await Requests.doPost(payload, "/api/user")
+    }
+
+    public static async createOrgUser(payload: PayloadCreateUser, orgId: string) {
+        return await Requests.doPost(payload, "/api/user?entity_id="+orgId+"&entity_type=organization")
     }
 
     public static async getUserByUsername(username: string){
@@ -21,6 +19,10 @@ export class UserAPI {
     public static async getUserById(userId: string){
         return await Requests.doGet('/api/user/'+userId)
 
+    }
+
+    public static async updateUser(payload: EditUser, userId: string){
+        return await Requests.doPatch(payload, '/api/user/'+userId)
     }
 
     public static async login(payload: PayloadLogin){
