@@ -64,12 +64,12 @@ const SButton = styled.button`
 `
 
 
-const DashboardHeader = ({ hover, mouseOver, mouseOut, handleCreateDataset }: any) => {
+const DashboardHeader = ({ hover, mouseOver, mouseOut, handleCreateNew, heading, type }: any) => {
   return (
     <SContainer>
-        <SH2>Dataset Dashboard</SH2>
-        <SButton className={hover ? "hover": ""} onClick={handleCreateDataset} onMouseOver={mouseOver} onMouseOut={mouseOut}>
-          <SICon className={hover ? "hover": ""} icon={faAdd} /> Create Dataset
+        <SH2>{heading}</SH2>
+        <SButton className={hover ? "hover": ""} onClick={handleCreateNew} onMouseOver={mouseOver} onMouseOut={mouseOut}>
+          <SICon className={hover ? "hover": ""} icon={faAdd} /> Create {type}
         </SButton>
       </SContainer>
   )

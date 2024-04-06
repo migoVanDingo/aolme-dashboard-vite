@@ -123,10 +123,12 @@ const DatasetDashboard = () => {
     return (
       <SContainer>
         <DashboardHeader
-          handleCreateDataset={handleShowCreateView}
+          handleCreateNew={handleShowCreateView}
           hover={hover}
           mouseOver={mouseOver}
           mouseOut={mouseOut}
+          heading={"Dataset Dashboard"}
+          type={"Dataset"}
         />
 
         <SWrapContainer>

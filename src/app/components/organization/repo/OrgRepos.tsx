@@ -5,6 +5,7 @@ import styled from "styled-components"
 import ListCard from "../../common/cards/ListCard"
 import AddRepo from "./AddRepo"
 import RepoCard from "../../profile/repo/RepoCard"
+import DashboardHeader from "../dataset/header/DashboardHeader"
 
 const SContainer = styled(SFlexCol)`
   width: 100%;
@@ -15,7 +16,7 @@ const SContainer = styled(SFlexCol)`
   background-color: ${({ theme }) => theme.color.color_2};
   overflow: hidden;
   overflow-y: scroll;
-  padding: 30px 50px;
+  padding: 30px 350px 30px 50px;
 `
 
 const SCreateNew = styled(SFlexRow)`
@@ -79,7 +80,9 @@ const OrgRepos = ({ repoList, trigger, edit, setEdit }: any) => {
   const showHover = () => setHover(true)
   const hideHover = () => setHover(false)
 
-  const showCreateNew = () => setCreateNew(true)
+  const showCreateNew = () => {
+    hideHover()
+    setCreateNew(true)}
   const hideCreateNew = () => setCreateNew(false)
 
   const showEdit = () => setEdit(true)
@@ -90,14 +93,24 @@ const OrgRepos = ({ repoList, trigger, edit, setEdit }: any) => {
       {createNew === true ? (
         <AddRepo trigger={trigger} hideCreateNew={hideCreateNew} />
       ) : (
-        repos.length > 0 &&
-        repos.map((repo: any, index: number) => {
-          return <RepoCard key={repo.repo_id} repo={repo} />
-        })
+        <>
+          <DashboardHeader
+            handleCreateNew={showCreateNew}
+            hover={hover}
+            mouseOver={showHover}
+            mouseOut={hideHover}
+            heading={"Repository Dashboard"}
+            type={"Repository"}
+          />
+          {repos.length > 0 &&
+            repos.map((repo: any, index: number) => {
+              return <RepoCard key={repo.repo_id} repo={repo} />
+            })}
+        </>
       )}
 
-      {
-        createNew === false && (<SCreateNew
+      {createNew === false && (
+        <SCreateNew
           className={"lg"}
           onMouseOver={showHover}
           onMouseOut={hideHover}
@@ -106,10 +119,8 @@ const OrgRepos = ({ repoList, trigger, edit, setEdit }: any) => {
           <SDashedBox className={hover ? "hover" : ""}>
             + Create Org Repository
           </SDashedBox>{" "}
-        </SCreateNew>)
-      }
-
-      
+        </SCreateNew>
+      )}
     </SContainer>
   )
 }

@@ -16,6 +16,18 @@ export const SUserRow = styled(SFlexRow)`
     font-weight: 500;
     border-bottom: 1px solid ${({ theme }) => theme.color.color_1};
   }
+
+  &.subset-table-header {
+    border-top-left-radius:${({ theme }) => theme.container.borderRadius.sm};
+    border-top-right-radius:${({ theme }) => theme.container.borderRadius.sm};
+  }
+
+  &.subset-table-bottom {
+    border-bottom-left-radius:${({ theme }) => theme.container.borderRadius.sm};
+    border-bottom-right-radius:${({ theme }) => theme.container.borderRadius.sm};
+  }
+
+
 `
 
 export const SUserCol = styled(SFlexCol)`

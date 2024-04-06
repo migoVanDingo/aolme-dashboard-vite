@@ -34,24 +34,21 @@ const SUserRowChild = styled(SUserRow)`
 `
 
 const SFieldValue = styled(SFlexRow)`
-    width: 300px;
-    padding: 10px;
-    box-sizing: border-box;
+  width: 300px;
+  padding: 10px;
+  box-sizing: border-box;
 
-    transition: all 0.3s ease;
-    color: ${({ theme }) => theme.color.color_5};
-    font-size: 0.9rem;
-    font-weight: 300;
-    `
+  transition: all 0.3s ease;
+  color: ${({ theme }) => theme.color.color_5};
+  font-size: 0.9rem;
+  font-weight: 300;
+`
 
-
-const SubsetItemRow = ({ item }: any) => {
+const SubsetItemRow = ({ item, last = false }: any) => {
   return (
-    <SUserRowChild>
-        
-      <SFieldValue>{item.name}</SFieldValue> 
-      <SFieldValue>{item.subset_item_id}</SFieldValue> 
-
+    <SUserRowChild className={last ? "subset-table-bottom" : ""}>
+      <SFieldValue>{item.name}</SFieldValue>
+      <SFieldValue>{item.subset_item_id}</SFieldValue>
     </SUserRowChild>
   )
 }

@@ -21,7 +21,7 @@ const SContainer = styled(SFlexCol)`
   height: calc(100vh - ${({ theme }) => theme.header.height});
   width: 100%;
   align-items: baseline;
-  padding: 0px 10px;
+  padding: 0px;
   box-sizing: border-box;
 
 
@@ -40,6 +40,7 @@ const SOrgDashboard = styled.div`
   position: relative; 
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
   grid-template-columns: 200px repeat(4, 1fr);
   grid-template-rows: 50px repeat(4, 1fr);
   grid-template-areas:
@@ -267,6 +268,7 @@ const Organization = () => {
     {
       option: "Configurations",
       icon: "config",
+      type:'CONFIG',
       callback: loadOrgConfigurations,
     },
     {

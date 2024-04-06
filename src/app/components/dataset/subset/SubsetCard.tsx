@@ -128,12 +128,14 @@ const SubsetCard = ({ subset, dataset }: any) => {
                 <SFilesHeading key={index}>{heading}</SFilesHeading>
 
 
-                <SUserRow className="th">
+                <SUserRow className="th subset-table-header">
                   <SFieldValue>Name</SFieldValue>
                   <SFieldValue>Item ID</SFieldValue>
                 </SUserRow>
                 {subsetFiles && subsetFiles.length > 0 &&
                   subsetFiles.map((file: any, index: number) => {
+
+
                     if (file.type === heading) {
                       return <SubsetItemRow key={file.subset_item_id} item={file} />
                     }

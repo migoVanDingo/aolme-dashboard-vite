@@ -180,11 +180,5 @@ const RepoTabs = ({ activeTab, setActiveTab, projectId, name }: any) => {
   )
 }
 
-const mapStoreStateToProps = (state: any) => {
-  return {
-    projectId: state['projectId'],
-    name: state['name']
-  }
-}
 
-export default connect(mapStoreStateToProps)(RepoTabs)
+export default RepoTabs

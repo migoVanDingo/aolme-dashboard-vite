@@ -9,6 +9,7 @@ import { SButton } from "../../common/styled"
 import { SFlexRow } from "../../common/containers/FlexContainers"
 import OrgEditUser from "./OrgEditUser"
 import AddUser from "./AddUser"
+import DashboardHeader from "../dataset/header/DashboardHeader"
 
 const SIcon = styled(FontAwesomeIcon)`
   color: ${({ theme }) => theme.color.color_6};
@@ -73,20 +74,23 @@ const SDashedBox = styled(SFlexRow)`
   border-radius: ${({ theme }) => theme.container.borderRadius.sm};
 `
 
-const OrgUsers = ({ userList, trigger, edit, setEdit }: any) => {
-  const [editUser, setEditUser] = useState<string>("")
+const OrgUsers = ({ userList, trigger, editUser, setEditUser }: any) => {
+  //const [editUser, setEditUser] = useState<string>("")
 
-  const [username, setUsername] = useState<string>("")
+  const [userId, setUserId] = useState<string>("")
   const [email, setEmail] = useState<string>("")
   const [role, setRole] = useState<string>("")
+  const [hover, setHover] = useState(false)
+  const mouseOver = () => setHover(true)
+  const mouseOut = () => setHover(false)
 
   const [createNew, setCreateNew] = useState<boolean>(false)
   const [createNewActive, setCreateNewActive] = useState<boolean>(false)
 
   const updateUser = (userId: string) => {
     console.log("UPDATE USER: ", userId)
-    setEditUser(userId)
-    setEdit(!edit)
+    setUserId(userId)
+    setEditUser(!editUser)
   }
 
   const handleHover = () => {
@@ -97,19 +101,29 @@ const OrgUsers = ({ userList, trigger, edit, setEdit }: any) => {
     setCreateNewActive(false)
   }
 
-  const showCreateNew = () => setCreateNew(true)
-
+  const showCreateNew = () => {
+    mouseOut()
+    setCreateNew(true)}
   const hideCreateNew = () => setCreateNew(false)
 
-  const showEdit = () => setEdit(true)
-  const hideEdit = () => setEdit(false)
+  const showEdit = () => setEditUser(true)
+  const hideEdit = () => setEditUser(false)
 
   return (
     <SContent>
+      
       {createNew === true ? (
         <AddUser trigger={trigger} hideCreateNew={hideCreateNew} />
       ) : (
         <>
+        <DashboardHeader
+          handleCreateNew={showCreateNew}
+          hover={hover}
+          mouseOver={mouseOver}
+          mouseOut={mouseOut}
+          heading={"User Dashboard"}
+          type={"User"}
+        />
           <SUserRow className="th">
             <SUserCol>#</SUserCol> <SUserCol>Username</SUserCol>{" "}
             <SUserCol>Email</SUserCol>
@@ -119,9 +133,9 @@ const OrgUsers = ({ userList, trigger, edit, setEdit }: any) => {
           </SUserRow>
           {userList &&
             userList.map((user: any, index: number) => {
-              user.roles[0].replaceAll('"', "")
+              user.roles.replaceAll('"', "")
 
-              if (edit === true && editUser === user.user_id) {
+              if (editUser === true && userId === user.user_id) {
                 return (
                   <OrgEditUser
                     user={user}
@@ -129,7 +143,7 @@ const OrgUsers = ({ userList, trigger, edit, setEdit }: any) => {
                     hideEdit={hideEdit}
                   />
                 )
-              } else if (edit !== true) {
+              } else if (editUser !== true) {
                 return (
                   <SUserRowChild key={index}>
                     <SUserCol>{index + 1}</SUserCol>{" "}
@@ -148,7 +162,7 @@ const OrgUsers = ({ userList, trigger, edit, setEdit }: any) => {
               }
             })}
 
-          {edit !== true && (
+          {editUser !== true && (
             <SNewGuy
               onClick={showCreateNew}
               onMouseOver={handleHover}

@@ -20,7 +20,7 @@ const SLabel = styled.label`
 
 const statusOptions = ["ACTIVE", "INVITED", "INACTIVE", "BANNED"]
 
-const roleOptions = ["DEVELOPER", "OWNER", "ADMIN", "SUPERUSER"]
+const roleOptions = ["DEVELOPER", "OWNER", "ADMIN", "SUPERUSER", "USER"]
 
 const defaultOptions = ["No options available."]
 
@@ -43,7 +43,7 @@ const SelectInput = ({
             label === "PROPS" && <SLabel>{"Type"}</SLabel>
         }
       <SSelect
-        onChange={(e: any) => handleInput(e.target.value)}
+        onChange={(e: any) => handleInput(e)}
         defaultValue={defaultValue}
         value={type}
       >

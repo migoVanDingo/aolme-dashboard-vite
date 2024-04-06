@@ -27,15 +27,15 @@ const SCardTop = styled(SFlexCol)`
   width: 100%;
   height: 1fr;
   align-items: baseline;
-  padding: 20px;
+  padding: 20px 30px;
   box-sizing: border-box;
 `
 const SCardBottom = styled(SFlexCol)`
   background-color: ${({ theme }) => theme.color.color_2_5};
   width: 100%;
-  height: 4fr;
+  height: 100%;
   align-items: baseline;
-  padding: 20px;
+  padding: 20px 30px;
   box-sizing: border-box;
 
   
@@ -57,7 +57,7 @@ const SRepoName = styled.p`
 
 const SLastUpdated = styled.p`
   padding: 0;
-  margin: 0;
+  margin: 5px 0 0 0;
   font-size: 0.8rem;
   font-weight: 200;
   color: ${({ theme }) => theme.color.color_5};
@@ -106,7 +106,8 @@ const RepoCard = ({ repo }: any) => {
     <SContainer>
       <SCardTop>
         <SRepoName onClick={handleSelectRepo}>{repo.name}</SRepoName>
-        <SLastUpdated>{"2 months ago"}</SLastUpdated>
+        <SLastUpdated>{"ID: " + repo.repo_id}</SLastUpdated>
+        <SLastUpdated>{repo.updated_at !== null ? "Last Updated: " + repo.updated_at : "Created: " + repo.created_at}</SLastUpdated>
       </SCardTop>
       <SCardBottom>
 

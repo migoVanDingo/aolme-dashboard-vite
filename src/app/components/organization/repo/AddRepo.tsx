@@ -72,7 +72,7 @@ const AddRepo = ({ trigger, hideCreateNew }: any) => {
     },
     {
       label: "Description",
-      type: "text",
+      type: "text-area",
       inputValue: description,
       setInputValue: setDescription,
       error: descriptionError,
@@ -109,7 +109,7 @@ const AddRepo = ({ trigger, hideCreateNew }: any) => {
   }
   return (
     <SContainer>
-      <SHeading>Add Org User</SHeading>
+      <SHeading>Create Org Repo</SHeading>
 
       {formInputs.map((input: FormCreateRepo, index: number) => {
         return (

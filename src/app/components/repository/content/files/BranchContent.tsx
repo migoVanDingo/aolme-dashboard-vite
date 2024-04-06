@@ -76,7 +76,7 @@ const SLastUpdate = styled.p`
 `
 
 const SEmptyRepo = styled(SFlexRow)`
-  padding: 60px;
+  padding: 10px 60px 60px;
   font-size: 1.2rem;
   color: ${({ theme }) => theme.color.color_3};
 `
