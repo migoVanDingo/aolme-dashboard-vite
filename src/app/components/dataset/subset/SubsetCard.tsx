@@ -4,6 +4,11 @@ import { SFlexCol, SFlexRow } from "../../common/containers/FlexContainers"
 import { DatasetAPI } from "../../../api/DatasetAPI"
 import SubsetItemRow from "./SubsetItemRow"
 import { SUserCol, SUserRow } from "../../styled/SOrganization"
+import { ICreateLabelStudioProject, LabelStudioAPI } from "../../../api/LabelStudioAPI"
+import { useSelector } from "react-redux"
+import { ISyncImportStorage } from "../../../utility/interface/project"
+import FileUploadService from "../../../services/FileUploadService"
+import { ILabelSubset } from "../../../utility/interface/dataset"
 
 const SContainer = styled(SFlexCol)`
   width: 100%;
@@ -31,6 +36,12 @@ const SHeading = styled.h3`
   font-weight: 200;
   margin: 0;
   color: ${({ theme }) => theme.accent.color_3};
+`
+
+const SCardHeader = styled(SFlexRow)`
+  width: 100%;
+  justify-content: space-between;
+  align-items: baseline;
 `
 
 const SLastUpdated = styled.p`
@@ -66,20 +77,43 @@ const SFilesHeading = styled.h3`
   color: ${({ theme }) => theme.color.color_6};
 `
 const SFieldValue = styled(SFlexRow)`
-    width: 300px;
-    padding: 10px;
-    box-sizing: border-box;
+  width: 300px;
+  padding: 10px;
+  box-sizing: border-box;
 
-    transition: all 0.3s ease;
-    color: ${({ theme }) => theme.color.color_5};
-    font-size: 0.9rem;
-    font-weight: 300;
-    `
+  transition: all 0.3s ease;
+  color: ${({ theme }) => theme.color.color_5};
+  font-size: 0.9rem;
+  font-weight: 300;
+`
+
+const SLabelerButton = styled.button`
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+
+  background-color: ${({ theme }) => theme.color.color_2};
+  border: 1px solid ${({ theme }) => theme.color.color_3};
+  color: ${({ theme }) => theme.color.color_6};
+  font-size: 0.9rem;
+  font-weight: 300;
+  padding: 5px 10px;
+  border-radius: ${({ theme }) => theme.container.borderRadius.sm};
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.color.color_2_5};
+    border-color: ${({ theme }) => theme.accent.color_1};
+    color: ${({ theme }) => theme.accent.color_1};
+  }
+`
 
 const SubsetCard = ({ subset, dataset }: any) => {
   const [subsetFiles, setSubsetFiles] = useState<any[]>([])
   const [loopLength, setLoopLength] = useState<number>(0)
   const [headingArr, setHeadingArr] = useState<any[]>([])
+
+  const { userId } = useSelector((state: any) => state)
 
   useEffect(() => {
     DatasetAPI.getSubsetItemList(subset.subset_id)
@@ -108,36 +142,44 @@ const SubsetCard = ({ subset, dataset }: any) => {
     setLoopLength(uniqueArr.length)
   }, [subsetFiles])
 
+  
+
+  
+
   return (
     <SContainer>
-      <SHeading>Title: {subset.name}</SHeading>
+      <SCardHeader>
+        <SHeading>Title: {subset.name}</SHeading>
+        <SLabelerButton>{"Launch Labeler"}</SLabelerButton>
+      </SCardHeader>
+
       <SLastUpdated>ID: {subset.subset_id}</SLastUpdated>
       {subset.updated_at !== null ? (
         <SLastUpdated>Last Updated: {subset.updated_at}</SLastUpdated>
       ) : (
         <SLastUpdated>Created: {subset.created_at}</SLastUpdated>
       )}
-      
+
       <SDescription>{subset.description}</SDescription>
 
       <SFlexColContainer>
         {headingArr.length > 0 &&
           headingArr.map((heading: any, index: number) => {
             return (
-              <SFilesContainer>
-                <SFilesHeading key={index}>{heading}</SFilesHeading>
-
+              <SFilesContainer key={index}>
+                <SFilesHeading>{heading}</SFilesHeading>
 
                 <SUserRow className="th subset-table-header">
                   <SFieldValue>Name</SFieldValue>
                   <SFieldValue>Item ID</SFieldValue>
                 </SUserRow>
-                {subsetFiles && subsetFiles.length > 0 &&
+                {subsetFiles &&
+                  subsetFiles.length > 0 &&
                   subsetFiles.map((file: any, index: number) => {
-
-
                     if (file.type === heading) {
-                      return <SubsetItemRow key={file.subset_item_id} item={file} />
+                      return (
+                        <SubsetItemRow key={file.subset_item_id} item={file} />
+                      )
                     }
                   })}
               </SFilesContainer>

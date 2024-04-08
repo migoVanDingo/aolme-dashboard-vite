@@ -16,3 +16,9 @@ export interface ICreateSubset {
     owner: string
     is_public: boolean
 }
+
+export interface ILabelSubset {
+    subset_id: string
+    dataset_id: string
+    entity_id: string
+}

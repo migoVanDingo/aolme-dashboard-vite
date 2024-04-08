@@ -9,8 +9,12 @@ import QuickUpload from "../../repository/content/files/QuickUpload"
 import FileUpload from "../../common/inputs/file-upload/FileUpload"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUpload } from "@fortawesome/free-solid-svg-icons"
-import { ICreateSubset } from "../../../utility/interface/dataset"
+import { ICreateSubset, ILabelSubset } from "../../../utility/interface/dataset"
 import { DatasetAPI } from "../../../api/DatasetAPI"
+import {
+  ICreateLabelStudioProject,
+  LabelStudioAPI,
+} from "../../../api/LabelStudioAPI"
 
 const SContainer = styled(SFlexCol)`
   align-items: flex-start;
@@ -78,10 +82,9 @@ const SInput = styled.input`
   cursor: pointer;
   height: 100%;
   z-index: 10;
-  
+
   &::file-selector-button {
     border: none;
-    
 
     padding-left: 30px;
     color: ${({ theme }) => theme.color.color_6};
@@ -98,7 +101,7 @@ const SInnerContainer = styled(SFlexRow)`
   width: 300px;
   height: 35px;
   align-items: center;
-  
+
   border-radius: ${({ theme }) => theme.container.borderRadius.sm};
   cursor: pointer;
   box-sizing: border-box;
@@ -123,12 +126,12 @@ const CreateSubset = ({ dataset, createViewInactive, triggerRender }: any) => {
 
   const [name, setName] = useState<string>("")
   const [description, setDescription] = useState<string>("")
-  const [type, setType] = useState<string>(types[0])
+  const [fileSetId, setFileSetId] = useState<string>("")
   const [status, setStatus] = useState<string>("")
 
   const [nameError, setNameError] = useState<string>("")
   const [descriptionError, setDescriptionError] = useState<string>("")
-  const [typeError, setTypeError] = useState<string>("")
+  const [fileSetError, setFileSetError] = useState<string>("")
   const [statusError, setStatusError] = useState<string>("")
   const [progress, setProgress] = useState<number>(0)
 
@@ -150,13 +153,13 @@ const CreateSubset = ({ dataset, createViewInactive, triggerRender }: any) => {
       setInputValue: setName,
       error: nameError,
     },
-    /* {
-        label: "Type",
-        type: "select",
-        inputValue: type,
-        setInputValue: setType,
-        error: typeError,
-      }, */
+    {
+        label: "File Set Id",
+        type: "text",
+        inputValue: fileSetId,
+        setInputValue: setFileSetId,
+        error: fileSetError,
+      },
     {
       label: "Description",
       type: "text-area",
@@ -181,15 +184,62 @@ const CreateSubset = ({ dataset, createViewInactive, triggerRender }: any) => {
     DatasetAPI.createSubset(payload, selectedFiles, (e: any) => {
       setProgress(Math.round((100 * e.loaded) / e.total))
     })
-      .then((res) => {
-        console.log("CreateSubset::handleCreate():: Subset Created: ", res.data)
+      .then((res: any) => {
+        setTimeout(() => {
+          console.log(
+            "CreateSubset::handleCreate():: Subset Created: ",
+            res.data,
+          )
+          initializeLabelStudio(res.data)
+        }, 3000)
+      })
+      .then(() => {
         createViewInactive()
         triggerRender()
         handleReset()
       })
+
       .catch((err) => {
         console.error("CreateSubset::handleCreate():: Error: ", err)
       })
+  }
+
+  const initializeLabelStudio = (subset: any) => {
+    const payload: ICreateLabelStudioProject = {
+      name: subset.name,
+      description: subset.description,
+      owner: dataset.entity_id,
+      created_by: userId,
+      subset_id: subset.subset_id,
+      dataset_id: dataset.dataset_id,
+      entity_id: dataset.entity_id,
+    }
+
+    LabelStudioAPI.initializeLabelStudioProject(payload)
+      .then((res: any) => {
+        console.log("res: ", res)
+        if(selectedFiles.length > 0){
+          syncLsFiles(subset)
+        }
+      })
+      .catch((err: any) => console.error(err))
+  }
+
+  const syncLsFiles = (subset: any) => {
+    
+      const payload: ILabelSubset = {
+        subset_id: subset.subset_id,
+        dataset_id: dataset.dataset_id,
+        entity_id: dataset.entity_id,
+      }
+      console.log("syncLSFiles payload: ", payload)
+      
+      LabelStudioAPI.syncLabelStudioFiles(payload, fileSetId)
+      .then((res: any) => {
+        console.log("syncLSFiles res: ", res)
+      })
+      .catch((err: any) => console.error(err))
+    
   }
 
   const handleChangeSelect = (type: string) => {

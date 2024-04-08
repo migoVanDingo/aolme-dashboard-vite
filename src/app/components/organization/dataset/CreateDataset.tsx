@@ -130,9 +130,9 @@ const CreateDataset = ({ trigger, hideCreateNew }: any) => {
     return
   }
 
-  const handleChangeSelect = (type: string) => {
-    console.log("Type: ", type)
-    setType(type)
+  const handleChangeSelect = (e: any) => {
+    console.log("Type: ", e.target.value)
+    setType(e.target.value)
   }
   return (
     <SContainer>

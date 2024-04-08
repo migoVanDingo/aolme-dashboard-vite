@@ -46,6 +46,7 @@ const fileUpload = async (files: any[], data: any, onUploadProgress: any, repoId
 
 
 }
+
 const handleFileUpload = async (files: any[], data: ISyncImportStorage, fileSetId: number, onUploadProgress: any) => {
 
   //const { name, description, owner } = data
