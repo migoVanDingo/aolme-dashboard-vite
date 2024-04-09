@@ -81,12 +81,16 @@ const SOrgToolbar = styled.ul`
   padding: 0;
   overflow: hidden;
   display: fixed;
+  letter-spacing: 1px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
 
 `
 
 const SToolbarItem = styled.li`
   width: 100%;
-  padding: 10px 20px;
+  padding: 10px 20px 10px 40px;
   font-family: Arial, sans-serif;
   font-weight: 200;
   transition: all 0.2s ease;

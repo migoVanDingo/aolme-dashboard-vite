@@ -144,13 +144,16 @@ const SubsetCard = ({ subset, dataset }: any) => {
 
   
 
+  const openLabelStudio = () => {
+    window.open("http://localhost:8080", "_blank")
+  }
   
 
   return (
     <SContainer>
       <SCardHeader>
         <SHeading>Title: {subset.name}</SHeading>
-        <SLabelerButton>{"Launch Labeler"}</SLabelerButton>
+        <SLabelerButton onClick={openLabelStudio}>{"Launch Labeler"}</SLabelerButton>
       </SCardHeader>
 
       <SLastUpdated>ID: {subset.subset_id}</SLastUpdated>
