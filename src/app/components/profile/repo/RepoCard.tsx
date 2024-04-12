@@ -3,7 +3,8 @@ import styled from "styled-components"
 import { SFlexCol, SFlexRowWrap } from "../../common/containers/FlexContainers"
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { setRepoId } from "../../../actions"
+import { setRepoId, setStoreOrganizationId, setStoreOrganizationName } from "../../../actions"
+import { OrganizationAPI } from "../../../api/OrganizationAPI"
 
 const SContainer = styled(SFlexCol)`
   align-items: flex-start;
@@ -97,10 +98,26 @@ const RepoCard = ({ repo }: any) => {
 
   const handleSelectRepo = () => {
 
-    dispatch(setRepoId(repo.repo_id))
+    handleUpdateStore()
     navigate(`/repository/${repo.repo_id}`)
 
   }
+
+  const handleUpdateStore = () => {
+  
+    OrganizationAPI.getOrganizationById(repo.entity_id)
+      .then((res: any) => {
+        console.log(res.data)
+        dispatch(setRepoId(repo.repo_id))
+        dispatch(setStoreOrganizationId(res.data.organization_id))
+        dispatch(setStoreOrganizationName(res.data.name))
+        
+      })
+      .catch((err: any) =>
+        console.error("RepoCard::handleSelectRepo()::Error: ", err),
+      )
+  }
+
 
   return (
     <SContainer>

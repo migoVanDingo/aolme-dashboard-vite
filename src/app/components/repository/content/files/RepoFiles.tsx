@@ -38,15 +38,6 @@ const tabs = [
     },
   },
   {
-    title: "Configs",
-    url: "link",
-    type: "CONFIG",
-    icon: faListCheck,
-    callback: () => {
-      console.log("not implemented")
-    },
-  },
-  {
     title: "Dataset",
     url: "link",
     type: "DATASET",
@@ -55,6 +46,16 @@ const tabs = [
       console.log("not implemented")
     },
   },
+  {
+    title: "Configs",
+    url: "link",
+    type: "CONFIG",
+    icon: faListCheck,
+    callback: () => {
+      console.log("not implemented")
+    },
+  },
+
   {
     title: "Modules",
     url: "link",
@@ -72,7 +73,7 @@ const tabs = [
     callback: () => {
       console.log("not implemented")
     },
-  },
+  } /* ,
   {
     title: "Annotations",
     url: "link",
@@ -90,7 +91,7 @@ const tabs = [
     callback: () => {
       console.log("not implemented")
     },
-  },
+  }, */,
 ]
 
 const RepoFiles = ({ repoId /* , repoFiles */ }: any) => {
@@ -231,14 +232,16 @@ const RepoFiles = ({ repoId /* , repoFiles */ }: any) => {
         setActiveTab={setActiveTab}
       />
 
-      <QuickUpload
-        inputFile={inputFile}
-        handleShow={handleShow}
-        menuOption={menuOption}
-        show={show}
-        handleChange={handleFileChange}
-        handleFormSubmit={handleFormSubmit}
-      />
+     
+       {/*  <QuickUpload
+          inputFile={inputFile}
+          handleShow={handleShow}
+          menuOption={menuOption}
+          show={show}
+          handleChange={handleFileChange}
+          handleFormSubmit={handleFormSubmit}
+        /> */}
+      
 
       <BranchContent
         folderItemsSwitch={folderItemsSwitch}

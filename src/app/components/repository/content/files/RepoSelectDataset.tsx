@@ -76,63 +76,25 @@ const SLabel = styled.label`
   font-weight: 200;
 `
 
-const RepoSelectDataset = ({ repoEntity, selectedDataset, setSelectedDataset }: any) => {
-  const [datasets, setDatasets] = useState<any[]>([])
-  const [option, setOption] = useState<string>("")
-  
-  const [loadSubsets, setLoadSubsets] = useState<boolean>(false)
+const RepoSelectDataset = ({ 
+  repoEntity, 
+  selectedDataset, 
+  setSelectedDataset, 
+  option, 
+  setOption, 
+  handleSelectNewDataset,
+  datasets }: any) => {
 
-  useEffect(() => {
-    const init = () => {
-      getOrgDatasets(repoEntity)
-    }
-
-    return init()
-  }, [repoEntity])
-
-  useEffect(() => {
-    switch (option) {
-      case "ORG":
-        getOrgDatasets(repoEntity)
-        break
-      case "UPLOAD":
-        break
-      case "URL":
-        break
-      default:
-        break
-    }
-  }, [option])
-
-
-
-  const getOrgDatasets = (entity: string) => {
-    DatasetAPI.getDatasetListByEntity(entity)
-      .then((res: any) => {
-        console.log("RepoSelectDataset::getOrgDatasets()::res: ", res)
-        setDatasets(res.data)
-        setSelectedDataset(res.data[0])
-      })
-      .catch((err: any) =>
-        console.error("RepoSelectDataset::getOrgDatasets()::ERROR: ", err),
-      )
-  }
 
   const orgDatasetHandleChange = (e: any) => {
-    console.log(
-      "RepoSelectDataset::orgDatasetHandleChange()::e: ",
-      e.target.value,
-    )
     setSelectedDataset(e.target.value)
   }
-  const handleSelectDataset = () => {
-    console.log("RepoSelectDataset::handleSelectDataset()::selectedDataset: ", selectedDataset)
-    //setLoadSubsets(true)
-  }
+
+
 
   return (
     <SContainer>
-      {option === "" && !loadSubsets ? (
+      {option === "" ? (
         <>
           <SHeading>Dataset</SHeading>
           <SPara>
@@ -156,12 +118,12 @@ const RepoSelectDataset = ({ repoEntity, selectedDataset, setSelectedDataset }: 
           <SHeading>Select Organization Dataset</SHeading>
           <SSelect
             onChange={(e: any) => orgDatasetHandleChange(e)}
-            defaultValue={datasets[0].name}
             value={selectedDataset}
           >
+            <option value="" selected>Select a dataset</option>
             {datasets.map((option: any, index: number) => {
               return (
-                <option key={index} value={option}>
+                <option key={index} value={option.dataset_id}>
                   {option.name}
                 </option>
               )
@@ -171,7 +133,7 @@ const RepoSelectDataset = ({ repoEntity, selectedDataset, setSelectedDataset }: 
             <SButton onClick={() => setOption("")} className="small">
               Cancel
             </SButton>
-            <SButton onClick={handleSelectDataset} className="small">
+            <SButton onClick={handleSelectNewDataset} className="small">
               Select
             </SButton>
           </SButtonContainer>

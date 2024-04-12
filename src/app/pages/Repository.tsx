@@ -82,18 +82,13 @@ const Repository = ({}: any) => {
             setEntityId(res.data["entity_id"])
             setIsPublic(res.data["is_public"])
 
-            dispatch(setRepoId(res.data["repo_id"]))
+            //dispatch(setRepoId(res.data["repo_id"]))
             dispatch(setRepoName(res.data["name"]))
             dispatch(setRepoDescription(res.data["description"]))
             dispatch(setRepoOwner(res.data["owner"]))
             dispatch(setRepoEntity(res.data["entity_id"]))
           })
-/*           .then(() => {
-            checkForNotebookFiles()
-          })
-          .then(() => {
-            getProjectFiles()
-          }) */
+
           .catch((err: any) => console.error(err))
       }
     }
