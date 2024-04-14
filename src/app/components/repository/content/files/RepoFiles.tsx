@@ -97,7 +97,6 @@ const tabs = [
 const RepoFiles = ({ repoId /* , repoFiles */ }: any) => {
   const [folderPath, setFolderPath] = useState<string[]>([])
   const [trigger, triggerRender] = useState<boolean>(false)
-  const [stopSwitchFolders, setStopSwitchFolders] = useState<boolean>(false)
   const [folderItemsSwitch, setFolderItemsSwitch] = useState<boolean>(false)
   const [menuOption, setMenuOption] = useState<string>("ALL")
   const [selectedFiles, setSelectedFiles] = useState<any[]>([])
@@ -106,9 +105,6 @@ const RepoFiles = ({ repoId /* , repoFiles */ }: any) => {
   const [isPublic, setIsPublic] = useState<number>(0)
   const [activeTab, setActiveTab] = useState<string>("ALL")
   const [files, setFiles] = useState<any[]>([])
-
-  const [tabFiles, setTabFiles] = useState<any[]>([])
-
   const [show, setShow] = useState<boolean>(false)
 
   const { repoEntity, userId } = useSelector((state: any) => state)
@@ -121,7 +117,7 @@ const RepoFiles = ({ repoId /* , repoFiles */ }: any) => {
 
   useEffect(() => {
     const init = () => {
-      getProjectFiles(menuOption)
+      //getProjectFiles(menuOption)
     }
 
     return init()
@@ -218,40 +214,17 @@ const RepoFiles = ({ repoId /* , repoFiles */ }: any) => {
     <SContainer>
       <FilesUpdate />
       <FilesMenu
-        handleSelectFileMenuOption={handleSelectFileMenuOption}
-        folderItemsSwitch={folderItemsSwitch}
-        setFolderItemsSwitch={setFolderItemsSwitch}
-        stopSwitchFolders={stopSwitchFolders}
-        setStopSwitchFolders={setStopSwitchFolders}
         folderPath={folderPath}
         setFolderPath={setFolderPath}
-        trigger={trigger}
-        triggerRender={triggerRender}
-        tabs={tabs}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
+        tabs={tabs}
+        setFolderItemsSwitch={setFolderItemsSwitch}
+        handleSelectFileMenuOption={handleSelectFileMenuOption} 
       />
-
-     
-       {/*  <QuickUpload
-          inputFile={inputFile}
-          handleShow={handleShow}
-          menuOption={menuOption}
-          show={show}
-          handleChange={handleFileChange}
-          handleFormSubmit={handleFormSubmit}
-        /> */}
       
 
       <BranchContent
-        folderItemsSwitch={folderItemsSwitch}
-        setFolderItemsSwitch={setFolderItemsSwitch}
-        stopSwitchFolders={stopSwitchFolders}
-        setStopSwitchFolders={setStopSwitchFolders}
-        folderPath={folderPath}
-        setFolderPath={setFolderPath}
-        trigger={trigger}
-        files={files}
         show={show}
         menuOption={menuOption}
       />

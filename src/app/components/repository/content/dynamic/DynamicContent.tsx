@@ -32,9 +32,9 @@ const DynamicContent = ({ menuOption, repoEntity, repoId }: any) => {
 
   //------>>>> BELOW: These methods are for checking for existing repo items
   const [dataset, setDataset] = useState<any>(null)
-  const [configs, setConfigs] = useState<any>(null)
-  const [notebooks, setNotebooks] = useState<any>(null)
-  const [modules, setModules] = useState<any>(null)
+  const [configs, setConfigs] = useState<any[]>([])
+  const [notebooks, setNotebooks] = useState<any[]>([])
+  const [modules, setModules] = useState<any[]>([])
   const [repoItems, setRepoItems] = useState<any[]>([])
   const [subsets, setSubsets] = useState<any[]>([])
 
@@ -103,7 +103,7 @@ const DynamicContent = ({ menuOption, repoEntity, repoId }: any) => {
   }
 
   const getSubsets = (datasetId: string, lock: any | null = null) => {
-    if (dataset === null || lock !== null) {
+    if (subsets === null || lock !== null) {
       DatasetAPI.getSubsetListByDatasetId(datasetId)
         .then((res: any) => {
           console.log("DynamicContent::getSubsets::res::", res.data)
@@ -173,6 +173,7 @@ const DynamicContent = ({ menuOption, repoEntity, repoId }: any) => {
       "DynamicContent::goEmptyContentMenu::createFileMethod" + createFileMethod,
     )
     setCreateFileMethod("")
+    
   }
 
   useEffect(() => {
@@ -186,9 +187,73 @@ const DynamicContent = ({ menuOption, repoEntity, repoId }: any) => {
 
   useEffect(() => {
     if (menuOption !== "") {
-      setCreateFileMethod("")
+      handleMenuOptionChange()
+
     }
   }, [menuOption])
+
+  const handleMenuOptionChange = () => {
+    //When user is cycling through menu options, we should first check the arrays datasets, configs, notebooks, etc. to get the data that's already been fetched and show it.  If it's not there, we should fetch it. If there's nothing in the database, we should set the existingContent to null and display the empty content menu
+
+    //Check arrays for fetched data
+    useFetchedData()
+
+    //Check databaset for data
+
+    //No exisiting data
+  }
+
+  const useFetchedData = () => {
+    switch (menuOption) {
+      case "DATASET":
+        if (subsets !== null && subsets.length > 0) {
+            console.log('DynamicContent::useFetchedData::subsets - exist::', subsets)
+          setExistingContent(subsets)
+        } else {
+            setCreateFileMethod("")
+            setExistingContent(null)
+         console.log("DynamicContent::useFetchedData::subets === null")   
+        }
+        break
+
+      case "CONFIG":
+        if (configs !== null && configs.length > 0) {
+            console.log("DynamicContent::useFetchedData::configs - exist::", configs)
+          setExistingContent(configs)
+        } else {
+            setCreateFileMethod("")
+            setExistingContent(null)
+            console.log("DynamicContent::useFetchedData::configs === null")   
+           }
+        break
+
+      case "NOTEBOOK":
+        if (notebooks !== null && notebooks.length > 0) {
+            console.log('DynamicContent::useFetchedData::notebooks - exist::', notebooks)
+          setExistingContent(notebooks)
+        } else {
+            setCreateFileMethod("")
+            setExistingContent(null)
+            console.log("DynamicContent::useFetchedData::notebooks === null")   
+           }
+        break
+
+      case "MODULE":
+        if (modules !== null && modules.length > 0) {
+            console.log('DynamicContent::useFetchedData::modules - exist::', modules)
+          setExistingContent(modules)
+        } else {
+            setCreateFileMethod("")
+            setExistingContent(null)
+            console.log("DynamicContent::useFetchedData::modules === null")   
+           }
+        break
+
+      default:
+        break
+    }
+  }
+
 
   //When user selects a file to link to the repo, this will set the selected content, so proper item displays in the selector dropdown
   useEffect(() => {
@@ -367,12 +432,12 @@ const DynamicContent = ({ menuOption, repoEntity, repoId }: any) => {
 
   return (
     <>
-      {(createFileMethod === "" && existingContent === null)  ? (
+      {createFileMethod === "" && existingContent === null ? (
         <EmptyContentMenu
           menuOption={menuOption}
           setCreateFileMethod={handleSelectFileMethod}
         />
-      ) : (createFileMethod !== "" && existingContent === null)  ? (
+      ) : createFileMethod !== "" && existingContent === null ? (
         <CreateContentViews
           menuOption={menuOption}
           selectedId={selectedId}
@@ -382,9 +447,9 @@ const DynamicContent = ({ menuOption, repoEntity, repoId }: any) => {
           handleSelectContent={handleAddContentToRepo}
           goEmptyContentMenu={goEmptyContentMenu}
         />
-      ) : menuOption === "DATASET" && existingContent !== null ? (
+      ) : menuOption === "DATASET" && existingContent !== null && dataset !== null ? (
          <RepoViewDataset 
-            subsets={subsets}
+            subsets={existingContent}
             dataset={dataset}
             selectDatasetView={returnToEmptyMenu}
 

@@ -60,7 +60,6 @@ function App() {
   const { currentUser } = useAuth()
   const dispatch = useDispatch()
 
-
   function selectTheme(e: any) {
     switch (e.target.value) {
       case "dark":
@@ -86,76 +85,81 @@ function App() {
         <SButton onClick={handleThemeChange}></SButton>
 
         <AuthProvider>
-        <SBody>
-          <Header />
+          <SBody>
+            <Header />
 
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <PrivateRoute>
-                  <Profile />
-                </PrivateRoute>
-              }
-            />
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <PrivateRoute>
+                    <Profile />
+                  </PrivateRoute>
+                }
+              />
 
-            <Route path="/login" element={<Login />} />
+              <Route path="/login" element={<Login />} />
 
-            <Route path="/signup" element={<CreateProfile />} />
+              <Route path="/signup" element={<CreateProfile />} />
 
-            <Route
-              path="/settings"
-              element={
-                <PrivateRoute>
-                  <Settings />
-                </PrivateRoute>
-              }
-            />
+              <Route
+                path="/settings"
+                element={
+                  <PrivateRoute>
+                    <Settings />
+                  </PrivateRoute>
+                }
+              />
 
-            <Route
-              path="/profile"
-              element={
-                <PrivateRoute>
-                  <Profile />
-                </PrivateRoute>
-              }
-            />
+              <Route
+                path="/profile"
+                element={
+                  <PrivateRoute>
+                    <Profile />
+                  </PrivateRoute>
+                }
+              />
 
-            <Route
-              path="/repository/create"
-              element={
-                <PrivateRoute>
-                  <CreateRepositoryV2 />
-                </PrivateRoute>
-              }
-            />
+              <Route
+                path="/repository/create"
+                element={
+                  <PrivateRoute>
+                    <CreateRepositoryV2 />
+                  </PrivateRoute>
+                }
+              />
 
-            <Route
-              path="/repository/:repoId"
-              element={
-                <PrivateRoute>
-                  <Repository />
-                </PrivateRoute>
-              }
-            />
 
-            <Route
-              path="/organization/create"
-              element={
-                <PrivateRoute>
-                  <CreateOrganization />
-                </PrivateRoute>
-              }/>
+              
+                <Route
+                  path="/repository/:repoId"
+                  element={
+                    <PrivateRoute>
+                      <Repository />
+                    </PrivateRoute>
+                  }
+                />
+      
 
-            <Route
-              path="/organization/:orgId"
-              element={
-                <PrivateRoute>
-                  <Organization />
-                </PrivateRoute>
-              }/>
-          </Routes>
-        </SBody>
+              <Route
+                path="/organization/create"
+                element={
+                  <PrivateRoute>
+                    <CreateOrganization />
+                  </PrivateRoute>
+                }
+              />
+
+              <Route
+                path="/organization/:orgId"
+                element={
+                  <PrivateRoute>
+                    <Organization />
+                  </PrivateRoute>
+                }
+              />
+            </Routes>
+          </SBody>
         </AuthProvider>
       </ThemeProvider>
     </Router>

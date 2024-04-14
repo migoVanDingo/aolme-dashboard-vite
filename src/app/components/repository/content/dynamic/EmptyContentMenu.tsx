@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { SFlexCol } from "../../../common/containers/FlexContainers"
+import SelectOrgContentView from "./SelectOrgContentView"
 
 const SContainer = styled(SFlexCol)`
   height: 100%;
@@ -48,8 +49,22 @@ const SButton = styled.button`
   }
 `
 
-const EmptyContentMenu = ({ menuOption, setCreateFileMethod }: any) => {
+const EmptyContentMenu = ({
+  menuOption,
+  triggerReload,
+  hideSelectDatasetView,
+}: any) => {
   const [heading, setHeading] = useState<string>("")
+  const [createFileMethod, setCreateFileMethod] = useState<string>("")
+
+  const goBackToEmptyMenu = () => setCreateFileMethod("")
+
+  const reload = () => {
+    goBackToEmptyMenu()
+    triggerReload()
+    hideSelectDatasetView()
+  
+  }
 
   useEffect(() => {
     const createHeading = () => {
@@ -63,27 +78,48 @@ const EmptyContentMenu = ({ menuOption, setCreateFileMethod }: any) => {
     return menuOption && createHeading()
   }, [menuOption])
 
-  return (
-    <SContainer>
-      <SHeading>{heading && heading}</SHeading>
-      <SPara>
-        No {menuOption.toLowerCase()}s linked to this repository. You can select
-        an option to: Use an organizational {menuOption.toLowerCase()}, upload a {menuOption.toLowerCase()} file, or add a link to download a {" " + menuOption.toLowerCase()} from somewhere else. Select an option below
-        to continue.
-      </SPara>
-      <SButton onClick={() => setCreateFileMethod("ORG")}>
-        Use Organization {heading && heading}
-      </SButton>
-      <SButton onClick={() => setCreateFileMethod("UPLOAD")}>
-        Upload {heading && heading} File
-      </SButton>
-      {menuOption === "DATASET" && (
-        <SButton onClick={() => setCreateFileMethod("URL")}>
-          Add URL to Download {heading && heading}
+
+  if (createFileMethod === "ORG") {
+    //Select from org files menu
+    return(<SelectOrgContentView
+      menuOption={menuOption}
+      goEmptyContentMenu={goBackToEmptyMenu}
+      hideSelectView={hideSelectDatasetView}
+      triggerReload={reload}
+    />)
+  } else if (createFileMethod === "UPLOAD") {
+    //Upload file
+
+  } else if (createFileMethod === "URL") {
+    //Add url to download file
+
+  } else {
+
+    //Main Menu
+    return (
+      <SContainer>
+        <SHeading>{heading && heading}</SHeading>
+        <SPara>
+          No {menuOption.toLowerCase()}s linked to this repository. You can
+          select an option to: Use an organizational {menuOption.toLowerCase()},
+          upload a {menuOption.toLowerCase()} file, or add a link to download a{" "}
+          {" " + menuOption.toLowerCase()} from somewhere else. Select an option
+          below to continue.
+        </SPara>
+        <SButton onClick={() => setCreateFileMethod("ORG")}>
+          Use Organization {heading && heading}
         </SButton>
-      )}
-    </SContainer>
-  )
+        <SButton onClick={() => setCreateFileMethod("UPLOAD")}>
+          Upload {heading && heading} File
+        </SButton>
+        {menuOption === "DATASET" && (
+          <SButton onClick={() => setCreateFileMethod("URL")}>
+            Add URL to Download {heading && heading}
+          </SButton>
+        )}
+      </SContainer>
+    )
+  }
 }
 
 export default EmptyContentMenu

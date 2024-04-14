@@ -12,7 +12,10 @@ const SContainer = styled(SFlexCol)`
   margin: auto;
 `
 
-const RepoViewDataset = ({ subsets, dataset, selectDatasetView }: any) => {
+
+
+
+const RepoViewDataset = ({ subsets, dataset, showSelectDatasetView }: any) => {
   return (
     <SContainer>
       {subsets.length > 0 &&
@@ -23,7 +26,7 @@ const RepoViewDataset = ({ subsets, dataset, selectDatasetView }: any) => {
               subset={subset}
               dataset={dataset}
               inRepo={true}
-              selectDatasetView={selectDatasetView}
+              selectDatasetView={showSelectDatasetView}
 
             />
           )
