@@ -4,7 +4,7 @@ import { SFlexCol } from "../../../common/containers/FlexContainers"
 
 const SContainer = styled(SFlexCol)`
   height: 100%;
-  padding: 20px;
+  padding: 50px;
   box-sizing: border-box;
   align-items: flex-start;
   margin: auto;
@@ -27,7 +27,7 @@ const SPara = styled.p`
 
 const SButton = styled.button`
   padding: 10px 20px;
-  margin: 20px 0;
+  margin: 10px 0;
   font-size: 1rem;
   font-weight: 200;
   width: 300px;
@@ -68,9 +68,7 @@ const EmptyContentMenu = ({ menuOption, setCreateFileMethod }: any) => {
       <SHeading>{heading && heading}</SHeading>
       <SPara>
         No {menuOption.toLowerCase()}s linked to this repository. You can select
-        an option to: Use an organizational {menuOption.toLowerCase()}, upload a 
-        {menuOption.toLowerCase()} file, or add a link to download a 
-        {menuOption.toLowerCase()} from somewhere else. Select an option below
+        an option to: Use an organizational {menuOption.toLowerCase()}, upload a {menuOption.toLowerCase()} file, or add a link to download a {" " + menuOption.toLowerCase()} from somewhere else. Select an option below
         to continue.
       </SPara>
       <SButton onClick={() => setCreateFileMethod("ORG")}>

@@ -12,7 +12,11 @@ import RepoViewDataset from "./RepoViewDataset"
 import ViewFiles from "./ViewFiles"
 import DynamicContent from "../dynamic/DynamicContent"
 
-
+const SEmptyRepo = styled(SFlexRow)`
+  padding: 80px 60px 100px 60px;
+  font-size: 1.2rem;
+  color: ${({ theme }) => theme.color.color_3};
+`
 
 
 
@@ -29,7 +33,7 @@ const BranchContent = ({
   const [datasets, setDatasets] = useState<any[]>([])
   const [createFileOption, setCreateFileOption] = useState<string>("")
 
-  const { repoEntity } = useSelector((state: any) => state)
+  const { repoEntity, repoId } = useSelector((state: any) => state)
 
   const showDatasetView = () => setIsSelectNewDataset(true)
   const hideDatasetView = () => setIsSelectNewDataset(false)
@@ -149,7 +153,11 @@ const BranchContent = ({
     } */}
 
     {
-      
+      !files || files.length === 0 && menuOption === "ALL" ? (
+        <SEmptyRepo>
+          There are no files in this repo. Click on the other tabs to upload or link files.
+        </SEmptyRepo>
+      ):
       menuOption === "ALL" ? (
         <ViewFiles files={files}/>
       ) :
@@ -157,15 +165,8 @@ const BranchContent = ({
         <DynamicContent 
         menuOption={menuOption}
         repoEntity={repoEntity} 
-        selectedDataset={selectedDataset} 
-        setSelectedDataset={handleChangeDataset} 
-        datasets={datasets} 
-        option={createFileOption} 
-        setOption={setCreateFileOption}
-        handleSelectNewDataset={handleSelectNewDataset}
-        subsets={subsets} 
-        dataset={selectedDataset} 
-        selectDatasetView={showDatasetView}
+        repoId={repoId}
+
         
         />
       ) 

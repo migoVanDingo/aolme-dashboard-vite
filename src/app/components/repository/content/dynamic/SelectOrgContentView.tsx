@@ -64,7 +64,14 @@ const SSelect = styled.select`
   padding: 10px;
   border-radius: ${({ theme }) => theme.container.borderRadius.sm};
 `
-const SelectOrgContentView = ({ menuOption, createMethod, contentId, contentList, handleChange }: any) => {
+const SelectOrgContentView = ({ 
+    menuOption,
+    selectedId,
+    contentList,
+    handleChange,
+    handleSelectContent,
+    goEmptyContentMenu
+}: any) => {
 
     const [heading, setHeading] = useState<string>("")
 
@@ -80,16 +87,17 @@ const SelectOrgContentView = ({ menuOption, createMethod, contentId, contentList
         return menuOption && createHeading()
     }, [menuOption])
 
-  return (
+  return contentList && contentList.length > 0 && (
     <SContainer>
 
           <SHeading>Select Organization {heading}</SHeading>
           <SSelect
-            onChange={(e: any) => handleChange(e)}
-            value={contentId}
+            onChange={(e: any) => handleChange(e.target.value)}
+            defaultValue={"DEFAULT"}
+            value={selectedId}
           >
-            <option value="" selected>Select a {menuOption && menuOption.toLowerCase()}</option>
-            {contentList.map((option: any, index: number) => {
+            <option value="DEFAULT">Select a {menuOption && menuOption.toLowerCase()}</option>
+            {contentList && contentList.length > 0 && contentList.map((option: any, index: number) => {
               return (
                 <option key={index} value={option.dataset_id}>
                   {option.name}
@@ -98,10 +106,10 @@ const SelectOrgContentView = ({ menuOption, createMethod, contentId, contentList
             })}
           </SSelect>
           <SButtonContainer>
-            <SButton onClick={} className="small">
+            <SButton onClick={goEmptyContentMenu} className="small">
               Cancel
             </SButton>
-            <SButton onClick={} className="small">
+            <SButton onClick={handleSelectContent} className="small">
               Select
             </SButton>
           </SButtonContainer>

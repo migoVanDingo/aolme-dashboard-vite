@@ -68,19 +68,24 @@ const SSelect = styled.select`
 const CreateContentViews = ({
   menuOption,
   createMethod,
-  contentId,
+  selectedId,
   contentList,
   handleChange,
+  handleSelectContent,
+  goEmptyContentMenu
 }: any) => {
+
+
   return (
     <>
       {createMethod === "ORG" ? (
         <SelectOrgContentView
           menuOption={menuOption}
-          createMethod={createMethod}
-          contentId={contentId}
+          selectedId={selectedId}
           contentList={contentList}
           handleChange={handleChange}
+          handleSelectContent={handleSelectContent}
+          goEmptyContentMenu={goEmptyContentMenu}
         />
       ) : createMethod === "UPLOAD" ? (
         <></>
