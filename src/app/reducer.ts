@@ -27,6 +27,7 @@ const initState: object = {
   modules: [],
 
   repoItems: [],
+  repoFiles:[],
 
 
 
@@ -150,6 +151,12 @@ const reducer = (state = initState, action: any) => {
       return {
         ...state,
         repoItems: action.repoItems
+      }
+
+    case ACTIONS.SET_REPO_FILES:
+      return {
+        ...state,
+        repoFiles: action.repoFiles
       }
 
     

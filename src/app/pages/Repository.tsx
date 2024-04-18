@@ -14,6 +14,7 @@ import {
   setRepoNotebook,
   setRepoOwner,
   setRepoSubsets,
+  setStoreRepoFiles,
 } from "../actions"
 import { ConfigAPI } from "../api/ConfigAPI"
 import { DatasetAPI } from "../api/DatasetAPI"
@@ -25,6 +26,7 @@ import { SFlexCol } from "../components/common/containers/FlexContainers"
 import RepoContent from "../components/repository/content/RepoContent"
 import RepoReadMe from "../components/repository/content/readme/RepoReadMe"
 import { RepoHeader } from "../components/repository/header/RepoHeader"
+import { FilesAPI } from "../api/FileAPI"
 
 const SContainer = styled(SFlexCol)`
   width: 100%;
@@ -81,7 +83,7 @@ const Repository = ({}: any) => {
       if (repoId !== "" && repoId !== null && repoId !== undefined) {
         console.log("repoId: ", repoId)
         getRepo(repoId)
-        //getRepoItems(repoId)
+        
       }
     }
 
@@ -93,7 +95,7 @@ const Repository = ({}: any) => {
 
     RepoAPI.getRepoById(repoId)
       .then((res: any) => {
-        console.log("res: ", res.data)
+        console.log("resaaaaa: ", res.data)
 
         setCurrentRepo(res.data["repo_id"])
         setName(res.data["name"])
@@ -109,12 +111,30 @@ const Repository = ({}: any) => {
         dispatch(setRepoDescription(res.data["description"]))
         dispatch(setRepoOwner(res.data["owner"]))
         dispatch(setRepoEntity(res.data["entity_id"]))
-      })
 
+        searchForRepoFiles(repoId, res.data["entity_id"])
+      })
       .catch((err: any) => console.error(err))
   }
 
-  //REPO ITEMS
+  //Read REPO ITEMS directly from folders
+  const searchForRepoFiles = (repoId: string, repoEntity: string) => {
+  console.log('here ese: '+ repoId + " --- " + repoEntity)
+    if(repoId !== "" && repoEntity !== ""){
+      console.log('here 2 ese')
+      FilesAPI.getRepoFiles(repoId, repoEntity)
+      .then((result: any) => {
+        console.log("Root::result: ", result.data)
+        dispatch(setStoreRepoFiles(result.data))
+        
+      })
+      .catch((err: any) => console.error(err))
+  
+    }
+    
+  }
+
+  //REPO ITEMS from database 
   
 
   /* async function getDatasets(contentId: string) {

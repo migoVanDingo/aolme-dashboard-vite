@@ -5,13 +5,15 @@ import { setRepoConfig, setRepoItems } from '../../../../actions'
 import { NotebookAPI } from '../../../../api/NotebookAPI'
 import EmptyContentMenu from '../dynamic/EmptyContentMenu'
 import RepoViewContent from './RepoViewContent'
+import { ProcessAPI } from '../../../../api/ProcessAPI'
+import RepoViewNotebook from '../files/RepoViewNotebook'
 
-const RepoNotebook = ({ notebooks }: any) => {
+const RepoNotebook = ({}: any) => {
   const dispatch = useDispatch()
-  const { repoId } = useSelector((state: any) => state)
+  const { repoId, repoEntity, userId, repoFiles } = useSelector((state: any) => state)
 
   
-  const [content, setContent] = useState<any[]>([])
+  const [notebooks, setNotebooks] = useState<any[]>([])
 
   const [signalReload, setSignalReload] = useState<boolean>(false)
   const triggerReload = () => {
@@ -34,7 +36,7 @@ const RepoNotebook = ({ notebooks }: any) => {
       repoId && getRepoItems(repoId)
     }
 
-    return init()
+    //return init()
   }, [signalReload])
 
   useEffect(() => {
@@ -43,13 +45,22 @@ const RepoNotebook = ({ notebooks }: any) => {
         console.log('itemList', itemList)
         const r = filterRepoItems(itemList)
         if (r.length > 0) {
-          getItems(r[0].file_id)
+          //getItems(r[0].file_id)
         }
       } 
     }
 
-    return init()
+    //return init()
   }, [itemList])
+
+  useEffect(() => {
+    const init = () => {
+      if(repoFiles && repoFiles.length > 0)
+        checkForNotebookFiles(repoFiles)
+    }
+
+    return init()
+  }, [repoFiles]);
 
   function getRepoItems(repoId: string) {
     RepoAPI.getRepoItems(repoId)
@@ -72,20 +83,46 @@ const RepoNotebook = ({ notebooks }: any) => {
     return itemList.filter((item: any) => item.type === "CONFIG")
   }
 
-  function getItems(contentId: string) {
-    NotebookAPI.getNotebookById(contentId)
+  function checkForNotebookFiles(files: any[]) {
+
+    const notebooks = files.filter((file: any) => file.type === "NOTEBOOK")
+    if(notebooks.length > 0) {
+      setNotebooks(notebooks)
+    } else {
+      showSelectView()
+    }
+
+    /* NotebookAPI.getNotebookById(contentId)
       .then((res: any) => {
         console.log("RepoDataset::init()::getDatasets::res::", res.data)
         //setDataset(res.data)
         if (res.data !== null) {
       
           dispatch(setRepoConfig(res.data))
-          setContent(res.data)
+          setNotebooks(res.data)
         }
       })
       .catch((err: any) =>
         console.error("RepoDataset::init()::getDatasets::error::", err),
-      )
+      ) */
+  }
+
+  const initializeJupyterNotebook = () => {
+    console.log("launching jupyter notebook...")
+    const payload = {
+      entity_id: repoEntity,
+      description: "JUPYTER NOTEBOOK",
+      owner: userId,
+      type: "NOTEBOOK",
+      is_public: 0,
+      repo_id: repoId
+    }
+
+    ProcessAPI.launchJupyterNotebook(payload)
+    .then((res:any) => {
+      console.log("launching jupyter notebook...")
+    })
+    .catch((err: any) => console.error(err))
   }
 
 
@@ -96,11 +133,13 @@ const RepoNotebook = ({ notebooks }: any) => {
           menuOption={"NOTEBOOK"}
           triggerReload={triggerReload}
           hideSelectDatasetView={hideSelectView}
+          launchNotebook={initializeJupyterNotebook}
         />
       ) : (
-        <RepoViewContent
-          content={content}
+        <RepoViewNotebook
+          notebooks={notebooks}
           showSelectView={showSelectView}
+          launchNotebook={initializeJupyterNotebook}
         />
       )}
     </>

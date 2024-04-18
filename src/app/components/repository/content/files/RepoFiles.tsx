@@ -38,15 +38,6 @@ const tabs = [
     },
   },
   {
-    title: "Dataset",
-    url: "link",
-    type: "DATASET",
-    icon: faHardDrive,
-    callback: () => {
-      console.log("not implemented")
-    },
-  },
-  {
     title: "Configs",
     url: "link",
     type: "CONFIG",
@@ -55,8 +46,18 @@ const tabs = [
       console.log("not implemented")
     },
   },
-
   {
+    title: "Dataset",
+    url: "link",
+    type: "DATASET",
+    icon: faHardDrive,
+    callback: () => {
+      console.log("not implemented")
+    },
+  },
+  
+
+  /* {
     title: "Modules",
     url: "link",
     type: "MODULE",
@@ -64,7 +65,7 @@ const tabs = [
     callback: () => {
       console.log("not implemented")
     },
-  },
+  }, */
   {
     title: "Notebooks",
     url: "link",

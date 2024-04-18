@@ -5,13 +5,15 @@ import { setRepoConfig, setRepoItems } from '../../../../actions'
 import EmptyContentMenu from '../dynamic/EmptyContentMenu'
 import RepoViewContent from './RepoViewContent'
 import { ConfigAPI } from '../../../../api/ConfigAPI'
+import { FilesAPI } from '../../../../api/FileAPI'
+import RepoViewConfig from '../files/RepoViewConfig'
 
 const RepoConfig = ({}: any) => {
   const dispatch = useDispatch()
-  const { repoId } = useSelector((state: any) => state)
+  const { repoId, repoEntity, userId, repoFiles } = useSelector((state: any) => state)
 
   
-  const [content, setContent] = useState<any[]>([])
+  const [config, setConfig] = useState<any>()
 
   const [signalReload, setSignalReload] = useState<boolean>(false)
   const triggerReload = () => {
@@ -34,7 +36,7 @@ const RepoConfig = ({}: any) => {
       repoId && getRepoItems(repoId)
     }
 
-    return init()
+    //return init()
   }, [signalReload])
 
   useEffect(() => {
@@ -43,13 +45,22 @@ const RepoConfig = ({}: any) => {
         console.log('itemList', itemList)
         const r = filterRepoItems(itemList)
         if (r.length > 0) {
-          getItems(r[0].file_id)
+          //getItems(r[0].file_id)
         }
       } 
     }
 
-    return init()
+    //return init()
   }, [itemList])
+
+  useEffect(() => {
+    const init = () => {
+      if(repoFiles && repoFiles.length > 0)
+        checkForNotebookFiles(repoFiles)
+    }
+
+    return init()
+  }, [repoFiles]);
 
   function getRepoItems(repoId: string) {
     RepoAPI.getRepoItems(repoId)
@@ -73,19 +84,31 @@ const RepoConfig = ({}: any) => {
   }
 
   function getItems(contentId: string) {
-    ConfigAPI.getConfigById(contentId)
+   /*  FilesAPI.getConfigById(contentId)
       .then((res: any) => {
         console.log("RepoDataset::init()::getDatasets::res::", res.data)
         //setDataset(res.data)
         if (res.data !== null) {
       
           dispatch(setRepoConfig(res.data))
-          setContent(res.data)
+          setConfig(res.data)
         }
       })
       .catch((err: any) =>
         console.error("RepoDataset::init()::getDatasets::error::", err),
-      )
+      ) */
+  }
+
+  function checkForNotebookFiles(files: any[]) {
+
+    const config = files.filter((file: any) => file.type === "CONFIG")
+    console.log("config: ", config)
+    if(config.length > 0) {
+      setConfig(config)
+    } else {
+      showSelectView()
+    }
+
   }
 
 
@@ -98,8 +121,8 @@ const RepoConfig = ({}: any) => {
           hideSelectDatasetView={hideSelectView}
         />
       ) : (
-        <RepoViewContent
-          content={content}
+        <RepoViewConfig
+          config={config}
           showSelectView={showSelectView}
         />
       )}

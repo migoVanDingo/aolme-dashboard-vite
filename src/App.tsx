@@ -21,7 +21,7 @@ import CreateRepositoryV2 from "./app/pages/CreateRepositoryV2"
 
 
 const SBody = styled.div`
-  background-color: ${({ theme }) => theme.color.color_0};
+  background-color: ${({ theme }) => theme.color.color_1};
   color: ${({ theme }) => theme.color.color_8};
   width: 100vw;
 

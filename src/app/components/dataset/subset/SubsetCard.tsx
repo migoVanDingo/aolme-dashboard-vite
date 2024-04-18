@@ -159,7 +159,7 @@ const SubsetCard = ({ subset, dataset, inRepo = false, selectDatasetView = () =>
   return (
     <SContainer>
       <SCardHeader>
-        <SHeading>Title: {subset.name}</SHeading>
+        <SHeading>Subset Name: {subset.name}</SHeading>
         <SButtonContainer>
         <SLabelerButton onClick={openLabelStudio}>{"Launch Labeler"}</SLabelerButton>
         {

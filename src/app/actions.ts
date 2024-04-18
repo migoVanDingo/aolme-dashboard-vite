@@ -22,14 +22,13 @@ export const ACTIONS = {
     SET_REPO_NOTEBOOKS: "SET_REPO_NOTEBOOKS",
     SET_REPO_SUBSETS: "SET_REPO_SUBSETS",
     SET_REPO_ITEMS: "SET_REPO_ITEMS",
+    SET_REPO_FILES: "SET_REPO_FILES",
+
 
     SET_DATASET_ID: "SET_DATASET_ID",
     SET_DATASET_NAME: "SET_DATASET_NAME",
     SET_DATASET_DESCRIPTION: "SET_DATASET_DESCRIPTION",
 
-    
-    
-    
 }
 
 
@@ -164,6 +163,13 @@ export const setRepoSubsets = (subsets: any) => {
     return {
         type: ACTIONS.SET_REPO_SUBSETS,
         subsets: subsets
+    }
+}
+
+export const setStoreRepoFiles = (repoFiles: any) => {
+    return {
+        type: ACTIONS.SET_REPO_FILES,
+        repoFiles: repoFiles
     }
 }
 

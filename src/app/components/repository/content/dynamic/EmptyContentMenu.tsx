@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { SFlexCol } from "../../../common/containers/FlexContainers"
 import SelectOrgContentView from "./SelectOrgContentView"
+import QuickUploadV2 from "../files/QuickUploadV2"
 
 const SContainer = styled(SFlexCol)`
   height: 100%;
@@ -47,12 +48,16 @@ const SButton = styled.button`
     width: 140px;
     font-size: 0.8rem;
   }
+  &.right {
+    margin-left: auto;
+  }
 `
 
 const EmptyContentMenu = ({
   menuOption,
   triggerReload,
   hideSelectDatasetView,
+  launchNotebook,
 }: any) => {
   const [heading, setHeading] = useState<string>("")
   const [createFileMethod, setCreateFileMethod] = useState<string>("")
@@ -63,7 +68,6 @@ const EmptyContentMenu = ({
     goBackToEmptyMenu()
     triggerReload()
     hideSelectDatasetView()
-  
   }
 
   useEffect(() => {
@@ -78,23 +82,29 @@ const EmptyContentMenu = ({
     return menuOption && createHeading()
   }, [menuOption])
 
-
   if (createFileMethod === "ORG") {
     //Select from org files menu
-    return(<SelectOrgContentView
-      menuOption={menuOption}
-      goEmptyContentMenu={goBackToEmptyMenu}
-      hideSelectView={hideSelectDatasetView}
-      triggerReload={reload}
-    />)
+    return (
+      <SelectOrgContentView
+        menuOption={menuOption}
+        goEmptyContentMenu={goBackToEmptyMenu}
+        hideSelectView={hideSelectDatasetView}
+        triggerReload={reload}
+      />
+    )
   } else if (createFileMethod === "UPLOAD") {
     //Upload file
+    return (
 
+        <QuickUploadV2
+        goEmptyContentMenu={goBackToEmptyMenu}
+         menuOption={menuOption} 
+         />
+  
+    )
   } else if (createFileMethod === "URL") {
     //Add url to download file
-
   } else {
-
     //Main Menu
     return (
       <SContainer>
@@ -116,6 +126,10 @@ const EmptyContentMenu = ({
           <SButton onClick={() => setCreateFileMethod("URL")}>
             Add URL to Download {heading && heading}
           </SButton>
+        )}
+
+        {menuOption === "NOTEBOOK" && (
+          <SButton onClick={launchNotebook}>Launch Jupyter Notebook</SButton>
         )}
       </SContainer>
     )
