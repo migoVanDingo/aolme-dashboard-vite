@@ -30,13 +30,7 @@ const SCrumb = styled.p`
 const FilesMenu = ({
   folderPath,
   setFolderPath,
-  trigger,
-  triggerRender,
-  stopSwitchFolders,
-  setStopSwitchFolders,
-  folderItemsSwitch, 
   setFolderItemsSwitch,
-  projectId,
   handleSelectFileMenuOption,
   tabs,
   activeTab,
@@ -69,13 +63,6 @@ const FilesMenu = ({
     return createBreadCrumb()
   }, [folderPath])
 
-  const handleClickRoot = () => {
-    console.log("root folder")
-    setStopSwitchFolders(false)
-    setFolderItemsSwitch(true)
-    setFolderPath([])
-    triggerRender(!trigger)
-  }
 
   const handleClickAncestor = (e: any) => {
     const index = parseInt(e.target.id) + 1
@@ -91,28 +78,14 @@ const FilesMenu = ({
    
   }
 
-  /* if (folderPath !== null && folderPath.length > 0) {
-    return (
-      <SContainer>
-        <SCrumb>Directory:</SCrumb>
-        <SCrumb className={"highlight"} onClick={handleClickRoot}>
-          Root Folder
-        </SCrumb>
-        {breadCrumbDirectory}
-      </SContainer>
-    )
-  } else { */
+
     return (
       <SContainer>
         <MenuTabs tabs={tabs} handleSelectFileMenuOption={handleSelectFileMenuOption}  setActiveTab={setActiveTab} setFolderPath={setFolderPath} activeTab={activeTab} />
       </SContainer>
     )
- /*  } */
-}
-const mapStoreStateToProps = (state: any) => {
-  return {
-    projectId: state.projectId,
-  }
+
 }
 
-export default connect(mapStoreStateToProps)(FilesMenu)
+
+export default FilesMenu

@@ -1,32 +1,23 @@
-import React, { useEffect, useRef, useState } from "react"
-import styled from "styled-components"
-import { SFlexCol } from "../../../common/containers/FlexContainers"
-import FilesUpdate from "./FilesUpdate"
-import FilesMenu from "./FilesMenu"
-import BranchContent from "./BranchContent"
-import FileUpload from "../../../common/inputs/file-upload/FileUpload"
-import { SButton } from "../../../common/styled"
-import FileUploadService from "../../../../services/FileUploadService"
-import {IDataset} from "../../../../utility/interface/dataset"
-import IModule from "../../../../utility/interface/module"
 import {
+  faBookBookmark,
+  faBullseye,
+  faCubes,
   faFile,
   faHardDrive,
-  faCubes,
-  faBookOpen,
-  faPencil,
-  faBullseye,
-  faBookBookmark,
   faListCheck,
-  faUpload,
+  faPencil,
 } from "@fortawesome/free-solid-svg-icons"
+import { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
-import QuickUpload from "./QuickUpload"
-import AddFileModal from "../../../modal/AddFileModal"
-import { DatasetAPI } from "../../../../api/DatasetAPI"
-import { RepoAPI } from "../../../../api/RepoAPI"
-import RepoItems from "./RepoItems"
+import styled from "styled-components"
 import { FilesAPI } from "../../../../api/FileAPI"
+import FileUploadService from "../../../../services/FileUploadService"
+import IModule from "../../../../utility/interface/module"
+import { SFlexCol } from "../../../common/containers/FlexContainers"
+import BranchContent from "./BranchContent"
+import FilesMenu from "./FilesMenu"
+import FilesUpdate from "./FilesUpdate"
+import QuickUpload from "./QuickUpload"
 
 const SContainer = styled(SFlexCol)`
   grid-area: files;
@@ -64,7 +55,9 @@ const tabs = [
       console.log("not implemented")
     },
   },
-  {
+  
+
+  /* {
     title: "Modules",
     url: "link",
     type: "MODULE",
@@ -72,7 +65,7 @@ const tabs = [
     callback: () => {
       console.log("not implemented")
     },
-  },
+  }, */
   {
     title: "Notebooks",
     url: "link",
@@ -81,7 +74,7 @@ const tabs = [
     callback: () => {
       console.log("not implemented")
     },
-  },
+  } /* ,
   {
     title: "Annotations",
     url: "link",
@@ -99,22 +92,12 @@ const tabs = [
     callback: () => {
       console.log("not implemented")
     },
-  },
-  /* {
-    title: "Uploads",
-    url: "link",
-    type: "Uploads",
-    icon: faUpload,
-    callback: () => {
-      console.log("not implemented")
-    },
-  }, */
+  }, */,
 ]
 
-const RepoFiles = ({ repoId/* , repoFiles */ }: any) => {
+const RepoFiles = ({ repoId /* , repoFiles */ }: any) => {
   const [folderPath, setFolderPath] = useState<string[]>([])
   const [trigger, triggerRender] = useState<boolean>(false)
-  const [stopSwitchFolders, setStopSwitchFolders] = useState<boolean>(false)
   const [folderItemsSwitch, setFolderItemsSwitch] = useState<boolean>(false)
   const [menuOption, setMenuOption] = useState<string>("ALL")
   const [selectedFiles, setSelectedFiles] = useState<any[]>([])
@@ -123,10 +106,6 @@ const RepoFiles = ({ repoId/* , repoFiles */ }: any) => {
   const [isPublic, setIsPublic] = useState<number>(0)
   const [activeTab, setActiveTab] = useState<string>("ALL")
   const [files, setFiles] = useState<any[]>([])
-
-
-  const [tabFiles, setTabFiles] = useState<any[]>([])
-
   const [show, setShow] = useState<boolean>(false)
 
   const { repoEntity, userId } = useSelector((state: any) => state)
@@ -134,58 +113,37 @@ const RepoFiles = ({ repoId/* , repoFiles */ }: any) => {
   const handleClose = () => setShow(false)
   const handleShow = () => {
     setShow(!show)
+    console.log("menuOption: ", menuOption)
   }
 
   useEffect(() => {
     const init = () => {
-      
-        getProjectFiles(menuOption)
-
-          
+      //getProjectFiles(menuOption)
     }
 
     return init()
   }, [menuOption])
 
-/*   useEffect(() => {
-    console.table("repofiles: ", repoFiles)
-    if (menuOption === "ALL") setTabFiles(repoFiles)
-    else {
-      const files = repoFiles.filter((file: any) => file.type === menuOption)
-      setTabFiles(files)
-    }
-  }, [repoFiles, menuOption]) */
-
   const getProjectFiles = (option: any) => {
     console.log("folderPath: ", folderPath)
 
-    if(menuOption !== "ALL"){
+    if (menuOption !== "ALL") {
       FilesAPI.getDirectoryItems(repoEntity, option, repoEntity, repoId)
-      .then((result: any) => {
-        console.log('RepoFiles::result: ', result.data)
-        setFiles(result.data)
-        /* const files = result.data.filter((item: any) => item.type === "file")
-        console.log('RepoFiles::files: ', files) */
-      })
-      .catch((err: any) => console.error(err))
+        .then((result: any) => {
+          console.log("RepoFiles::result: ", result.data)
+          setFiles(result.data)
+        })
+        .catch((err: any) => console.error(err))
     } else {
       FilesAPI.getRepoFiles(repoId, repoEntity)
-      .then((result: any) => {
-        console.log('Root::result: ', result.data)
+        .then((result: any) => {
+          console.log("Root::result: ", result.data)
 
-        setFiles(result.data)
-        
-        //setFiles(result.data)
-        /* const files = result.data.filter((item: any) => item.type === "file")
-        console.log('RepoFiles::files: ', files) */
-      })
-      .catch((err: any) => console.error(err))
+          setFiles(result.data)
+        })
+        .catch((err: any) => console.error(err))
     }
-    
   }
-
-
-  
 
   const inputFile = useRef(null)
 
@@ -225,51 +183,11 @@ const RepoFiles = ({ repoId/* , repoFiles */ }: any) => {
       is_public: isPublic,
     }
     return payload
-    /* switch (type) {
-      /* case "DATASET":
-        payload = {
-          entity_id: repoEntity,
-          description: description,
-          owner: userId,
-          type: "DATASET",
-          is_public: isPublic,
-        }
-        break
-
-      case "MODULE":
-        payload = {
-          entity_id: repoEntity,
-          description: description,
-          owner: userId,
-          type: "MODULE",
-          is_public: isPublic,
-        }
-        break
-
-      case "CONFIG":
-        payload = {
-          entity_id: repoEntity,
-          description: description,
-          owner: userId,
-          type: "CONFIG",
-          is_public: isPublic,
-        }
-        break 
-
-      default:
-        payload = {
-          entity_id: repoEntity,
-          description: description,
-          owner: userId,
-          type: type,
-          is_public: isPublic,
-        }
-        break
-    } */
   }
 
   const addFiles = async (e: any, payload: IModule) => {
     console.log("repoId: ", repoId)
+    console.log("payload: ", payload)
     FileUploadService.fileUpload(
       selectedFiles,
       payload,
@@ -297,58 +215,20 @@ const RepoFiles = ({ repoId/* , repoFiles */ }: any) => {
     <SContainer>
       <FilesUpdate />
       <FilesMenu
-        handleSelectFileMenuOption={handleSelectFileMenuOption}
-        folderItemsSwitch={folderItemsSwitch}
-        setFolderItemsSwitch={setFolderItemsSwitch}
-        stopSwitchFolders={stopSwitchFolders}
-        setStopSwitchFolders={setStopSwitchFolders}
         folderPath={folderPath}
         setFolderPath={setFolderPath}
-        trigger={trigger}
-        triggerRender={triggerRender}
-        tabs={tabs}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
+        tabs={tabs}
+        setFolderItemsSwitch={setFolderItemsSwitch}
+        handleSelectFileMenuOption={handleSelectFileMenuOption} 
       />
-      <QuickUpload
-        inputFile={inputFile}
-        handleShow={handleShow}
-        menuOption={menuOption}
-        show={show}
-        handleChange={handleFileChange}
-        handleFormSubmit={handleFormSubmit}
-        
-      />
-      {/* <AddFileModal  show={show} handleClose={handleClose} handleShow={handleShow} /> */}
-
-      {/* <RepoItems tabFiles={tabFiles} /> */}
+      
 
       <BranchContent
-        folderItemsSwitch={folderItemsSwitch}
-        setFolderItemsSwitch={setFolderItemsSwitch}
-        stopSwitchFolders={stopSwitchFolders}
-        setStopSwitchFolders={setStopSwitchFolders}
-        folderPath={folderPath}
-        setFolderPath={setFolderPath}
-        trigger={trigger}
-        files={files}
-
-        
+        show={show}
+        menuOption={menuOption}
       />
-      {/* ) : menuOption === "DATASET" ||
-        menuOption === "MODULE" ||
-        menuOption === "CONFIG" ? (
-        <form
-          encType="multipart/form-data"
-          id="ful-form"
-          onSubmit={() => handleFormSubmit(menuOption)}
-        >
-          <FileUpload handleFileChange={handleFileChange} />
-          <SButton type="submit" innerHtml={"Create Repository"} />
-        </form>
-      ) : (
-        <></>
-      )} */}
     </SContainer>
   )
 }

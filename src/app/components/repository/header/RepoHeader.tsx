@@ -18,6 +18,7 @@ const SContainer = styled.div`
 
     padding: 15px 0 0 0;
     background-color: ${({theme}) => theme.color.color_2_5};
+    box-shadow: 0px 0px 4px ${({theme}) => theme.color.shadow.dark};
 `
 
 export const RepoHeader = ({ owner, projectName, entityName }: any) => {

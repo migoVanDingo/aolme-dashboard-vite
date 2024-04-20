@@ -20,6 +20,17 @@ const initState: object = {
   datasetName:"",
   datasetDescription:"",
 
+  subsets: [],
+  dataset: {},
+  notebooks: [],
+  configs: [],
+  modules: [],
+
+  repoItems: [],
+  repoFiles:[],
+
+
+
 
 
 
@@ -105,6 +116,50 @@ const reducer = (state = initState, action: any) => {
         ...state,
         datasetDescription: action.datasetDescription
       }
+
+    case ACTIONS.SET_REPO_SUBSETS:
+      return {
+        ...state,
+        subsets: action.subsets
+      }
+    
+    case ACTIONS.SET_REPO_DATASET:
+      return {
+        ...state,
+        dataset: action.dataset
+      }
+    
+    case ACTIONS.SET_REPO_NOTEBOOKS:
+      return {
+        ...state,
+        notebooks: action.notebooks
+      }
+    
+    case ACTIONS.SET_REPO_CONFIGS:
+      return {
+        ...state,
+        configs: action.configs
+      }
+
+    case ACTIONS.SET_REPO_MODULES:
+      return {
+        ...state,
+        modules: action.modules
+      }
+
+    case ACTIONS.SET_REPO_ITEMS:
+      return {
+        ...state,
+        repoItems: action.repoItems
+      }
+
+    case ACTIONS.SET_REPO_FILES:
+      return {
+        ...state,
+        repoFiles: action.repoFiles
+      }
+
+    
 
     
 

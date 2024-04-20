@@ -6,7 +6,8 @@ import {
   faServer,
   faFlask,
   faVectorSquare,
-  faCode
+  faCode,
+  faBookBookmark
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { connect, useSelector } from "react-redux"
@@ -138,7 +139,7 @@ const RepoTabs = ({ activeTab, setActiveTab, projectId, name }: any) => {
     {
       title: "Notebook",
       callback: initializeJupyterNotebook,
-      icon: faCode,
+      icon: faBookBookmark,
     },
     {
       title: "Experiments",

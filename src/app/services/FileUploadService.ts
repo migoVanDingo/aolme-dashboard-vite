@@ -15,27 +15,6 @@ const fileUpload = async (files: any[], data: any, onUploadProgress: any, repoId
 
   let url = "/api/files"
 
-  /* console.log("DATUM BATCH: ", formData)
-  switch(data.type){
-    case "FILE":
-      url = "/api/files"
-      break;
-    case "DATASET":
-      url = "/api/dataset"
-      break
-    case "MODULE":
-      url = "/api/module"
-      break
-    case "CONFIG":
-      url = "/api/config"
-      break
-
-    
-    default:
-      url = ""
-      break
-  } */
-
 
   if(repoId !== null)
     url = url + "?repo_id=" + repoId

@@ -8,6 +8,13 @@ export interface ICreateRepository {
     created_by: string
 }
 
+export interface IAddRepoItem {
+    file_id: string
+    file_type: string
+    user_id: string
+
+}
+
 export interface FormCreateRepo {
     label: string
     type: string

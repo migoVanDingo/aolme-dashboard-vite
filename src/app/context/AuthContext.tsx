@@ -14,8 +14,6 @@ export function useAuth() {
 }
 
 export default function AuthProvider({ children }: any) {
-  
-  
   const [currentUser, setCurrentUser] = useState<any>()
   const [loading, setLoading] = useState<any>(false)
   const dispatch = useDispatch()
@@ -23,16 +21,29 @@ export default function AuthProvider({ children }: any) {
 
   //const auth = getAuth()
 
-  /* useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user: any) => {
-      setCurrentUser(user);
-      setLoading(false);
-    });
-    return unsubscribe;
-  }, []); */
+  useEffect(() => {
+    const getUser = () => {
+      let userId = localStorage.getItem("userId")
+      let username = localStorage.getItem("username")
+      //let email = localStorage.getItem("email")
+
+      console.log("AuthContext::User found: ", userId, username)
+      
+
+
+      userId ? dispatch(setStoreUserId(userId)) : console.error("AuthContext::User not found")
+      username ? dispatch(setStoreUsername(username)) : console.error("AuthContext::User not found")
+      /* email ? dispatch(setStoreUserEmail(email)) : console.error("AuthContext::User not found") */
+
+      setCurrentUser(userId)
+    }
+
+    
+
+    return getUser()
+  }, [])
 
   async function register(payload: PayloadCreateUser) {
-
     console.log("processed: ", payload)
     UserAPI.createUser(payload)
       .then((result: any) => {
@@ -48,14 +59,14 @@ export default function AuthProvider({ children }: any) {
     UserAPI.login(payload)
       .then((result: any) => {
         const { username, userId, email } = result.data
-
+        localStorage.setItem("userId", userId)
+        localStorage.setItem("username", username)
+        //localStorage.setItem("email", email)
         dispatch(setStoreUserId(userId))
         dispatch(setStoreUsername(username))
-        dispatch(setStoreUserEmail(email))
+        //dispatch(setStoreUserEmail(email))
         setCurrentUser(userId)
         nav("/profile")
-
-       
       })
       .catch((err: any) => {
         setLoading(false)
