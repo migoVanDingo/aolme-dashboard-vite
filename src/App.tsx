@@ -86,26 +86,37 @@ function App() {
 
         <AuthProvider>
           <SBody>
-            <Header />
+            
+            
 
             <Routes>
               <Route
                 path="/"
                 element={
                   <PrivateRoute>
+                    <Header />
                     <Profile />
                   </PrivateRoute>
                 }
               />
 
-              <Route path="/login" element={<Login />} />
+              <Route path="/login" element={
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
+            } />
 
-              <Route path="/signup" element={<CreateProfile />} />
+              <Route path="/signup" element={
+            <PublicRoute>
+            <CreateProfile />
+          </PublicRoute>
+            } />
 
               <Route
                 path="/settings"
                 element={
                   <PrivateRoute>
+                    <Header />
                     <Settings />
                   </PrivateRoute>
                 }
@@ -115,6 +126,7 @@ function App() {
                 path="/profile"
                 element={
                   <PrivateRoute>
+                    <Header />
                     <Profile />
                   </PrivateRoute>
                 }
@@ -124,6 +136,7 @@ function App() {
                 path="/repository/create"
                 element={
                   <PrivateRoute>
+                    <Header />
                     <CreateRepositoryV2 />
                   </PrivateRoute>
                 }
@@ -135,6 +148,7 @@ function App() {
                   path="/repository/:repoId"
                   element={
                     <PrivateRoute>
+                      <Header />
                       <Repository />
                     </PrivateRoute>
                   }
@@ -145,6 +159,7 @@ function App() {
                 path="/organization/create"
                 element={
                   <PrivateRoute>
+                    <Header />
                     <CreateOrganization />
                   </PrivateRoute>
                 }
@@ -154,6 +169,7 @@ function App() {
                 path="/organization/:orgId"
                 element={
                   <PrivateRoute>
+                    <Header />
                     <Organization />
                   </PrivateRoute>
                 }

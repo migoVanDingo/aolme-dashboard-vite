@@ -27,7 +27,7 @@ const SContainer = styled(SFlexCol)`
 
 const SDescription = styled.p`
   padding: 10px 0;
-  margin: 0;
+  margin: 20px 0;
   font-size: 0.95rem;
   line-height: 25px;
   font-weight: 400;

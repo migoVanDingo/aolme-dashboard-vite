@@ -5,5 +5,5 @@ import { useAuth } from "../../context/AuthContext";
 export default function FencedRoute({ children }: any) {
   const { currentUser } = useAuth();
 
-  return !currentUser ? children : <Navigate to="/" />;
+  return !currentUser ? children : <Navigate to="/profile" />;
 }
