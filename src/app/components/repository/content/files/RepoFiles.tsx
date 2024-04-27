@@ -47,15 +47,6 @@ const tabs = [
     },
   },
   {
-    title: "Configs",
-    url: "link",
-    type: "CONFIG",
-    icon: faListCheck,
-    callback: () => {
-      console.log("not implemented")
-    },
-  },
-  {
     title: "Dataset",
     url: "link",
     type: "DATASET",
@@ -65,10 +56,10 @@ const tabs = [
     },
   },
   {
-    title: "Modules",
+    title: "Configs",
     url: "link",
-    type: "MODULE",
-    icon: faCubes,
+    type: "CONFIG",
+    icon: faListCheck,
     callback: () => {
       console.log("not implemented")
     },
@@ -81,7 +72,19 @@ const tabs = [
     callback: () => {
       console.log("not implemented")
     },
-  },
+  } 
+  
+
+  /* {
+    title: "Modules",
+    url: "link",
+    type: "MODULE",
+    icon: faCubes,
+    callback: () => {
+      console.log("not implemented")
+    },
+  }, */
+  /* ,
   {
     title: "Annotations",
     url: "link",

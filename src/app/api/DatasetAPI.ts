@@ -71,4 +71,10 @@ export class DatasetAPI {
     return Requests.doGet("/api/dataset/subset/" + subsetId + "/item")
   }
 
+  public static async getAnnotationData(subsetId: string, filename: string) {
+    return Requests.doGet(
+      "/api/subset/" + subsetId + "/annotation?filename=" + filename
+    )
+  }
+
 }

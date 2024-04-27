@@ -18,7 +18,8 @@ import { setStoreUserId } from "./app/actions"
 import CreateOrganization from "./app/pages/CreateOrganization"
 import Organization from "./app/pages/Organization"
 import CreateRepositoryV2 from "./app/pages/CreateRepositoryV2"
-
+import Test from "./app/pages/Test"
+import ActivityMap from "./app/pages/ActivityMap"
 
 const SBody = styled.div`
   background-color: ${({ theme }) => theme.color.color_0};
@@ -86,22 +87,35 @@ function App() {
         <SButton onClick={handleThemeChange}></SButton>
 
         <AuthProvider>
-        <SBody>
-          <Header />
+          <SBody>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <PrivateRoute>
+                    <Header />
+                    <Profile />
+                  </PrivateRoute>
+                }
+              />
 
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <PrivateRoute>
-                  <Profile />
-                </PrivateRoute>
-              }
-            />
+              <Route
+                path="/login"
+                element={
+                  <PublicRoute>
+                    <Login />
+                  </PublicRoute>
+                }
+              />
 
-            <Route path="/login" element={<Login />} />
-
-            <Route path="/signup" element={<CreateProfile />} />
+              <Route
+                path="/signup"
+                element={
+                  <PublicRoute>
+                    <CreateProfile />
+                  </PublicRoute>
+                }
+              />
 
             <Route
               path="/settings"
@@ -121,23 +135,25 @@ function App() {
               }
             />
 
-            <Route
-              path="/repository/create"
-              element={
-                <PrivateRoute>
-                  <CreateRepositoryV2 />
-                </PrivateRoute>
-              }
-            />
+              <Route
+                path="/repository/create"
+                element={
+                  <PrivateRoute>
+                    <Header />
+                    <CreateRepositoryV2 />
+                  </PrivateRoute>
+                }
+              />
 
-            <Route
-              path="/repository/:repoId"
-              element={
-                <PrivateRoute>
-                  <Repository />
-                </PrivateRoute>
-              }
-            />
+              <Route
+                path="/repository/:repoId"
+                element={
+                  <PrivateRoute>
+                    <Header />
+                    <Repository />
+                  </PrivateRoute>
+                }
+              />
 
             <Route
               path="/organization/create"
@@ -147,15 +163,29 @@ function App() {
                 </PrivateRoute>
               }/>
 
-            <Route
-              path="/organization/:orgId"
-              element={
-                <PrivateRoute>
-                  <Organization />
-                </PrivateRoute>
-              }/>
-          </Routes>
-        </SBody>
+              <Route
+                path="/organization/:orgId"
+                element={
+                  <PrivateRoute>
+                    <Header />
+                    <Organization />
+                  </PrivateRoute>
+                }
+              />
+
+              <Route
+                path="/subset/:subsetId/activity-map/"
+                element={
+                  <>
+                    <PrivateRoute>
+                      <Header />
+                      <ActivityMap />
+                    </PrivateRoute>
+                  </>
+                }
+              />
+            </Routes>
+          </SBody>
         </AuthProvider>
       </ThemeProvider>
     </Router>

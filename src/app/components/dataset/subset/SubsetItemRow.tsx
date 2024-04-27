@@ -40,15 +40,45 @@ const SFieldValue = styled(SFlexRow)`
 
   transition: all 0.3s ease;
   color: ${({ theme }) => theme.color.color_5};
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 300;
+
+  &.filename{
+    &:hover {   
+      cursor: pointer;
+      color: ${({ theme }) => theme.accent.color_2};
+    }
+  }
+
+`
+const SButton = styled.button`
+  font-size: 0.7rem;
+  background-color: ${({ theme }) => theme.color.color_2};
+  color: ${({ theme }) => theme.color.color_6};
+  font-weight: 200;
+  border: none;
+  border-radius: ${({ theme }) => theme.container.borderRadius.sm};
+  box-sizing: border-box;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.color.color_2_5};
+    cursor: pointer;
+    border: 1px solid ${({ theme }) => theme.accent.color_1};
+    color: ${({ theme }) => theme.accent.color_1};
+  }
 `
 
-const SubsetItemRow = ({ item, last = false }: any) => {
+const SubsetItemRow = ({ item, last = false, filePath }: any) => {
+
+  const handleLaunchActivityMap = (path: string) => {
+    console.log('activity map: ' + path)
+  }
+
   return (
     <SUserRowChild className={last ? "subset-table-bottom" : ""}>
-      <SFieldValue>{item.name}</SFieldValue>
+      <SFieldValue className={"filename"} onClick={() => handleLaunchActivityMap(filePath)} >{item.name}</SFieldValue>
       <SFieldValue>{item.subset_item_id}</SFieldValue>
+
     </SUserRowChild>
   )
 }

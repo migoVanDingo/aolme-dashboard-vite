@@ -9,6 +9,7 @@ import { useSelector } from "react-redux"
 import { ISyncImportStorage } from "../../../utility/interface/project"
 import FileUploadService from "../../../services/FileUploadService"
 import { ILabelSubset } from "../../../utility/interface/dataset"
+import { useNavigate } from "react-router-dom"
 
 const SContainer = styled(SFlexCol)`
   width: 100%;
@@ -114,6 +115,7 @@ const SubsetCard = ({ subset, dataset }: any) => {
   const [headingArr, setHeadingArr] = useState<any[]>([])
 
   const { userId } = useSelector((state: any) => state)
+  const nav = useNavigate()
 
   useEffect(() => {
     DatasetAPI.getSubsetItemList(subset.subset_id)
@@ -145,7 +147,11 @@ const SubsetCard = ({ subset, dataset }: any) => {
   
 
   const openLabelStudio = () => {
-    window.open("http://localhost:8080", "_blank")
+ 
+  }
+
+  const openSubsetActivityMap = () => {
+    nav(`/subset/${subset.subset_id}/activity-map/`/* , "_blank" */)
   }
   
 
@@ -154,6 +160,11 @@ const SubsetCard = ({ subset, dataset }: any) => {
       <SCardHeader>
         <SHeading>Title: {subset.name}</SHeading>
         <SLabelerButton onClick={openLabelStudio}>{"Launch Labeler"}</SLabelerButton>
+        {
+          inRepo !== false && (<SLabelerButton onClick={selectDatasetView}>{"Select Dataset"}</SLabelerButton>)
+        }
+        <SLabelerButton onClick={openSubsetActivityMap}>{"Activity Map"}</SLabelerButton>
+        </SButtonContainer>
       </SCardHeader>
 
       <SLastUpdated>ID: {subset.subset_id}</SLastUpdated>
@@ -181,7 +192,7 @@ const SubsetCard = ({ subset, dataset }: any) => {
                   subsetFiles.map((file: any, index: number) => {
                     if (file.type === heading) {
                       return (
-                        <SubsetItemRow key={file.subset_item_id} item={file} />
+                        <SubsetItemRow filePath={file.path + "/" + file.name} key={file.subset_item_id} item={file} />
                       )
                     }
                   })}
