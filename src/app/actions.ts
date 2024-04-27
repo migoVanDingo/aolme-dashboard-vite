@@ -16,11 +16,19 @@ export const ACTIONS = {
     SET_REPO_OWNER: "SET_REPO_OWNER",
     SET_REPO_ENTITY: "SET_REPO_ENTITY",
 
+    SET_REPO_DATASET: "SET_REPO_DATASET",
+    SET_REPO_CONFIGS: "SET_REPO_CONFIGS",
+    SET_REPO_MODULES: "SET_REPO_MODULES",
+    SET_REPO_NOTEBOOKS: "SET_REPO_NOTEBOOKS",
+    SET_REPO_SUBSETS: "SET_REPO_SUBSETS",
+    SET_REPO_ITEMS: "SET_REPO_ITEMS",
+    SET_REPO_FILES: "SET_REPO_FILES",
+
+
     SET_DATASET_ID: "SET_DATASET_ID",
     SET_DATASET_NAME: "SET_DATASET_NAME",
     SET_DATASET_DESCRIPTION: "SET_DATASET_DESCRIPTION",
-    
-    
+
 }
 
 
@@ -115,6 +123,57 @@ export const setDatasetDescription = (datasetDescription: string) => {
         datasetDescription: datasetDescription
     }
 }
+
+export const setRepoItems = (repoItems: any) => {
+    return {
+        type: ACTIONS.SET_REPO_ITEMS,
+        repoItems: repoItems
+    }
+}
+
+export const setRepoDataset = (dataset: any) => {
+    return {
+        type: ACTIONS.SET_REPO_DATASET,
+        dataset: dataset
+    }
+}
+
+export const setRepoConfig = (configs: any) => {
+    return {
+        type: ACTIONS.SET_REPO_CONFIGS,
+        configs: configs
+    }
+}
+
+export const setRepoModule = (modules: any) => {
+    return {
+        type: ACTIONS.SET_REPO_MODULES,
+        modules: modules
+    }
+}
+
+export const setRepoNotebook = (notebooks: any) => {
+    return {
+        type: ACTIONS.SET_REPO_NOTEBOOKS,
+        notebooks: notebooks
+    }
+}
+
+export const setRepoSubsets = (subsets: any) => {
+    return {
+        type: ACTIONS.SET_REPO_SUBSETS,
+        subsets: subsets
+    }
+}
+
+export const setStoreRepoFiles = (repoFiles: any) => {
+    return {
+        type: ACTIONS.SET_REPO_FILES,
+        repoFiles: repoFiles
+    }
+}
+
+
 
 
 

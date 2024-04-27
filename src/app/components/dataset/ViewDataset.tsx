@@ -16,6 +16,10 @@ const SContainer = styled(SFlexCol)`
   padding: 50px;
   box-sizing: border-box;
 
+  &.repo{
+    width: 100%;
+  }
+
 `
 
 const SDsHeading = styled.h1`
@@ -74,7 +78,7 @@ const SLastUpdated = styled.p`
   color: ${({ theme }) => theme.color.color_5};
 `
 
-const ViewDataset = ({ hideView, viewId, dataset }: any) => {
+const ViewDataset = ({ hideView, viewId, dataset, repo }: any) => {
   //const { datasetId, datasetName, datasetDescription } = useSelector((state: any) => state)
 
   const [buttonHover, setButtonHover] = useState<boolean>(false)
@@ -122,7 +126,7 @@ const ViewDataset = ({ hideView, viewId, dataset }: any) => {
   }
 
   return (
-    <SContainer>
+    <SContainer className={repo ? "repo":""}>
       {!isNewSubsetActive && (
         <>
           <SButton

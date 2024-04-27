@@ -109,7 +109,14 @@ const SLabelerButton = styled.button`
   }
 `
 
-const SubsetCard = ({ subset, dataset }: any) => {
+const SButtonContainer = styled(SFlexRow)`
+  gap: 20px;
+  padding: 0;
+  margin: 0 0 0 auto;
+
+`
+
+const SubsetCard = ({ subset, dataset, inRepo = false, selectDatasetView = () => {} }: any) => {
   const [subsetFiles, setSubsetFiles] = useState<any[]>([])
   const [loopLength, setLoopLength] = useState<number>(0)
   const [headingArr, setHeadingArr] = useState<any[]>([])
@@ -158,7 +165,8 @@ const SubsetCard = ({ subset, dataset }: any) => {
   return (
     <SContainer>
       <SCardHeader>
-        <SHeading>Title: {subset.name}</SHeading>
+        <SHeading>Subset Name: {subset.name}</SHeading>
+        <SButtonContainer>
         <SLabelerButton onClick={openLabelStudio}>{"Launch Labeler"}</SLabelerButton>
         {
           inRepo !== false && (<SLabelerButton onClick={selectDatasetView}>{"Select Dataset"}</SLabelerButton>)

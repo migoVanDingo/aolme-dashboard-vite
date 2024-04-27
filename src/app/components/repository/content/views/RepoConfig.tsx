@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { RepoAPI } from "../../../../api/RepoAPI"
-import { setRepoConfig, setRepoItems } from "../../../../actions"
-import EmptyContentMenu from "../dynamic/EmptyContentMenu"
-import RepoViewContent from "./RepoViewContent"
-import { ConfigAPI } from "../../../../api/ConfigAPI"
-import { FilesAPI } from "../../../../api/FileAPI"
-import RepoViewConfig from "../files/RepoViewConfig"
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { RepoAPI } from '../../../../api/RepoAPI'
+import { setRepoConfig, setRepoItems } from '../../../../actions'
+import EmptyContentMenu from '../dynamic/EmptyContentMenu'
+import RepoViewContent from './RepoViewContent'
+import { ConfigAPI } from '../../../../api/ConfigAPI'
+import { FilesAPI } from '../../../../api/FileAPI'
+import RepoViewConfig from '../files/RepoViewConfig'
 
 const RepoConfig = ({}: any) => {
   const dispatch = useDispatch()
-  const { repoId, repoEntity, userId, repoFiles } = useSelector(
-    (state: any) => state,
-  )
+  const { repoId, repoEntity, userId, repoFiles } = useSelector((state: any) => state)
 
+  
   const [config, setConfig] = useState<any>()
 
   const [signalReload, setSignalReload] = useState<boolean>(false)
@@ -28,11 +27,11 @@ const RepoConfig = ({}: any) => {
 
   useEffect(() => {
     hideSelectView()
-  }, [])
+  }, []);
 
   useEffect(() => {
     const init = () => {
-      console.log("herehere:", repoId)
+        console.log('herehere:', repoId)
 
       repoId && getRepoItems(repoId)
     }
@@ -43,12 +42,12 @@ const RepoConfig = ({}: any) => {
   useEffect(() => {
     const init = () => {
       if (itemList && itemList.length > 0) {
-        console.log("itemList", itemList)
+        console.log('itemList', itemList)
         const r = filterRepoItems(itemList)
         if (r.length > 0) {
           //getItems(r[0].file_id)
         }
-      }
+      } 
     }
 
     //return init()
@@ -56,25 +55,23 @@ const RepoConfig = ({}: any) => {
 
   useEffect(() => {
     const init = () => {
-      if (repoFiles && repoFiles.length > 0) {
+      if(repoFiles && repoFiles.length > 0)
         checkForNotebookFiles(repoFiles)
-      } else {
-        showSelectView()
-      }
     }
 
     return init()
-  }, [repoFiles])
+  }, [repoFiles]);
 
   function getRepoItems(repoId: string) {
     RepoAPI.getRepoItems(repoId)
       .then((res: any) => {
         console.log("Repository::init()::getRepoItems::res::", res.data)
         if (filterRepoItems(res.data).length > 0) {
-          setItemList(filterRepoItems(res.data))
-          dispatch(setRepoItems(res.data))
+            setItemList(filterRepoItems(res.data))
+            dispatch(setRepoItems(res.data))
+          
         } else {
-          showSelectView()
+            showSelectView()
         }
       })
       .catch((err: any) =>
@@ -87,7 +84,7 @@ const RepoConfig = ({}: any) => {
   }
 
   function getItems(contentId: string) {
-    /*  FilesAPI.getConfigById(contentId)
+   /*  FilesAPI.getConfigById(contentId)
       .then((res: any) => {
         console.log("RepoDataset::init()::getDatasets::res::", res.data)
         //setDataset(res.data)
@@ -103,14 +100,17 @@ const RepoConfig = ({}: any) => {
   }
 
   function checkForNotebookFiles(files: any[]) {
+
     const config = files.filter((file: any) => file.type === "CONFIG")
     console.log("config: ", config)
-    if (config.length > 0) {
+    if(config.length > 0) {
       setConfig(config)
     } else {
       showSelectView()
     }
+
   }
+
 
   return (
     <>
@@ -121,7 +121,10 @@ const RepoConfig = ({}: any) => {
           hideSelectDatasetView={hideSelectView}
         />
       ) : (
-        <RepoViewConfig config={config} showSelectView={showSelectView} />
+        <RepoViewConfig
+          config={config}
+          showSelectView={showSelectView}
+        />
       )}
     </>
   )

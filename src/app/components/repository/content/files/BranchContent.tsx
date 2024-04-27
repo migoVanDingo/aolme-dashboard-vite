@@ -1,236 +1,227 @@
-import React, { useEffect, useState } from "react"
+
+import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
 import styled from "styled-components"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faFile, faFolder } from "@fortawesome/free-solid-svg-icons"
 import { SFlexRow } from "../../../common/containers/FlexContainers"
-import { connect, useSelector } from "react-redux"
-import { FilesAPI } from "../../../../api/FileAPI"
-
-const SRow = styled(SFlexRow)`
-  align-items: center;
-  width: 100%;
-  height: 40px;
-
-  background-color: ${({ theme }) => theme.color.color_0};
-  border-bottom: 1px solid ${({ theme }) => theme.color.color_5};
-  font-size: 0.8rem;
-  padding: 5px 15px;
-  box-sizing: border-box;
-
-  &.last {
-    border-bottom: none;
-  }
-
-  &.first {
-    border-top: 1px solid ${({ theme }) => theme.color.color_5};
-  }
-`
-
-const SContentLink = styled(SFlexRow)`
-  width: 300px;
-
-  cursor: pointer;
-
-  &:hover {
-    color: ${({ theme }) => theme.accent.color_2};
-  }
-`
-
-const SIcon = styled(FontAwesomeIcon)`
-  margin: 0 10px 0 0;
-  color: ${({ theme }) => theme.color.color_8};
-`
-
-const SLine = styled.p`
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  color: ${({ theme }) => theme.color.color_8};
-  &:hover {
-    color: ${({ theme }) => theme.accent.color_2};
-  }
-`
-
-const SCommit = styled.p`
-  border-radius: ${({ theme }) => theme.container.borderRadius.md};
-  width: 90px;
-  text-align: center;
-  font-size: 0.8rem;
-  margin: 0 0 0 40px;
-  padding: 5px 12px;
-  color: ${({ theme }) => theme.color.color_5};
-  background-color: ${({ theme }) => theme.color.color_1};
-`
-
-const SCommitMsg = styled.p`
-  font-size: 0.8rem;
-  margin: 0 0 0 20px;
-  padding: 5px 0;
-`
-
-const SLastUpdate = styled.p`
-  font-size: 0.8rem;
-  margin: 0;
-  margin-left: auto;
-  padding: 5px 0;
-`
+import RepoSelectDataset from "./RepoSelectDataset"
+import ViewDataset from "../../../dataset/ViewDataset"
+import Subset from "../../../dataset/subset/Subset"
+import { DatasetAPI } from "../../../../api/DatasetAPI"
+import SubsetCard from "../../../dataset/subset/SubsetCard"
+import RepoViewDataset from "./RepoViewDataset"
+import ViewFiles from "./ViewFiles"
+import DynamicContent from "../dynamic/DynamicContent"
+import RepoDataset from "../views/RepoDataset"
+import RepoAll from "../views/RepoAll"
+import RepoConfig from "../views/RepoConfig"
+import RepoModule from "../views/RepoModule"
+import RepoNotebook from "../views/RepoNotebook"
 
 const SEmptyRepo = styled(SFlexRow)`
-  padding: 10px 60px 60px;
+  padding: 80px 60px 100px 60px;
   font-size: 1.2rem;
   color: ${({ theme }) => theme.color.color_3};
 `
 
 
+
 const BranchContent = ({
-  folderPath,
-  setFolderPath,
-  trigger,
-  projectId,
-  stopSwitchFolders,
-  setStopSwitchFolders,
-  folderItemsSwitch, 
-  setFolderItemsSwitch,
   files,
-  handleTriggerRender
+  show,
+  menuOption,
 }: any) => {
-  //const [files, setFiles] = useState<any[]>([])
-  const [folders, setFolders] = useState<any[]>([])
-  const [stopSwitchFiles, setStopSwitchFiles] = useState<boolean>(false)
 
-  const { repoEntity } = useSelector((state: any) => state)
 
-  
 
-  let fp = []
-  /* useEffect(() => {
-    const getProjectFiles = (projectId: number) => {
-      if (projectId !== undefined && stopSwitchFiles === false) {
-        setStopSwitchFiles(true)
 
-        const response = FilesAPI.getProjectFiles(projectId)
-          .then((res: any) => {
-            setFiles(res.data)
-          })
-          .catch((err: any) => console.error(err))
-      }
+  useEffect(() => {
+    
+    const init = () => {
+      console.log("BranchContent::init()::menuOption: ", menuOption)
     }
 
-    const getProjectFolders = () => {
-      if (projectId !== undefined && stopSwitchFolders === false) {
-        setStopSwitchFolders(true)
-
-        const response = FilesAPI.getProjectFolders(projectId)
-          .then((res: any) => {
-            console.log("resdata: ", res.data)
-            const folderList = res.data.map((folder: any) => folder.name)
-            const f = folderList.sort()
-            setFolders(f)
-          })
-          .catch((err: any) => console.error(err))
-      }
-    }
-
-    return () => {
-      setFolderPath([])
-
-      setFiles([])
-
-      getProjectFolders()
-      
-    }
-  }, [projectId, trigger]) */
-
- /*  useEffect(() => {
-    if (folderItemsSwitch === true) {
-      console.log("folderPath: ", folderPath)
-      FilesAPI.getFolderItems(repoEntity, folderPath)
-        .then((result: any) => {
-          const files = result.data.filter((item: any) => item.type === "file")
-          
-          let folders = result.data.filter(
-            (item: any) => item.type === "folder",
-          )
-
-          //folders = folders.map((folder: any) => folder.name)
-
-
-
-          console.log("files: ", files)
-          //console.log("folders: ", folders)
-          setFolderItemsSwitch(false)
-          setFiles(files)
-          //setFolders(folders)
-        })
-        .catch((err: any) =>
-          console.error("BranchContent -- handleSelectFolder(): ", err),
-        )
-    }
-  }, [folderPath, folderItemsSwitch]) */
-
-  const handleContentClicks = () => {}
-
-  const handleSelectFolder = (e: any) => {
-    console.log("dname: ", e.target.id)
-    const fp = folderPath ? [...folderPath, e.target.id] : [e.target.id]
-    console.log("fp: ", fp)
-    setFolderItemsSwitch(true)
-    setFolderPath(fp)
-  }
+    return init()
+  }, []);
 
   return (
     <>
     {
-      folders.length === 0 && files.length === 0 && (<SEmptyRepo>Empty Repo. Upload files or create modules to get started.</SEmptyRepo>)
+      menuOption === "ALL" ? (
+        <RepoAll />
+      )
+      : menuOption === "DATASET" ? (
+        <RepoDataset />
+      )
+      : menuOption === "CONFIG" ? (
+        <RepoConfig />
+      )
+      : menuOption === "MODULE" ? (
+        <RepoModule />
+      )
+      : menuOption === "NOTEBOOK" ? (
+        <RepoNotebook  />
+      )
+      : <></>
     }
-     {/*  {folders &&
-        folders.map((folder: any, index: number) => {
-          console.log('folder'+ index+ ": ", folder)
-          return (
-            <SRow
-              key={index}
-              className={index === folders.length - 1 ? "last" : ""}
-            >
-              <SContentLink onClick={handleSelectFolder}>
-                <SIcon id={folder} icon={faFolder} />
-                <SLine id={folder}>{folder}</SLine>
-              </SContentLink>
-
-              {folder.commit && <SCommit>{folder.commit}</SCommit>}
-              {folder.commit_message && (
-                <SCommitMsg>{folder.commit_message}</SCommitMsg>
-              )}
-              {folder.last_updated && (
-                <SLastUpdate>{folder.last_updated}</SLastUpdate>
-              )}
-            </SRow>
-          )
-        })} */}
-      {files &&
-        files.map((file: any, index: number) => {
-          return (
-            <SRow
-              key={index}
-              className={index === files.length - 1 && index === 0 ? "first last" : index === files.length - 1 ? "last" : index === 0 ? "first" : ""}
-            >
-              <SContentLink onClick={() => {}}>
-                <SIcon icon={faFile} />
-                <SLine>{file.name}</SLine>
-              </SContentLink>
-
-              {file.commit && <SCommit>{file.commit}</SCommit>}
-              {file.commit_message && (
-                <SCommitMsg>{file.commit_message}</SCommitMsg>
-              )}
-              {file.last_updated && (
-                <SLastUpdate>{file.last_updated}</SLastUpdate>
-              )}
-            </SRow>
-          )
-        })}
     </>
+    
   )
+
+
+}
+
+export default BranchContent
+
+/*
+
+const [isSelectNewDataset, setIsSelectNewDataset] = useState<boolean>(false)
+const [selectedDataset, setSelectedDataset] = useState<any>(null)
+const [subsets, setSubsets] = useState<any[]>([])
+
+const [datasets, setDatasets] = useState<any[]>([])
+const [createFileOption, setCreateFileOption] = useState<string>("")
+
+const { repoEntity, repoId } = useSelector((state: any) => state)
+
+const showDatasetView = () => setIsSelectNewDataset(true)
+const hideDatasetView = () => setIsSelectNewDataset(false)
+
+useEffect(() => {
+  if(selectedDataset === "" || selectedDataset === null || subsets.length === 0) {
+    setIsSelectNewDataset(true)
+  }
+  console.log("sss: ",subsets)
+  console.log("selectedDataset: ", selectedDataset)
+},[])
+
+useEffect(() => {
+  if(selectedDataset) {
+    getSubsets(selectedDataset)
+  }
+}, [selectedDataset]);
+
+useEffect(() => {
+  if(subsets.length > 0) {
+    console.log("Set Subsets: ", subsets)
+  }
+
+}, [subsets]);
+
+
+const getSubsets = (dataset: any) => {
+  DatasetAPI.getSubsetListByDatasetId(dataset)
+  .then((response) => {
+    console.log("Subset response: ", response)
+    setSubsets(response.data)
+  })
+  .catch((error) => console.error("BranchContent::getSubsets()::error: ", error))
 }
 
 
-export default BranchContent
+useEffect(() => {
+  const init = () => {
+    getOrgDatasets(repoEntity)
+  }
+  return init()
+}, [repoEntity])
+
+
+useEffect(() => {
+  
+  switch (createFileOption) {
+    case "ORG":
+      getOrgDatasets(repoEntity)
+      break
+    case "UPLOAD":
+      break
+    case "URL":
+      break
+    default:
+      break
+  }
+}, [createFileOption])
+
+
+
+const getOrgDatasets = (entity: string) => {
+  DatasetAPI.getDatasetListByEntity(entity)
+    .then((res: any) => {
+      console.log("RepoSelectDataset::getOrgDatasets()::res: ", res)
+      setDatasets(res.data)
+      //setSelectedDataset(res.data[0])
+    })
+    .catch((err: any) =>
+      console.error("RepoSelectDataset::getOrgDatasets()::ERROR: ", err),
+    )
+}
+
+const handleChangeDataset = (dataset_id: string) => {
+  console.log("BranchContent::handleSelectDataset()::dataset_id: ", dataset_id)
+  setSelectedDataset(dataset_id)
+  
+}
+
+const handleSelectNewDataset = () => {
+  setIsSelectNewDataset(false)
+  handleChangeDataset(selectedDataset)
+  console.log('which subsets set: ', subsets)
+  console.log("selectedDataset: ", selectedDataset)
+ 
+}
+
+
+
+
+return (
+  <>
+    { {
+    menuOption !== "DATASET" ? (
+
+      <SEmptyRepo>
+        No {menuOption.toLowerCase()} files. Upload or create a {menuOption.toLowerCase()} to get started.
+      </SEmptyRepo>
+      
+    ) : repoEntity && isSelectNewDataset ? (
+
+      <RepoSelectDataset 
+      repoEntity={repoEntity} 
+      selectedDataset={selectedDataset} 
+      setSelectedDataset={handleChangeDataset} 
+      datasets={datasets} 
+      option={createFileOption} 
+      setOption={setCreateFileOption}
+      handleSelectNewDataset={handleSelectNewDataset}
+      
+      />
+    ) : !isSelectNewDataset && subsets.length > 0 ?
+    (
+      <RepoViewDataset subsets={subsets} dataset={selectedDataset} selectDatasetView={showDatasetView} />
+    )
+    : <></>
+  } }
+
+  {
+    !files || files.length === 0 && menuOption === "ALL" ? (
+      <SEmptyRepo>
+        There are no files in this repo. Click on the other tabs to upload or link files.
+      </SEmptyRepo>
+    ):
+    menuOption === "ALL" ? (
+      <ViewFiles files={files}/>
+    ) :
+    (
+      <DynamicContent 
+      menuOption={menuOption}
+      repoEntity={repoEntity} 
+      repoId={repoId}
+
+      
+      />
+    ) 
+    
+
+  }
+
+    
+  </>
+)*/

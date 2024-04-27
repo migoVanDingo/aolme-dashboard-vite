@@ -260,7 +260,7 @@ const CreateSubset = ({ dataset, createViewInactive, triggerRender }: any) => {
         if (input.type === "select") {
           return (
             <SelectInput
-              value={type}
+              defaultValue={types[0]}
               options={types}
               label={"PROPS"}
               handleInput={handleChangeSelect}

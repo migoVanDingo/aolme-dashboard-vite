@@ -10,7 +10,7 @@ import Avatar from './Avatar'
 const SHeader = styled.div`
     width: 100vw;
     background-color: ${({theme}) => theme.header.height};
-    box-shadow: 0px 2px 3px ${({theme}) => theme.color.shadow.dark};
+    box-shadow: 0px 0px 3px ${({theme}) => theme.color.shadow.dark};
     padding: 5px ${({theme}) => theme.spacing.edges};
     margin: 0;
     position: relative;

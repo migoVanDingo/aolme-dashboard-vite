@@ -22,7 +22,7 @@ import Test from "./app/pages/Test"
 import ActivityMap from "./app/pages/ActivityMap"
 
 const SBody = styled.div`
-  background-color: ${({ theme }) => theme.color.color_0};
+  background-color: ${({ theme }) => theme.color.color_1};
   color: ${({ theme }) => theme.color.color_8};
   width: 100vw;
 
@@ -61,7 +61,6 @@ function App() {
   const { currentUser } = useAuth()
   const dispatch = useDispatch()
 
-
   function selectTheme(e: any) {
     switch (e.target.value) {
       case "dark":
@@ -88,6 +87,9 @@ function App() {
 
         <AuthProvider>
           <SBody>
+            
+            
+
             <Routes>
               <Route
                 path="/"
@@ -117,23 +119,25 @@ function App() {
                 }
               />
 
-            <Route
-              path="/settings"
-              element={
-                <PrivateRoute>
-                  <Settings />
-                </PrivateRoute>
-              }
-            />
+              <Route
+                path="/settings"
+                element={
+                  <PrivateRoute>
+                    <Header />
+                    <Settings />
+                  </PrivateRoute>
+                }
+              />
 
-            <Route
-              path="/profile"
-              element={
-                <PrivateRoute>
-                  <Profile />
-                </PrivateRoute>
-              }
-            />
+              <Route
+                path="/profile"
+                element={
+                  <PrivateRoute>
+                    <Header />
+                    <Profile />
+                  </PrivateRoute>
+                }
+              />
 
               <Route
                 path="/repository/create"
@@ -145,23 +149,28 @@ function App() {
                 }
               />
 
+
+              
+                <Route
+                  path="/repository/:repoId"
+                  element={
+                    <PrivateRoute>
+                      <Header />
+                      <Repository />
+                    </PrivateRoute>
+                  }
+                />
+      
+
               <Route
-                path="/repository/:repoId"
+                path="/organization/create"
                 element={
                   <PrivateRoute>
                     <Header />
-                    <Repository />
+                    <CreateOrganization />
                   </PrivateRoute>
                 }
               />
-
-            <Route
-              path="/organization/create"
-              element={
-                <PrivateRoute>
-                  <CreateOrganization />
-                </PrivateRoute>
-              }/>
 
               <Route
                 path="/organization/:orgId"

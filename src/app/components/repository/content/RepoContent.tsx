@@ -21,11 +21,11 @@ const SContainer = styled.div`
 
 `
 
-const RepoContent = ({ repoId, repoFiles }: any) => {
+const RepoContent = ({ repoId }: any) => {
   return (
     <SContainer>
         <RepoBranch />
-        <RepoFiles repoId={repoId}  /* repoFiles={repoFiles} *//>
+        <RepoFiles  />
         <RepoCollab />
     </SContainer>
   )

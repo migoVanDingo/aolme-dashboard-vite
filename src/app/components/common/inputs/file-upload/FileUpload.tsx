@@ -79,7 +79,7 @@ interface IFilePayload {
   ext: string
 }
 
-const FileUpload = ({ handleFileChange, handleFormSubmit, inputFile }: any) => {
+const FileUpload = ({ handleFileChange, inputFile }: any) => {
   
 
   return (
@@ -89,7 +89,6 @@ const FileUpload = ({ handleFileChange, handleFormSubmit, inputFile }: any) => {
           <SButtonContainer>
             <SIcon icon={faUpload} />
             <SInput name="files" type="file" ref={inputFile} onChange={handleFileChange} multiple/>
-            <SButton2 onClick={handleFormSubmit}>Upload</SButton2>
           </SButtonContainer>
   
       </SInnerContainer>
