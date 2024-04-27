@@ -154,7 +154,7 @@ const SubsetCard = ({ subset, dataset, inRepo = false, selectDatasetView = () =>
   
 
   const openLabelStudio = () => {
- 
+    window.open("http://localhost:8080", "_blank")
   }
 
   const openSubsetActivityMap = () => {
