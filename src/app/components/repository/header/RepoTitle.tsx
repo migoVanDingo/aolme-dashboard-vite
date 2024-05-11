@@ -34,6 +34,7 @@ const STitle = styled.p`
 
   &.accent {
     color: ${({ theme }) => theme.accent.color_1};
+    cursor: pointer;
   }
 `
 
@@ -77,7 +78,7 @@ const RepoTitle = ({ owner, projectName, entityName }: any) => {
     <SContainer>
       <STitleContainer>
         <SIcon icon={faBook} />
-        <STitle className={"accent"}>{owner} </STitle>
+        <STitle onClick={() => nav(`/profile`)} className={"accent"}>{owner} </STitle>
         <STitle>{" / "}</STitle>
         <STitle className={"accent"}> {projectName}</STitle>
       </STitleContainer>

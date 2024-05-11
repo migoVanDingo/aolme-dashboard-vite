@@ -40,13 +40,13 @@ const count = 3
 
 const users = [
   {
-    username: "Migo",
+    username: "Miguel",
   },
   {
-    username: "Bubz",
+    username: "Wenjing",
   },
   {
-    username: "Jamiriquai",
+    username: "Venkatesh",
   },
 ]
 

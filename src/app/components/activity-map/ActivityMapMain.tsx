@@ -4,6 +4,7 @@ import { SFlexCol } from "../common/containers/FlexContainers"
 import { DatasetAPI } from "../../api/DatasetAPI"
 import LabelTimelineComponent from "./LabelTimelineComponent"
 import LabelTimelineMap from "./LabelTimelineMap"
+import Player from "../video-player/Player"
 
 const SContainer = styled(SFlexCol)`
   width: 100%;
@@ -11,10 +12,12 @@ const SContainer = styled(SFlexCol)`
   grid-area: main;
   box-sizing: border-box;
   padding: 40px;
+  border: 1ps solid blue;
 `
 
 const ActivityMapMain = ({ subsetId, selectedItem }: any) => {
   const [annotationArr, setAnnotationArr] = useState<any[]>([])
+  const [videoTime, setVideoTime] = useState<number>(0)
 
   let toggle = true
 
@@ -73,13 +76,15 @@ const ActivityMapMain = ({ subsetId, selectedItem }: any) => {
     const filteredSequences = sequences.filter((sequence: any) =>
       filterSequences(sequence),
     )
-
-    return {
+   
+    const ret = {
       duration: duration,
       frames: frames,
       label: label,
       sequences: filteredSequences,
     }
+    //console.log("ActivityMapMain::filterAnnotationData::ret::", ret)
+    return ret
   }
 
   const filterSequences = (sequence: any) => {
@@ -89,11 +94,16 @@ const ActivityMapMain = ({ subsetId, selectedItem }: any) => {
     }
   }
 
-  return (
+
+  const handleVideoSkipTime = (time: number) => {
+    setVideoTime(time)
+  } 
+
+  if(annotationArr) return(
     <SContainer>
-        {
-           annotationArr && <LabelTimelineMap annotationArr={annotationArr} />
-        }
+      <Player currentTime={videoTime} path={"/Users/bubz/Developer/master-project/aolme-backend/_fs/organization/ORGIUZAZNDBCFS2RLF5WY04UF/dataset/DAT9USSP13T8YXZ5U88AFEA3S/subset/SBSJXCH34019G3AHZHDQP0OPN/files/G-C2L1P-Feb23-B-Shelby_q2_04-06.mp4"}/>
+        <LabelTimelineMap handleVideoSkipTime={handleVideoSkipTime} annotationArr={annotationArr} />
+        
     </SContainer>
   )
 }

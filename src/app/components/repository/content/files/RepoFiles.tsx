@@ -28,7 +28,7 @@ const SContainer = styled(SFlexCol)`
 `
 
 const tabs = [
-  {
+  /* {
     title: "All",
     url: "link",
     type: "ALL",
@@ -36,21 +36,12 @@ const tabs = [
     callback: () => {
       console.log("not implemented")
     },
-  },
+  }, */
   {
     title: "Dataset",
     url: "link",
     type: "DATASET",
     icon: faHardDrive,
-    callback: () => {
-      console.log("not implemented")
-    },
-  },
-  {
-    title: "Configs",
-    url: "link",
-    type: "CONFIG",
-    icon: faListCheck,
     callback: () => {
       console.log("not implemented")
     },
@@ -63,7 +54,16 @@ const tabs = [
     callback: () => {
       console.log("not implemented")
     },
-  } 
+  },
+  {
+    title: "Configs",
+    url: "link",
+    type: "CONFIG",
+    icon: faListCheck,
+    callback: () => {
+      console.log("not implemented")
+    },
+  }
   
 
   /* {
@@ -100,12 +100,12 @@ const RepoFiles = ({ repoId /* , repoFiles */ }: any) => {
   const [folderPath, setFolderPath] = useState<string[]>([])
   const [trigger, triggerRender] = useState<boolean>(false)
   const [folderItemsSwitch, setFolderItemsSwitch] = useState<boolean>(false)
-  const [menuOption, setMenuOption] = useState<string>("ALL")
+  const [menuOption, setMenuOption] = useState<string>("DATASET")
   const [selectedFiles, setSelectedFiles] = useState<any[]>([])
   const [progress, setProgress] = useState(0)
   const [description, setDescription] = useState<string>("")
   const [isPublic, setIsPublic] = useState<number>(0)
-  const [activeTab, setActiveTab] = useState<string>("ALL")
+  const [activeTab, setActiveTab] = useState<string>("DATASET")
   const [files, setFiles] = useState<any[]>([])
   const [show, setShow] = useState<boolean>(false)
 

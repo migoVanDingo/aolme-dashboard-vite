@@ -6,6 +6,7 @@ interface IProps {
   end: number
   width: number
   start: number
+  color: string
 }
 
 const STimelineItem = styled(SFlexRow)<IProps>`
@@ -13,7 +14,7 @@ const STimelineItem = styled(SFlexRow)<IProps>`
   margin-left: ${(p) => p.start + "px"};
   height: 5px;
   z-index: 2;
-  background-color: blue;
+  background-color: ${(p) => p.color};
   align-items: center;
   position: absolute;
   top: -1px;
@@ -21,12 +22,13 @@ const STimelineItem = styled(SFlexRow)<IProps>`
 
 interface IStartThumb {
   start: number
+  color: string
 }
 
 const SStartThumb = styled.div<IStartThumb>`
   width: 10px;
   height: 10px;
-  background-color: blue;
+  background-color: ${(p) => p.color};
   border-radius: 50%;
   z-index: 3;
   position: absolute;
@@ -41,12 +43,13 @@ const SStartThumb = styled.div<IStartThumb>`
 
 interface IEndThumb {
   end: number
+  color: string
 }
 
 const SEndThumb = styled.div<IEndThumb>`
   width: 10px;
   height: 10px;
-  background-color: blue;
+  background-color: ${(p) => p.color};
   border-radius: 50%;
   z-index: 3;
   position: absolute;
@@ -64,12 +67,13 @@ const Moment = ({
   width,
   handleClickStart,
   handleClickEnd,
+  color
 }: any) => {
   return (
     <>
-      <SStartThumb onClick={handleClickStart} start={start - 8} />
-      <STimelineItem start={start} end={end} width={width} />
-      <SEndThumb onClick={handleClickEnd} end={end - 2} />
+      <SStartThumb color={color.color} onClick={handleClickStart} start={start - 8} />
+      <STimelineItem color={color.color} start={start} end={end} width={width} />
+      <SEndThumb color={color.color} onClick={handleClickEnd} end={end - 2} />
     </>
   )
 }

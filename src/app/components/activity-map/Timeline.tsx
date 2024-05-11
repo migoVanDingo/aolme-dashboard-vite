@@ -3,15 +3,15 @@ import styled from "styled-components"
 import { SFlexCol, SFlexRow } from "../common/containers/FlexContainers"
 import Moment from "./Moment"
 const SContainer = styled(SFlexCol)`
-    width: 1200px;
-    height: 300px;
-    border: 1px solid ${({ theme }) => theme.color.color_5};
+  width: 1200px;
+  height: 300px;
+  border: 1px solid ${({ theme }) => theme.color.color_5};
 
-    padding: 30px;
+  padding: 0px;
 `
 
 const STimeline = styled(SFlexRow)`
-  width: 1000px;
+  width: 100%;
   height: 3px;
   background-color: ${({ theme }) => theme.color.color_8};
   border-radius: 4px;
@@ -19,36 +19,95 @@ const STimeline = styled(SFlexRow)`
   position: relative;
 `
 
-
-
-const Timeline = ({ duration, ranges }: any) => {
+const Timeline = ({ duration, sequences, color, handleVideoSkipTime}: any) => {
   const [timelineWidth, setTimelineWidth] = useState<number>(0)
-  const [start, setStart] = useState<number>(0)
+  /*   const [start, setStart] = useState<number>(0)
   const [end, setEnd] = useState<number>(0)
-  const [width, setWidth] = useState<number>(0)
+  const [width, setWidth] = useState<number>(0) */
+  const [moments, setMoments] = useState<any[]>([])
 
   useEffect(() => {
     const init = () => {
-      calculateValues()
+      const values = calculateValues()
+      //console.log("Timeline1::values: ", values)
+      setMoments(values)
     }
     return init()
   }, [])
 
   useEffect(() => {
     const init = () => {
-      calculateValues()
+      const values = calculateValues()
+      //console.log("Timeline2::values: ", values)
+      setMoments(values)
     }
     return init()
-  }, [duration, ranges])
+  }, [duration, sequences])
 
   const calculateValues = () => {
+    // console.log("Timeline::duration", duration)
+    // console.log("Timeline::sequences", sequences)
     const timeline = document.getElementById("timeline")
     const timelineItem = document.getElementById("timeline-item")
 
-    if (timeline && duration !== 0 && ranges.length > 0) {
+    if (timeline && duration !== 0 && sequences.length > 0) {
+      const ratio = timeline.clientWidth / duration
+
+      return sequences.map((sequence: any, index: number) => {
+        //console.log("loop::sequence::index: " + index + " :: seq: ", sequence)
+        const start = sequence[0]["time"] * ratio
+        const end = sequence[1]["time"] * ratio
+
+        const width = end - start
+
+        return { start, end, width, ratio }
+      })
+    } else {
+      return []
+    }
+  }
+
+  const handleClickStart = (value: number) => {
+    console.log("start: ", value * (1 / moments[0].ratio) + " seconds")
+    handleVideoSkipTime(value * (1 / moments[0].ratio))
+  }
+
+  const handleClickEnd = (value: number) => {
+    console.log("end: ", value * (1 / moments[0].ratio) + " seconds")
+    handleVideoSkipTime(value * (1 / moments[0].ratio))
+  }
+
+  return (
+    <STimeline id="timeline">
+      {moments &&
+        moments.length > 0 &&
+        moments.map((moment: any, index: number) => {
+          return (
+            <Moment
+              key={index}
+              start={moment.start}
+              end={moment.end}
+              width={moment.width}
+              handleClickStart={() => handleClickStart(moment.start)}
+              color={color}
+              handleClickEnd={() => handleClickEnd(moment.end)}
+            />
+          )
+        })}
+    </STimeline>
+  )
+}
+
+export default Timeline
+
+/* const calculateValues = () => {
+    const timeline = document.getElementById("timeline")
+    const timelineItem = document.getElementById("timeline-item")
+
+    if (timeline && duration !== 0 && sequences.length > 0) {
       const ratio = timelineWidth / duration
-      const adjustedStart = ranges[0][0] * ratio
-      const adjustedEnd = ranges[0][1] * ratio
+      const adjustedStart = sequences[0][0] * ratio
+      const adjustedEnd = sequences[0][1] * ratio
       const adjustedWidth = adjustedEnd - adjustedStart
 
       console.log("adjustedStart", adjustedStart)
@@ -61,27 +120,12 @@ const Timeline = ({ duration, ranges }: any) => {
 
       setTimelineWidth(timeline.clientWidth)
     }
-  }
+  } */
 
-  const handleClickStart = () => {
-    console.log("start", ranges[0][0] / 30 + " seconds")
+/* const handleClickStart = () => {
+    console.log("start", sequences[0][0] / 30 + " seconds")
   }
 
   const handleClickEnd = () => {
-    console.log("end", ranges[0][1] / 30 + " seconds")
-  }
-
-  return (
-    <STimeline id="timeline">
-        <Moment 
-            start={start} 
-            end={end} 
-            width={width} 
-            handleClickStart={handleClickStart} 
-            handleClickEnd={handleClickEnd} 
-        />
-    </STimeline>
-  )
-}
-
-export default Timeline
+    console.log("end", sequences[0][1] / 30 + " seconds")
+  } */
