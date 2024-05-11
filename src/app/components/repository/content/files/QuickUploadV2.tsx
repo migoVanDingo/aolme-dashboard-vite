@@ -58,7 +58,7 @@ const SButtonContainer = styled(SFlexRow)`
   margin: 0 0 0 auto;
 `
 
-const QuickUploadV2 = ({ menuOption, goBackToEmptyMenu }: any) => {
+const QuickUploadV2 = ({ menuOption, goEmptyContentMenu }: any) => {
   const { userId, repoEntity, repoId } = useSelector((state: any) => state)
   const [uploadFiles, setUploadFiles] = useState<any>(null)
   const [progress, setProgress] = useState<number>(0)
@@ -104,7 +104,7 @@ const QuickUploadV2 = ({ menuOption, goBackToEmptyMenu }: any) => {
 
   const handleCancel = () => {
     handleReset()
-    goBackToEmptyMenu()
+    goEmptyContentMenu()
   }
 
   return (

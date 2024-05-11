@@ -18,7 +18,8 @@ import { setStoreUserId } from "./app/actions"
 import CreateOrganization from "./app/pages/CreateOrganization"
 import Organization from "./app/pages/Organization"
 import CreateRepositoryV2 from "./app/pages/CreateRepositoryV2"
-
+import Test from "./app/pages/Test"
+import ActivityMap from "./app/pages/ActivityMap"
 
 const SBody = styled.div`
   background-color: ${({ theme }) => theme.color.color_1};
@@ -100,17 +101,23 @@ function App() {
                 }
               />
 
-              <Route path="/login" element={
-              <PublicRoute>
-                <Login />
-              </PublicRoute>
-            } />
+              <Route
+                path="/login"
+                element={
+                  <PublicRoute>
+                    <Login />
+                  </PublicRoute>
+                }
+              />
 
-              <Route path="/signup" element={
-            <PublicRoute>
-            <CreateProfile />
-          </PublicRoute>
-            } />
+              <Route
+                path="/signup"
+                element={
+                  <PublicRoute>
+                    <CreateProfile />
+                  </PublicRoute>
+                }
+              />
 
               <Route
                 path="/settings"
@@ -172,6 +179,18 @@ function App() {
                     <Header />
                     <Organization />
                   </PrivateRoute>
+                }
+              />
+
+              <Route
+                path="/subset/:subsetId/activity-map/"
+                element={
+                  <>
+                    <PrivateRoute>
+                      <Header />
+                      <ActivityMap />
+                    </PrivateRoute>
+                  </>
                 }
               />
             </Routes>

@@ -9,6 +9,7 @@ import { useSelector } from "react-redux"
 import { ISyncImportStorage } from "../../../utility/interface/project"
 import FileUploadService from "../../../services/FileUploadService"
 import { ILabelSubset } from "../../../utility/interface/dataset"
+import { useNavigate } from "react-router-dom"
 
 const SContainer = styled(SFlexCol)`
   width: 100%;
@@ -121,6 +122,7 @@ const SubsetCard = ({ subset, dataset, inRepo = false, selectDatasetView = () =>
   const [headingArr, setHeadingArr] = useState<any[]>([])
 
   const { userId } = useSelector((state: any) => state)
+  const nav = useNavigate()
 
   useEffect(() => {
     DatasetAPI.getSubsetItemList(subset.subset_id)
@@ -154,6 +156,10 @@ const SubsetCard = ({ subset, dataset, inRepo = false, selectDatasetView = () =>
   const openLabelStudio = () => {
     window.open("http://localhost:8080", "_blank")
   }
+
+  const openSubsetActivityMap = () => {
+    nav(`/subset/${subset.subset_id}/activity-map/`/* , "_blank" */)
+  }
   
 
   return (
@@ -165,6 +171,7 @@ const SubsetCard = ({ subset, dataset, inRepo = false, selectDatasetView = () =>
         {
           inRepo !== false && (<SLabelerButton onClick={selectDatasetView}>{"Select Dataset"}</SLabelerButton>)
         }
+        <SLabelerButton onClick={openSubsetActivityMap}>{"Activity Map"}</SLabelerButton>
         </SButtonContainer>
       </SCardHeader>
 
@@ -193,7 +200,7 @@ const SubsetCard = ({ subset, dataset, inRepo = false, selectDatasetView = () =>
                   subsetFiles.map((file: any, index: number) => {
                     if (file.type === heading) {
                       return (
-                        <SubsetItemRow key={file.subset_item_id} item={file} />
+                        <SubsetItemRow filePath={file.path + "/" + file.name} key={file.subset_item_id} item={file} />
                       )
                     }
                   })}
