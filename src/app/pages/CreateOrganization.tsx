@@ -47,6 +47,7 @@ const CreateOrganization = () => {
       email: orgEmail,
       url: "",
       user_id: userId ? userId : orgAdmin,
+      user_status: "ACTIVE"
     }
     OrganizationAPI.createOrganization(org)
       .then((result: any) => {

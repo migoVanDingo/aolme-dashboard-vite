@@ -117,7 +117,7 @@ const RepoTabs = ({ activeTab, setActiveTab, projectId, name }: any) => {
   }
 
   const initializeMLFlow = () => {
-    window.open('http://localhost:9000','_blank')
+    window.open('http://localhost:9001','_blank')
   }
 
   const tabs = [
