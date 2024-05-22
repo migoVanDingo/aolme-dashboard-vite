@@ -7,6 +7,7 @@ import { useSelector } from "react-redux"
 import { DatasetAPI } from "../api/DatasetAPI"
 import ActivityMapSidebar from "../components/activity-map/ActivityMapSidebar"
 import ActivityMapMain from "../components/activity-map/ActivityMapMain"
+import ActivityMapMainV2 from "../components/activity-map/ActivityMapMainV2"
 
 /* const SContainer = styled(SFlexCol)`
     width: 1200px;
@@ -97,7 +98,7 @@ const ActivityMap = () => {
         subsetItems={subsetItems}
         setSelectedItem={handleSelectItem}
       />
-      <ActivityMapMain
+      <ActivityMapMainV2
         subsetId={subsetId}
         selectedItem={selectedItem}
       />

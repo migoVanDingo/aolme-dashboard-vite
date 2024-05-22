@@ -10,7 +10,7 @@ const CheckboxInput = ({ checked, setChecked, label }: any) => {
   
     return (
       <SContainer>
-        <SLabel>{label}</SLabel>
+        { label && <SLabel>{label}</SLabel>}
         <SCheckbox onChange={handleInput} value={checked}/>
       </SContainer>
     )

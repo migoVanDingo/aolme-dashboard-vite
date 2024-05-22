@@ -1,10 +1,4 @@
 import React, { useRef, useEffect } from "react"
-import styled from "styled-components"
-
-const SContainer = styled.div`
-  grid-area: player;
-
-`
 
 
 function Player({ currentTime, path }: any) {
@@ -38,12 +32,13 @@ function Player({ currentTime, path }: any) {
   }
 
   return (
-    <SContainer>
-      <video controls  width="640" height="360" ref={videoRef}>
+    <div>
+      <h2>Video Player</h2>
+      <video controls width="858" height="480" ref={videoRef}>
         <source src={path} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-    </SContainer>
+    </div>
   )
 }
 

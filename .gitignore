@@ -31,3 +31,4 @@ build
 package-lock.json
 src/assets
 *.txt
+*.rest

@@ -7,6 +7,8 @@ const SContainer = styled(SFlexCol)`
   width: 100%;
   box-sizing: border-box;
   padding: 40px;
+  grid-area: map;
+
 `
 
 const colors = [

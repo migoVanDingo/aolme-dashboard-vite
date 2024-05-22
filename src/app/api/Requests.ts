@@ -12,14 +12,25 @@ export class Requests {
       })
   }
   
-  public static async doPost(formData: any, endpoint: string) {
-    return await axios
-      .post("http://localhost:5000" + endpoint, formData, {
+  public static async doPost(data: any, endpoint: string) {
+    try {
+      const response = await fetch("http://localhost:5000" + endpoint, {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json'
         },
-      })
-      
+        body: JSON.stringify(data)
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      return await response.json();
+    } catch (error) {
+      console.error("POST ERROR: ", error);
+      throw error; // Re-throw the error to handle it outside this function if needed
+    }
   }
 
   public static async doGet(endpoint: string) {

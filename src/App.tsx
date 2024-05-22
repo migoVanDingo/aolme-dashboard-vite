@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import "@mantine/core/styles.css"
 import styled, { ThemeProvider } from "styled-components"
 import { light, dark, dark_grey_1, light_grey_1 } from "./app/theme/ThemeConfig"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
@@ -20,6 +21,12 @@ import Organization from "./app/pages/Organization"
 import CreateRepositoryV2 from "./app/pages/CreateRepositoryV2"
 import Test from "./app/pages/Test"
 import ActivityMap from "./app/pages/ActivityMap"
+
+import { createTheme, MantineProvider } from "@mantine/core"
+
+const mantineTheme = createTheme({
+  /** Put your mantine theme override here */
+})
 
 const SBody = styled.div`
   background-color: ${({ theme }) => theme.color.color_1};
@@ -82,75 +89,71 @@ function App() {
   }
   return (
     <Router>
-      <ThemeProvider theme={theme}>
-        <SButton onClick={handleThemeChange}></SButton>
+      <MantineProvider theme={mantineTheme}>
+        <ThemeProvider theme={theme}>
+          <SButton onClick={handleThemeChange}></SButton>
 
-        <AuthProvider>
-          <SBody>
-            
-            
+          <AuthProvider>
+            <SBody>
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <PrivateRoute>
+                      <Header />
+                      <Profile />
+                    </PrivateRoute>
+                  }
+                />
 
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <PrivateRoute>
-                    <Header />
-                    <Profile />
-                  </PrivateRoute>
-                }
-              />
+                <Route
+                  path="/login"
+                  element={
+                    <PublicRoute>
+                      <Login />
+                    </PublicRoute>
+                  }
+                />
 
-              <Route
-                path="/login"
-                element={
-                  <PublicRoute>
-                    <Login />
-                  </PublicRoute>
-                }
-              />
+                <Route
+                  path="/signup"
+                  element={
+                    <PublicRoute>
+                      <CreateProfile />
+                    </PublicRoute>
+                  }
+                />
 
-              <Route
-                path="/signup"
-                element={
-                  <PublicRoute>
-                    <CreateProfile />
-                  </PublicRoute>
-                }
-              />
+                <Route
+                  path="/settings"
+                  element={
+                    <PrivateRoute>
+                      <Header />
+                      <Settings />
+                    </PrivateRoute>
+                  }
+                />
 
-              <Route
-                path="/settings"
-                element={
-                  <PrivateRoute>
-                    <Header />
-                    <Settings />
-                  </PrivateRoute>
-                }
-              />
+                <Route
+                  path="/profile"
+                  element={
+                    <PrivateRoute>
+                      <Header />
+                      <Profile />
+                    </PrivateRoute>
+                  }
+                />
 
-              <Route
-                path="/profile"
-                element={
-                  <PrivateRoute>
-                    <Header />
-                    <Profile />
-                  </PrivateRoute>
-                }
-              />
+                <Route
+                  path="/repository/create"
+                  element={
+                    <PrivateRoute>
+                      <Header />
+                      <CreateRepositoryV2 />
+                    </PrivateRoute>
+                  }
+                />
 
-              <Route
-                path="/repository/create"
-                element={
-                  <PrivateRoute>
-                    <Header />
-                    <CreateRepositoryV2 />
-                  </PrivateRoute>
-                }
-              />
-
-
-              
                 <Route
                   path="/repository/:repoId"
                   element={
@@ -160,43 +163,43 @@ function App() {
                     </PrivateRoute>
                   }
                 />
-      
 
-              <Route
-                path="/organization/create"
-                element={
-                  <PrivateRoute>
-                    <Header />
-                    <CreateOrganization />
-                  </PrivateRoute>
-                }
-              />
-
-              <Route
-                path="/organization/:orgId"
-                element={
-                  <PrivateRoute>
-                    <Header />
-                    <Organization />
-                  </PrivateRoute>
-                }
-              />
-
-              <Route
-                path="/subset/:subsetId/activity-map/"
-                element={
-                  <>
+                <Route
+                  path="/organization/create"
+                  element={
                     <PrivateRoute>
                       <Header />
-                      <ActivityMap />
+                      <CreateOrganization />
                     </PrivateRoute>
-                  </>
-                }
-              />
-            </Routes>
-          </SBody>
-        </AuthProvider>
-      </ThemeProvider>
+                  }
+                />
+
+                <Route
+                  path="/organization/:orgId"
+                  element={
+                    <PrivateRoute>
+                      <Header />
+                      <Organization />
+                    </PrivateRoute>
+                  }
+                />
+
+                <Route
+                  path="/subset/:subsetId/activity-map/"
+                  element={
+                    <>
+                      <PrivateRoute>
+                        <Header />
+                        <ActivityMap />
+                      </PrivateRoute>
+                    </>
+                  }
+                />
+              </Routes>
+            </SBody>
+          </AuthProvider>
+        </ThemeProvider>
+      </MantineProvider>
     </Router>
   )
 }

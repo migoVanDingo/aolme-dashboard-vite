@@ -12,7 +12,7 @@ const SContainer = styled(SFlexCol)`
   grid-area: main;
   box-sizing: border-box;
   padding: 40px;
-  border: 1ps solid blue;
+
 `
 
 const ActivityMapMain = ({ subsetId, selectedItem }: any) => {
@@ -101,7 +101,7 @@ const ActivityMapMain = ({ subsetId, selectedItem }: any) => {
 
   if(annotationArr) return(
     <SContainer>
-      <Player currentTime={videoTime} path={"/Users/bubz/Developer/master-project/aolme-backend/_fs/organization/ORGIUZAZNDBCFS2RLF5WY04UF/dataset/DAT9USSP13T8YXZ5U88AFEA3S/subset/SBSJXCH34019G3AHZHDQP0OPN/files/G-C2L1P-Feb23-B-Shelby_q2_04-06.mp4"}/>
+      <Player currentTime={videoTime} path={"https://ece46medsrv.ece.unm.edu/COHORT_3/LEVEL_1/POLK/04_Polk_Mar21/04_Polk_Mar21_GroupA/Group_Interactions/Venkatesh/G-C3L1P-Mar21-A-Venkatesh_q2_03-05.mp4"}/>
         <LabelTimelineMap handleVideoSkipTime={handleVideoSkipTime} annotationArr={annotationArr} />
         
     </SContainer>

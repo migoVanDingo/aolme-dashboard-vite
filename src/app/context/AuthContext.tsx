@@ -58,7 +58,8 @@ export default function AuthProvider({ children }: any) {
   async function login(payload: PayloadLogin) {
     UserAPI.login(payload)
       .then((result: any) => {
-        const { username, userId, email } = result.data
+        const { username, userId } = result
+        console.log("AuthContext.tsx -- login() result: ", result.data)
         localStorage.setItem("userId", userId)
         localStorage.setItem("username", username)
         //localStorage.setItem("email", email)
