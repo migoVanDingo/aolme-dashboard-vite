@@ -27,14 +27,24 @@ export class LabelStudioAPI {
     return await Requests.doGet("/api/label_studio/subset/" + subsetId)
   }
 
-  public static async syncLabelStudioFiles(payload: ILabelSubset, fileSetId: string = "") {
-
+  public static async syncLabelStudioFiles(
+    payload: ILabelSubset,
+    fileSetId: string = ""
+  ) {
     let path = ""
-    if(fileSetId !== ""){
-        path = "/api/dataset/subset/sync-label-studio-files?file_set_id=" + fileSetId
+    if (fileSetId !== "") {
+      path =
+        "/api/dataset/subset/sync-label-studio-files?file_set_id=" + fileSetId
     } else {
-        path = "/api/dataset/subset/sync-label-studio-files"
+      path = "/api/dataset/subset/sync-label-studio-files"
     }
     return await Requests.doPost(payload, path)
+  }
+
+  public static async syncImportStorage(importId: string, payload: any) {
+    return await Requests.doPost(
+      payload,
+      "/api/label_studio/sync_import_storage/" + importId
+    )
   }
 }

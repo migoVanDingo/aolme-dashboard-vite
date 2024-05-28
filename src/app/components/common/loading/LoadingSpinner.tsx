@@ -62,10 +62,10 @@ const SSpinner = styled.div`
   }
 `
 
-const LoadingSpinner = () => {
+const LoadingSpinner = ({ message }: any) => {
   return (
     <SLoadingContainer>
-      <SLoadingHeading>Initializing Project</SLoadingHeading>
+      <SLoadingHeading>{message}</SLoadingHeading>
       <SSpinner className="lds-ring">
         <div></div>
         <div></div>

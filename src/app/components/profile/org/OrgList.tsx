@@ -6,6 +6,7 @@ import ListCard from '../../common/cards/ListCard'
 const SContainer = styled(SFlexCol)`
     width: 100%;
     gap: 10px;
+    grid-area: content;
 `
 
 const OrgList = ({ organizations }: any) => {

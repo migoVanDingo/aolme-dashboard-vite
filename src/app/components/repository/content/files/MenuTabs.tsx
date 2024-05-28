@@ -10,7 +10,7 @@ const SContainer = styled(SFlexRow)`
   background-color: ${({ theme }) => theme.color.color_1};
   gap: 10px;
   width: 100%;
-  /* border-bottom: 1px solid ${({theme}) => theme.color.color_5}; */
+
 
 `
 

@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import RepoTitle from './RepoTitle'
-import RepoTabs from './RepoTabs'
+
 
 const SContainer = styled.div`
 
     width: 100%;
-    
+    height: 100px;
 
     display: grid;
 
@@ -16,13 +15,12 @@ const SContainer = styled.div`
     "title misc"
     "tabs   blank";
 
-    padding: 15px 0 0 15px;
-    background-color: ${({theme}) => theme.color.color_1};
+    padding: 15px 0 0 0;
+    background-color: ${({theme}) => theme.color.color_2_5};
     box-shadow: 0px 0px 4px ${({theme}) => theme.color.shadow.dark};
-
 `
 
-export const RepoHeader = ({ owner, projectName, entityName }: any) => {
+export const ProfileHeader = ({ owner, projectName, entityName }: any) => {
 
     const [activeTab, setActiveTab] = useState<string>('Files')
     
@@ -31,8 +29,17 @@ export const RepoHeader = ({ owner, projectName, entityName }: any) => {
 
   return (
     <SContainer>
-        <RepoTitle owner={owner} projectName={projectName} entityName={entityName} />
-        <RepoTabs setActiveTab={setActiveTab} activeTab={activeTab} />
+      {/*   <ProfileTitle owner={owner} />
+        <ProfileTabs setActiveTab={setActiveTab} activeTab={activeTab} /> */}
     </SContainer>
   )
 }
+
+
+const HeaderContainer = () => {
+  return (
+    <div>HeaderContainer</div>
+  )
+}
+
+export default HeaderContainer

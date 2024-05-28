@@ -1,23 +1,46 @@
-import React, { useEffect, useState } from "react"
-import EmptyContentMenu from "../dynamic/EmptyContentMenu"
-import { DatasetAPI } from "../../../../api/DatasetAPI"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import {
+  setDatasetDescription,
+  setDatasetId,
+  setDatasetName,
   setRepoDataset,
   setRepoItems,
   setRepoSubsets,
 } from "../../../../actions"
-import RepoViewDataset from "../files/RepoViewDataset"
+import { DatasetAPI } from "../../../../api/DatasetAPI"
+import {
+  ICreateLabelStudioProject,
+  LabelStudioAPI,
+} from "../../../../api/LabelStudioAPI"
 import { RepoAPI } from "../../../../api/RepoAPI"
+import {
+  ICreateSubset,
+  IDataset,
+  ILabelSubset,
+} from "../../../../utility/interface/dataset"
+import EmptyContentMenu from "../dynamic/EmptyContentMenu"
+import RepoViewDataset from "../files/RepoViewDataset"
+import LoadingSpinner from "../../../common/loading/LoadingSpinner"
 
 const RepoDataset = ({}: any) => {
   const dispatch = useDispatch()
-  const { repoId } = useSelector((state: any) => state)
+  const repoId = useSelector((state: any) => state.repoId)
+  const userId = useSelector((state: any) => state.userId)
+  const repoEntity = useSelector((state: any) => state.repoEntity)
+  const repoName = useSelector((state: any) => state.repoName)
+  const repoDescription = useSelector((state: any) => state.repoDescription)
+
+  const [progress, setProgress] = useState<number>(0)
 
   const [componentDataset, setComponentDataset] = useState<any>()
   const [componentSubsets, setComponentSubsets] = useState<any[]>([])
+  const [uploadFiles, setUploadFiles] = useState<any[]>([])
 
   const [signalReload, setSignalReload] = useState<boolean>(false)
+  const [subsetName, setSubsetname] = useState<string>("")
+  const [subsetDescription, setSubsetDescription] = useState<string>("")
+
   const triggerReload = () => {
     setSignalReload(!signalReload)
   }
@@ -27,29 +50,29 @@ const RepoDataset = ({}: any) => {
   const hideSelectDatasetView = () => setIsSelectDatasetView(false)
   const [itemList, setItemList] = useState<any[]>([])
 
+  const [isLoading, setLoading] = useState<boolean>(false)
+
   useEffect(() => {
     hideSelectDatasetView()
-  }, []);
+  }, [])
 
   useEffect(() => {
     const init = () => {
-        console.log('herehere:', repoId)
-
+      console.log("Repository::init()::repoId::", repoId)
       repoId && getRepoItems(repoId)
     }
 
     return init()
-  }, [signalReload])
+  }, [signalReload, isLoading])
 
   useEffect(() => {
     const init = () => {
       if (itemList && itemList.length > 0) {
-        console.log('itemList', itemList)
         const r = filterRepoItems(itemList)
         if (r.length > 0) {
           getDatasets(r[0].file_id)
         }
-      } 
+      }
     }
 
     return init()
@@ -60,11 +83,10 @@ const RepoDataset = ({}: any) => {
       .then((res: any) => {
         console.log("Repository::init()::getRepoItems::res::", res.data)
         if (filterRepoItems(res.data).length > 0) {
-            setItemList(filterRepoItems(res.data))
-            dispatch(setRepoItems(res.data))
-          
+          setItemList(filterRepoItems(res.data))
+          dispatch(setRepoItems(res.data))
         } else {
-            showSelectDatasetView()
+          showSelectDatasetView()
         }
       })
       .catch((err: any) =>
@@ -85,6 +107,7 @@ const RepoDataset = ({}: any) => {
           getSubsets(res.data["dataset_id"])
           dispatch(setRepoDataset(res.data))
           setComponentDataset(res.data)
+          
         }
       })
       .catch((err: any) =>
@@ -106,20 +129,63 @@ const RepoDataset = ({}: any) => {
         console.error("RepoDataset::init()::getSubsets::error::", err),
       )
   }
+
+  const handleFormSubmit = () => {
+    setLoading(true)
+    handleInitializeDatasetRepoLabeler()
+  }
+
+  const handleInitializeDatasetRepoLabeler = () => {
+    const payload = {
+      owner: userId,
+      entity_id: repoEntity,
+      entity_type: repoEntity.includes("ORG") ? "ORGANIZATION" : "USER",
+      name: repoName + " Dataset",
+      description: repoDescription,
+      is_public: 0,
+      type: "VIDEO",
+      repo_item_type: "DATASET",
+      repo_id: repoId,
+    }
+    DatasetAPI.handleInitializeDatasetRepoLabeler(payload, uploadFiles, (e: any) => {
+      setProgress(Math.round((100 * e.loaded) / e.total))
+    } )
+    .then((res: any) => {
+      console.log("handleInitializeDatasetRepoLabeler::res::", res)
+      setIsSelectDatasetView(false)
+      setLoading(false)
+    })
+    .catch((err: any) => console.error("handleInitializeDatasetRepoLabeler::err::", err))
+  }
+
+  
   return (
     <>
-      {isSelectDatasetView ? (
-        <EmptyContentMenu
-          menuOption={"DATASET"}
-          triggerReload={triggerReload}
-          hideSelectDatasetView={hideSelectDatasetView}
-        />
+      {!isLoading ? (
+        <>
+          {isSelectDatasetView ? (
+            <EmptyContentMenu
+              menuOption={"DATASET"}
+              triggerReload={triggerReload}
+              hideSelectDatasetView={hideSelectDatasetView}
+              setUploadFiles={setUploadFiles}
+              handleFormSubmit={handleFormSubmit}
+              name={subsetName}
+              setName={setSubsetname}
+              description={subsetDescription}
+              setDescription={setSubsetDescription}
+            />
+          ) : (
+            <RepoViewDataset
+              subsets={componentSubsets}
+              dataset={componentDataset}
+              showSelectDatasetView={showSelectDatasetView}
+              triggerReload={triggerReload}
+            />
+          )}
+        </>
       ) : (
-        <RepoViewDataset
-          subsets={componentSubsets}
-          dataset={componentDataset}
-          showSelectDatasetView={showSelectDatasetView}
-        />
+        <LoadingSpinner message={"Creating Dataset"} />
       )}
     </>
   )

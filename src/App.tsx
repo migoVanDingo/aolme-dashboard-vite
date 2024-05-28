@@ -23,13 +23,14 @@ import Test from "./app/pages/Test"
 import ActivityMap from "./app/pages/ActivityMap"
 
 import { createTheme, MantineProvider } from "@mantine/core"
+import ProfileV2 from "./app/pages/ProfileV2"
 
 const mantineTheme = createTheme({
   /** Put your mantine theme override here */
 })
 
 const SBody = styled.div`
-  background-color: ${({ theme }) => theme.color.color_1};
+  background-color: ${({ theme }) => theme.color.color_2};
   color: ${({ theme }) => theme.color.color_8};
   width: 100vw;
 
@@ -49,7 +50,7 @@ const SBody = styled.div`
   padding: 0;
   transition: all 0.2s ease;
 
-  overflow-y: scroll;
+  overflow-y: auto;
 `
 const SButton = styled.button`
   height: 20px;

@@ -13,8 +13,8 @@ import { useNavigate } from "react-router-dom"
 
 const SContainer = styled(SFlexRow)`
   border: 1px solid ${({ theme }) => theme.color.color_5};
-
-  height: 20px;
+  box-sizing: border-box;
+  height: 25px;
   padding: 3px;
   border-radius: 4px;
   align-items: center;

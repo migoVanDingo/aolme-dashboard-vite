@@ -107,7 +107,8 @@ const SToolbarItem = styled.li`
 `
 
 const Organization = () => {
-  const { orgName, orgId } = useSelector((state: any) => state)
+  const orgName = useSelector((state: any) => state.orgName)
+  const orgId = useSelector((state: any) => state.orgId)
 
   const [organizationName, setOrganizationName] = useState<string>("")
   const [organizationId, setOrganizationId] = useState<string>("")

@@ -10,10 +10,11 @@ import RepoViewConfig from '../files/RepoViewConfig'
 
 const RepoConfig = ({}: any) => {
   const dispatch = useDispatch()
-  const { repoId, repoEntity, userId, repoFiles } = useSelector((state: any) => state)
+  const repoId = useSelector((state: any) => state.repoId)
+  const repoFiles = useSelector((state: any) => state.repoFiles)
 
   
-  const [config, setConfig] = useState<any>()
+  const [config, setConfig] = useState<any[]>([])
 
   const [signalReload, setSignalReload] = useState<boolean>(false)
   const triggerReload = () => {
@@ -31,7 +32,6 @@ const RepoConfig = ({}: any) => {
 
   useEffect(() => {
     const init = () => {
-        console.log('herehere:', repoId)
 
       repoId && getRepoItems(repoId)
     }
@@ -114,7 +114,7 @@ const RepoConfig = ({}: any) => {
 
   return (
     <>
-      {isSelectView ? (
+      {isSelectView || config.length === 0 ? (
         <EmptyContentMenu
           menuOption={"CONFIG"}
           triggerReload={triggerReload}

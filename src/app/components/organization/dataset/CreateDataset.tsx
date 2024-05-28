@@ -9,7 +9,7 @@ import {
   ICreateRepository,
 } from "../../../utility/interface/repository"
 import { RepoAPI } from "../../../api/RepoAPI"
-import {IDataset} from "../../../utility/interface/dataset"
+import { IDataset } from "../../../utility/interface/dataset"
 import SelectInput from "../../common/inputs/select/SelectInput"
 import { DatasetAPI } from "../../../api/DatasetAPI"
 import {
@@ -61,7 +61,8 @@ const types = ["IMAGE", "TEXT", "AUDIO", "VIDEO"]
 
 const CreateDataset = ({ trigger, hideCreateNew }: any) => {
   const dispatch = useDispatch()
-  const { orgId, userId } = useSelector((state: any) => state)
+  const orgId = useSelector((state: any) => state.orgId)
+  const userId = useSelector((state: any) => state.userId)
 
   const [name, setName] = useState<string>("")
   const [description, setDescription] = useState<string>("")
@@ -112,14 +113,11 @@ const CreateDataset = ({ trigger, hideCreateNew }: any) => {
 
     DatasetAPI.createDataset(payload)
       .then((res) => {
-        dispatch(setDatasetId(res.data.dataset_id))
-        dispatch(setDatasetName(res.data.name))
-        dispatch(setDatasetDescription(res.data.description))
+        console.log("CreateDataset::handleCreate():: Dataset Created: ", res)
+        dispatch(setDatasetId(res.dataset_id))
+        dispatch(setDatasetName(res.name))
+        dispatch(setDatasetDescription(res.description))
         trigger()
-        console.log(
-          "CreateDataset::handleCreate():: Dataset Created: ",
-          res.data,
-        )
       })
       .catch((err) => {
         console.log("Dataset Creation Failed: ", err)
@@ -142,6 +140,7 @@ const CreateDataset = ({ trigger, hideCreateNew }: any) => {
         if (input.type === "select") {
           return (
             <SelectInput
+              key={index}
               value={type}
               options={types}
               label={"PROPS"}

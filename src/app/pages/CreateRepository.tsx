@@ -141,7 +141,7 @@ const CreateRepository = ({ userId }: any) => {
           </form>
         </>
       ) : (
-        <LoadingSpinner />
+        <LoadingSpinner message={"Initializing Project"}/>
       )}
     </SContainer>
   )

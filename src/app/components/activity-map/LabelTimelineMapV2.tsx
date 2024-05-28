@@ -7,13 +7,49 @@ import ActionTimeline from "./ActionTimeline"
 const SContainer = styled(SFlexCol)`
   width: 100%;
   box-sizing: border-box;
-  padding: 40px;
+  padding:  40px;
   grid-area: map;
+  align-items: flex-start;
 
+  min-height: 200px;
+
+
+  border: 1px solid ${({ theme }) => theme.color.color_5};
+  
+  border-radius: ${({ theme }) => theme.container.borderRadius.lg};
+
+  &.layout-1{
+    margin: 10px 0 0 20px;
+  }
+
+  &.layout-2{
+    margin: 10px 0;
+  }
+  
+  
+  
 `
 
 const SParticipant = styled.p`
+  width: 100%;
+
   
+`
+
+const SHeading = styled.h2`
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 400;
+  font-size: 1.3rem;
+  color: ${({ theme }) => theme.color.color_6};
+  margin: 0;
+  padding: 0px;
+  border-bottom: 1px solid ${({ theme }) => theme.color.color_2_5};
+`
+
+const STimelineContainer = styled(SFlexCol)`
+  width: 100%;
+  align-items: flex-start;
+  overflow-y: auto;
 `
 
 const colors = [
@@ -39,15 +75,18 @@ const colors = [
   { color: "#40E0D0" },
 ]
 
-const LabelTimelineMapV2 = ({ annotationArr, handleVideoSkipTime, actionsList, participantsList }: any) => {
-
+const LabelTimelineMapV2 = ({
+  annotationArr,
+  handleVideoSkipTime,
+  actionsList,
+  participantsList,
+  layout
+}: any) => {
   const [participants, setParticipants] = useState<any[]>([])
   const [actions, setActions] = useState<any[]>([])
 
   useEffect(() => {
-    const init = () => {
-
-    }
+    const init = () => {}
     return init()
   }, [])
 
@@ -56,14 +95,14 @@ const LabelTimelineMapV2 = ({ annotationArr, handleVideoSkipTime, actionsList, p
       updateParticipantsList(participantsList)
     }
     return init()
-  }, [participantsList]);
+  }, [participantsList])
 
   useEffect(() => {
     const init = () => {
       updateActionsList(actionsList)
     }
     return init()
-  }, [actionsList]);
+  }, [actionsList])
 
   const updateParticipantsList = (activeParticipants: any[]) => {
     setParticipants(activeParticipants.filter((p: any) => p.toggle === true))
@@ -74,29 +113,21 @@ const LabelTimelineMapV2 = ({ annotationArr, handleVideoSkipTime, actionsList, p
   }
 
   return (
-    <SContainer>
-      {
-        participants.map((participant: any, index: number) => {
-          return (
-            <div key={index}>
+    <SContainer className={layout}>
+      <SHeading>Activity Map</SHeading>
+      
+      {participants.map((participant: any, index: number) => {
+        return (
+          <STimelineContainer key={index}>
             <SParticipant>{participant.title}</SParticipant>
 
             {actions.map((action: any, index: number, array: any) => {
-
-      
-                return (
-                  <ActionTimeline
-                    key={index}
-                    action={action.action}
-                  />
-                )
-              
-              
+              return (<ActionTimeline key={index} action={action.action} color={colors[index]} />)
             })}
-</div>
-          )
-      })
-    }
+          </STimelineContainer>
+        )
+      })}
+
     </SContainer>
   )
 }

@@ -6,6 +6,8 @@ export interface IDataset {
     owner: string
     type: string
     is_public: boolean
+    repo_id?: string
+    repo_item_type?: string
 
 }
 

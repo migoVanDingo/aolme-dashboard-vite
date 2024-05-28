@@ -8,6 +8,7 @@ import { DatasetAPI } from "../api/DatasetAPI"
 import ActivityMapSidebar from "../components/activity-map/ActivityMapSidebar"
 import ActivityMapMain from "../components/activity-map/ActivityMapMain"
 import ActivityMapMainV2 from "../components/activity-map/ActivityMapMainV2"
+import ActivityMapSidebarV2 from "../components/activity-map/ActivityMapSidebarV2"
 
 /* const SContainer = styled(SFlexCol)`
     width: 1200px;
@@ -24,6 +25,9 @@ const SContainer = styled(SFlexCol)`
   grid-template-columns: 350px auto;
   grid-template-rows: 100%;
   grid-template-areas: "sidebar main";
+  background-color: ${({ theme }) => theme.color.color_2};
+
+  
 `
 
 const ActivityMap = () => {
@@ -94,7 +98,7 @@ const ActivityMap = () => {
 
   return (
     <SContainer>
-      <ActivityMapSidebar
+      <ActivityMapSidebarV2
         subsetItems={subsetItems}
         setSelectedItem={handleSelectItem}
       />

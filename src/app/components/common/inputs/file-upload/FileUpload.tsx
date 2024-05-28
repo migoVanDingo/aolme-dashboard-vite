@@ -11,14 +11,16 @@ const SContainer = styled(SFlexCol)`
   align-items: baseline;
 `
 const SInnerContainer = styled(SFlexRow)`
-  background-color: ${({ theme }) => theme.color.color_2};
+  background-color: ${({ theme }) => theme.color.color_1};
   font-size: 1rem;
   width: 500px;
-  height: 25px;
+  height: 45px;
   align-items: center;
   padding: 5px 10px;
   border-radius: ${({ theme }) => theme.container.borderRadius.sm};
+  border: 1px solid ${({ theme }) => theme.color.color_3};
   cursor: pointer;
+
 
   &:hover {
     background-color: ${({ theme }) => theme.color.color_3};

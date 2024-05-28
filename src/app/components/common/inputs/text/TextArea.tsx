@@ -1,7 +1,6 @@
-import React from "react"
 import styled from "styled-components"
-import { SFlexCol } from "../../containers/FlexContainers"
 import "../../../../../styles/fonts.css"
+import { SFlexCol } from "../../containers/FlexContainers"
 
 const SContainer = styled(SFlexCol)`
   align-items: baseline;

@@ -27,8 +27,8 @@ export const light = {
     },
     profile:{
         card:{
-            width: "220px",
-            height:"300px",
+            width: "280px",
+            height:"360px",
             border: "1px solid #bdbdbd",
             borderRadius: "12px"  
         }
@@ -117,8 +117,8 @@ export const dark = {
     },
     profile:{
         card:{
-            width: "220px",
-            height:"300px",
+            width: "280px",
+            height:"360px",
             border: "1px solid #8a8a8a",
             borderRadius: "12px" 
         }
@@ -217,8 +217,8 @@ export const dark_grey_1 = {
     },
     profile:{
         card:{
-            width: "220px",
-            height:"300px",
+            width: "280px",
+            height:"360px",
             border: "1px solid #8a8a8a",
             borderRadius: "12px" 
         }
@@ -316,8 +316,8 @@ export const light_grey_1 = {
     },
     profile:{
         card:{
-            width: "220px",
-            height:"300px",
+            width: "280px",
+            height:"360px",
             border: "1px solid #8a8a8a",
             borderRadius: "12px" 
         }

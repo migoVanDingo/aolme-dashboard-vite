@@ -10,7 +10,7 @@ const SContainer = styled(SFlexRow)`
   grid-area: tabs;
   padding: 10px;
   margin: 0;
-  gap: 0;
+  gap: 10px;
   margin-left: 0;
   box-sizing: border-box;
 
@@ -25,6 +25,7 @@ const STab = styled(SFlexRow)`
   align-items: center;
   font-weight: 200;
   font-size: 0.8rem;
+  background-color: ${({ theme }) => theme.color.color_1};
 
   color: ${({ theme }) => theme.color.color_7};
   gap: 5px;
@@ -32,13 +33,31 @@ const STab = styled(SFlexRow)`
 
   &:hover{
     cursor: pointer;
+    background-color: ${({ theme }) => theme.color.color_2_5};
+    border: 1px solid ${({ theme }) => theme.color.color_3};
   }
 
 
   &.active {
-    background-color: ${({ theme }) => theme.color.color_2};
+    border: 1px solid ${({ theme }) => theme.accent.color_1};
+    color: ${({ theme }) => theme.accent.color_1};
     font-weight: 500;
     box-shadow: 1px 2px 4px ${({ theme }) => theme.color.shadow.dark}
+  }
+
+  &.create-new{
+    background-color: ${({ theme }) => theme.accent.color_1_dim};
+    color: ${({ theme }) => theme.color.color_7};
+    font-weight: 500;
+    font-size: .9rem;
+    box-shadow: 1px 2px 4px ${({ theme }) => theme.color.shadow.dark};
+    margin-left: auto;
+
+    &:hover{
+      cursor: pointer;
+      background-color: ${({ theme }) => theme.accent.color_1};
+      color: ${({ theme }) => theme.color.color_9};
+    }
   }
 `
 
@@ -46,7 +65,7 @@ const SIcon = styled(FontAwesomeIcon)`
   
 `
 
-const Tabs = ({ tabs, iconArr, setContent }: any) => {
+const Tabs = ({ tabs, activeTab, setContent }: any) => {
   const [active, setActive] = useState<number>(0)
 
   const handleClick = (index: number, tab: string) => {
@@ -62,12 +81,12 @@ const Tabs = ({ tabs, iconArr, setContent }: any) => {
           return (
             <STab
               key={index}
-              onClick={() => handleClick(index, tab.title)}
-              className={active == index ? "active" : ""}
+              onClick={() => handleClick(index, tab.type)}
+              className={tab.type === "NEW" ? "create-new" : tab.type === activeTab ? "active" : ""}
             >
               <SIcon
                 className={active == index ? "active" : ""}
-                icon={iconArr[index]}
+                icon={tab.icon}
               />
               {tab.title}
             </STab>

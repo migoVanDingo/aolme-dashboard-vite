@@ -1,14 +1,25 @@
 import React, { useRef, useEffect } from "react"
 import styled from "styled-components"
+import { SFlexCol } from "../common/containers/FlexContainers";
 
-const SContainer = styled.div`
+const SContainer = styled(SFlexCol)`
   grid-area: player;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  align-items: center;
+  justify-content: center;
+  background-color: ${({ theme }) => theme.color.color_1};
+  
 
 `
 
 
-function Player({ currentTime, path }: any) {
+function Player({ currentTime, path, layout }: any) {
   const videoRef = useRef(null)
+
+  const [height, setHeight] = React.useState(0);
+  const [width, setWidth] = React.useState(0);  
 
   useEffect(() => {
     if (videoRef.current) {
@@ -27,6 +38,20 @@ function Player({ currentTime, path }: any) {
   }, [currentTime])
 
   useEffect(() => {
+    switch(layout){
+      case 'layout-1':
+        setHeight(360);
+        setWidth(640);
+        break;
+      
+      case 'layout-2':
+        setHeight(270);
+        setWidth(480);
+        break;
+    }
+  }, [layout]);
+
+  useEffect(() => {
     path && console.log('path: ', path)
   }, [path]);
 
@@ -39,7 +64,7 @@ function Player({ currentTime, path }: any) {
 
   return (
     <SContainer>
-      <video controls  width="640" height="360" ref={videoRef}>
+      <video controls style={{objectFit: "contain"}}  width={width} height={height} ref={videoRef}>
         <source src={path} type="video/mp4" />
         Your browser does not support the video tag.
       </video>

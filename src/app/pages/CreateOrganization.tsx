@@ -27,7 +27,8 @@ const SContainer = styled(SFlexCol)`
 `
 
 const CreateOrganization = () => {
-  const { userId } = useSelector((state: any) => state)
+  const userId = useSelector((state: any) => state.userId)
+  
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [orgName, setOrgName] = useState<string>("")
   const [orgDesc, setOrgDesc] = useState<string>("")
@@ -51,11 +52,11 @@ const CreateOrganization = () => {
     }
     OrganizationAPI.createOrganization(org)
       .then((result: any) => {
-        console.log(result.data)
-        dispatch(setStoreOrganizationName(result.data.name))
-        dispatch(setStoreOrganizationId(result.data.org_id))
+        console.log("Organization: " , result)
+        dispatch(setStoreOrganizationName(result.name))
+        dispatch(setStoreOrganizationId(result.org_id))
         setIsLoading(false)
-        nav("/organization/"+result.data.org_id)    
+        nav("/organization/"+result.org_id)    
       })
       .catch((err: any) => {
         console.error(

@@ -38,7 +38,8 @@ const DatasetDashboard = () => {
 
   const [trigger, setTrigger] = useState(false)
 
-  const { orgId, userId } = useSelector((state: any) => state)
+  const orgId = useSelector((state: any) => state.orgId)
+  const userId = useSelector((state: any) => state.userId)
 
   const mouseOver = () => setHover(true)
   const mouseOut = () => setHover(false)

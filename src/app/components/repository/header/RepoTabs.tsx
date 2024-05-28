@@ -7,7 +7,10 @@ import {
   faFlask,
   faVectorSquare,
   faCode,
-  faBookBookmark
+  faBookBookmark,
+  faComments,
+  faSquarePollVertical,
+  faCodePullRequest
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { connect, useSelector } from "react-redux"
@@ -20,14 +23,14 @@ const SContainer = styled(SFlexRow)`
   grid-area: tabs;
   align-items: end;
   gap: 20px;
-  padding: 0 0 0 65px;
+  padding: 0 0 0 25px;
 `
 
 const STab = styled(SFlexRow)`
   gap: 5px;
   font-size: 0.8rem;
   box-sizing: border-box;
-  padding: 10px;
+  padding: 10px 10px 0;
   transition: all 0.3s ease;
   border-bottom: 2px solid transparent;
 
@@ -48,7 +51,12 @@ const SIcon = styled(FontAwesomeIcon)``
 
 const RepoTabs = ({ activeTab, setActiveTab, projectId, name }: any) => {
   
-  const { repoEntity, userId, repoId, repoDescription, repoName} = useSelector((state: any) => state)
+  const repoEntity = useSelector((state: any) => state.repoEntity)
+  const userId = useSelector((state: any) => state.userId)
+  const repoId = useSelector((state: any) => state.repoId)
+  const repoDescription = useSelector((state: any) => state.repoDescription)
+  const repoName = useSelector((state: any) => state.repoName)
+  
 
 
   const nav = useNavigate()
@@ -132,19 +140,19 @@ const RepoTabs = ({ activeTab, setActiveTab, projectId, name }: any) => {
       icon: faServer,
     },
     {
-      title: "Annotate",
-      callback: initializeLabelStudio,
-      icon: faVectorSquare,
+      title: "Pull Requests",
+      callback: () => console.log("PULL REQUESTS"),
+      icon: faCodePullRequest,
     },
     {
-      title: "Notebook",
-      callback: initializeJupyterNotebook,
-      icon: faBookBookmark,
+      title: "Results",
+      callback: () => console.log("RESULTS"),
+      icon: faSquarePollVertical,
     },
     {
-      title: "Experiments",
-      callback: initializeMLFlow,
-      icon: faFlask,
+      title: "Discussion",
+      callback: () => console.log("DISCUSSION"),
+      icon: faComments,
     },
   ]
 

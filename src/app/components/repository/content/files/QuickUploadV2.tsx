@@ -1,15 +1,12 @@
-import React, { useEffect, useRef, useState } from "react"
+import { useRef } from "react"
 import styled from "styled-components"
 import { SFlexCol, SFlexRow } from "../../../common/containers/FlexContainers"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faUpload, faX } from "@fortawesome/free-solid-svg-icons"
 import FileUpload from "../../../common/inputs/file-upload/FileUpload"
-import FileUploadService from "../../../../services/FileUploadService"
-import { useSelector } from "react-redux"
+
 
 const SColContainer = styled(SFlexCol)`
   height: 100%;
-  padding: 50px;
+  width: 100%;
   box-sizing: border-box;
   align-items: flex-start;
   margin: auto;
@@ -37,8 +34,8 @@ const SButton = styled.button`
   font-weight: 200;
   width: 300px;
   color: ${({ theme }) => theme.color.color_6};
-  background-color: ${({ theme }) => theme.color.color_2};
-  border: 1px solid transparent;
+  background-color: ${({ theme }) => theme.color.color_2_5};
+  border: 1px solid ${({ theme }) => theme.color.color_3};
   border-radius: ${({ theme }) => theme.container.borderRadius.sm};
   cursor: pointer;
   transition: all 0.3s;
@@ -58,10 +55,13 @@ const SButtonContainer = styled(SFlexRow)`
   margin: 0 0 0 auto;
 `
 
-const QuickUploadV2 = ({ menuOption, goEmptyContentMenu }: any) => {
-  const { userId, repoEntity, repoId } = useSelector((state: any) => state)
-  const [uploadFiles, setUploadFiles] = useState<any>(null)
-  const [progress, setProgress] = useState<number>(0)
+const QuickUploadV2 = ({
+  menuOption,
+  goEmptyContentMenu,
+  setUploadFiles,
+  handleFormSubmit
+}: any) => {
+
 
   const inputFile = useRef(null)
 
@@ -77,39 +77,14 @@ const QuickUploadV2 = ({ menuOption, goEmptyContentMenu }: any) => {
     setUploadFiles(e.target.files)
   }
 
-  const handleFormSubmit = () => {
-    const payload = {
-      entity_id: repoEntity,
-      owner: userId,
-      type: menuOption,
-    }
-
-    FileUploadService.fileUpload(
-      uploadFiles, 
-      payload, 
-      (e: any) => {
-      setProgress(Math.round((100 * e.loaded) / e.total))
-      },
-      repoId
-  
-  )
-      .then((res) => {
-        console.log("QuickUploadV2: ", res.data)
-        handleReset()
-      })
-      .catch((err) => {
-        console.log("QuickUploadV2: ", err)
-      })
-  }
-
   const handleCancel = () => {
     handleReset()
     goEmptyContentMenu()
   }
+  
 
   return (
     <SColContainer>
-      <SHeading>Upload a {menuOption.toLowerCase()} file</SHeading>
       <SContainer>
         <FileUpload
           id="ful-form"

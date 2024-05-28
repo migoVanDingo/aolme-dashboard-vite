@@ -10,7 +10,11 @@ import RepoViewNotebook from '../files/RepoViewNotebook'
 
 const RepoNotebook = ({}: any) => {
   const dispatch = useDispatch()
-  const { repoId, repoEntity, userId, repoFiles } = useSelector((state: any) => state)
+
+  const repoId = useSelector((state: any) => state.repoId)
+  const repoEntity = useSelector((state: any) => state.repoEntity)
+  const userId = useSelector((state: any) => state.userId)
+  const repoFiles = useSelector((state: any) => state.repoFiles)
 
   
   const [notebooks, setNotebooks] = useState<any[]>([])
@@ -31,7 +35,6 @@ const RepoNotebook = ({}: any) => {
 
   useEffect(() => {
     const init = () => {
-        console.log('herehere:', repoId)
 
       repoId && getRepoItems(repoId)
     }
@@ -128,7 +131,7 @@ const RepoNotebook = ({}: any) => {
 
   return (
     <>
-      {isSelectView ? (
+      {isSelectView || notebooks.length === 0 ? (
         <EmptyContentMenu
           menuOption={"NOTEBOOK"}
           triggerReload={triggerReload}

@@ -116,12 +116,11 @@ const SButtonContainer = styled(SFlexRow)`
 
 `
 
-const SubsetCard = ({ subset, dataset, inRepo = false, selectDatasetView = () => {} }: any) => {
+const SubsetCard = ({ subset, dataset, inRepo = false, selectDatasetView = () => {}, handleShowUploadFilesView }: any) => {
   const [subsetFiles, setSubsetFiles] = useState<any[]>([])
   const [loopLength, setLoopLength] = useState<number>(0)
   const [headingArr, setHeadingArr] = useState<any[]>([])
 
-  const { userId } = useSelector((state: any) => state)
   const nav = useNavigate()
 
   useEffect(() => {
@@ -170,6 +169,9 @@ const SubsetCard = ({ subset, dataset, inRepo = false, selectDatasetView = () =>
         <SLabelerButton onClick={openLabelStudio}>{"Launch Labeler"}</SLabelerButton>
         {
           inRepo !== false && (<SLabelerButton onClick={selectDatasetView}>{"Select Dataset"}</SLabelerButton>)
+        }
+        {
+          inRepo !== false && (<SLabelerButton onClick={() => handleShowUploadFilesView(dataset.dataset_id, subset.subset_id)}>{"Upload Files"}</SLabelerButton>)
         }
         <SLabelerButton onClick={openSubsetActivityMap}>{"Activity Map"}</SLabelerButton>
         </SButtonContainer>

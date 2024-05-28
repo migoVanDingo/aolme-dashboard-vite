@@ -12,7 +12,7 @@ const SContainer = styled(SFlexRow)`
     padding: 5px 15px;
     font-size: 0.8rem;
     gap: 15px;
-    background-color: ${({theme}) => theme.color.color_2};
+    background-color: ${({theme}) => theme.color.color_2_5};
 `
 
 const SUser = styled(SFlexRow)`
@@ -28,18 +28,18 @@ const SIcon = styled(FontAwesomeIcon)`
 
 const SCommit = styled.p`
     border-radius: ${({theme}) => theme.container.borderRadius.md};
-    width: 50px;
+  
     font-size: 0.8rem;
     margin: 0;
     padding: 5px 12px;
     color:  ${({theme}) => theme.color.color_6};
-    background-color: ${({theme}) => theme.color.color_1};
+    background-color: ${({theme}) => theme.color.color_0};
 `
 
 const SCommitMsg = styled.p`
     font-size: 0.8rem;
     margin: 0;
-    padding: 5px 0;
+    padding: 5px 15px;
     color:  ${({theme}) => theme.color.color_6};
 `
 

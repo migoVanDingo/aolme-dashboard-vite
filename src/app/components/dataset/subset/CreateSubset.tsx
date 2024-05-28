@@ -119,8 +119,8 @@ const SButton2 = styled.button`
 const types = ["IMAGE", "TEXT", "AUDIO", "VIDEO"]
 
 const CreateSubset = ({ dataset, createViewInactive, triggerRender }: any) => {
-  const dispatch = useDispatch()
-  const { orgId, userId } = useSelector((state: any) => state)
+
+  const userId = useSelector((state: any) => state.userId)
 
   const [selectedFiles, setSelectedFiles] = useState<any[]>([])
 

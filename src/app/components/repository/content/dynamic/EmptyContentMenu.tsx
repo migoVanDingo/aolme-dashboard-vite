@@ -1,15 +1,20 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import styled from "styled-components"
 import { SFlexCol } from "../../../common/containers/FlexContainers"
-import SelectOrgContentView from "./SelectOrgContentView"
+import TextArea from "../../../common/inputs/text/TextArea"
+import TextInput from "../../../common/inputs/text/TextInput"
 import QuickUploadV2 from "../files/QuickUploadV2"
+import SelectOrgContentView from "./SelectOrgContentView"
+import UploadDatasetFilesRepo from "../../upload/UploadDatasetFilesRepo"
 
 const SContainer = styled(SFlexCol)`
   height: 100%;
-  padding: 50px;
+  width: 100%;
   box-sizing: border-box;
   align-items: flex-start;
   margin: auto;
+  background-color: ${({ theme }) => theme.color.color_2_5};
+  padding: 50px;
 `
 
 const SHeading = styled.h3`
@@ -26,6 +31,13 @@ const SPara = styled.p`
   font-weight: 400;
   color: ${({ theme }) => theme.color.color_6};
 `
+const SColContainer = styled(SFlexCol)`
+  height: 100%;
+  width: 500px;
+  box-sizing: border-box;
+  align-items: flex-start;
+  margin: auto;
+`
 
 const SButton = styled.button`
   padding: 10px 20px;
@@ -35,13 +47,14 @@ const SButton = styled.button`
   width: 300px;
   color: ${({ theme }) => theme.color.color_6};
   background-color: ${({ theme }) => theme.color.color_2};
-  border: 1px solid transparent;
+  border: 1px solid ${({ theme }) => theme.color.color_5};
   border-radius: ${({ theme }) => theme.container.borderRadius.sm};
   cursor: pointer;
   transition: all 0.3s;
   &:hover {
     border-color: ${({ theme }) => theme.accent.color_1};
     color: ${({ theme }) => theme.accent.color_1};
+    background-color: ${({ theme }) => theme.color.color_1};
   }
 
   &.small {
@@ -58,6 +71,12 @@ const EmptyContentMenu = ({
   triggerReload,
   hideSelectDatasetView,
   launchNotebook,
+  setUploadFiles,
+  handleFormSubmit,
+  name,
+  setName,
+  description,
+  setDescription,
 }: any) => {
   const [heading, setHeading] = useState<string>("")
   const [createFileMethod, setCreateFileMethod] = useState<string>("")
@@ -95,12 +114,18 @@ const EmptyContentMenu = ({
   } else if (createFileMethod === "UPLOAD") {
     //Upload file
     return (
-
-        <QuickUploadV2
-        goEmptyContentMenu={goBackToEmptyMenu}
-         menuOption={menuOption} 
-         />
-  
+      <UploadDatasetFilesRepo
+      menuOption={menuOption}
+      name={name}
+      description={description}
+      setName={setName}
+      setDescription={setDescription}
+      goEmptyContentMenu={goBackToEmptyMenu}
+      trigger={reload}
+      setUploadFiles={setUploadFiles}
+      handleFormSubmit={handleFormSubmit}
+      />
+      
     )
   } else if (createFileMethod === "URL") {
     //Add url to download file
@@ -116,11 +141,13 @@ const EmptyContentMenu = ({
           {" " + menuOption.toLowerCase()} from somewhere else. Select an option
           below to continue.
         </SPara>
-        <SButton onClick={() => setCreateFileMethod("ORG")}>
-          Use Organization {heading && heading}
-        </SButton>
+        {menuOption !== "NOTEBOOK" && (
+          <SButton onClick={() => setCreateFileMethod("ORG")}>
+            Use Organization {heading && heading}
+          </SButton>
+        )}
         <SButton onClick={() => setCreateFileMethod("UPLOAD")}>
-          Upload {heading && heading} File
+          Upload {heading && heading} Files
         </SButton>
         {menuOption === "DATASET" && (
           <SButton onClick={() => setCreateFileMethod("URL")}>

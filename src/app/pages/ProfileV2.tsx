@@ -4,15 +4,7 @@ import { SFlexCol } from "../components/common/containers/FlexContainers"
 import Card from "../components/common/cards/Card"
 import avatar from "../../assets/lucy-photo.jpg"
 import Tabs from "../components/common/Tabs"
-import {
-  faFolder,
-  faClockRotateLeft,
-  faUser,
-  faUserGroup,
-  faPlus,
-  faBuilding,
-  faEye,
-} from "@fortawesome/free-solid-svg-icons"
+import { faFolder, faClockRotateLeft } from "@fortawesome/free-solid-svg-icons"
 import UsernameTag from "../components/common/UsernameTag"
 import Button from "../components/common/buttons/Button"
 import RepoProfileContent from "../components/profile/repo/RepoProfileContent"
@@ -24,44 +16,61 @@ import { useAuth } from "../context/AuthContext"
 import ProfileOrgListModule from "../components/profile/org/ProfileOrgListModule"
 import EntityUserAPI from "../api/EntityUserAPI"
 import { ProfileHeader } from "../components/profile/header/ProfileHeader"
-import {
-  faDatabase,
-  faPeopleGroup,
-  faBriefcase,
-  faGear,
-} from "@fortawesome/free-solid-svg-icons"
-import CreateNew from "../components/header/CreateNew"
-import CreateRepositoryV2 from "./CreateRepositoryV2"
+import ProfileBody from "../components/profile/body/ProfileBody"
+
+//const username = "Miguel"
+
+const tabs = [
+  {
+    title: "Personal",
+    action: "",
+  },
+  {
+    title: "Public",
+    action: "",
+  },
+]
+
+const views = [
+  {
+    title: "Repositories",
+    entity: "REPO",
+  },
+  {
+    title: "Organizations",
+    entity: "ORG",
+  },
+]
 
 const SProfileContainer = styled.div`
   width: 100%;
-  height: calc(100% ${({ theme }) => theme.header.height});
+  height: 100%;
   display: grid;
-  grid-template-rows: 50px auto;
+  grid-template-rows: 100px auto;
   grid-template-areas:
     "header"
     "content ";
 
   position: relative;
-  background-color: ${({ theme }) => theme.color.color_2};
 `
 
 const SContainer = styled.div`
-  width: 75%;
+  width: 65%;
 
   display: grid;
   grid-template-columns: [left]1fr [col2] 4fr [right];
   grid-template-rows: [top]60px [row2] 200px [row3] 200px [row4] auto[end];
   grid-template-areas:
-    "profile list"
-    "profile list"
-    "view list"
-    "view list";
+    "header header"
+    "profile tabs"
+    "profile content"
+    "view content"
+    "view content";
 
   grid-gap: 40px;
 
   position: relative;
-  margin: 40px auto 0;
+  margin-top: 20px;
   height: 100%;
 `
 
@@ -109,99 +118,38 @@ const SViewItem = styled.li`
   }
 `
 
-const SItemContainer = styled.div`
-  width: 100%;
-  overflow-y: auto;
-  grid-area: list;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 70px auto;
-  grid-template-areas:
-    "tabs"
-    "content";
-`
-const repoTabs = [
-  {
-    title: "Personal",
-    type: "PERSONAL",
-    action: "",
-    icon: faUser,
-  },
-  {
-    title: "Public",
-    type: "PUBLIC",
-    action: "",
-    icon: faUserGroup,
-  },
-  {
-    title: "New Repo",
-    type: "NEW",
-    action: "",
-    icon: faPlus,
-  },
-]
-
-const headerTabs = [
-  {
-    title: "Repositories",
-    callback: () => console.log("Repositories"),
-    icon: faDatabase,
-  },
-  {
-    title: "Organizations",
-    callback: () => console.log("Organizations"),
-    icon: faPeopleGroup,
-  },
-  {
-    title: "Resources",
-    callback: () => console.log("Resources"),
-    icon: faBriefcase,
-  },
-  {
-    title: "Settings",
-    callback: () => console.log("Settings"),
-    icon: faGear,
-  },
-]
-
-const orgTabs = [
-  {
-    title: "My Organizations",
-    type: "MY_ORGS",
-    action: "",
-    icon: faBuilding,
-  },
-  {
-    title: "Watching",
-    type: "WATCHING",
-    action: "",
-    icon: faEye,
-  },
-]
-
 const Profile = ({}: any) => {
   //Hooks
   const theme = useTheme()
-
   const username = useSelector((state: any) => state.username)
   const userId = useSelector((state: any) => state.userId)
 
-  //State
-  const [repoContent, setRepoContent] = useState<any>("PERSONAL")
-  const [orgContent, setOrgContent] = useState<any>("MY_ORGS")
+  const version = 2
 
-  const [activeTab, setActiveTab] = useState<string>("Repositories")
+  //State
+  const [content, setContent] = useState<any>("Personal")
+  const [selectedView, setSelectedView] = useState<string>("REPO")
   const [selectedIndex, setSelectedIndex] = useState<number>(0)
   const [organizations, setOrganizations] = useState<any>([])
 
+  const handleEditProfile = () => {
+    console.log("yoseph!")
+  }
+
   useEffect(() => {
     const init = () => {}
+
     return init()
   }, [])
 
+  const viewEntities = (entity: string, index: number) => {
+    setSelectedIndex(index)
+    setSelectedView(entity)
+  }
+
   useEffect(() => {
     const getUserOrgs = (userId: string) => {
-      if (userId && userId !== "" && activeTab === "Organizations") {
+      if (userId && userId !== "") {
         EntityUserAPI.getEntityListByUserId(userId)
           .then((res: any) => {
             console.log("ENTITIES: ", res.data)
@@ -215,25 +163,20 @@ const Profile = ({}: any) => {
 
     //console.log(userId ? userId : "No user id")
     return getUserOrgs(userId)
-  }, [activeTab, userId])
+  }, [selectedView, userId])
 
-  const viewEntities = (entity: string, index: number) => {
-    setSelectedIndex(index)
-    setActiveTab(entity)
-  }
-
-  const handleEditProfile = () => {
-    console.log("EDIT PROFILE")
-  }
-  return (
-    <SProfileContainer>
-      <ProfileHeader
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        tabs={headerTabs}
-      />
+  if (version === 2) {
+    return (
+      <SProfileContainer>
+        <ProfileHeader />
+        <ProfileBody />
+      </SProfileContainer>
+    )
+  } else {
+    return (
       <SContainer>
-        
+        <ProfileHeader />
+        {username && (
           <Card
             cardStyle={theme.profile.card}
             imageSrc={avatar}
@@ -246,41 +189,53 @@ const Profile = ({}: any) => {
               innerHtml={"Edit Profile"}
             />
           </Card>
-        
+        )}
+        <SViewContainer>
+          <SHeading1>View</SHeading1>
+          <SViewList>
+            {views &&
+              views.map((view: any, index: number) => {
+                return (
+                  <SViewItem
+                    className={index === selectedIndex ? "active" : ""}
+                    key={index}
+                    onClick={() => viewEntities(view.entity, index)}
+                  >
+                    <a>{view.title}</a>
+                  </SViewItem>
+                )
+              })}
+          </SViewList>
+        </SViewContainer>
 
-        {activeTab === "Repositories" ? (
-          <SItemContainer>
-            <Tabs 
-              tabs={repoTabs} 
-              setContent={setRepoContent} 
-              activeTab={repoContent} 
+        {selectedView === "REPO" ? (
+          <>
+            <Tabs
+              tabs={tabs}
+              setContent={setContent}
+              iconArr={[faFolder, faClockRotateLeft]}
             />
-
-            {repoContent === "PERSONAL" ? (
+            {content === "Personal" ? (
               <RepoProfileContent />
-            ) : repoContent === "PUBLIC" ? (
+            ) : content === "Public" ? (
               <ActivityProfileContent />
-            ) : repoContent === "NEW" ?  (
-              <CreateRepositoryV2 />
-            ): ""}
-          </SItemContainer>
-        ) : activeTab === "Organizations" ? (
+            ) : (
+              ""
+            )}
+          </>
+        ) : selectedView === "ORG" ? (
           organizations.length > 0 && (
-            <SItemContainer>
-              <Tabs tabs={orgTabs} setContent={setOrgContent} activeTab={orgContent} />
-              {orgContent === "MY_ORGS" ? (
-              <ProfileOrgListModule
-                userId={userId}
-                organizations={organizations}
-              /> ) : ""}
-            </SItemContainer>
+            <ProfileOrgListModule
+              userId={userId}
+              organizations={organizations}
+            />
           )
         ) : (
           ""
         )}
       </SContainer>
-    </SProfileContainer>
-  )
+    )
+  }
 }
 
 export default Profile

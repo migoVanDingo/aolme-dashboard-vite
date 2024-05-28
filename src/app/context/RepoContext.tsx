@@ -13,8 +13,7 @@ export function useRepo() {
 }
 
 export default function RepoProvider({ children }: any) {
-  const dispatch = useDispatch()
-  const { repoId } = useSelector((state: any) => state)
+
   const [loading, setLoading] = React.useState(false)
   const [repoItems, setRepoItems] = React.useState<any[]>([])
   const [dataset, setDataset] = React.useState<any | null>(null)

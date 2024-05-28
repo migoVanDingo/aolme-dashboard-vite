@@ -109,7 +109,8 @@ const RepoFiles = ({ repoId /* , repoFiles */ }: any) => {
   const [files, setFiles] = useState<any[]>([])
   const [show, setShow] = useState<boolean>(false)
 
-  const { repoEntity, userId } = useSelector((state: any) => state)
+  const repoEntity = useSelector((state: any) => state.repoEntity)
+  const userId = useSelector((state: any) => state.userId)
 
   const handleClose = () => setShow(false)
   const handleShow = () => {
@@ -187,8 +188,7 @@ const RepoFiles = ({ repoId /* , repoFiles */ }: any) => {
   }
 
   const addFiles = async (e: any, payload: IModule) => {
-    console.log("repoId: ", repoId)
-    console.log("payload: ", payload)
+
     FileUploadService.fileUpload(
       selectedFiles,
       payload,

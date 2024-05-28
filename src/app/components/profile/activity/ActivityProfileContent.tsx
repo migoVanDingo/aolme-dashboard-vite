@@ -3,26 +3,7 @@ import styled from "styled-components"
 import { SFlexCol } from "../../common/containers/FlexContainers"
 import ActivityCard from "./ActivityCard"
 
-const activities = [
-  {
-    user: "migo",
-    action: "created",
-    object: "Repo 1",
-    date: "2 days ago",
-  },
-  {
-    user: "bubz",
-    action: "updated",
-    object: "New project 2",
-    date: "1 month ago",
-  },
-  {
-    user: "migo",
-    action: "updated",
-    object: "New project 2",
-    date: "2 months ago",
-  },
-]
+
 
 const SContainer = styled(SFlexCol)`
   width: 100%;
@@ -33,7 +14,8 @@ const SContainer = styled(SFlexCol)`
 
 `
 
-const ActivityProfileContent = () => {
+const ActivityProfileContent = ({ activities }: any) => {
+  
   return (
     <SContainer>
       {activities &&

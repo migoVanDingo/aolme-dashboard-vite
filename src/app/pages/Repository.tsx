@@ -35,9 +35,7 @@ const SContainer = styled(SFlexCol)`
 
 const Repository = ({}: any) => {
   const { repoId } = useParams()
-  const { username, /* repoId, */ repoEntity, userId } = useSelector(
-    (state: any) => state,
-  )
+  const username = useSelector((state: any) => state.username)
 
   //Repo init
   const [currentRepo, setCurrentRepo] = useState<any>()
@@ -60,8 +58,6 @@ const Repository = ({}: any) => {
 
   const dispatch = useDispatch()
 
-
-
   useEffect(() => {
     const init = () => {
       if (owner !== entityId) {
@@ -81,9 +77,8 @@ const Repository = ({}: any) => {
   useEffect(() => {
     const init = () => {
       if (repoId !== "" && repoId !== null && repoId !== undefined) {
-        console.log("repoId: ", repoId)
+
         getRepo(repoId)
-        
       }
     }
 
@@ -91,11 +86,10 @@ const Repository = ({}: any) => {
   }, [repoId])
 
   const getRepo = (repoId: string) => {
-    console.log("repoId: ", repoId)
+
 
     RepoAPI.getRepoById(repoId)
       .then((res: any) => {
-        console.log("resaaaaa: ", res.data)
 
         setCurrentRepo(res.data["repo_id"])
         setName(res.data["name"])
@@ -119,23 +113,19 @@ const Repository = ({}: any) => {
 
   //Read REPO ITEMS directly from folders
   const searchForRepoFiles = (repoId: string, repoEntity: string) => {
-  console.log('here ese: '+ repoId + " --- " + repoEntity)
-    if(repoId !== "" && repoEntity !== ""){
-      console.log('here 2 ese')
+
+    if (repoId !== "" && repoEntity !== "") {
+ 
       FilesAPI.getRepoFiles(repoId, repoEntity)
-      .then((result: any) => {
-        console.log("Root::result: ", result.data)
-        dispatch(setStoreRepoFiles(result.data))
-        
-      })
-      .catch((err: any) => console.error(err))
-  
+        .then((result: any) => {
+          console.log("Root::result: ", result.data)
+          dispatch(setStoreRepoFiles(result.data))
+        })
+        .catch((err: any) => console.error(err))
     }
-    
   }
 
-  //REPO ITEMS from database 
-  
+  //REPO ITEMS from database
 
   /* async function getDatasets(contentId: string) {
     DatasetAPI.getDatasetById(contentId)

@@ -31,12 +31,14 @@ const SContainer = styled(SFlexCol)`
 
 const CreateRepositoryV2 = ({ }: any) => {
     
-  const { userId, username } = useSelector((state: any) => state)
+  const userId = useSelector((state: any) => state.userId)
+  const username = useSelector((state: any) => state.username)
 
   const [isLoading, setLoading] = useState<boolean>(false)
   const [repoOwner, setRepoOwner] = useState<string>(username)
   const [repoName, setRepoName] = useState<string>("")
   const [repoDescription, setRepoDescription] = useState<string>("")
+  const [repoId, setRepoId] = useState<string>("")
 
   const [isPublic, setIsPublic] = useState<boolean>(false)
 
@@ -48,6 +50,17 @@ const CreateRepositoryV2 = ({ }: any) => {
       console.log("uid: ", userId)
 
   },[userId])
+
+  useEffect(() => {
+    const init = () => {
+      if(repoId && repoId !== ""){
+        navigate(`/repository/${repoId}`)
+        setLoading(false)
+      }
+    }
+
+    return init()
+  }, [repoId]);
 
 
   const createRepository = () => {
@@ -64,8 +77,9 @@ const CreateRepositoryV2 = ({ }: any) => {
 
     RepoAPI.createRepo(project)
     .then((res: any) => {
-        console.log("RESPONSE: " , res.data)
-        navigate(`/repository/${res.data["repo_id"]}`)
+        console.log("RESPONSE: " , res)
+        setRepoId(res.repo_id)
+        
     })
     .catch((err: any) => console.error(err))
 
@@ -76,8 +90,8 @@ const CreateRepositoryV2 = ({ }: any) => {
   const handleFormSubmit = async (e: any) => {
     e.preventDefault()
     setLoading(true)
-    console.log("loading...")
-    createRepository()
+    setTimeout(createRepository, 1000)
+        
     
   }
 
@@ -119,7 +133,7 @@ const CreateRepositoryV2 = ({ }: any) => {
           </form>
         </>
       ) : (
-        <LoadingSpinner />
+        <LoadingSpinner message={"Initializing Repository"}/>
       )}
     </SContainer>
   )

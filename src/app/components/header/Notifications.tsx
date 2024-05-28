@@ -6,10 +6,11 @@ import { SFlexRow } from "../common/containers/FlexContainers"
 
 const SContainer = styled(SFlexRow)`
   border: 1px solid ${({ theme }) => theme.color.color_5};
-  height: 20px;
+  height: 26px;
   padding: 3px 5px;
   border-radius: 4px;
   align-items: center;
+  box-sizing: border-box;
 
   &:hover {
     border: 1px solid ${({ theme }) => theme.color.color_7};

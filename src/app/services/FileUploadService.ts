@@ -64,7 +64,7 @@ const handleFileUpload = async (files: any[], data: ISyncImportStorage, fileSetI
     
 }
 
-const doFu = (data: any, files: any[], url: string, onUploadProgress: any) => {
+const doFu = async (data: any, files: any[], url: string, onUploadProgress: any) => {
   const formData = new FormData()
   for(const field in data){
     formData.append(field, data[field])
@@ -74,7 +74,7 @@ const doFu = (data: any, files: any[], url: string, onUploadProgress: any) => {
     formData.append("file", file)
   }
 
-  return FormDataClient.post(url, formData, {
+  return await Requests.updloadFile(formData, url, {
     onUploadProgress,
   })
 }
@@ -85,7 +85,7 @@ const upload = (file: any, onUploadProgress: any) => {
 
   formData.append("file", file, file.name)
 
-  return FormDataClient.post("/upload", formData, {
+  return  FormDataClient.post("/upload", formData, {
     onUploadProgress,
   })
 }

@@ -84,7 +84,8 @@ const OrgDataset = () => {
   const [selectedFiles, setSelectedFiles] = useState<any[]>([])
   const [progress, setProgress] = useState(0)
 
-  const { orgId, userId } = useSelector((state: any) => state)
+  const orgId = useSelector((state: any) => state.orgId)
+  const userId = useSelector((state: any) => state.userId)
 
   const fileSetId = 20170330
   const repoId = "RPSH648N5EK18KBPAN3NDGXA7"

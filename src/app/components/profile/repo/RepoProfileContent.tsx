@@ -11,9 +11,10 @@ const SContainer = styled(SFlexCol)`
   width: 100%;
   gap: 20px;
   margin: 0;
-  padding: 0;
+  padding: 20px 0 0;
   position:relative;
   grid-area: content;
+  overflow-y: auto;
 
 `
 
@@ -21,15 +22,14 @@ const RepoProfileContent = () => {
 
   const [repoList, setRepoList] = useState<any[]>([])
 
-  const { userId } =  useSelector((state: any) => state)
+  const userId =  useSelector((state: any) => state.userId)
 
   useEffect(() => {
 
     const getList = () => {
-      console.log("fire")
+
       RepoAPI.getRepoByOwner(userId)
       .then((result: any) => {
-        console.log("Repositories: ", result.data)
         setRepoList(result.data)
       })
       .catch((err: any) => console.error(err))

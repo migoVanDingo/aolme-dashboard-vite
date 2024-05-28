@@ -8,7 +8,7 @@ const SContainer = styled(SFlexRow)`
     width: 100%;
     border-bottom: 1px solid ${({ theme }) => theme.color.color_5};
     padding: 10px 15px;
-    background-color: ${({theme}) => theme.color.color_2};
+    background-color: ${({theme}) => theme.color.color_1};
     color: ${({ theme }) => theme.color.color_6};
 `
 

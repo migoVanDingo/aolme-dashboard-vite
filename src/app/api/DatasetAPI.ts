@@ -3,7 +3,6 @@ import { IDataset } from "../utility/interface/dataset"
 import { Requests } from "./Requests"
 
 export class DatasetAPI {
-
   /* This DatasetAPI class also interacts with the Subset and Subset Item backend APIs */
 
   //Dataset API
@@ -39,7 +38,6 @@ export class DatasetAPI {
     return Requests.doPatch("/api/dataset/" + datasetId, payload)
   }
 
-
   //Subset API
   public static async createSubset(
     payload: any,
@@ -50,8 +48,7 @@ export class DatasetAPI {
       payload,
       files,
       "/api/dataset/subset",
-      onUploadProgress,
-     
+      onUploadProgress
     )
   }
 
@@ -77,4 +74,35 @@ export class DatasetAPI {
     )
   }
 
+  // Subset Label Studio Info
+  public static async getLabelStudioProject(subsetId: string) {
+    return Requests.doGet("/api/subset/" + subsetId + "/labelstudio")
+  }
+
+  public static async pushFilesToSubset(
+    payload: any,
+    files: any[],
+    onUploadProgress: any
+  ) {
+    console.log("DatasetAPI::pushFilesToSubset::", payload, files)
+    return FileUploadService.doFu(
+      payload,
+      files,
+      "/api/dataset/subset/push",
+      null
+    )
+  }
+
+  public static async handleInitializeDatasetRepoLabeler(
+    payload: any,
+    files: any[],
+    onUploadProgress: any
+  ){
+    return FileUploadService.doFu(
+      payload,
+      files,
+      "/api/dataset/initialize",
+      onUploadProgress
+    )
+  }
 }

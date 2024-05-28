@@ -11,18 +11,40 @@ import LabelTimelineMapV2 from "./LabelTimelineMapV2"
 
 const SContainer = styled.div`
   width: 100%;
-  height: 100%;
   grid-area: main;
   box-sizing: border-box;
   padding: 40px;
 
   display: grid;
+  overflow-y: auto;
+  
+
+  top: ${({ theme }) => theme.header.height};
+
   grid-template-columns: repeat(4, calc(calc(858px * 3) / 16)) auto;
   grid-template-rows: 80px 300px auto;
   grid-template-areas:
     "header  header  header  header  header"
     "options options options options map"
     "player  player  player  player  map";
+
+  &.layout-1 {
+    grid-template-columns: repeat(4, calc(calc(858px * 3) / 16)) auto;
+    grid-template-rows: 80px 300px auto;
+    grid-template-areas:
+      "header  header  header  header  header"
+      "options options options options map"
+      "player  player  player  player  map";
+  }
+
+  &.layout-2 {
+    grid-template-columns: repeat(4, calc(calc(858px * 3) / 16)) auto;
+  grid-template-rows: 80px 300px auto;
+  grid-template-areas:
+    "header  header  header  header  header"
+    "options options options  player  player"
+    "map     map     map     map     map";
+  }
 `
 
 const SOptionsContainer = styled(SFlexRow)`
@@ -122,6 +144,8 @@ const ActivityMapMain = ({ subsetId, selectedItem }: any) => {
   const [actions, setActions] = useState<any[]>([])
   const [toggleParticipantList, setToggleParticipantList] = useState<any[]>([])
   const [toggleActionList, setToggleActionList] = useState<any[]>([])
+
+  const [layout, setLayout] = useState<string>("layout-2")
 
   let toggle = true
 
@@ -277,10 +301,20 @@ const ActivityMapMain = ({ subsetId, selectedItem }: any) => {
     })
   }
 
+  const handleSetLayout = (layout: string) => {
+    /* if(layout === "layout-1" ){
+      setLayout("layout-2")
+    } else {
+      setLayout("layout-1")
+    } */
+    
+  }
+
   if (annotationArr)
     return (
-      <SContainer>
+      <SContainer className={layout}>
         <ActivityMapHeader
+          setLayout={handleSetLayout}
           title={"C1L1P-B-2015-VJ"}
           id={"VID8271JINDS82932FHW"}
         />
@@ -301,12 +335,14 @@ const ActivityMapMain = ({ subsetId, selectedItem }: any) => {
           )}
         </SOptionsContainer>
         <Player
+          layout={layout}
           currentTime={videoTime}
           path={
             "https://ece46medsrv.ece.unm.edu/COHORT_3/LEVEL_1/POLK/04_Polk_Mar21/04_Polk_Mar21_GroupA/Group_Interactions/Venkatesh/G-C3L1P-Mar21-A-Venkatesh_q2_03-05.mp4"
           }
         />
         <LabelTimelineMapV2
+          layout={layout}
           handleVideoSkipTime={handleVideoSkipTime}
           annotationArr={annotationArr}
           participantsList={participants}

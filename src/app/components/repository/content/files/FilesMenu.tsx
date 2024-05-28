@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom"
 
 const SContainer = styled(SFlexRow)`
   width: 100%;
-  padding: 0px 5px;
+  padding: 0px 0px;
   box-sizing: border-box;
   gap: 4px;
 

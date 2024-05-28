@@ -79,7 +79,7 @@ const SLastUpdated = styled.p`
 `
 
 const ViewDataset = ({ hideView, viewId, dataset, repo }: any) => {
-  //const { datasetId, datasetName, datasetDescription } = useSelector((state: any) => state)
+
 
   const [buttonHover, setButtonHover] = useState<boolean>(false)
   const [subsets, setSubsets] = useState<any[]>([])

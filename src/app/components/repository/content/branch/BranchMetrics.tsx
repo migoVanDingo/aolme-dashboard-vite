@@ -8,6 +8,7 @@ const SContainer = styled(SFlexRow)`
   align-items: center;
   gap: 3px;
   margin-left: 10px;
+  background-color: ${({ theme }) => theme.color.color_2};
 `
 
 const SPara = styled.p`

@@ -8,7 +8,7 @@ const SContainer = styled(SFlexCol)`
     padding: 20px 0;
     margin-bottom: 0px;
     height: 100%;
-    background-color: ${({ theme }) => theme.color.color_0};
+    background-color: ${({ theme }) => theme.color.color_2_5};
 
   
 `
@@ -39,7 +39,8 @@ const repoName = "Hello-World"
 
 const ReadmeContent = () => {
 
-  const { repoName, repoDescription } = useSelector((state: any) => state)
+  const repoName = useSelector((state: any) => state.repoName)
+  const repoDescription = useSelector((state: any) => state.repoDescription)
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
 
