@@ -16,19 +16,20 @@ const SSidebar = styled(SFlexCol)`
   width: 100%;
   grid-area: sidebar;
   background-color: ${({ theme }) => theme.color.color_2_5};
-  padding: 50px 20px;
-  margin: 130px 0;
+  padding: 0px 20px;
+  margin: 80px 0;
   align-items: flex-start;
   box-sizing: border-box;
 `
 const SHeading = styled.h2`
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  font-weight: 400;
-  font-size: 1.2rem;
+  width: 100%;
+  font-family: sans-serif;
+  font-weight: 100;
+  font-size: 1.7rem;
   color: ${({ theme }) => theme.color.color_6};
-  margin: 0;
-  padding: 20px;
-  border-bottom: 1px solid ${({ theme }) => theme.color.color_2_5};
+  margin: 0 0 15px;
+  padding: 20px 20px 0;
+  border-bottom: 1px solid ${({ theme }) => theme.color.color_4};
 `
 
 const SSidebarList = styled.ul`
@@ -93,33 +94,17 @@ const SAccordion = styled(Accordion)`
   margin: 0;
 
 `
-
+1488123144
 const entries = [
-  
+  //Feb 26
   {
-    timestamp: 1490904812,
-    title: "G-C1L1P-Mar30-C-Kelly_q2_03-06",
-    date: "20170330",
+    timestamp: 1488123144,
+    title: "string",
+    date: "20170226",
     id:"a18rjkI92b"
   },
-  {
-    timestamp: 1490904812,
-    title: "G-C1L1P-Mar30-C-Kelly_q2_04-06",
-    date: "20170330",
-    id:"a18rjkI92c"
-  },
-  {
-    timestamp: 1490904812,
-    title: "G-C1L1P-Mar30-C-Kelly_q2_05-06",
-    date: "20170330",
-    id:"a18rjkI92d"
-  },
-  {
-    timestamp: 1490904812,
-    title: "G-C1L1P-Mar30-C-Kelly_q2_06-06",
-    date: "20170330",
-    id:"a18rjkI92e"
-  },
+
+  // March 2
   {
     timestamp: 1488485612,
     title: "G-C1L1P-Mar02-E-Irma_q2_01-08",
@@ -154,38 +139,80 @@ const entries = [
     timestamp: 1488485612,
     title: "G-C1L1P-Mar02-E-Irma_q2_06-08",
     date: "20170302",
-    id:"a18rjkI92k"
+    id:"a18rjkI92kz"
   },
   {
     timestamp: 1488485612,
-    title: "G-C1L1P-Mar02-B-Scott_q2_01-09_30fps",
+    title: "G-C1L1P-Mar02-E-Irma_q2_07-08",
     date: "20170302",
-    id:"a18rjkI92n"
+    id:"a18rjkI92ks"
   },
   {
     timestamp: 1488485612,
-    title: "G-C1L1P-Mar02-B-Scott_q2_02-09_30fps",
+    title: "G-C1L1P-Mar02-E-Irma_q2_08-08",
     date: "20170302",
-    id:"a18rjkI92o"
+    id:"a18rjkI92kfsf"
+  },
+
+  // March 30
+  {
+    timestamp: 1490904812,
+    title: "G-C1L1P-Mar30-C-Kelly_q2_03-06",
+    date: "20170330",
+    id:"a18rjkI92b"
   },
   {
-    timestamp: 1488485612,
-    title: "G-C1L1P-Mar02-B-Scott_q2_03-09_30fps",
-    date: "20170302",
-    id:"a18rjkI92p"
+    timestamp: 1490904812,
+    title: "G-C1L1P-Mar30-C-Kelly_q2_04-06",
+    date: "20170330",
+    id:"a18rjkI92c"
   },
   {
-    timestamp: 1488485612,
-    title: "G-C1L1P-Mar02-B-Scott_q2_04-09_30fps",
-    date: "20170302",
-    id:"a18rjkI9q2"
+    timestamp: 1490904812,
+    title: "G-C1L1P-Mar30-C-Kelly_q2_05-06",
+    date: "20170330",
+    id:"a18rjkI92d"
   },
   {
-    timestamp: 1488485612,
-    title: "G-C1L1P-Mar02-B-Scott_q2_05-09_30fps",
-    date: "20170302",
-    id:"a18rjkI92r"
+    timestamp: 1490904812,
+    title: "G-C1L1P-Mar30-C-Kelly_q2_06-06",
+    date: "20170330",
+    id:"a18rjkI92e"
   },
+
+  //May 10
+  {
+    timestamp: 1494430344,
+    title: "string",
+    date: "20170510",
+    id:"a18rjkI92fadad"
+  },
+
+  //May 10
+  {
+    timestamp: 1495899144,
+    title: "string",
+    date: "20170527",
+    id:"dffdsfsfder"
+  },
+
+  //Jun 6
+  {
+    timestamp: 1496763144,
+    title: "string",
+    date: "20170606",
+    id:"adfargafe"
+  },
+
+  // July 13
+  {
+    timestamp: 1499959944,
+    title: "string",
+    date: "20170713",
+    id:"a18rjkI92fdfb"
+  }
+  
+  
   
 ]
 
@@ -201,8 +228,8 @@ const ActivityMapSidebarV2 = ({ subsetItems, setSelectedItem }: any) => {
     return init()
   }, [])
 
-  const handleSelectItem = (item: any) => {
-    setSelectedItem(item)
+  const handleSelectItem = (title: any) => {
+    setSelectedItem(title)
   }
 
   const distillUniqueDates = (entries: any) => {
@@ -254,9 +281,13 @@ const ActivityMapSidebarV2 = ({ subsetItems, setSelectedItem }: any) => {
     setHoverListItem("")
   }
 
+  const handleLoadActivityMap = (id: string, title: string) => {
+
+  }
+
   return (
     <SSidebar>
-      <SHeading>{}</SHeading>
+      <SHeading>{"Sessions"}</SHeading>
       <SListContainer>
         <Accordion
           variant="contained"
@@ -320,6 +351,8 @@ const ActivityMapSidebarV2 = ({ subsetItems, setSelectedItem }: any) => {
                         <SListItem 
                           onMouseOver={() => handleMouseOverListItem(entry.id)}
                           onMouseOut={handleMouseOutListItem}
+
+                          onClick={() => handleSelectItem(entry.title)}
                           className={hoverListItem === entry.id ? "hover" : ""}
                         >{entry.title}</SListItem></Accordion.Panel>
                       )

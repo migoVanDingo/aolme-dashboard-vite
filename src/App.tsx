@@ -186,7 +186,7 @@ function App() {
                 />
 
                 <Route
-                  path="/subset/:subsetId/activity-map/"
+                  path="/dataset/:datasetId/activity-map/"
                   element={
                     <>
                       <PrivateRoute>

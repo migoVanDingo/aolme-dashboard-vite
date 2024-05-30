@@ -11,7 +11,6 @@ const SContainer = styled(SFlexCol)`
   grid-area: map;
   align-items: flex-start;
 
-  min-height: 200px;
 
 
   border: 1px solid ${({ theme }) => theme.color.color_5};
@@ -26,14 +25,10 @@ const SContainer = styled(SFlexCol)`
     margin: 10px 0;
   }
   
-  
-  
 `
 
 const SParticipant = styled.p`
-  width: 100%;
-
-  
+  width: 100%; 
 `
 
 const SHeading = styled.h2`
@@ -48,8 +43,9 @@ const SHeading = styled.h2`
 
 const STimelineContainer = styled(SFlexCol)`
   width: 100%;
+  height: auto;
   align-items: flex-start;
-  overflow-y: auto;
+
 `
 
 const colors = [
@@ -84,11 +80,23 @@ const LabelTimelineMapV2 = ({
 }: any) => {
   const [participants, setParticipants] = useState<any[]>([])
   const [actions, setActions] = useState<any[]>([])
+  const [filteredAnnotations, setFilteredAnnotations] = useState<any[]>([])
 
   useEffect(() => {
-    const init = () => {}
+    const init = () => {
+     handleFilterParticipants(annotationArr, participantsList)
+    }
+   
     return init()
-  }, [])
+  }, [annotationArr])
+
+  useEffect(() => {
+    const init = () => {
+      updateActionsList(actionsList)
+    }
+    return init()
+  }, [actionsList])
+  
 
   useEffect(() => {
     const init = () => {
@@ -97,12 +105,25 @@ const LabelTimelineMapV2 = ({
     return init()
   }, [participantsList])
 
-  useEffect(() => {
-    const init = () => {
-      updateActionsList(actionsList)
-    }
-    return init()
-  }, [actionsList])
+
+  const handleFilterParticipants = (annotationArr: any[], participantsList: any[]) => {
+
+    let filteredAnnotations: any = []
+    participantsList.forEach((participant: any) => {
+      annotationArr.map((annotationList: any) => {
+        //console.log('al', annotationList)
+        annotationList.annotations.map((annotation: any) => {
+          // console.log('annotation', annotation)
+          // console.log('participant', participant.title)
+          if(annotation.label == participant.title) 
+             filteredAnnotations.push({ participant: annotation.label, type: annotationList.type, annotation})
+          })
+      })
+    })
+
+    //console.log('filteredAnnotations', filteredAnnotations)
+    setFilteredAnnotations(filteredAnnotations)
+  }
 
   const updateParticipantsList = (activeParticipants: any[]) => {
     setParticipants(activeParticipants.filter((p: any) => p.toggle === true))
@@ -110,6 +131,11 @@ const LabelTimelineMapV2 = ({
 
   const updateActionsList = (activeActions: any[]) => {
     setActions(activeActions.filter((a: any) => a.toggle === true))
+  }
+
+  const handleGetValues = (action: any, participant: any) => {
+    
+    return filteredAnnotations.filter((anno: any) => anno.type === action.action.toLowerCase() && participant.title === anno.participant)[0]
   }
 
   return (
@@ -122,7 +148,9 @@ const LabelTimelineMapV2 = ({
             <SParticipant>{participant.title}</SParticipant>
 
             {actions.map((action: any, index: number, array: any) => {
-              return (<ActionTimeline key={index} action={action.action} color={colors[index]} />)
+              const values = handleGetValues(action, participant)
+              if(values === undefined) return
+              return (<ActionTimeline key={index} action={action.action} color={colors[index]} annotationArr={values}/>)
             })}
           </STimelineContainer>
         )

@@ -157,7 +157,7 @@ const SubsetCard = ({ subset, dataset, inRepo = false, selectDatasetView = () =>
   }
 
   const openSubsetActivityMap = () => {
-    nav(`/subset/${subset.subset_id}/activity-map/`/* , "_blank" */)
+    nav(`/dataset/${dataset.dataset_id}/activity-map/`/* , "_blank" */)
   }
   
 

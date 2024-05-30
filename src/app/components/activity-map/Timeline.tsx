@@ -42,6 +42,8 @@ const Timeline = ({ duration, sequences, color, handleVideoSkipTime}: any) => {
       setMoments(values)
     }
     return init()
+    console.log("Timeline::duration", duration)
+    console.log("Timeline::sequences", sequences)
   }, [duration, sequences])
 
   const calculateValues = () => {
@@ -52,7 +54,21 @@ const Timeline = ({ duration, sequences, color, handleVideoSkipTime}: any) => {
 
     if (timeline && duration !== 0 && sequences.length > 0) {
       const ratio = timeline.clientWidth / duration
+      let moments = []
+      for(let i = 0; i < sequences.length; i+2){
+        const start = sequences[i]["time"] * ratio
+        const end = sequences[i+1]["time"] * ratio
+        const width = end - start
+        console.log("start: ", start)
+        console.log("end: ", end)
+        console.log("width: ", width)
+        moments.push({ start, end, width, ratio })
 
+      }
+
+      return moments
+
+/* 
       return sequences.map((sequence: any, index: number) => {
         //console.log("loop::sequence::index: " + index + " :: seq: ", sequence)
         const start = sequence[0]["time"] * ratio
@@ -61,7 +77,7 @@ const Timeline = ({ duration, sequences, color, handleVideoSkipTime}: any) => {
         const width = end - start
 
         return { start, end, width, ratio }
-      })
+      }) */
     } else {
       return []
     }

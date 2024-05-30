@@ -8,18 +8,21 @@ import Player from "../video-player/Player"
 import ToggleModule from "../common/ToggleModule"
 import ActivityMapHeader from "./ActivityMapHeader"
 import LabelTimelineMapV2 from "./LabelTimelineMapV2"
+import LoadingSpinner from "../common/loading/LoadingSpinner"
 
 const SContainer = styled.div`
   width: 100%;
   grid-area: main;
   box-sizing: border-box;
-  padding: 40px;
 
   display: grid;
   overflow-y: auto;
-  
+  position: relative;
+  padding: 20px 40px 40px;
+  height: calc(100vh);
 
-  top: ${({ theme }) => theme.header.height};
+  top: 0;
+  margin: 0;
 
   grid-template-columns: repeat(4, calc(calc(858px * 3) / 16)) auto;
   grid-template-rows: 80px 300px auto;
@@ -39,11 +42,11 @@ const SContainer = styled.div`
 
   &.layout-2 {
     grid-template-columns: repeat(4, calc(calc(858px * 3) / 16)) auto;
-  grid-template-rows: 80px 300px auto;
-  grid-template-areas:
-    "header  header  header  header  header"
-    "options options options  player  player"
-    "map     map     map     map     map";
+    grid-template-rows: 80px 300px auto;
+    grid-template-areas:
+      "header  header  header  header  header"
+      "options options options  player  player"
+      "map     map     map     map     map";
   }
 `
 
@@ -137,13 +140,14 @@ const annotations = [
   },
 ]
 
-const ActivityMapMain = ({ subsetId, selectedItem }: any) => {
-  const [annotationArr, setAnnotationArr] = useState<any[]>(annotations)
+const ActivityMapMain = ({ subsetId, selectedItem, fileAnnotations }: any) => {
+  const [annotationArr, setAnnotationArr] = useState<any[]>([])
   const [videoTime, setVideoTime] = useState<number>(0)
   const [participants, setParticipants] = useState<any[]>([])
   const [actions, setActions] = useState<any[]>([])
   const [toggleParticipantList, setToggleParticipantList] = useState<any[]>([])
   const [toggleActionList, setToggleActionList] = useState<any[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
 
   const [layout, setLayout] = useState<string>("layout-2")
 
@@ -152,7 +156,8 @@ const ActivityMapMain = ({ subsetId, selectedItem }: any) => {
   useEffect(() => {
     const init = () => {
       if (annotationArr && annotationArr.length > 0) {
-        setAnnotationArr(sortParticipantList(annotationArr))
+        //console.log("ActivityMapMain::annotationArr::", annotationArr)
+        /* setAnnotationArr(sortParticipantList(annotationArr))
         if (participants.length === 0) {
           let uniqueTitles = new Set()
           let uniqueParticipants: any[] = []
@@ -179,34 +184,91 @@ const ActivityMapMain = ({ subsetId, selectedItem }: any) => {
           })
           setActions(sortActionList(actionArray))
           setToggleActionList(sortActionList(actionArray))
-        }
+        } */
       }
     }
     return init()
   }, [])
 
   useEffect(() => {
-    //console.log("ActivityMapMain::participants::", participants)
-  }, [participants])
-
-  /*  useEffect(() => {
     const init = () => {
-      console.log("init")
-      if (subsetId && selectedItem) {
-        console.log("ActivityMapMain::init::subsetId: " +subsetId +" selectedItem: " +selectedItem["name"])
-        getAnnotationData(subsetId, selectedItem["name"])
+      if (fileAnnotations && fileAnnotations.length > 0) {
+        const items = processFileAnnotationObject(fileAnnotations)
+
+        setAnnotationArr(items)
+        const itemAnnotations = items.map(
+          (item: any, index: number, array: any) => item.annotations,
+        )
+
+        const annotations = itemAnnotations.filter(
+          (item: any, index: number, array: any) => {
+            let longest = 0
+            let anno = 0
+
+            if (item.length > longest) {
+              longest = item.length
+              anno = index
+            }
+
+            if(index === array.length - 1)
+              return array[anno]
+          },
+        )
+
+
+        const participants = annotations[0].map((annotation: any) => {
+          return { title: annotation.label, toggle: true }
+        })
+
+        setParticipants(sortParticipantList(participants))
+        setToggleParticipantList(sortParticipantList(participants))
 
         
-      } else {
-        console.log("ActivityMapMain::init::subsetId or selectedItem is null" +subsetId+" " +selectedItem,
-        )
+
+        const actions = fileAnnotations.map((annotation: any) => {
+          return {
+            action: capitalizeFirstLetter(annotation.type),
+            toggle: true,
+          }
+        })
+
+        setActions(sortActionList(actions))
+        setToggleActionList(sortActionList(actions))
       }
     }
     return init()
-  }, [subsetId, selectedItem]) */
+  }, [fileAnnotations])
+
+  useEffect(() => {
+    const init = () => {
+      if (annotationArr.length > 0 && actions.length > 0) {
+        setLoading(false)
+      }
+    }
+    return init()
+  }, [actions, annotationArr])
+
+  function capitalizeFirstLetter(string: string) {
+    return string.charAt(0).toUpperCase() + string.slice(1)
+  }
+
+  const processFileAnnotationObject = (fileAnnotations: any[]) => {
+    return fileAnnotations.map((fileAnnotation: any) => {
+      let annotationRaw = fileAnnotation
+
+      let annotationData = annotationRaw["data"][0]["annotations"][0]["result"]
+
+      annotationData = annotationData.map((annotation: any) => annotation.value)
+
+      annotationData = annotationData.map((annotation: any) =>
+        filterAnnotationData(annotation),
+      )
+      return { type: annotationRaw["type"], annotations: annotationData }
+    })
+  }
 
   const getAnnotationData = async (subsetId: string, filename: string) => {
-    const annotationData = await DatasetAPI.getAnnotationData(
+    const annotationData = await DatasetAPI.getFileAnnotationListByDataset(
       subsetId,
       selectedItem["name"],
     )
@@ -244,7 +306,8 @@ const ActivityMapMain = ({ subsetId, selectedItem }: any) => {
       label: label,
       sequences: filteredSequences,
     }
-    //console.log("ActivityMapMain::filterAnnotationData::ret::", ret)
+
+    // console.log("ActivityMapMain::filterAnnotationData::ret::", ret)
     return ret
   }
 
@@ -260,13 +323,10 @@ const ActivityMapMain = ({ subsetId, selectedItem }: any) => {
   }
 
   const handleUpdateParticipants = (participants: any[]) => {
-    //console.log("ActivityMapMain::handleUpdateParticipants::participants::", participants)
-
     setParticipants(sortParticipantList(participants))
   }
 
   const handleUpdateActions = (actions: any[]) => {
-    console.log("ActivityMapMain::handleUpdateActions::actions::", actions)
     setActions(sortActionList(actions))
   }
 
@@ -307,10 +367,11 @@ const ActivityMapMain = ({ subsetId, selectedItem }: any) => {
     } else {
       setLayout("layout-1")
     } */
-    
   }
 
-  if (annotationArr)
+  if (loading) {
+    return <LoadingSpinner message={"Loading Activity Map"} />
+  } else {
     return (
       <SContainer className={layout}>
         <ActivityMapHeader
@@ -326,7 +387,7 @@ const ActivityMapMain = ({ subsetId, selectedItem }: any) => {
               list={toggleParticipantList}
             />
           )}
-          {toggleActionList && actions.length > 0 && (
+          {toggleActionList && toggleActionList.length > 0 && (
             <ToggleModule
               heading={"Actions"}
               handleUpdateList={handleUpdateActions}
@@ -338,7 +399,7 @@ const ActivityMapMain = ({ subsetId, selectedItem }: any) => {
           layout={layout}
           currentTime={videoTime}
           path={
-            "https://ece46medsrv.ece.unm.edu/COHORT_3/LEVEL_1/POLK/04_Polk_Mar21/04_Polk_Mar21_GroupA/Group_Interactions/Venkatesh/G-C3L1P-Mar21-A-Venkatesh_q2_03-05.mp4"
+            "https://ece46medsrv.ece.unm.edu/COHORT_1/LEVEL_1/POLK/03_Polk_Mar02/03_Polk_Mar02_GroupE/Group_Interactions/Irma/G-C1L1P-Mar02-E-Irma_q2_04-08.mp4"
           }
         />
         <LabelTimelineMapV2
@@ -350,6 +411,7 @@ const ActivityMapMain = ({ subsetId, selectedItem }: any) => {
         />
       </SContainer>
     )
+  }
 }
 
 export default ActivityMapMain

@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react"
 import styled from "styled-components"
 import { SFlexCol } from "../common/containers/FlexContainers";
+import video4 from "/Users/bubz/Developer/master-project/aolme-backend/_raw_files/Typing/C1L1P-E/20170302/G-C1L1P-Mar02-E-Irma_q2_04-08.mp4"
 
 const SContainer = styled(SFlexCol)`
   grid-area: player;
@@ -65,7 +66,7 @@ function Player({ currentTime, path, layout }: any) {
   return (
     <SContainer>
       <video controls style={{objectFit: "contain"}}  width={width} height={height} ref={videoRef}>
-        <source src={path} type="video/mp4" />
+        <source src={video4} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     </SContainer>

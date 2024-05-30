@@ -74,6 +74,11 @@ export class DatasetAPI {
     )
   }
 
+  public static async getFileAnnotationListByDataset(datasetId: string, filename: string) {
+    return Requests.doGet("/api/dataset/" + datasetId + "/annotation?filename=" + filename)
+  }
+
+
   // Subset Label Studio Info
   public static async getLabelStudioProject(subsetId: string) {
     return Requests.doGet("/api/subset/" + subsetId + "/labelstudio")
