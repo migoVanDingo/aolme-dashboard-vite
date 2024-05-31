@@ -13,7 +13,7 @@ const SContainer = styled(SFlexCol)`
 const STimeline = styled(SFlexRow)`
   width: 100%;
   height: 3px;
-  background-color: ${({ theme }) => theme.color.color_8};
+  background-color: ${({ theme }) => theme.color.color_5};
   border-radius: 4px;
   z-index: 1;
   position: relative;
@@ -55,7 +55,7 @@ const Timeline = ({ duration, sequences, color, handleVideoSkipTime}: any) => {
     if (timeline && duration !== 0 && sequences.length > 0) {
       const ratio = timeline.clientWidth / duration
       let moments = []
-      for(let i = 0; i < sequences.length; i+2){
+      for(let i = 0; i < sequences.length; i +=2){
         const start = sequences[i]["time"] * ratio
         const end = sequences[i+1]["time"] * ratio
         const width = end - start

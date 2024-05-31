@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom"
 const SHeader = styled.div`
   width: 100vw;
   background-color: ${({ theme }) => theme.color.color_1};
-  //box-shadow: 0px 0px 3px ${({ theme }) => theme.color.shadow.dark};
+  box-shadow: 0px 0px 5px ${({ theme }) => theme.color.color_5};
   padding: 8px ${({ theme }) => theme.spacing.edges};
   margin: 0;
   position: relative;

@@ -10,7 +10,7 @@ const SContainer = styled(SFlexCol)`
   margin: 0;
   align-items: center;
   justify-content: center;
-  background-color: ${({ theme }) => theme.color.color_1};
+  background-color: ${({ theme }) => theme.color.color_2_5};
   
 
 `

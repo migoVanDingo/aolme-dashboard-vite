@@ -25,7 +25,7 @@ const SContainer = styled(SFlexCol)`
   grid-template-columns: 350px auto;
   grid-template-rows: 100%;
   grid-template-areas: "sidebar main";
-  background-color: ${({ theme }) => theme.color.color_2};
+  background-color: ${({ theme }) => theme.color.color_1};
   display: relative;
 
   padding: 0;

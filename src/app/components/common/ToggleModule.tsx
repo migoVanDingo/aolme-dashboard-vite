@@ -59,7 +59,7 @@ const ToggleModule = ({ heading, list, handleUpdateList }: any) => {
       {heading && <SHeading>{heading}</SHeading>}
       {list.map((item: any, index: number) => {
         return (
-          <ToggleValue key={index} item={item.title ? item : {title: item.action, toggle: item.toggle}} handleToggle={handleToggle} />
+          <ToggleValue key={index} item={item.title ? item : {title: item.action, toggle: item.toggle, color: item.color}} handleToggle={handleToggle} />
         )
       })}
     </SContainer>

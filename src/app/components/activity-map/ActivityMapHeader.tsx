@@ -43,13 +43,13 @@ const SDownloadButton = styled.button`
   padding: 0px 10px;
   border-radius: ${({ theme }) => theme.container.borderRadius.sm};
   background-color: ${({ theme }) => theme.accent.color_1_dim};
-  color: ${({ theme }) => theme.color.color_8};
+  color: ${({ theme }) => theme.color.color_1};
   font-size: 1rem;
   cursor: pointer;
   border: none;
   transition: all 0.3s;
   &:hover {
-    background-color: ${({ theme }) => theme.accent.color_1};
+    background-color: ${({ theme }) => theme.color.color_1};
     color: white;
   }
 `

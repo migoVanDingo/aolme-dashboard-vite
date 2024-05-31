@@ -20,8 +20,18 @@ const STitle = styled.p`
     color: ${({ theme }) => theme.color.color_5};
     
 `
+interface ISColor {
+    color: string
+}
+const SColor = styled.div<ISColor>`
+    width: 20px;
+    height: 20px;
+    background-color: ${p => p.color};
+    border-radius: 50%;
+    margin-right: 10px;
+`
 
-const ToggleValue = ({ item, handleToggle }: any) => {
+const ToggleValue = ({ item, handleToggle, color }: any) => {
 
     const [toggle, setToggle] = useState<boolean>(item.toggle)
 
@@ -33,6 +43,7 @@ const ToggleValue = ({ item, handleToggle }: any) => {
 
   return (
     <SContainer>
+        <SColor color={item.color}/>
         <STitle>{item.title}</STitle>
         <Switch style={{ marginLeft: "auto"}} checked={toggle} color="teal" size='md' onChange={(event: any) => handleToggleValue(item.title, event.currentTarget.checked)} />
         

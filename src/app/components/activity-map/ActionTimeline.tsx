@@ -28,7 +28,7 @@ const ActionTimeline = ({ action, color, annotationArr }: any) => {
 
   const handleSetValues = (annotation: any) => {
     console.log("ActionTimeline::handleSetValues::annotation: ", annotation.annotation)
-    setDuration(annotation.annotation.frames)
+    setDuration(annotation.annotation.duration)
     setSequences(annotation.annotation.sequences)
 
   }

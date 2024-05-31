@@ -62,16 +62,19 @@ const actions = [
     title: "Talking",
     id: "",
     toggle: false,
+    color: "red"
   },
   {
     title: "Typing",
     id: "",
     toggle: false,
+    color: "blue"
   },
   {
     title: "Writing",
     id: "",
     toggle: false,
+    color: "green"
   },
 ]
 
@@ -229,6 +232,7 @@ const ActivityMapMain = ({ subsetId, selectedItem, fileAnnotations }: any) => {
           return {
             action: capitalizeFirstLetter(annotation.type),
             toggle: true,
+            color: annotation.type === "typing" ? "blue" : annotation.type === "writing" ? "green" : "red"
           }
         })
 

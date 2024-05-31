@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import styled from "styled-components"
+import styled, { useTheme } from "styled-components"
 import { SFlexCol } from "../common/containers/FlexContainers"
 import { Accordion, rem } from "@mantine/core"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -285,6 +285,8 @@ const ActivityMapSidebarV2 = ({ subsetItems, setSelectedItem }: any) => {
 
   }
 
+  const theme = useTheme()
+
   return (
     <SSidebar>
       <SHeading>{"Sessions"}</SHeading>
@@ -293,16 +295,16 @@ const ActivityMapSidebarV2 = ({ subsetItems, setSelectedItem }: any) => {
           variant="contained"
           styles={{
             root: {
-              backgroundColor: "#1c1c1c",
-              color: "#b0b0b0",
+              backgroundColor: theme.color.color_1,
+              color: theme.color.color_6,
               width: "100%",
            
               
               
             },
             item: {
-              backgroundColor: "#1c1c1c",
-              color: "#b0b0b0",
+              backgroundColor: theme.color.color_1,
+              color: theme.color.color_6,
               border: "1px solid #636363"
               
               
@@ -310,16 +312,16 @@ const ActivityMapSidebarV2 = ({ subsetItems, setSelectedItem }: any) => {
             },
 
             control: {
-              backgroundColor: "#242424",
-              color: "#b0b0b0",
+              backgroundColor: theme.color.color_1,
+              color: theme.color.color_6,
         
            
 
             },
 
             panel: {
-              backgroundColor: "#1c1c1c",
-              color: "#b0b0b0",
+              backgroundColor: theme.color.color_1,
+              color: theme.color.color_6,
               fontSize: "0.75rem",
               
               display: "flex",

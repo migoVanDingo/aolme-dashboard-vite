@@ -12,12 +12,12 @@ interface IProps {
 const STimelineItem = styled(SFlexRow)<IProps>`
   width: ${(p) => p.width + "px"};
   margin-left: ${(p) => p.start + "px"};
-  height: 5px;
+  height: 10px;
   z-index: 2;
   background-color: ${(p) => p.color};
   align-items: center;
   position: absolute;
-  top: -1px;
+  top: -3.5px;
 `
 
 interface IStartThumb {
@@ -71,9 +71,9 @@ const Moment = ({
 }: any) => {
   return (
     <>
-      <SStartThumb color={color.color} onClick={handleClickStart} start={start - 8} />
-      <STimelineItem color={color.color} start={start} end={end} width={width} />
-      <SEndThumb color={color.color} onClick={handleClickEnd} end={end - 2} />
+      <SStartThumb color={color} onClick={handleClickStart} start={start - 6} />
+      <STimelineItem color={color} start={start} end={end} width={width} />
+      <SEndThumb color={color} onClick={handleClickEnd} end={end - 4} />
     </>
   )
 }

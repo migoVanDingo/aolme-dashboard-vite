@@ -49,7 +49,7 @@ const STimelineContainer = styled(SFlexCol)`
 `
 
 const colors = [
-  { color: "#FF0000" },
+  { action: "talking", color: "#FF0000" },
   { color: "#00FF00" },
   { color: "#0000FF" },
   { color: "#FFFF00" },
@@ -150,7 +150,7 @@ const LabelTimelineMapV2 = ({
             {actions.map((action: any, index: number, array: any) => {
               const values = handleGetValues(action, participant)
               if(values === undefined) return
-              return (<ActionTimeline key={index} action={action.action} color={colors[index]} annotationArr={values}/>)
+              return (<ActionTimeline key={index} action={action.action} color={action.action.toLowerCase() === "talking" ? "red" : action.action.toLowerCase() === "typing" ? "blue" : "green"} annotationArr={values}/>)
             })}
           </STimelineContainer>
         )
