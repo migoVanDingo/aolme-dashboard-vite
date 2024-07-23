@@ -18,6 +18,20 @@ export const STextInput = styled.input`
   background-color: #dedede;
   font-family: 'Helvetica', sans-serif;
   font-weight: 500;
+
+  &.sm {
+    width: 150px;
+  }
+
+  &.md {
+    width: 220px; 
+  }
+
+  &.lg {
+    width: 350px;
+  }
+
+  
 `
 
 export const SLabel = styled.label`

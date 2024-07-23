@@ -45,4 +45,16 @@ export class RepoAPI {
   public static async archiveRepo(repoId: string) {
     return await Requests.doDelete("/api/repository/archive/" + repoId)
   }
+
+  public static async cloneGithubRepo(payload: any) {
+    return await Requests.doPost(payload, "/api/repository/clone")
+  }
+
+  public static async syncGithubRepo(repoId: string){
+    return await Requests.doGet("/api/repository/"+ repoId +"/sync")
+  }
+
+  public static async getDirectoryContents(repoId: string){
+    return await Requests.doGet("/api/repository/"+ repoId +"/contents")
+  }
 }

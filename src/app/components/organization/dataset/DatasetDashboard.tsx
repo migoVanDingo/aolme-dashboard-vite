@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
 import styled from "styled-components"
+import { DatasetAPI } from "../../../api/DatasetAPI"
 import {
   SFlexCol,
-  SFlexRow,
-  SFlexRowWrap,
+  SFlexRowWrap
 } from "../../common/containers/FlexContainers"
+import ViewDataset from "../../dataset/ViewDataset"
+import CreateDataset from "./CreateDataset"
 import DatasetCard from "./DatasetCard"
 import DashboardHeader from "./header/DashboardHeader"
-import CreateDataset from "./CreateDataset"
-import Dataset from "../../../pages/Dataset"
-import { DatasetAPI } from "../../../api/DatasetAPI"
-import { useSelector } from "react-redux"
-import ViewDataset from "../../dataset/ViewDataset"
 
 const SContainer = styled(SFlexCol)`
   width: 100%;

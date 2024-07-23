@@ -25,9 +25,9 @@ const SIcon = styled(FontAwesomeIcon)`
     margin-left: 10px;
 `
 
-const Download = () => {
+const Download = ({ label, action }: any) => {
   return (
-    <SButton>Download<SIcon icon={faCaretDown}/></SButton>
+    <SButton onClick={action}>{label}<SIcon icon={faCaretDown}/></SButton>
   )
 }
 

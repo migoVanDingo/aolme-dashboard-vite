@@ -24,6 +24,7 @@ import ActivityMap from "./app/pages/ActivityMap"
 
 import { createTheme, MantineProvider } from "@mantine/core"
 import ProfileV2 from "./app/pages/ProfileV2"
+import Notebook from "./app/pages/Notebook"
 
 const mantineTheme = createTheme({
   /** Put your mantine theme override here */
@@ -192,6 +193,17 @@ function App() {
                       <PrivateRoute>
                         <Header />
                         <ActivityMap />
+                      </PrivateRoute>
+                    </>
+                  }
+                />
+                <Route
+                  path="/notebook"
+                  element={
+                    <>
+                      <PrivateRoute>
+                        <Header />
+                        <Notebook />
                       </PrivateRoute>
                     </>
                   }

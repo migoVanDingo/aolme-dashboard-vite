@@ -10,13 +10,6 @@ import ActivityMapMain from "../components/activity-map/ActivityMapMain"
 import ActivityMapMainV2 from "../components/activity-map/ActivityMapMainV2"
 import ActivityMapSidebarV2 from "../components/activity-map/ActivityMapSidebarV2"
 
-/* const SContainer = styled(SFlexCol)`
-    width: 1200px;
-    height: 300px;
-    border: 1px solid ${({ theme }) => theme.color.color_5};
-
-    padding: 30px;
-` */
 const SContainer = styled(SFlexCol)`
   width: 100%;
   height: 100%;
@@ -32,6 +25,73 @@ const SContainer = styled(SFlexCol)`
   margin: 0;
 `
 
+const videoObjectArr = [
+  {
+    title: "G-C1L1P-Mar02-E-Irma_q2_01-08.mp4",
+    path: "/Users/bubz/Developer/master-project/aolme-backend/_raw_files/Typing/C1L1P-E/20170302/G-C1L1P-Mar02-E-Irma_q2_01-08.mp4",
+    facilitator: "IRMA",
+    date: "20170302",
+    timestamp: 1488485612,
+    id: "a18rjkI92b",
+  },
+  {
+    title: "G-C1L1P-Mar02-E-Irma_q2_02-08.mp4",
+    path: "/Users/bubz/Developer/master-project/aolme-backend/_raw_files/Typing/C1L1P-E/20170302/G-C1L1P-Mar02-E-Irma_q2_02-08.mp4",
+    facilitator: "IRMA",
+    date: "20170302",
+    timestamp: 1488485612,
+    id: "a18rjkI92c",
+  },
+  {
+    title: "G-C1L1P-Mar02-E-Irma_q2_03-08.mp4",
+    path: "/Users/bubz/Developer/master-project/aolme-backend/_raw_files/Typing/C1L1P-E/20170302/G-C1L1P-Mar02-E-Irma_q2_03-08.mp4",
+    facilitator: "IRMA",
+    date: "20170302",
+    timestamp: 1488485612,
+    id: "a18rjkI92d",
+  },
+  {
+    title: "G-C1L1P-Mar02-E-Irma_q2_04-08.mp4",
+    path: "/Users/bubz/Developer/master-project/aolme-backend/_raw_files/Typing/C1L1P-E/20170302/G-C1L1P-Mar02-E-Irma_q2_04-08.mp4",
+    facilitator: "IRMA",
+    date: "20170302",
+    timestamp: 1488485612,
+    id: "a18rjkI92e",
+  },
+  {
+    title: "G-C1L1P-Mar02-E-Irma_q2_05-08.mp4",
+    path: "/Users/bubz/Developer/master-project/aolme-backend/_raw_files/Typing/C1L1P-E/20170302/G-C1L1P-Mar02-E-Irma_q2_05-08.mp4",
+    facilitator: "IRMA",
+    date: "20170302",
+    timestamp: 1488485612,
+    id: "a18rjkI92f",
+  },
+  {
+    title: "G-C1L1P-Mar02-E-Irma_q2_06-08.mp4",
+    path: "/Users/bubz/Developer/master-project/aolme-backend/_raw_files/Typing/C1L1P-E/20170302/G-C1L1P-Mar02-E-Irma_q2_06-08.mp4",
+    facilitator: "IRMA",
+    date: "20170302",
+    timestamp: 1488485612,
+    id: "a18rjkI92g",
+  },
+  {
+    title: "G-C1L1P-Mar02-E-Irma_q2_07-08.mp4",
+    path: "/Users/bubz/Developer/master-project/aolme-backend/_raw_files/Typing/C1L1P-E/20170302/G-C1L1P-Mar02-E-Irma_q2_07-08.mp4",
+    facilitator: "IRMA",
+    date: "20170302",
+    timestamp: 1488485612,
+    id: "a18rjkI92h",
+  },
+  {
+    title: "G-C1L1P-Mar02-E-Irma_q2_08-08.mp4",
+    path: "/Users/bubz/Developer/master-project/aolme-backend/_raw_files/Typing/C1L1P-E/20170302/G-C1L1P-Mar02-E-Irma_q2_08-08.mp4",
+    facilitator: "IRMA",
+    date: "20170302",
+    timestamp: 1488485612,
+    id: "a18rjkI92i",
+  },
+]
+
 const ActivityMap = () => {
   const dispatch = useDispatch()
   const { datasetId } = useParams<{ datasetId: string }>()
@@ -42,6 +102,7 @@ const ActivityMap = () => {
   const [selectedItem, setSelectedItem] = useState<any>()
 
   const [beastObject, setBeastObject] = useState<any[]>([])
+  const [videoObject, setVideoObject] = useState<any[]>(videoObjectArr)
 
   useEffect(() => {
     const init = () => {
@@ -96,6 +157,8 @@ const ActivityMap = () => {
       (item: any) => item.subset_item_id === itemId,
     )
     setSelectedItem(item[0]) */
+    const item = videoObject.filter((item: any) => item.title === title)
+    setSelectedItem(item[0])
     if(datasetId){
       DatasetAPI.getFileAnnotationListByDataset(datasetId, title)
       .then((res: any) => {
@@ -114,6 +177,7 @@ const ActivityMap = () => {
       <ActivityMapSidebarV2
         subsetItems={subsetItems}
         setSelectedItem={handleSelectItem}
+        entries={videoObject}
       />
       <ActivityMapMainV2 selectedItem={selectedItem} fileAnnotations={beastObject}/>
     </SContainer>

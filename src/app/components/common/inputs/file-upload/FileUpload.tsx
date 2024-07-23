@@ -90,7 +90,7 @@ const FileUpload = ({ handleFileChange, inputFile }: any) => {
         
           <SButtonContainer>
             <SIcon icon={faUpload} />
-            <SInput name="files" type="file" ref={inputFile} onChange={handleFileChange} multiple/>
+            <SInput name="files" type="file" ref={inputFile} onChange={handleFileChange} multiple /* webkitdirectory="" mozdirectory directory *//>
           </SButtonContainer>
   
       </SInnerContainer>

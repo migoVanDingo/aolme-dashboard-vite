@@ -40,7 +40,8 @@ const SelectInput = ({
   return (
     <SContainer>
         {
-            label === "PROPS" && <SLabel>{"Type"}</SLabel>
+            label === "PROPS" ? <SLabel>{"Type"}</SLabel>
+            : <SLabel>{label}</SLabel>
         }
       <SSelect
         onChange={(e: any) => handleInput(e)}

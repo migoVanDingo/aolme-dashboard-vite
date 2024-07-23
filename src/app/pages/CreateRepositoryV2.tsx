@@ -40,16 +40,12 @@ const CreateRepositoryV2 = ({ }: any) => {
   const [repoDescription, setRepoDescription] = useState<string>("")
   const [repoId, setRepoId] = useState<string>("")
 
+
   const [isPublic, setIsPublic] = useState<boolean>(false)
 
   const navigate = useNavigate()
 
 
-  useEffect(() => {
-
-      console.log("uid: ", userId)
-
-  },[userId])
 
   useEffect(() => {
     const init = () => {
@@ -95,10 +91,34 @@ const CreateRepositoryV2 = ({ }: any) => {
     
   }
 
+  const handleCloneRepo = () => {
+    const payload = {
+      owner: userId,
+      entity_id: userId,
+      github_url: githubUrl
+    }
+
+    setLoading(true)
+    RepoAPI.cloneGithubRepo(payload)
+    .then((res: any) => {
+      console.log("Clone Response: ", res)
+      setRepoId(res.repo_id)
+    })
+    .catch((err: any) => console.error(err))
+  }
+
   return (
     <SContainer className={isLoading ? "loading" : ""}>
       {!isLoading ? (
         <>
+       {/*  <TextInput
+        setName={setGithubUrl}
+        name={githubUrl}
+        label={"Clone Github Repository URL"}
+      />
+      <SButton type="button" onClick={handleCloneRepo} innerHtml={"Clone"} /> */}
+
+
           <Heading heading={"Create Repository"} size={"md"} />
           <Message
             text={"Required fields are marked with an asterisk (*)."}

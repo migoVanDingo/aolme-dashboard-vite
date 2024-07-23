@@ -26,7 +26,7 @@ export default function AuthProvider({ children }: any) {
       let userId = localStorage.getItem("userId")
       let username = localStorage.getItem("username")
 
-      
+      console.log("AuthContext::User found: ", userId, username)
 
 
       userId ? dispatch(setStoreUserId(userId)) : console.error("AuthContext::User not found")

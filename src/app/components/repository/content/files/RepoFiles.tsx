@@ -6,6 +6,7 @@ import {
   faHardDrive,
   faListCheck,
   faPencil,
+  faRetweet,
 } from "@fortawesome/free-solid-svg-icons"
 import { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
@@ -18,6 +19,7 @@ import BranchContent from "./BranchContent"
 import FilesMenu from "./FilesMenu"
 import FilesUpdate from "./FilesUpdate"
 import QuickUpload from "./QuickUpload"
+import { icon } from "@fortawesome/fontawesome-svg-core"
 
 const SContainer = styled(SFlexCol)`
   grid-area: files;
@@ -37,6 +39,16 @@ const tabs = [
       console.log("not implemented")
     },
   }, */
+  {
+    title: "Repo Files",
+    url: "link",
+    type: "FILES",
+    icon: faFile,
+    callback: () => {
+      console.log("not implemented")
+    },
+  },
+  
   {
     title: "Dataset",
     url: "link",
@@ -63,7 +75,13 @@ const tabs = [
     callback: () => {
       console.log("not implemented")
     },
-  }
+  },
+  {
+    title: "Pipeline",
+    url: "link",
+    type: "PIPELINE",
+    icon: faRetweet
+  },
   
 
   /* {

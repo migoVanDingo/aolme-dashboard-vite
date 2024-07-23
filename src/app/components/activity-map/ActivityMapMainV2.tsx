@@ -143,6 +143,9 @@ const annotations = [
   },
 ]
 
+
+
+
 const ActivityMapMain = ({ subsetId, selectedItem, fileAnnotations }: any) => {
   const [annotationArr, setAnnotationArr] = useState<any[]>([])
   const [videoTime, setVideoTime] = useState<number>(0)
@@ -403,7 +406,7 @@ const ActivityMapMain = ({ subsetId, selectedItem, fileAnnotations }: any) => {
           layout={layout}
           currentTime={videoTime}
           path={
-            "https://ece46medsrv.ece.unm.edu/COHORT_1/LEVEL_1/POLK/03_Polk_Mar02/03_Polk_Mar02_GroupE/Group_Interactions/Irma/G-C1L1P-Mar02-E-Irma_q2_04-08.mp4"
+            selectedItem.path
           }
         />
         <LabelTimelineMapV2

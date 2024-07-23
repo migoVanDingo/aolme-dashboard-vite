@@ -6,6 +6,8 @@ import { faCodeBranch } from '@fortawesome/free-solid-svg-icons'
 import SelectBranch from './SelectBranch'
 import BranchMetrics from './BranchMetrics'
 import Download from './Download'
+import { useSelector } from 'react-redux'
+import { RepoAPI } from '../../../../api/RepoAPI'
 
 const SContainer = styled(SFlexRow)`
     grid-area: branch;
@@ -15,11 +17,22 @@ const SContainer = styled(SFlexRow)`
 
 
 const RepoBranch = () => {
+  const repoId = useSelector((state: any) => state.repoId)
+  const handleSyncRepo = () => {
+    console.log('syncing repo: ', repoId)
+    RepoAPI.syncGithubRepo(repoId)
+    .then((res: any) => {
+      console.log("ActivityMapHeader::syncGithubRepo::res", res)
+    })
+    .catch((err: any) => {
+      console.log("ActivityMapHeader::syncGithubRepo::err", err)
+    })
+  }
   return (
     <SContainer>
       <SelectBranch />
       <BranchMetrics />
-      <Download />
+      <Download action={handleSyncRepo} label={"Sync Repo"}/>
     </SContainer>
   )
 }
