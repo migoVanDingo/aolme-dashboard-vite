@@ -39,20 +39,18 @@ const repoName = "Hello-World"
 
 const ReadmeContent = () => {
 
-  const repoName = useSelector((state: any) => state.repoName)
-  const repoDescription = useSelector((state: any) => state.repoDescription)
-  const [name, setName] = useState("")
-  const [description, setDescription] = useState("")
+  const repoName = useSelector((state: any) => state.repo.storeRepoName)
+  const repoDescription = useSelector((state: any) => state.repo.storeRepoDescription)
 
   useEffect(() => {
-    
-    setName(repoName)
-    setDescription(repoDescription)
-  }, [repoName, repoDescription])
+    console.log('repoName', repoName)
+    console.log("repoDescription", repoDescription)
+  }, [repoName, repoDescription]);
+
   return (
     <SContainer>
-        <SRepoName>{name && name}</SRepoName>
-        <SDescription>{description}</SDescription>
+        <SRepoName>{repoName && repoName}</SRepoName>
+        <SDescription>{repoDescription}</SDescription>
     </SContainer>
   )
 }

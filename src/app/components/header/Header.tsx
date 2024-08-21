@@ -8,12 +8,13 @@ import Notifications from "./Notifications"
 import Avatar from "./Avatar"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
+import { useProfile } from "../../hooks/useProfile"
 
 const SHeader = styled.div`
   width: 100vw;
   background-color: ${({ theme }) => theme.color.color_1};
-  box-shadow: 0px 0px 5px ${({ theme }) => theme.color.color_5};
-  padding: 8px ${({ theme }) => theme.spacing.edges};
+  border-bottom: 1px solid ${({ theme }) => theme.color.color_2};
+  padding: 10px ${({ theme }) => theme.spacing.edges};
   margin: 0;
   position: relative;
   box-sizing: border-box;
@@ -35,7 +36,7 @@ const SContainerRight = styled(SFlexRow)`
 
 const SUsername = styled.p`
   font-size: 1.2rem;
-  color: ${({ theme }) => theme.color.color_9};
+  color: ${({ theme }) => theme.color.color_8};
   padding: 0;
   margin: 0;
   font-weight: bold;
@@ -44,10 +45,13 @@ const SUsername = styled.p`
 
 `
 
-const Header = () => {
-  const username = useSelector((state: any) => state.username)
-  const nav = useNavigate()
+interface IHeader {
+  username: string
+}
 
+const Header = ({ username }: IHeader) => {
+
+  const nav = useNavigate()
 
   return (
     <SHeader>

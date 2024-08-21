@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from "react"
-import styled from "styled-components"
-import { SFlexCol } from "../common/containers/FlexContainers"
-import { useParams } from "react-router-dom"
-import { useSelector } from "react-redux"
-import Subset from "./subset/Subset"
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faAdd, faArrowLeft } from "@fortawesome/free-solid-svg-icons"
+import { useEffect, useState } from "react"
+import styled from "styled-components"
 import { DatasetAPI } from "../../api/DatasetAPI"
+import { SFlexCol } from "../common/containers/FlexContainers"
+import Subset from "./subset/Subset"
+import { useLoaderData, useNavigate } from "react-router-dom"
 
 const SContainer = styled(SFlexCol)`
   width: 1100px;
-  height: 100%;
+  min-height: calc(100vh - 100px);
   align-items: flex-start;
-  justify-content: center;
+
   padding: 50px;
   box-sizing: border-box;
+
+
 
   &.repo{
     width: 100%;
@@ -78,11 +79,15 @@ const SLastUpdated = styled.p`
   color: ${({ theme }) => theme.color.color_5};
 `
 
-const ViewDataset = ({ hideView, viewId, dataset, repo }: any) => {
+const ViewDataset = ({ hideView, viewId, repo }: any) => {
+
+  const { selectedDataset, selectedSubsets } = useLoaderData() as any
+  const nav = useNavigate()
 
 
   const [buttonHover, setButtonHover] = useState<boolean>(false)
-  const [subsets, setSubsets] = useState<any[]>([])
+  const [dataset, setDataset] = useState<any>(selectedDataset)
+  const [subsets, setSubsets] = useState<any[]>(selectedSubsets)
 
   const hoverOn = () => setButtonHover(true)
   const hoverOff = () => setButtonHover(false)
@@ -104,12 +109,12 @@ const ViewDataset = ({ hideView, viewId, dataset, repo }: any) => {
 
   useEffect(() => {
     const init = () => {
-      if (subsets.length === 0) {
+      if (!subsets || subsets.length === 0) {
         loadSubsets()
       }
     }
 
-    return init()
+    //return init()
   }, [])
 
   useEffect(() => {
@@ -117,12 +122,15 @@ const ViewDataset = ({ hideView, viewId, dataset, repo }: any) => {
   }, [trigger])
 
   const loadSubsets = () => {
-    DatasetAPI.getSubsetListByDatasetId(dataset.dataset_id)
+    DatasetAPI.getSubsetListByDatasetId(selectedDataset.dataset_id)
       .then((res: any) => {
-        console.log("SUBSETS: ", res)
-        setSubsets(res.data)
+        setSubsets(res)
       })
       .catch((err: any) => console.log(err))
+  }
+
+  const handleGoBack = () => {
+    nav(-1)
   }
 
   return (
@@ -131,17 +139,17 @@ const ViewDataset = ({ hideView, viewId, dataset, repo }: any) => {
         <>
           <SButton
             className={buttonHover ? "hover" : ""}
-            onClick={hideView}
+            onClick={handleGoBack}
             onMouseOver={hoverOn}
             onMouseLeave={hoverOff}
           >
             <SIcon className={buttonHover ? "hover" : ""} icon={faArrowLeft} />
             Back to Datasets
           </SButton>
-          <SDsHeading>{dataset.name}</SDsHeading>
-          <SLastUpdated>ID: {dataset.dataset_id}</SLastUpdated>
+          <SDsHeading>{selectedDataset.name}</SDsHeading>
+          <SLastUpdated>ID: {selectedDataset.dataset_id}</SLastUpdated>
 
-          <SPara>{dataset.description}</SPara>
+          <SPara>{selectedDataset.description}</SPara>
         </>
       )}
 
@@ -161,3 +169,16 @@ const ViewDataset = ({ hideView, viewId, dataset, repo }: any) => {
 }
 
 export default ViewDataset
+
+export const loader = async () => {
+  const selectedDataset = JSON.parse(localStorage.getItem("selectedDataset") as any)
+  const subsets = await DatasetAPI.getSubsetListByDatasetId(selectedDataset.dataset_id)
+
+  console.log('selectedDataset: ', selectedDataset)
+  console.log('subsets: ', subsets)
+
+  return {
+    selectedDataset,
+    selectedSubsets: subsets
+  }
+}

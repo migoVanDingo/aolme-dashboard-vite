@@ -4,7 +4,10 @@ import { SFlexCol, SFlexRow } from "../../common/containers/FlexContainers"
 import { DatasetAPI } from "../../../api/DatasetAPI"
 import SubsetItemRow from "./SubsetItemRow"
 import { SUserCol, SUserRow } from "../../styled/SOrganization"
-import { ICreateLabelStudioProject, LabelStudioAPI } from "../../../api/LabelStudioAPI"
+import {
+  ICreateLabelStudioProject,
+  LabelStudioAPI,
+} from "../../../api/LabelStudioAPI"
 import { useSelector } from "react-redux"
 import { ISyncImportStorage } from "../../../utility/interface/project"
 import FileUploadService from "../../../services/FileUploadService"
@@ -113,10 +116,15 @@ const SButtonContainer = styled(SFlexRow)`
   gap: 20px;
   padding: 0;
   margin: 0 0 0 auto;
-
 `
 
-const SubsetCard = ({ subset, dataset, inRepo = false, selectDatasetView = () => {}, handleShowUploadFilesView }: any) => {
+const SubsetCard = ({
+  subset,
+  dataset,
+  inRepo = false,
+  selectDatasetView = () => {},
+  handleShowUploadFilesView,
+}: any) => {
   const [subsetFiles, setSubsetFiles] = useState<any[]>([])
   const [loopLength, setLoopLength] = useState<number>(0)
   const [headingArr, setHeadingArr] = useState<any[]>([])
@@ -124,56 +132,79 @@ const SubsetCard = ({ subset, dataset, inRepo = false, selectDatasetView = () =>
   const nav = useNavigate()
 
   useEffect(() => {
-    DatasetAPI.getSubsetItemList(subset.subset_id)
-      .then((res: any) => {
-        console.log("SubsetCard::DatasetAPI.getSubsetItemList::res::", res)
+    const init = () => {
+      //console.log("SubsetCard::subset::", subset)
+      DatasetAPI.getSubsetItemList(subset.subset_id)
+        .then((res: any) => {
+          //console.log("SubsetCard::DatasetAPI.getSubsetItemList::res::", res)
 
-        setSubsetFiles(res.data)
-      })
-      .catch((err: any) =>
-        console.error("SubsetCard::DatasetAPI.getSubsetItemList::error::", err),
-      )
+          setSubsetFiles(res)
+        })
+        .catch((err: any) =>
+          console.error(
+            "SubsetCard::DatasetAPI.getSubsetItemList::error::",
+            err,
+          ),
+        )
+    }
+    return subset && init()
   }, [subset])
 
   useEffect(() => {
-    let uniqueArr: string[] = []
-    const files = subsetFiles.map((file: any, index: number) => {
-      if (!uniqueArr.includes(file.type)) {
-        uniqueArr.push(file.type)
-      }
-      return
-    })
-
-    console.log("SubsetCard::uniqueArr::", uniqueArr)
-
-    setHeadingArr(uniqueArr)
-    setLoopLength(uniqueArr.length)
-  }, [subsetFiles])
-
+    const init = () => {
+      if(subsetFiles && subsetFiles.length > 0){
+        let uniqueArr: string[] = []
+        const files = subsetFiles.map((file: any, index: number) => {
+          if (!uniqueArr.includes(file.type)) {
+            uniqueArr.push(file.type)
+          }
+          return
+        })
   
+        //console.log("SubsetCard::uniqueArr::", uniqueArr)
+  
+        setHeadingArr(uniqueArr)
+        setLoopLength(uniqueArr.length)
+      }
+      
+    }
+
+    return init()
+  }, [subsetFiles])
 
   const openLabelStudio = () => {
     window.open("http://localhost:8080", "_blank")
   }
 
   const openSubsetActivityMap = () => {
-    nav(`/dataset/${dataset.dataset_id}/activity-map/`/* , "_blank" */)
+    nav(`/dataset/${dataset.dataset_id}/activity-map/` /* , "_blank" */)
   }
-  
 
   return (
     <SContainer>
       <SCardHeader>
         <SHeading>Subset Name: {subset.name}</SHeading>
         <SButtonContainer>
-        <SLabelerButton onClick={openLabelStudio}>{"Launch Labeler"}</SLabelerButton>
-        {
-          inRepo !== false && (<SLabelerButton onClick={selectDatasetView}>{"Select Dataset"}</SLabelerButton>)
-        }
-        {
-          inRepo !== false && (<SLabelerButton onClick={() => handleShowUploadFilesView(dataset.dataset_id, subset.subset_id)}>{"Upload Files"}</SLabelerButton>)
-        }
-        <SLabelerButton onClick={openSubsetActivityMap}>{"Activity Map"}</SLabelerButton>
+          <SLabelerButton onClick={openLabelStudio}>
+            {"Launch Labeler"}
+          </SLabelerButton>
+          {inRepo !== false && (
+            <SLabelerButton onClick={selectDatasetView}>
+              {"Select Dataset"}
+            </SLabelerButton>
+          )}
+          {inRepo !== false && (
+            <SLabelerButton
+              onClick={() =>
+                handleShowUploadFilesView(dataset.dataset_id, subset.subset_id)
+              }
+            >
+              {"Upload Files"}
+            </SLabelerButton>
+          )}
+          <SLabelerButton onClick={openSubsetActivityMap}>
+            {"Activity Map"}
+          </SLabelerButton>
         </SButtonContainer>
       </SCardHeader>
 
@@ -202,7 +233,11 @@ const SubsetCard = ({ subset, dataset, inRepo = false, selectDatasetView = () =>
                   subsetFiles.map((file: any, index: number) => {
                     if (file.type === heading) {
                       return (
-                        <SubsetItemRow filePath={file.path + "/" + file.name} key={file.subset_item_id} item={file} />
+                        <SubsetItemRow
+                          filePath={file.path + "/" + file.name}
+                          key={file.subset_item_id}
+                          item={file}
+                        />
                       )
                     }
                   })}

@@ -1,9 +1,9 @@
-import React from "react"
+import { useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import {
   SFlexCol,
-  SFlexRow,
-  SFlexRowWrap,
+  SFlexRowWrap
 } from "../../common/containers/FlexContainers"
 
 const SContainer = styled(SFlexCol)`
@@ -83,10 +83,19 @@ const STag = styled(SFlexCol)`
 `
 
 const DatasetCard = ({ dataset, selectDataset }: any) => {
+
+  const orgName = useSelector((state: any) => state.org.storeOrgName)
+  const nav = useNavigate()
+
+  const handleSelectDataset = () => {
+    localStorage.setItem("selectedDataset", JSON.stringify(dataset))
+    nav("/organization/"+orgName+"/datasets/"+dataset.name,)
+  }
+
   return (
     <SContainer>
       <SCardTop>
-        <SName onClick={() => selectDataset(dataset.dataset_id)}>{dataset.name}</SName>
+        <SName onClick={handleSelectDataset}>{dataset.name}</SName>
         <SLastUpdated>{dataset.updated_by}</SLastUpdated>
         <SLastUpdated>{dataset.updated_at}</SLastUpdated>
       </SCardTop>

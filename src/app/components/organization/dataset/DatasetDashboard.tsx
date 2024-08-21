@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
+import { useRouteLoaderData } from "react-router-dom"
 import styled from "styled-components"
 import { DatasetAPI } from "../../../api/DatasetAPI"
 import {
   SFlexCol,
   SFlexRowWrap
 } from "../../common/containers/FlexContainers"
-import ViewDataset from "../../dataset/ViewDataset"
 import CreateDataset from "./CreateDataset"
 import DatasetCard from "./DatasetCard"
 import DashboardHeader from "./header/DashboardHeader"
 
 const SContainer = styled(SFlexCol)`
   width: 100%;
+  min-height: 100vh;
   box-sizing: border-box;
   align-items: flex-start;
 `
@@ -25,7 +26,10 @@ const SWrapContainer = styled(SFlexRowWrap)`
 `
 
 const DatasetDashboard = () => {
-  const [datasets, setDatasets] = useState<any[]>([])
+  const { loaderOrgDatasets } = useRouteLoaderData("org") as {
+    loaderOrgDatasets: any
+  }
+  const [datasets, setDatasets] = useState<any[]>(loaderOrgDatasets)
 
   const [hover, setHover] = useState(false)
   const [createNewActive, setCreateNewActive] = useState(false)
@@ -36,8 +40,8 @@ const DatasetDashboard = () => {
 
   const [trigger, setTrigger] = useState(false)
 
-  const orgId = useSelector((state: any) => state.orgId)
-  const userId = useSelector((state: any) => state.userId)
+  const orgId = useSelector((state: any) => state.org.storeOrgId)
+  const userId = useSelector((state: any) => state.user.storeUserId)
 
   const mouseOver = () => setHover(true)
   const mouseOut = () => setHover(false)
@@ -63,11 +67,11 @@ const DatasetDashboard = () => {
         loadDatasets()
       }
     }
-    return init()
+    //return init()
   }, [])
 
   useEffect(() => {
-    return loadDatasets()
+    //return loadDatasets()
   }, [trigger])
 
   useEffect(() => {
@@ -108,16 +112,7 @@ const DatasetDashboard = () => {
         />
       </SContainer>
     )
-  } else if (viewActive && viewId !== "" && activeDataset !== null) {
-    return (
-      <SContainer>
-        <ViewDataset
-          hideView={handleHideView}
-          viewId={viewId}
-          dataset={activeDataset}
-        />
-      </SContainer>
-    )
+  
   } else {
     return (
       <SContainer>

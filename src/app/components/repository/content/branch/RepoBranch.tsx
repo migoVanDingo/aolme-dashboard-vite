@@ -17,7 +17,7 @@ const SContainer = styled(SFlexRow)`
 
 
 const RepoBranch = () => {
-  const repoId = useSelector((state: any) => state.repoId)
+  const repoId = useSelector((state: any) => state.repo.storeRepoId)
   const handleSyncRepo = () => {
     console.log('syncing repo: ', repoId)
     RepoAPI.syncGithubRepo(repoId)

@@ -8,11 +8,12 @@ const SContainer = styled(SFlexCol)`
   position: relative;
   margin: 15px 0;
   box-sizing: border-box;
+  width: 100%;
 
 `
 
 const STextInput = styled.input`
-  width: 300px;
+  width: 100%;
   height: 35px;
   border-radius: ${({ theme }) => theme.container.borderRadius.sm};
   padding: 4px 7px;

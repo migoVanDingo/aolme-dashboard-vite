@@ -1,22 +1,17 @@
-import React, { useState } from "react"
-import FileUpload from "../../common/inputs/file-upload/FileUpload"
-import UploadService from "../../../services/FileUploadService"
-import { useSelector } from "react-redux"
-import { ISyncImportStorage } from "../../../utility/interface/project"
-import styled from "styled-components"
-import { SFlexCol, SFlexRow } from "../../common/containers/FlexContainers"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import Button from "../../common/buttons/Button"
-import { faUpload } from "@fortawesome/free-solid-svg-icons"
+import { useState } from "react"
+import { useSelector } from "react-redux"
+import styled from "styled-components"
+import UploadService from "../../../services/FileUploadService"
+import { ISyncImportStorage } from "../../../utility/interface/project"
+import { SFlexCol, SFlexRow } from "../../common/containers/FlexContainers"
 import DatasetDashboard from "./DatasetDashboard"
 
 const SContainer = styled(SFlexCol)`
   align-items: baseline;
   width: 100%;
-  height: auto;
   background-color: ${({ theme }) => theme.color.color_2};
   grid-area: content;
-  overflow-y: scroll;
 `
 const SInnerContainer = styled(SFlexRow)`
   background-color: ${({ theme }) => theme.color.color_2};
@@ -84,8 +79,8 @@ const OrgDataset = () => {
   const [selectedFiles, setSelectedFiles] = useState<any[]>([])
   const [progress, setProgress] = useState(0)
 
-  const orgId = useSelector((state: any) => state.orgId)
-  const userId = useSelector((state: any) => state.userId)
+  const orgId = useSelector((state: any) => state.org.storeOrgId)
+  const userId = useSelector((state: any) => state.user.storeUserId)
 
   const fileSetId = 20170330
   const repoId = "RPSH648N5EK18KBPAN3NDGXA7"
@@ -120,19 +115,6 @@ const OrgDataset = () => {
   }
   return (
     <SContainer>
-      {/* <SInnerContainer>
-        <SButtonContainer>
-          <SIcon icon={faUpload} />
-          <SInput
-            name="files"
-            type="file"
-            onChange={handleFileChange}
-            multiple
-          />
-        </SButtonContainer>
-        <SButton onClick={uploadFiles}>Upload</SButton>
-      </SInnerContainer> */}
-
       <DatasetDashboard />
     </SContainer>
   )

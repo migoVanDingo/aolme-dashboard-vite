@@ -84,9 +84,9 @@ const SelectOrgContentView = ({
   triggerReload,
 }: any) => {
 
-  const repoEntity = useSelector((state: any) => state.repoEntity)
-  const repoId = useSelector((state: any) => state.repoId)
-  const userId = useSelector((state: any) => state.userId)
+  const repoEntity = useSelector((state: any) => state.repo.storeRepoEntityntity)
+  const repoId = useSelector((state: any) => state.repo.storeRepoId)
+  const userId = useSelector((state: any) => state.user.storeUserId)
   const [heading, setHeading] = useState<string>("")
   const [contentList, setContentList] = useState<any[]>([])
   const [selectedContent, setSelectedContent] = useState<any>(null)

@@ -1,28 +1,21 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
+import { Outlet, useLoaderData, useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import {
-  SFlexCol,
-  SFlexRow,
-} from "../components/common/containers/FlexContainers"
-import { useParams } from "react-router-dom"
-import { useSelector } from "react-redux"
+import { DatasetAPI } from "../api/DatasetAPI"
 import EntityUserAPI from "../api/EntityUserAPI"
-import {
-  SContent,
-  SUserCol,
-  SUserRow,
-} from "../components/styled/SOrganization"
-import OrgUsers from "../components/organization/user/OrgUsers"
-import OrgRepos from "../components/organization/repo/OrgRepos"
 import { RepoAPI } from "../api/RepoAPI"
-import OrgDataset from "../components/organization/dataset/OrgDataset"
+import {
+  SFlexCol
+} from "../components/common/containers/FlexContainers"
+import { useOrg } from "../hooks/useOrg"
 
 const SContainer = styled(SFlexCol)`
-  height: calc(100vh - ${({ theme }) => theme.header.height});
+
   width: 100%;
   align-items: baseline;
   padding: 0px;
   box-sizing: border-box;
+  color: ${({ theme }) => theme.color.color_6};
 
 
 
@@ -34,21 +27,19 @@ const SContainer = styled(SFlexCol)`
 
 const SOrgDashboard = styled.div`
   width: 100%;
-  height: 100%;
-  background-color: ${({ theme }) => theme.color.color_1};
+
+  background-color: ${({ theme }) => theme.color.color_2};
   display: grid;
   position: relative; 
   padding: 0;
   margin: 0;
   box-sizing: border-box;
   grid-template-columns: 200px repeat(4, 1fr);
-  grid-template-rows: 50px repeat(4, 1fr);
+  grid-template-rows: 50px auto;
   grid-template-areas:
     "sidebar header header header header"
-    "sidebar content content content content"
-    "sidebar content content content content"
-    "sidebar content content content content"
     "sidebar content content content content";
+
 `
 
 const SHeader = styled.div`
@@ -64,12 +55,14 @@ const SHeader = styled.div`
 `
 
 const SSidebar = styled.div`
-  height: auto;
+
   width: 100%;
+  height: 100%;
   grid-area: sidebar;
   background-color: ${({ theme }) => theme.color.color_1};
-  padding: 0;
-  margin: 130px 0;
+  padding-top: 48px;
+  margin: 0;
+
 
 `
 
@@ -107,14 +100,23 @@ const SToolbarItem = styled.li`
 `
 
 const Organization = () => {
-  const orgName = useSelector((state: any) => state.orgName)
-  const orgId = useSelector((state: any) => state.orgId)
 
-  const [organizationName, setOrganizationName] = useState<string>("")
-  const [organizationId, setOrganizationId] = useState<string>("")
 
-  const [userList, setUserList] = useState<any>([])
-  const [repoList, setRepoList] = useState<any>([])
+  const { loaderOrgUsers, loaderOrgRepos, loaderOrgDatasets, orgId, orgName } = useLoaderData() as {
+    orgId: any
+    orgName: any
+    loaderOrgUsers: any
+    loaderOrgRepos: any
+    loaderOrgDatasets: any
+  }
+
+  const { orgUsers, orgRepos, orgDatasets} = useOrg(loaderOrgUsers, loaderOrgRepos, loaderOrgDatasets)
+
+  const [organizationName, setOrganizationName] = useState<string>(orgName)
+  const [organizationId, setOrganizationId] = useState<string>(orgId)
+
+  const [userList, setUserList] = useState<any[]>(loaderOrgUsers)
+  const [repoList, setRepoList] = useState<any>(loaderOrgRepos)
 
   const [selected, setSelected] = useState<string>("USERS")
   const [editUser, setEditUser] = useState<boolean>(false)
@@ -122,6 +124,8 @@ const Organization = () => {
 
   const [triggerGetUserList, setTriggerGetUserList] = useState<boolean>(false)
   const [triggerGetRepoList, setTriggerGetRepoList] = useState<boolean>(false)
+
+  const nav = useNavigate()
 
   const userTrigger = () => {
     setEditUser(false)
@@ -144,16 +148,10 @@ const Organization = () => {
       }
     }
 
-    if (orgId === "" || orgName === "") {
-      setInterval(() => {
-        console.log("waiting...")
-      }, 500)
-    } else {
-      return init()
-    }
+  
   }, [])
 
-  useEffect(() => {
+/*   useEffect(() => {
     loadOrgUsers(organizationId)
     console.log("organizationId", organizationId)
   }, [organizationId])
@@ -164,7 +162,7 @@ const Organization = () => {
 
   useEffect(() => {
     loadOrgRepositories(organizationId)
-  }, [organizationId])
+  }, [organizationId]) */
 
   useEffect(() => {
     console.log("triggerGetRepoList", triggerGetRepoList)
@@ -174,7 +172,7 @@ const Organization = () => {
 
 
   const loadOrgUsers = (oid: string) => {
-    if (userList === null || userList === undefined || userList.length === 0) {
+    /* if (userList === null || userList === undefined || userList.length === 0) {
       console.log("oid", oid)
       EntityUserAPI.getUserListByEntityId(oid)
         .then((res: any) => {
@@ -185,7 +183,9 @@ const Organization = () => {
         .catch((err: any) =>
           console.error("Organization::getUserListByEntityId:", err),
         )
-    }
+    } */
+        setSelected("USERS")
+        nav("/organization/"+orgName+"/users")
   }
 
   const refreshOrgUsers = (oid: string) => {
@@ -201,7 +201,7 @@ const Organization = () => {
   }
 
   const loadOrgRepositories = (orgId: string) => {
-    if(repoList === null || repoList === undefined || repoList.length === 0){
+    /* if(repoList === null || repoList === undefined || repoList.length === 0){
       RepoAPI.getRepoByEntity(orgId)
       .then((res: any) => {
         setSelected("REPO")
@@ -211,12 +211,14 @@ const Organization = () => {
       .catch((err: any) =>
         console.error("Organization::getRepositoriesByEntityId:", err),
       )
-    }
+    } */
+      setSelected("REPO")
+      nav("/organization/"+orgName+"/repositories")
   }
 
   const refreshOrgRepositories = (orgId: string) => {
 
-    RepoAPI.getRepoByEntity(orgId)
+    /* RepoAPI.getRepoByEntity(orgId)
     .then((res: any) => {
       setSelected("REPO")
       console.log("REPOS: ", res.data)
@@ -224,25 +226,23 @@ const Organization = () => {
     })
     .catch((err: any) =>
       console.error("Organization::getRepositoriesByEntityId:", err),
-    )
+    ) */
   }
 
   const loadOrgDatasets = () => {
+
     setSelected("DATASET")
-    console.log("loadOrgDatasets")
+    nav("/organization/"+orgName+"/datasets")
   }
 
   const loadOrgModules = () => {
     setSelected("MODULE")
-    console.log("loadOrgModules")
+    nav("/organization/"+orgName+"/modules")
   }
-  const loadOrgConfigurations = () => {
-    setSelected("CONFIG")
-    console.log("loadOrgConfigurations")
-  }
+
   const loadOrgSettings = () => {
     setSelected("SETTINGS")
-    console.log("loadOrgSettings")
+    nav("/organization/"+orgName+"/settings")
   }
 
   const toolbarOptions = [
@@ -270,12 +270,7 @@ const Organization = () => {
       type: "MODULE",
       callback: loadOrgModules,
     },
-    {
-      option: "Configurations",
-      icon: "config",
-      type:'CONFIG',
-      callback: loadOrgConfigurations,
-    },
+
     {
       option: "Settings",
       icon: "settings",
@@ -310,7 +305,8 @@ const Organization = () => {
               })}
           </SOrgToolbar>
         </SSidebar>
-        {userList !== null && selected === "USERS" ? (
+        <Outlet />
+        {/* {userList  && selected === "USERS" ? (
           <OrgUsers
             userList={userList}
             trigger={userTrigger}
@@ -326,10 +322,29 @@ const Organization = () => {
           />
         ) : selected === "DATASET" ? (
           <OrgDataset />
-        ): (<></>)}
+        ): (<></>)} */}
       </SOrgDashboard>
     </SContainer>
   )
 }
 
 export default Organization
+
+export const loader = async () => {
+
+  const orgId = localStorage.getItem("orgId") as string
+  const orgName = localStorage.getItem("orgName") as string
+  const loaderOrgUsers = await EntityUserAPI.getUserListByEntityId(orgId)
+  const loaderOrgRepos = await RepoAPI.getRepoByEntity(orgId)
+  const loaderOrgDatasets = await DatasetAPI.getDatasetListByEntity(orgId)
+  console.log('orgId: ', orgId) 
+  const data = {
+    orgId,
+    orgName,
+    loaderOrgUsers,
+    loaderOrgRepos,
+    loaderOrgDatasets,
+  }
+  console.log('loaderOrgData: ', data)
+  return data
+}

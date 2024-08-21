@@ -27,14 +27,7 @@ const SHeading = styled.h2`
 `
 
 const ProfileOrgListModule = ({ userId, organizations }: any) => {
-
-
-  useEffect(() => {
-    console.log("ORGANIZATIONS: ", organizations)
-  }, [organizations])
   
-
-
   return (
     <SContainer>
       <OrgList organizations={organizations && organizations}/>

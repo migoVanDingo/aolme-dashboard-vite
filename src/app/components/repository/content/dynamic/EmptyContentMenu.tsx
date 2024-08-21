@@ -129,6 +129,9 @@ const EmptyContentMenu = ({
     )
   } else if (createFileMethod === "URL") {
     //Add url to download file
+    return (
+      <div>NOT IMPLEMENTED</div>
+    )
   } else {
     //Main Menu
     return (

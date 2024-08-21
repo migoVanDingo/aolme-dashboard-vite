@@ -10,7 +10,7 @@ import { store } from "../store"
 import { setStoreUserEmail, setStoreUserId, setStoreUsername } from "../actions"
 import { connect, useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { useAuth } from "../context/AuthContext"
+import { useAuth } from "../hooks/useAuth"
 
 const SContainer = styled(SFlexCol)`
   align-items: baseline;
@@ -81,7 +81,7 @@ const Login = ({ userId }: any) => {
 
   const handleLogin = async () => {
     let err = false
-    console.log("create profile")
+    
 
     if (email === "") {
       setUsernameError("Mandatory field")
@@ -100,6 +100,7 @@ const Login = ({ userId }: any) => {
         email,
         password,
       }
+      console.log("payload: ", payload)
       //AuthContext
       login(payload)
      

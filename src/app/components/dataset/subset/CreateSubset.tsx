@@ -1,28 +1,27 @@
-import React, { useRef, useState } from "react"
-import styled from "styled-components"
-import { SFlexCol, SFlexRow } from "../../common/containers/FlexContainers"
-import { useDispatch, useSelector } from "react-redux"
-import { FormCreateRepo } from "../../../utility/interface/repository"
-import SelectInput from "../../common/inputs/select/SelectInput"
-import TextInputComponent from "../../common/inputs/text/TextInputComponent"
-import QuickUpload from "../../repository/content/files/QuickUpload"
-import FileUpload from "../../common/inputs/file-upload/FileUpload"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUpload } from "@fortawesome/free-solid-svg-icons"
-import { ICreateSubset, ILabelSubset } from "../../../utility/interface/dataset"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { useRef, useState } from "react"
+import { useSelector } from "react-redux"
+import styled from "styled-components"
 import { DatasetAPI } from "../../../api/DatasetAPI"
 import {
   ICreateLabelStudioProject,
   LabelStudioAPI,
 } from "../../../api/LabelStudioAPI"
+import { ICreateSubset, ILabelSubset } from "../../../utility/interface/dataset"
+import { FormCreateRepo } from "../../../utility/interface/repository"
+import { SFlexCol, SFlexRow } from "../../common/containers/FlexContainers"
+import SelectInput from "../../common/inputs/select/SelectInput"
+import TextInputComponent from "../../common/inputs/text/TextInputComponent"
+import { useLoaderData, useNavigate, useRouteLoaderData } from "react-router-dom"
 
 const SContainer = styled(SFlexCol)`
   align-items: flex-start;
-  width: 400px;
-  height: 100%;
+  width: 100%;
+  min-height: 100vh;
   margin: 0 auto;
   background-color: ${({ theme }) => theme.color.color_2};
-  padding: 7px;
+  padding: 20px 100px;
 `
 const SHeading = styled.p`
   font-size: 2rem;
@@ -81,6 +80,7 @@ const SInput = styled.input`
   font-size: ${({ theme }) => theme.color.color_2};
   cursor: pointer;
   height: 100%;
+  width: 100%;
   z-index: 10;
 
   &::file-selector-button {
@@ -98,7 +98,7 @@ const SInput = styled.input`
 const SInnerContainer = styled(SFlexRow)`
   background-color: ${({ theme }) => theme.color.color_3};
   font-size: 1rem;
-  width: 300px;
+  width: 100%;
   height: 35px;
   align-items: center;
 
@@ -118,11 +118,14 @@ const SButton2 = styled.button`
 
 const types = ["IMAGE", "TEXT", "AUDIO", "VIDEO"]
 
-const CreateSubset = ({ dataset, createViewInactive, triggerRender }: any) => {
+const CreateSubset = ({}: any) => {
+  const { selectedDataset } = useLoaderData() as any
+  const nav = useNavigate()
 
-  const userId = useSelector((state: any) => state.userId)
+  const userId = useSelector((state: any) => state.user.storeUserId)
 
   const [selectedFiles, setSelectedFiles] = useState<any[]>([])
+  const [dataset, setDataset] = useState<any>(selectedDataset)
 
   const [name, setName] = useState<string>("")
   const [description, setDescription] = useState<string>("")
@@ -154,12 +157,12 @@ const CreateSubset = ({ dataset, createViewInactive, triggerRender }: any) => {
       error: nameError,
     },
     {
-        label: "File Set Id",
-        type: "text",
-        inputValue: fileSetId,
-        setInputValue: setFileSetId,
-        error: fileSetError,
-      },
+      label: "File Set Id",
+      type: "text",
+      inputValue: fileSetId,
+      setInputValue: setFileSetId,
+      error: fileSetError,
+    },
     {
       label: "Description",
       type: "text-area",
@@ -194,9 +197,7 @@ const CreateSubset = ({ dataset, createViewInactive, triggerRender }: any) => {
         }, 3000)
       })
       .then(() => {
-        createViewInactive()
-        triggerRender()
-        handleReset()
+        nav(-1)
       })
 
       .catch((err) => {
@@ -218,7 +219,7 @@ const CreateSubset = ({ dataset, createViewInactive, triggerRender }: any) => {
     LabelStudioAPI.initializeLabelStudioProject(payload)
       .then((res: any) => {
         console.log("res: ", res)
-        if(selectedFiles.length > 0){
+        if (selectedFiles.length > 0) {
           syncLsFiles(subset)
         }
       })
@@ -226,20 +227,18 @@ const CreateSubset = ({ dataset, createViewInactive, triggerRender }: any) => {
   }
 
   const syncLsFiles = (subset: any) => {
-    
-      const payload: ILabelSubset = {
-        subset_id: subset.subset_id,
-        dataset_id: dataset.dataset_id,
-        entity_id: dataset.entity_id,
-      }
-      console.log("syncLSFiles payload: ", payload)
-      
-      LabelStudioAPI.syncLabelStudioFiles(payload, fileSetId)
+    const payload: ILabelSubset = {
+      subset_id: subset.subset_id,
+      dataset_id: dataset.dataset_id,
+      entity_id: dataset.entity_id,
+    }
+    console.log("syncLSFiles payload: ", payload)
+
+    LabelStudioAPI.syncLabelStudioFiles(payload, fileSetId)
       .then((res: any) => {
         console.log("syncLSFiles res: ", res)
       })
       .catch((err: any) => console.error(err))
-    
   }
 
   const handleChangeSelect = (type: string) => {
@@ -294,7 +293,7 @@ const CreateSubset = ({ dataset, createViewInactive, triggerRender }: any) => {
         <SButton onClick={handleCreate} type="button">
           {"Save Changes"}
         </SButton>
-        <SButton onClick={createViewInactive} type="button">
+        <SButton onClick={() => nav(-1)} type="button">
           {"Cancel"}
         </SButton>
       </SButtonContainer>
@@ -303,3 +302,11 @@ const CreateSubset = ({ dataset, createViewInactive, triggerRender }: any) => {
 }
 
 export default CreateSubset
+
+export const loader = async () => {
+  const selectedDataset = JSON.parse(localStorage.getItem("selectedDataset") as any)
+
+  return {
+    selectedDataset,
+  }
+}

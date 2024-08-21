@@ -1,19 +1,22 @@
-import React, { useState } from "react"
-import { SContent, SUserCol, SUserRow } from "../../styled/SOrganization"
+import { faEdit } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faEdit, faX } from "@fortawesome/free-solid-svg-icons"
+import { useState } from "react"
+import { useRouteLoaderData } from "react-router-dom"
 import styled from "styled-components"
-import { Button, Modal } from "react-bootstrap"
-import TextInput from "../../common/inputs/text/TextInput"
-import { SButton } from "../../common/styled"
 import { SFlexRow } from "../../common/containers/FlexContainers"
-import OrgEditUser from "./OrgEditUser"
-import AddUser from "./AddUser"
+import { SContent, SUserCol, SUserRow } from "../../styled/SOrganization"
 import DashboardHeader from "../dataset/header/DashboardHeader"
+import AddUser from "./AddUser"
+import OrgEditUser from "./OrgEditUser"
+
+const SContainer = styled(SContent)`
+    min-height: calc(100vh - 100px);
+`
 
 const SIcon = styled(FontAwesomeIcon)`
   color: ${({ theme }) => theme.color.color_6};
   font-size: 1.1rem;
+  
   &:hover {
     color: #33adff;
     cursor: pointer;
@@ -77,6 +80,8 @@ const SDashedBox = styled(SFlexRow)`
 const OrgUsers = ({ userList, trigger, editUser, setEditUser }: any) => {
   //const [editUser, setEditUser] = useState<string>("")
 
+  const { loaderOrgUsers } = useRouteLoaderData('org') as any
+
   const [userId, setUserId] = useState<string>("")
   const [email, setEmail] = useState<string>("")
   const [role, setRole] = useState<string>("")
@@ -110,7 +115,7 @@ const OrgUsers = ({ userList, trigger, editUser, setEditUser }: any) => {
   const hideEdit = () => setEditUser(false)
 
   return (
-    <SContent>
+    <SContainer>
       
       {createNew === true ? (
         <AddUser trigger={trigger} hideCreateNew={hideCreateNew} />
@@ -131,8 +136,8 @@ const OrgUsers = ({ userList, trigger, editUser, setEditUser }: any) => {
             <SUserCol>Status</SUserCol>
             <SUserCol>Edit</SUserCol>
           </SUserRow>
-          {userList &&
-            userList.map((user: any, index: number) => {
+          {loaderOrgUsers &&
+            loaderOrgUsers.map((user: any, index: number) => {
               user.roles.replaceAll('"', "")
 
               if (editUser === true && userId === user.user_id) {
@@ -179,7 +184,7 @@ const OrgUsers = ({ userList, trigger, editUser, setEditUser }: any) => {
           )}
         </>
       )}
-    </SContent>
+    </SContainer>
   )
 }
 

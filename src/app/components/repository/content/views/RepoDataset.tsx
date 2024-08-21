@@ -1,45 +1,38 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import {
-  setDatasetDescription,
-  setDatasetId,
-  setDatasetName,
   setRepoDataset,
   setRepoItems,
-  setRepoSubsets,
+  setRepoSubsets
 } from "../../../../actions"
 import { DatasetAPI } from "../../../../api/DatasetAPI"
-import {
-  ICreateLabelStudioProject,
-  LabelStudioAPI,
-} from "../../../../api/LabelStudioAPI"
 import { RepoAPI } from "../../../../api/RepoAPI"
-import {
-  ICreateSubset,
-  IDataset,
-  ILabelSubset,
-} from "../../../../utility/interface/dataset"
+import LoadingSpinner from "../../../common/loading/LoadingSpinner"
 import EmptyContentMenu from "../dynamic/EmptyContentMenu"
 import RepoViewDataset from "../files/RepoViewDataset"
-import LoadingSpinner from "../../../common/loading/LoadingSpinner"
+import { setStoreRepoItems } from "../../../../store/slices/repository"
 
 const RepoDataset = ({}: any) => {
+
+  const repoDataset = useSelector((state: any) => state.repo.storeRepoDataset)
+  const repoSubsets = useSelector((state: any) => state.repo.storeRepoSubsets)
   const dispatch = useDispatch()
-  const repoId = useSelector((state: any) => state.repoId)
-  const userId = useSelector((state: any) => state.userId)
-  const repoEntity = useSelector((state: any) => state.repoEntity)
-  const repoName = useSelector((state: any) => state.repoName)
-  const repoDescription = useSelector((state: any) => state.repoDescription)
+  const repoId = useSelector((state: any) => state.repo.storeRepoId)
+  const userId = useSelector((state: any) => state.user.storeUserId)
+  const repoEntity = useSelector((state: any) => state.repo.storeRepoEntity)
+  const repoName = useSelector((state: any) => state.repo.storeRepoName)
+  const repoDescription = useSelector((state: any) => state.repo.storeRepoDescription)
 
   const [progress, setProgress] = useState<number>(0)
 
-  const [componentDataset, setComponentDataset] = useState<any>()
-  const [componentSubsets, setComponentSubsets] = useState<any[]>([])
+  const [componentDataset, setComponentDataset] = useState<any>(repoDataset)
+  const [componentSubsets, setComponentSubsets] = useState<any[]>(repoSubsets)
   const [uploadFiles, setUploadFiles] = useState<any[]>([])
 
   const [signalReload, setSignalReload] = useState<boolean>(false)
   const [subsetName, setSubsetname] = useState<string>("")
   const [subsetDescription, setSubsetDescription] = useState<string>("")
+
 
   const triggerReload = () => {
     setSignalReload(!signalReload)
@@ -53,6 +46,7 @@ const RepoDataset = ({}: any) => {
   const [isLoading, setLoading] = useState<boolean>(false)
 
   useEffect(() => {
+    console.log(componentSubsets.length)
     hideSelectDatasetView()
   }, [])
 
@@ -62,7 +56,7 @@ const RepoDataset = ({}: any) => {
       repoId && getRepoItems(repoId)
     }
 
-    return init()
+    //return init()
   }, [signalReload, isLoading])
 
   useEffect(() => {
@@ -75,7 +69,7 @@ const RepoDataset = ({}: any) => {
       }
     }
 
-    return init()
+    //return init()
   }, [itemList])
 
   function getRepoItems(repoId: string) {
@@ -84,7 +78,7 @@ const RepoDataset = ({}: any) => {
         console.log("Repository::init()::getRepoItems::res::", res.data)
         if (filterRepoItems(res.data).length > 0) {
           setItemList(filterRepoItems(res.data))
-          dispatch(setRepoItems(res.data))
+          dispatch(setStoreRepoItems(res.data))
         } else {
           showSelectDatasetView()
         }
@@ -163,7 +157,7 @@ const RepoDataset = ({}: any) => {
     <>
       {!isLoading ? (
         <>
-          {isSelectDatasetView ? (
+          {isSelectDatasetView || componentSubsets.length === 0 ? (
             <EmptyContentMenu
               menuOption={"DATASET"}
               triggerReload={triggerReload}

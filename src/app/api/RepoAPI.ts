@@ -57,4 +57,8 @@ export class RepoAPI {
   public static async getDirectoryContents(repoId: string){
     return await Requests.doGet("/api/repository/"+ repoId +"/contents")
   }
+
+  public static async getRepoStages(path: string){
+    return await Requests.doGet("/api/repository/stages?path=" + path)
+  }
 }

@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { setRepoId, setStoreOrganizationId, setStoreOrganizationName } from "../../../actions"
 import { OrganizationAPI } from "../../../api/OrganizationAPI"
+import { setStoreOrgId, setStoreOrgName } from "../../../store/slices/organization"
+import { setStoreRepoDescription, setStoreRepoEntity, setStoreRepoId, setStoreRepoName, setStoreRepoOwner } from "../../../store/slices/repository"
 
 const SContainer = styled(SFlexCol)`
   align-items: flex-start;
@@ -98,24 +100,29 @@ const RepoCard = ({ repo }: any) => {
 
   const handleSelectRepo = () => {
 
-    handleUpdateStore()
-    navigate(`/repository/${repo.repo_id}`)
+    localStorage.setItem("currentRepo", JSON.stringify(repo))
+    navigate(`/repository/${repo.name}`)
 
   }
 
   const handleUpdateStore = () => {
-  
+   
+   if(repo.entity_type === "ORGANIZATION"){
     OrganizationAPI.getOrganizationById(repo.entity_id)
-      .then((res: any) => {
-        console.log(res.data)
-        dispatch(setRepoId(repo.repo_id))
-        dispatch(setStoreOrganizationId(res.data.organization_id))
-        dispatch(setStoreOrganizationName(res.data.name))
-        
-      })
-      .catch((err: any) =>
-        console.error("RepoCard::handleSelectRepo()::Error: ", err),
-      )
+    .then((res: any) => {
+      console.log(res.data)
+      
+      dispatch(setStoreOrgId(res.data.organization_id))
+      dispatch(setStoreOrgName(res.data.name))
+      
+    })
+    .catch((err: any) =>
+      console.error("RepoCard::handleSelectRepo()::Error: ", err),
+    )
+   }
+
+   
+    
   }
 
 

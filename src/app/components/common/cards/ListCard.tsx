@@ -1,9 +1,8 @@
-import React from "react"
-import styled from "styled-components"
-import { SFlexCol, SFlexRowWrap } from "../containers/FlexContainers"
-import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
-import { setStoreOrganizationId, setStoreOrganizationName } from "../../../actions"
+import { useNavigate } from "react-router-dom"
+import styled from "styled-components"
+import { setStoreOrgId, setStoreOrgName } from "../../../store/slices/organization"
+import { SFlexCol, SFlexRowWrap } from "../containers/FlexContainers"
 
 const SContainer = styled(SFlexCol)`
   align-items: flex-start;
@@ -92,9 +91,11 @@ const ListCard = ({ data }: any) => {
 
   const handleSelectCard = (organization_id: string, organization_name: string) => {
 
-    dispatch(setStoreOrganizationId(organization_id))
-    dispatch(setStoreOrganizationName(organization_name))
-    navigate("/organization/"+organization_id)
+    dispatch(setStoreOrgId(organization_id))
+    dispatch(setStoreOrgName(organization_name))
+    localStorage.setItem("orgId", organization_id)
+    localStorage.setItem("orgName", organization_name)
+    navigate("/organization/"+name+"/users")
   }
 
 

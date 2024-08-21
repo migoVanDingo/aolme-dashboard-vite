@@ -19,7 +19,7 @@ export class DatasetAPI {
   }
 
   public static async getDatasetByRepoId(repoId: string) {
-    console.log("NOT_IMPLEMENTED: getDatasetByRepoId")
+    return Requests.doGet("/api/dataset/repo/" + repoId)
   }
 
   public static async getDatasetListByUserId(userId: string) {

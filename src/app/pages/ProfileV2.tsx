@@ -121,8 +121,8 @@ const SViewItem = styled.li`
 const Profile = ({}: any) => {
   //Hooks
   const theme = useTheme()
-  const username = useSelector((state: any) => state.username)
-  const userId = useSelector((state: any) => state.userId)
+  const username = useSelector((state: any) => state.user.storeUsername)
+  const userId = useSelector((state: any) => state.user.storeUserId)
 
   const version = 2
 

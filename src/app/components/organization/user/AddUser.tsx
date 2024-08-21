@@ -49,8 +49,8 @@ const SButton = styled.button`
   }
 `
 const AddUser = ({ trigger, hideCreateNew }: any) => {
-  const orgId = useSelector((state: any) => state.orgId)
-  const userId = useSelector((state: any) => state.userId)
+  const orgId = useSelector((state: any) => state.org.storeOrgId)
+  const userId = useSelector((state: any) => state.user.storeUserId)
 
   const [username, setUsername] = useState<string>("")
   const [email, setEmail] = useState<string>("")

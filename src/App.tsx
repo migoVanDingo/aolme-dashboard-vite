@@ -1,34 +1,156 @@
-import React, { useEffect, useState } from "react"
 import "@mantine/core/styles.css"
+import { useState } from "react"
+import { useDispatch } from "react-redux"
+import {
+  createBrowserRouter,
+  RouterProvider
+} from "react-router-dom"
 import styled, { ThemeProvider } from "styled-components"
-import { light, dark, dark_grey_1, light_grey_1 } from "./app/theme/ThemeConfig"
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { useAuth } from "./app/context/AuthContext"
+import CreateOrganization from "./app/pages/CreateOrganization"
+import CreateRepositoryV2 from "./app/pages/CreateRepositoryV2"
+import Organization from "./app/pages/Organization"
+import Profile from "./app/pages/Profile"
 import Repository from "./app/pages/Repository"
 import Settings from "./app/pages/Settings"
-import Profile from "./app/pages/Profile"
-import Header from "./app/components/header/Header"
-import CreateRepository from "./app/pages/CreateRepository"
-import CreateProfile from "./app/pages/CreateProfile"
-import Login from "./app/pages/Login"
-import PrivateRoute from "./app/components/authentication/PrivateRoute"
-import PublicRoute from "./app/components/authentication/PublicRoute"
-import { useAuth } from "./app/context/AuthContext"
-import AuthProvider from "./app/context/AuthContext"
-import { useDispatch } from "react-redux"
-import { setStoreUserId } from "./app/actions"
-import CreateOrganization from "./app/pages/CreateOrganization"
-import Organization from "./app/pages/Organization"
-import CreateRepositoryV2 from "./app/pages/CreateRepositoryV2"
-import Test from "./app/pages/Test"
-import ActivityMap from "./app/pages/ActivityMap"
+import { dark_grey_1, light_grey_1 } from "./app/theme/ThemeConfig"
 
 import { createTheme, MantineProvider } from "@mantine/core"
-import ProfileV2 from "./app/pages/ProfileV2"
-import Notebook from "./app/pages/Notebook"
+import ViewDataset, { loader as ViewDatasetLoader } from "./app/components/dataset/ViewDataset"
+import OrgDataset from "./app/components/organization/dataset/OrgDataset"
+import OrgModules from "./app/components/organization/modules/OrgModules"
+import OrgRepos from "./app/components/organization/repo/OrgRepos"
+import OrgSettings from "./app/components/organization/settings/OrgSettings"
+import OrgUsers from "./app/components/organization/user/OrgUsers"
+import Login from "./app/pages/Login"
+import { loader as OrgLoader } from "./app/pages/Organization"
+import { loader as ProfileLoader } from "./app/pages/Profile"
+import { loader as RepoLoader } from "./app/pages/Repository"
+import { loader as CreateSubsetLoader } from "./app/components/dataset/subset/CreateSubset"
+import RootLayout, { loader as RootLoader } from "./app/pages/RootLayout"
+import CreateSubset from "./app/components/dataset/subset/CreateSubset"
 
 const mantineTheme = createTheme({
   /** Put your mantine theme override here */
 })
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <RootLayout />,
+    loader: RootLoader,
+    id: "root",
+    children: [
+      {
+        path: "/profile",
+        element: <Profile />,
+        loader: ProfileLoader,
+        action: () => null,
+        id:"profile"
+      },
+      {
+        path: "/settings",
+        element: <Settings />,
+        loader: () => null,
+        action: () => null,
+      },
+      {
+        path: "/repository/create",
+        element: <CreateRepositoryV2 />,
+        loader: () => null,
+        action: () => null,
+      },
+      {
+        path: "/repository/:repoName",
+        element: <Repository />,
+        loader: RepoLoader,
+        action: () => null,
+        id: "repo"
+      },
+      {
+        path: "/organization/create",
+        element: <CreateOrganization />,
+        loader: () => null,
+        action: () => null,
+      },
+      {
+        path: "/organization/:orgName",
+        element: <Organization />,
+        loader: OrgLoader,
+        action: () => null,
+        id: "org", 
+        children: [
+          {
+            path: "/organization/:orgName/datasets",
+            element: <OrgDataset />,
+            loader: () => null,
+            action: () => null,
+            id: "org-dataset"
+
+          },
+          {
+            path: "/organization/:orgName/datasets/:datasetName",
+            element: <ViewDataset />,
+            loader: ViewDatasetLoader,
+            action: () => null,
+            id: "org-dataset-view"
+
+          },
+          {
+            path: "/organization/:orgName/datasets/:datasetName/subset",
+            element: <CreateSubset />,
+            loader: CreateSubsetLoader,
+            action: () => null,
+            id: "org-dataset-create-subset"
+
+          },
+          {
+            path: "/organization/:orgName/users",
+            element: <OrgUsers />,
+            loader: () => null,
+            action: () => null,
+            id: "org-users"
+
+          },
+          {
+            path: "/organization/:orgName/repositories",
+            element: <OrgRepos />,
+            loader: () => null,
+            action: () => null,
+            id: "org-repos"
+
+          }
+          ,
+          {
+            path: "/organization/:orgName/modules",
+            element: <OrgModules />,
+            loader: () => null,
+            action: () => null,
+            id: "org-modules"
+
+          }
+          ,
+          {
+            path: "/organization/:orgName/settings",
+            element: <OrgSettings />,
+            loader: () => null,
+            action: () => null,
+            id: "org-settings"
+
+          }
+        ]
+      },
+     
+    ],
+  },
+  {
+    path: "/login",
+    element:  <Login />,
+    loader: () => null,
+    action: () => null,
+    id: "login"
+  }
+])
 
 const SBody = styled.div`
   background-color: ${({ theme }) => theme.color.color_2};
@@ -89,7 +211,16 @@ function App() {
     if (theme === dark_grey_1) setTheme(light_grey_1)
     else setTheme(dark_grey_1)
   }
+
   return (
+    <MantineProvider theme={mantineTheme}>
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </MantineProvider>
+  )
+
+  /* return (
     <Router>
       <MantineProvider theme={mantineTheme}>
         <ThemeProvider theme={theme}>
@@ -214,7 +345,7 @@ function App() {
         </ThemeProvider>
       </MantineProvider>
     </Router>
-  )
+  ) */
 }
 
 export default App
