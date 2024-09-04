@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from "styled-components"
-import ListCard from '../../common/cards/ListCard'
 import { SFlexCol } from '../../common/containers/FlexContainers'
+import ListCard from '../../common/cards/ListCard'
 
 const SContainer = styled(SFlexCol)`
     width: 100%;

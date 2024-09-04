@@ -26,7 +26,7 @@ import Login from "./app/pages/Login"
 import { loader as OrgLoader } from "./app/pages/Organization"
 import { loader as ProfileLoader } from "./app/pages/Profile"
 import { loader as RepoLoader } from "./app/pages/Repository"
-import { loader as CreateSubsetLoader } from "./app/components/dataset/subset/CreateSubset"
+import { loader as CreateSubsetLoader} from "./app/components/dataset/subset/CreateSubset"
 import RootLayout, { loader as RootLoader } from "./app/pages/RootLayout"
 import CreateSubset from "./app/components/dataset/subset/CreateSubset"
 

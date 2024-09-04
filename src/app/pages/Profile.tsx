@@ -28,6 +28,7 @@ import CreateRepositoryV2 from "./CreateRepositoryV2"
 
 const SProfileContainer = styled.div`
   width: 100%;
+  min-height: 100vh;
   display: grid;
   grid-template-rows: 50px auto;
   grid-template-areas:
@@ -40,7 +41,7 @@ const SProfileContainer = styled.div`
 
 const SContainer = styled.div`
   width: 75%;
-  
+  min-height: 100vh;
   display: grid;
   grid-template-columns: [left]1fr [col2] 4fr [right];
   grid-template-rows: [top]60px [row2] 200px [row3] 200px [row4] auto[end];
@@ -54,7 +55,7 @@ const SContainer = styled.div`
 
   position: relative;
   margin: 40px auto 0;
-  height: 100%;
+
 `
 
 const SHeading1 = styled.h1`
@@ -103,7 +104,7 @@ const SViewItem = styled.li`
 
 const SItemContainer = styled.div`
   width: 100%;
-  height: 100%;
+
   padding-bottom: 50px;
   overflow-y: auto;
   grid-area: list;

@@ -35,9 +35,9 @@ export class Requests {
   }
 
 
-  public static async doPost(data: any, endpoint: string) {
+  public static async doPost(data: any, endpoint: string, port: string) {
     try {
-      const response = await fetch("http://localhost:5003" + endpoint, {
+      const response = await fetch("http://localhost:" + port + endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,9 +56,9 @@ export class Requests {
     }
   }
 
-  public static async doGet(endpoint: string) {
+  public static async doGet(endpoint: string, port: string) {
     try {
-      const response = await fetch("http://localhost:5003" + endpoint, {
+      const response = await fetch("http://localhost:" + port + endpoint, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -75,23 +75,23 @@ export class Requests {
     }
   }
 
-  public static async doPatch(formData: any, endpoint: string) {
-    return await axios.patch("http://localhost:5003" + endpoint, formData, {
+  public static async doPatch(formData: any, endpoint: string, port: string) {
+    return await axios.patch("http://localhost:" + port + endpoint, formData, {
       headers: {
         "Content-Type": "application/json",
       },
     })
   }
 
-  public static async doPut(formData: any, endpoint: string) {
-    return await axios.put("http://localhost:5003" + endpoint, formData, {
+  public static async doPut(formData: any, endpoint: string, port: string) {
+    return await axios.put("http://localhost:" + port + endpoint, formData, {
       headers: {
         "Content-Type": "application/json",
       },
     })
   }
 
-  public static async doDelete(endpoint: string) {
-    return await axios.delete("http://localhost:5003" + endpoint)
+  public static async doDelete(endpoint: string, port: string) {
+    return await axios.delete("http://localhost:" + port + endpoint)
   }
 }

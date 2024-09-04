@@ -1,10 +1,11 @@
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import {
   SFlexCol,
   SFlexRowWrap
 } from "../../common/containers/FlexContainers"
+import { setDatasetId } from "../../../store/slices/dataset"
 
 const SContainer = styled(SFlexCol)`
   align-items: flex-start;
@@ -86,9 +87,12 @@ const DatasetCard = ({ dataset, selectDataset }: any) => {
 
   const orgName = useSelector((state: any) => state.org.storeOrgName)
   const nav = useNavigate()
+  const dispatch = useDispatch()
 
   const handleSelectDataset = () => {
+    dispatch(setDatasetId(dataset.dataset_id))
     localStorage.setItem("selectedDataset", JSON.stringify(dataset))
+    
     nav("/organization/"+orgName+"/datasets/"+dataset.name,)
   }
 

@@ -16,15 +16,15 @@ export class LabelStudioAPI {
   public static async initializeLabelStudioProject(
     payload: ICreateLabelStudioProject
   ) {
-    return await Requests.doPost(payload, "/api/label_studio/project")
+    return await Requests.doPost(payload, "/api/label_studio/project", import.meta.env.VITE_BACKEND_PORT)
   }
 
   public static async getLabelStudioProjectByRepoId(repoId: string) {
-    return await Requests.doGet("/api/label_studio/repo/" + repoId)
+    return await Requests.doGet("/api/label_studio/repo/" + repoId, import.meta.env.VITE_BACKEND_PORT)
   }
 
   public static async getLabelStudioProjectBySubsetId(subsetId: string) {
-    return await Requests.doGet("/api/label_studio/subset/" + subsetId)
+    return await Requests.doGet("/api/label_studio/subset/" + subsetId, import.meta.env.VITE_BACKEND_PORT)
   }
 
   public static async syncLabelStudioFiles(
@@ -38,13 +38,13 @@ export class LabelStudioAPI {
     } else {
       path = "/api/dataset/subset/sync-label-studio-files"
     }
-    return await Requests.doPost(payload, path)
+    return await Requests.doPost(payload, path, import.meta.env.VITE_BACKEND_PORT)
   }
 
   public static async syncImportStorage(importId: string, payload: any) {
     return await Requests.doPost(
       payload,
       "/api/label_studio/sync_import_storage/" + importId
-    )
+      , import.meta.env.VITE_BACKEND_PORT)
   }
 }

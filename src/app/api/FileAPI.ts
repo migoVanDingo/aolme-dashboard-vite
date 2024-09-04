@@ -2,13 +2,13 @@ import { Requests } from "./Requests";
 
 export class FilesAPI {
     public static async getProjectFiles(projectId: number){
-        return await Requests.doGet('/files/'+projectId)
+        return await Requests.doGet('/files/'+projectId, import.meta.env.VITE_BACKEND_PORT)
      
     }
 
     public static async getProjectFolders(projectId: number){
         console.log('get Root')
-        return await Requests.doGet('/api/directory/project/'+projectId+'/root')
+        return await Requests.doGet('/api/directory/project/'+projectId+'/root', import.meta.env.VITE_BACKEND_PORT)
      
     }
 
@@ -39,7 +39,7 @@ export class FilesAPI {
             
         }
         console.log("URL : " + '/api/directory/entity/' + entity_id + '/folder' + params)
-      return await Requests.doGet('/api/directory/entity/' + entity_id + '/folder' + params )
+      return await Requests.doGet('/api/directory/entity/' + entity_id + '/folder' + params , import.meta.env.VITE_BACKEND_PORT)
     }
 
     public static async getDirectoryItems(entity_id: string, folder_name: string, owner_id: string, repo_id: string){
@@ -48,11 +48,11 @@ export class FilesAPI {
         if(entity_id === null) return "FileAPI::::getDirectoryItems()::::ENTITY ID IS NULL"
         if(repo_id === null) return "FileAPI::::getDirectoryItems()::::REPO ID IS NULL"
 
-        return await Requests.doGet('/api/directory/entity/'+ entity_id +'/folder/'+ folder_name +'/owner/' + owner_id + '/repo/' + repo_id)
+        return await Requests.doGet('/api/directory/entity/'+ entity_id +'/folder/'+ folder_name +'/owner/' + owner_id + '/repo/' + repo_id, import.meta.env.VITE_BACKEND_PORT)
     }
 
     public static async getRepoFiles(repo_id: string, entity_id: string){
-        return await Requests.doGet('/api/directory/repo/'+repo_id + "?entity_id=" + entity_id)
+        return await Requests.doGet('/api/directory/repo/'+repo_id + "?entity_id=" + entity_id, import.meta.env.VITE_BACKEND_PORT)
     }
 
 
