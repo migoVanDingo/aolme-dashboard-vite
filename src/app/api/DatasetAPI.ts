@@ -40,14 +40,7 @@ export class DatasetAPI {
     return Requests.doPatch("/api/dataset/" + datasetId, payload, import.meta.env.VITE_BACKEND_PORT)
   }
 
-  public static async getGroupEntities(){
-    console.log('port: ', import.meta.env.VITE_DATASTORE_PORT)
-    return Requests.doGet("/api/group/entities", import.meta.env.VITE_DATASTORE_PORT)
-  }
 
-  public static async getGroups(){
-    return Requests.doGet("/api/group", import.meta.env.VITE_DATASTORE_PORT)
-  }
 
   //Subset API
   public static async createSubset(

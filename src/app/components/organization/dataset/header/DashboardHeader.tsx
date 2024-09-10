@@ -9,14 +9,14 @@ const SContainer = styled(SFlexRow)`
     width: 100%;
     align-items: flex-end;
     box-sizing: border-box;
-    padding-right: 25px;
+    padding-right: 0;
 
 `
 
 const SH2 = styled.h2`
   font-size: 1.5rem;
   font-weight: 200;
-  margin: 40px 0 10px 20px;
+  margin: 0;
 `
 
 const SICon = styled(FontAwesomeIcon)`

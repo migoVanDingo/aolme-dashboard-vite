@@ -27,8 +27,12 @@ import { loader as OrgLoader } from "./app/pages/Organization"
 import { loader as ProfileLoader } from "./app/pages/Profile"
 import { loader as RepoLoader } from "./app/pages/Repository"
 import { loader as CreateSubsetLoader} from "./app/components/dataset/subset/CreateSubset"
+import { loader as DatastoreDashboardLoader } from "./app/components/organization/datastore/DatastoreDashboard"
+import { loader as ViewDatastoreLoader } from "./app/components/organization/datastore/ViewDatastore"
 import RootLayout, { loader as RootLoader } from "./app/pages/RootLayout"
 import CreateSubset from "./app/components/dataset/subset/CreateSubset"
+import DatastoreDashboard from "./app/components/organization/datastore/DatastoreDashboard"
+import ViewDatastore from "./app/components/organization/datastore/ViewDatastore"
 
 const mantineTheme = createTheme({
   /** Put your mantine theme override here */
@@ -104,6 +108,23 @@ const router = createBrowserRouter([
             id: "org-dataset-create-subset"
 
           },
+          //Datastore
+          {
+            path: "/organization/:orgName/datastore/dashboard",
+            element: <DatastoreDashboard />,
+            loader: DatastoreDashboardLoader,
+            action: () => null,
+            id: "org-datastore-dashboard"
+          },
+          {
+            path: "/organization/:orgName/datastore/:datastoreName",
+            element: <ViewDatastore />,
+            loader: ViewDatastoreLoader,
+            action: () => null,
+            id: "org-datastore-view"
+          },
+
+          //Users
           {
             path: "/organization/:orgName/users",
             element: <OrgUsers />,

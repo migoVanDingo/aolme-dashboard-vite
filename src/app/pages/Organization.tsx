@@ -27,7 +27,6 @@ const SContainer = styled(SFlexCol)`
 
 const SOrgDashboard = styled.div`
   width: 100%;
-
   background-color: ${({ theme }) => theme.color.color_2};
   display: grid;
   position: relative; 
@@ -229,6 +228,11 @@ const Organization = () => {
     ) */
   }
 
+  const loadOrgDatastore = () => {
+    setSelected("DATASTORE")
+      nav("/organization/"+orgName+"/datastore/dashboard")
+  }
+
   const loadOrgDatasets = () => {
 
     setSelected("DATASET")
@@ -251,6 +255,12 @@ const Organization = () => {
       icon: "user",
       type: "USERS",
       callback: loadOrgUsers,
+    },
+    {
+      option: "Datastore",
+      icon: "datastore",
+      type: "DATASTORE",
+      callback: loadOrgDatastore,
     },
     {
       option: "Repositories",

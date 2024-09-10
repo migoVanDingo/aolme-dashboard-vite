@@ -24,6 +24,7 @@ import { mainSelectionFormProps } from "./mainSelectionFormProps"
 import SelectionForm from "../../common/form/SelectionForm"
 import { ac } from "vitest/dist/types-e3c9754d.js"
 import { setDatasetId } from "../../../store/slices/dataset"
+import { DatastoreAPI } from "../../../api/DatastoreAPI"
 
 
 const SContainer = styled(SFlexCol)`
@@ -415,7 +416,7 @@ export const loader = async () => {
 
   //console.log("dataStoreEntites: ", datastoreEntities)
 
-  const groups = await DatasetAPI.getGroups()
+  const groups = await DatastoreAPI.getGroups()
 
   return {
     datastoreGroups: groups,
