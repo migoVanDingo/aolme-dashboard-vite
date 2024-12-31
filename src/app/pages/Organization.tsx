@@ -347,7 +347,7 @@ export const loader = async () => {
   const loaderOrgUsers = await EntityUserAPI.getUserListByEntityId(orgId)
   const loaderOrgRepos = await RepoAPI.getRepoByEntity(orgId)
   const loaderOrgDatasets = await DatasetAPI.getDatasetListByEntity(orgId)
-  console.log('orgId: ', orgId) 
+
   const data = {
     orgId,
     orgName,
@@ -355,6 +355,6 @@ export const loader = async () => {
     loaderOrgRepos,
     loaderOrgDatasets,
   }
-  console.log('loaderOrgData: ', data)
+
   return data
 }

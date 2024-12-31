@@ -1,10 +1,7 @@
 import "@mantine/core/styles.css"
 import { useState } from "react"
 import { useDispatch } from "react-redux"
-import {
-  createBrowserRouter,
-  RouterProvider
-} from "react-router-dom"
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import styled, { ThemeProvider } from "styled-components"
 import { useAuth } from "./app/context/AuthContext"
 import CreateOrganization from "./app/pages/CreateOrganization"
@@ -16,7 +13,9 @@ import Settings from "./app/pages/Settings"
 import { dark_grey_1, light_grey_1 } from "./app/theme/ThemeConfig"
 
 import { createTheme, MantineProvider } from "@mantine/core"
-import ViewDataset, { loader as ViewDatasetLoader } from "./app/components/dataset/ViewDataset"
+import ViewDataset, {
+  loader as ViewDatasetLoader,
+} from "./app/components/dataset/ViewDataset"
 import OrgDataset from "./app/components/organization/dataset/OrgDataset"
 import OrgModules from "./app/components/organization/modules/OrgModules"
 import OrgRepos from "./app/components/organization/repo/OrgRepos"
@@ -26,13 +25,16 @@ import Login from "./app/pages/Login"
 import { loader as OrgLoader } from "./app/pages/Organization"
 import { loader as ProfileLoader } from "./app/pages/Profile"
 import { loader as RepoLoader } from "./app/pages/Repository"
-import { loader as CreateSubsetLoader} from "./app/components/dataset/subset/CreateSubset"
+import { loader as CreateSubsetLoader } from "./app/components/dataset/subset/CreateSubset"
 import { loader as DatastoreDashboardLoader } from "./app/components/organization/datastore/DatastoreDashboard"
 import { loader as ViewDatastoreLoader } from "./app/components/organization/datastore/ViewDatastore"
+import { loader as DatastoreSubsetDetailsLoader } from "./app/components/organization/datastore/DatastoreSubsetDetails"
 import RootLayout, { loader as RootLoader } from "./app/pages/RootLayout"
 import CreateSubset from "./app/components/dataset/subset/CreateSubset"
 import DatastoreDashboard from "./app/components/organization/datastore/DatastoreDashboard"
 import ViewDatastore from "./app/components/organization/datastore/ViewDatastore"
+import DatastoreSubsetList from "./app/components/organization/datastore/DatastoreSubsetList"
+import DatastoreSubsetDetails from "./app/components/organization/datastore/DatastoreSubsetDetails"
 
 const mantineTheme = createTheme({
   /** Put your mantine theme override here */
@@ -50,7 +52,7 @@ const router = createBrowserRouter([
         element: <Profile />,
         loader: ProfileLoader,
         action: () => null,
-        id:"profile"
+        id: "profile",
       },
       {
         path: "/settings",
@@ -69,7 +71,7 @@ const router = createBrowserRouter([
         element: <Repository />,
         loader: RepoLoader,
         action: () => null,
-        id: "repo"
+        id: "repo",
       },
       {
         path: "/organization/create",
@@ -82,31 +84,28 @@ const router = createBrowserRouter([
         element: <Organization />,
         loader: OrgLoader,
         action: () => null,
-        id: "org", 
+        id: "org",
         children: [
           {
             path: "/organization/:orgName/datasets",
             element: <OrgDataset />,
             loader: () => null,
             action: () => null,
-            id: "org-dataset"
-
+            id: "org-dataset",
           },
           {
             path: "/organization/:orgName/datasets/:datasetName",
             element: <ViewDataset />,
             loader: ViewDatasetLoader,
             action: () => null,
-            id: "org-dataset-view"
-
+            id: "org-dataset-view",
           },
           {
             path: "/organization/:orgName/datasets/:datasetName/subset",
             element: <CreateSubset />,
             loader: CreateSubsetLoader,
             action: () => null,
-            id: "org-dataset-create-subset"
-
+            id: "org-dataset-create-subset",
           },
           //Datastore
           {
@@ -114,14 +113,30 @@ const router = createBrowserRouter([
             element: <DatastoreDashboard />,
             loader: DatastoreDashboardLoader,
             action: () => null,
-            id: "org-datastore-dashboard"
+            id: "org-datastore-dashboard",
           },
           {
             path: "/organization/:orgName/datastore/:datastoreName",
             element: <ViewDatastore />,
             loader: ViewDatastoreLoader,
             action: () => null,
-            id: "org-datastore-view"
+            id: "org-datastore-view",
+            children: [
+              {
+                path: "/organization/:orgName/datastore/:datastoreName",
+                element: <DatastoreSubsetList />,
+                loader: () => null,
+                action: () => null,
+                id: "org-datastore-view-list",
+              },
+              {
+                path: "/organization/:orgName/datastore/:datastoreName/subset/:subsetId",
+                element: <DatastoreSubsetDetails />,
+                loader: DatastoreSubsetDetailsLoader,
+                action: () => null,
+                id: "org-datastore-subset-details",
+              },
+            ],
           },
 
           //Users
@@ -130,47 +145,40 @@ const router = createBrowserRouter([
             element: <OrgUsers />,
             loader: () => null,
             action: () => null,
-            id: "org-users"
-
+            id: "org-users",
           },
           {
             path: "/organization/:orgName/repositories",
             element: <OrgRepos />,
             loader: () => null,
             action: () => null,
-            id: "org-repos"
-
-          }
-          ,
+            id: "org-repos",
+          },
           {
             path: "/organization/:orgName/modules",
             element: <OrgModules />,
             loader: () => null,
             action: () => null,
-            id: "org-modules"
-
-          }
-          ,
+            id: "org-modules",
+          },
           {
             path: "/organization/:orgName/settings",
             element: <OrgSettings />,
             loader: () => null,
             action: () => null,
-            id: "org-settings"
-
-          }
-        ]
+            id: "org-settings",
+          },
+        ],
       },
-     
     ],
   },
   {
     path: "/login",
-    element:  <Login />,
+    element: <Login />,
     loader: () => null,
     action: () => null,
-    id: "login"
-  }
+    id: "login",
+  },
 ])
 
 const SBody = styled.div`

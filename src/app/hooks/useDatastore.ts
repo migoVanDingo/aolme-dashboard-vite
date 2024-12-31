@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 
 export const useDatastore = (datastoreId: string, subsets: any) => {
 
-    const [subsetNames, setSubsetNames] = useState<any[]>([])
+    const [subsetRows, setSubsetRows] = useState<any[]>([])
 
     useEffect(() => {
         const init = () => {
             if(subsets && subsets.length > 0){
-                setSubsetNames(handleProcessSubsetName(subsets))
+                setSubsetRows(handleProcessSubsetName(subsets))
             }
         }
         return init()
@@ -33,7 +33,7 @@ export const useDatastore = (datastoreId: string, subsets: any) => {
 
     }
 
-    return { subsetNames }
+    return { subsetRows }
     
 }
 

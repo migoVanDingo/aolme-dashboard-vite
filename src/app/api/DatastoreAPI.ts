@@ -18,4 +18,9 @@ export class DatastoreAPI {
       public static async getSubsetList(datastoreId: string){
         return Requests.doGet("/api/datastore/subset/"+datastoreId, import.meta.env.VITE_DATASTORE_PORT)
       }
+
+      // Subset Items
+      public static async getSubsetItems(subsetId: string){
+        return Requests.doGet("/api/datastore/subset/"+subsetId+"/items", import.meta.env.VITE_DATASTORE_PORT)
+      }
 }

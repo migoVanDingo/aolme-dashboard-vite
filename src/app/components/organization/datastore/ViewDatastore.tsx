@@ -7,6 +7,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 import DatastoreSubsetList from "./DatastoreSubsetList"
 import { DatastoreAPI } from "../../../api/DatastoreAPI"
 import { useDatastore } from "../../../hooks/useDatastore"
+import { Outlet } from "react-router-dom"
 
 const SContainer = styled(SFlexCol)`
   width: 100%;
@@ -17,11 +18,13 @@ const SContainer = styled(SFlexCol)`
 
 const SViewHeader = styled(SFlexRow)`
   width: 100%;
-  height: 50px;
+  height: 60px;
   align-items: center;
-  justify-content: space-between;
+
   padding: 0;
   margin-bottom: 0px;
+  box-sizing: border-box;
+  gap: 10px;
 `
 const SHeading = styled.h1`
   font-size: 1.5rem;
@@ -30,7 +33,6 @@ const SHeading = styled.h1`
   margin-bottom: 0px;
   padding: 0;
   margin: 0;
-
 `
 
 const SH2 = styled.h2`
@@ -79,8 +81,8 @@ const SButton = styled.button`
   gap: 5px;
   margin-bottom: 30px;
 
-  &.subset {
-    margin-left: auto;
+  &.subset-buttons {
+   width: 150px;
   }
 
   &.active {
@@ -88,6 +90,10 @@ const SButton = styled.button`
     border-color: ${({ theme }) => theme.accent.color_1};
     cursor: pointer;
   }
+  &.push-right{
+    margin-left: auto;
+  }
+
 `
 
 const SIcon = styled(FontAwesomeIcon)`
@@ -100,25 +106,22 @@ const SIcon = styled(FontAwesomeIcon)`
 
 const ViewDatastore = () => {
   const nav = useNavigate()
-  const { currentDatastore, loaderSubsetList } = useLoaderData() as {
+  const { currentDatastore } = useLoaderData() as {
     currentDatastore: any
     loaderSubsetList: any
   }
 
   const [datastore, setDatastore] = useState<any>(currentDatastore)
   const [hover, setHover] = useState<boolean>(false)
+  const [hover2, setHover2] = useState<boolean>(false)
+  const [hover3, setHover3] = useState<boolean>(false)
 
-  const { subsetNames } = useDatastore(
-    currentDatastore.datastore_id,
-    loaderSubsetList,
-  )
+
+
 
   const handleMouseOver = () => setHover(true)
   const handleMouseOut = () => setHover(false)
 
-  useEffect(() => {
-    console.log('subsetNames: ', subsetNames)
-  }, [subsetNames]);
 
   return (
     <SContainer>
@@ -128,6 +131,7 @@ const ViewDatastore = () => {
           <SMeta>Datastore ID: {datastore.datastore_id}</SMeta>
         </SCol>
         <SButton
+            id="back"
           onMouseOver={handleMouseOver}
           onMouseOut={handleMouseOut}
           className={hover ? "active" : ""}
@@ -138,10 +142,7 @@ const ViewDatastore = () => {
         </SButton>
       </SViewHeader>
 
-      <SListContainer>
-        <SH2>Subset List</SH2>
-        <DatastoreSubsetList subsetList={subsetNames}/>
-      </SListContainer>
+    <Outlet />
     </SContainer>
   )
 }
@@ -149,15 +150,13 @@ const ViewDatastore = () => {
 export default ViewDatastore
 
 export const loader = async () => {
-  const currentDatastore = JSON.parse(
-    localStorage.getItem("currentDatastore") as any,
-  )
-
+  const currentDatastore = JSON.parse(localStorage.getItem("currentDatastore") as any)
+  
+    
   const subsets = await DatastoreAPI.getSubsetList(
     currentDatastore.datastore_id,
   )
 
-  console.log("subsets: ", subsets)
 
   return {
     currentDatastore,
