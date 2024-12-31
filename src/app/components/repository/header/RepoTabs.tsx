@@ -51,11 +51,11 @@ const SIcon = styled(FontAwesomeIcon)``
 
 const RepoTabs = ({ activeTab, setActiveTab, projectId, name }: any) => {
   
-  const repoEntity = useSelector((state: any) => state.repoEntity)
-  const userId = useSelector((state: any) => state.userId)
-  const repoId = useSelector((state: any) => state.repoId)
-  const repoDescription = useSelector((state: any) => state.repoDescription)
-  const repoName = useSelector((state: any) => state.repoName)
+  const repoEntity = useSelector((state: any) => state.repo.storeRepoEntityntity)
+  const userId = useSelector((state: any) => state.user.storeUserId)
+  const repoId = useSelector((state: any) => state.repo.storeRepoId)
+  const repoDescription = useSelector((state: any) => state.repo.storeRepoDescription)
+  const repoName = useSelector((state: any) => state.repo.storeRepoName)
   
 
 

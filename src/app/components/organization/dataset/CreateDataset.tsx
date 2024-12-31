@@ -61,8 +61,8 @@ const types = ["IMAGE", "TEXT", "AUDIO", "VIDEO"]
 
 const CreateDataset = ({ trigger, hideCreateNew }: any) => {
   const dispatch = useDispatch()
-  const orgId = useSelector((state: any) => state.orgId)
-  const userId = useSelector((state: any) => state.userId)
+  const orgId = useSelector((state: any) => state.org.storeOrgId)
+  const userId = useSelector((state: any) => state.user.storeUserId)
 
   const [name, setName] = useState<string>("")
   const [description, setDescription] = useState<string>("")

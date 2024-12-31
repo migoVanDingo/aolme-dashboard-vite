@@ -15,16 +15,16 @@ export class ProjectAPI {
       last_updated_by: "migo",
     }
 
-    const response = await Requests.doPost(project, "/repo/project/create")
+    const response = await Requests.doPost(project, "/repo/project/create", import.meta.env.VITE_BACKEND_PORT)
     return response
   }
 
   public static async getProjectList() {
-    return await Requests.doGet("/repo/project/list")
+    return await Requests.doGet("/repo/project/list", import.meta.env.VITE_BACKEND_PORT)
   }
 
   public static async getProjectById(projectId: string) {
-    return await Requests.doGet("/repo/project/" + projectId)
+    return await Requests.doGet("/repo/project/" + projectId, import.meta.env.VITE_BACKEND_PORT)
   }
 
   /*  const deleteProject = (projectId: string) => {

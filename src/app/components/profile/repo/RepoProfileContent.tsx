@@ -5,6 +5,8 @@ import { SFlexCol, SFlexRowWrap } from '../../common/containers/FlexContainers'
 import { RepoAPI } from '../../../api/RepoAPI'
 import { preprocessCSS } from 'vite'
 import { useSelector } from 'react-redux'
+import { useProfile } from '../../../hooks/useProfile'
+import { useRouteLoaderData } from 'react-router-dom'
 
 
 const SContainer = styled(SFlexCol)`
@@ -16,36 +18,18 @@ const SContainer = styled(SFlexCol)`
   grid-area: content;
   overflow-y: auto;
 
+  box-sizing: border-box;
+
+
 `
 
-const RepoProfileContent = () => {
-
-  const [repoList, setRepoList] = useState<any[]>([])
-
-  const userId =  useSelector((state: any) => state.userId)
-
-  useEffect(() => {
-
-    const getList = () => {
-
-      RepoAPI.getRepoByOwner(userId)
-      .then((result: any) => {
-        setRepoList(result.data)
-      })
-      .catch((err: any) => console.error(err))
-    }
-
-    return getList()
-      
-
-  }, [])
-
+const RepoProfileContent = ({ userRepos }: any) => {
 
 
   return (
     <SContainer>
       {
-        repoList && repoList.map((repo: any, index: number) => {
+        userRepos && userRepos.map((repo: any, index: number) => {
           return(
             <RepoCard key={index} repo={repo} />
           )

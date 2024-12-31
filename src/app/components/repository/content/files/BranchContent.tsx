@@ -5,11 +5,10 @@ import { SFlexRow } from "../../../common/containers/FlexContainers"
 import RepoAll from "../views/RepoAll"
 import RepoConfig from "../views/RepoConfig"
 import RepoDataset from "../views/RepoDataset"
+import RepoDirectory from "../views/RepoDirectory"
 import RepoModule from "../views/RepoModule"
 import RepoNotebook from "../views/RepoNotebook"
-import RepoFiles from "./RepoFiles"
-import RepoDirectory from "../views/RepoDirectory"
-import RepoPipeline from "./RepoPipeline"
+import RepoPipeline from "../views/RepoPipeline"
 
 const SEmptyRepo = styled(SFlexRow)`
   padding: 80px 60px 100px 60px;

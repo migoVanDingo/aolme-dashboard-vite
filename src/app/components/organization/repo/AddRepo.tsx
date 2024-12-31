@@ -50,8 +50,8 @@ const SButton = styled.button`
 `
 
 const AddRepo = ({ trigger, hideCreateNew }: any) => {
-  const orgId = useSelector((state: any) => state.orgId)
-  const userId = useSelector((state: any) => state.userId)
+  const orgId = useSelector((state: any) => state.org.storeOrgId)
+  const userId = useSelector((state: any) => state.user.storeUserId)
 
   const [repoName, setRepoName] = useState<string>("")
   const [description, setDescription] = useState<string>("")

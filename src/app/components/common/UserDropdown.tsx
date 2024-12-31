@@ -9,6 +9,7 @@ const SContainer = styled(SFlexCol)`
   align-items: baseline;
   gap: 5px;
   position: relative;
+  color: ${({ theme }) => theme.color.color_6};
 `
 
 const SLabel = styled.label`
@@ -59,6 +60,7 @@ const SMenu = styled.ul`
   top: 53px;
   right: 0;
   background: ${({ theme }) => theme.color.color_2};
+
   padding: 5px;
   border-radius: ${({ theme }) => theme.container.borderRadius.md};
   display: flex;

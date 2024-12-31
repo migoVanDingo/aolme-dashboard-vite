@@ -10,8 +10,8 @@ import RepoViewConfig from '../files/RepoViewConfig'
 
 const RepoConfig = ({}: any) => {
   const dispatch = useDispatch()
-  const repoId = useSelector((state: any) => state.repoId)
-  const repoFiles = useSelector((state: any) => state.repoFiles)
+  const repoId = useSelector((state: any) => state.repo.storeRepoId)
+  const repoFiles = useSelector((state: any) => state.repo.storeRepoFiles)
 
   
   const [config, setConfig] = useState<any[]>([])

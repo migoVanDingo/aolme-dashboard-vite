@@ -27,7 +27,7 @@ const SContainer = styled(SFlexCol)`
 `
 
 const CreateOrganization = () => {
-  const userId = useSelector((state: any) => state.userId)
+  const userId = useSelector((state: any) => state.user.storeUserId)
   
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [orgName, setOrgName] = useState<string>("")

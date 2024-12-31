@@ -1,28 +1,42 @@
-import React, { useRef, useState } from "react"
-import styled from "styled-components"
-import { SFlexCol, SFlexRow } from "../../common/containers/FlexContainers"
-import { useDispatch, useSelector } from "react-redux"
-import { FormCreateRepo } from "../../../utility/interface/repository"
-import SelectInput from "../../common/inputs/select/SelectInput"
-import TextInputComponent from "../../common/inputs/text/TextInputComponent"
-import QuickUpload from "../../repository/content/files/QuickUpload"
-import FileUpload from "../../common/inputs/file-upload/FileUpload"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUpload } from "@fortawesome/free-solid-svg-icons"
-import { ICreateSubset, ILabelSubset } from "../../../utility/interface/dataset"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { useEffect, useRef, useState } from "react"
+import { useSelector } from "react-redux"
+import styled from "styled-components"
 import { DatasetAPI } from "../../../api/DatasetAPI"
 import {
   ICreateLabelStudioProject,
   LabelStudioAPI,
 } from "../../../api/LabelStudioAPI"
+import { ICreateSubset, ILabelSubset } from "../../../utility/interface/dataset"
+import { FormCreateRepo } from "../../../utility/interface/repository"
+import { SFlexCol, SFlexRow } from "../../common/containers/FlexContainers"
+import SelectInput from "../../common/inputs/select/SelectInput"
+import TextInputComponent from "../../common/inputs/text/TextInputComponent"
+import {
+  useLoaderData,
+  useNavigate,
+  useRouteLoaderData,
+} from "react-router-dom"
+import { Checkbox } from "@mantine/core"
+import { useSelectGroups } from "../../../hooks/useSelectGroups"
+import { mainSelectionFormProps } from "./mainSelectionFormProps"
+import SelectionForm from "../../common/form/SelectionForm"
+import { ac } from "vitest/dist/types-e3c9754d.js"
+import { setDatasetId } from "../../../store/slices/dataset"
+import { DatastoreAPI } from "../../../api/DatastoreAPI"
+
 
 const SContainer = styled(SFlexCol)`
   align-items: flex-start;
-  width: 400px;
-  height: 100%;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 800px;
+  min-height: 100vh;
+  margin: 0 50px;
   background-color: ${({ theme }) => theme.color.color_2};
-  padding: 7px;
+  padding: 20px 100px;
+
+  grid-area: content;
 `
 const SHeading = styled.p`
   font-size: 2rem;
@@ -81,6 +95,7 @@ const SInput = styled.input`
   font-size: ${({ theme }) => theme.color.color_2};
   cursor: pointer;
   height: 100%;
+  width: 100%;
   z-index: 10;
 
   &::file-selector-button {
@@ -98,7 +113,7 @@ const SInput = styled.input`
 const SInnerContainer = styled(SFlexRow)`
   background-color: ${({ theme }) => theme.color.color_3};
   font-size: 1rem;
-  width: 300px;
+  width: 100%;
   height: 35px;
   align-items: center;
 
@@ -116,28 +131,62 @@ const SButton2 = styled.button`
   margin-left: auto;
 `
 
+const SFormSection = styled.label`
+  margin: 20px 0;
+`
+
 const types = ["IMAGE", "TEXT", "AUDIO", "VIDEO"]
 
-const CreateSubset = ({ dataset, createViewInactive, triggerRender }: any) => {
+const CreateSubset = ({}: any) => {
+  const { selectedDataset, datastoreGroups, datastoreEntities } =
+    useLoaderData() as any
+  const nav = useNavigate()
 
-  const userId = useSelector((state: any) => state.userId)
+  const userId = useSelector((state: any) => state.user.storeUserId)
+  const entityId = useSelector((state: any) => state.org.storeOrgId)
 
   const [selectedFiles, setSelectedFiles] = useState<any[]>([])
+  const [dataset, setDataset] = useState<any>(selectedDataset)
 
   const [name, setName] = useState<string>("")
   const [description, setDescription] = useState<string>("")
   const [fileSetId, setFileSetId] = useState<string>("")
-  const [status, setStatus] = useState<string>("")
+  const [datasetType, setDatasetType] = useState<string>("")
+  const [datasetTypeError, setDatasetTypeError] = useState<string>("")
 
   const [nameError, setNameError] = useState<string>("")
   const [descriptionError, setDescriptionError] = useState<string>("")
-  const [fileSetError, setFileSetError] = useState<string>("")
-  const [statusError, setStatusError] = useState<string>("")
   const [progress, setProgress] = useState<number>(0)
+
+  const [isDatastoreFiles, setIsDatastoreFiles] = useState<boolean>(true)
+  const [isUploadFiles, setIsUploadFiles] = useState<boolean>(false)
+
+  const {
+    formState,
+    handleChange,
+    formOptions,
+    formDisabled,
+    activityMapGroups,
+    handleReset,
+  } = useSelectGroups(mainSelectionFormProps, datastoreGroups)
+
+/*   useEffect(() => {
+    const init = () => {
+      if(selectedDataset) {
+        dispatch(setDatasetId(dataset.dataset_id))
+      }
+    }
+    return init()
+  }, [selectedDataset]); */
+
+  const toggleFileSource = () => {
+    setIsDatastoreFiles(!isDatastoreFiles)
+    setIsUploadFiles(!isUploadFiles)
+  }
 
   const inputFile = useRef(null)
 
-  const handleReset = () => {
+  const handleFileReset = () => {
     if (inputFile.current) {
       inputFile.current.value = ""
       inputFile.current.type = "text"
@@ -153,13 +202,20 @@ const CreateSubset = ({ dataset, createViewInactive, triggerRender }: any) => {
       setInputValue: setName,
       error: nameError,
     },
+    /*    {
+      label: "File Set Id",
+      type: "text",
+      inputValue: fileSetId,
+      setInputValue: setFileSetId,
+      error: fileSetError,
+    }, */
     {
-        label: "File Set Id",
-        type: "text",
-        inputValue: fileSetId,
-        setInputValue: setFileSetId,
-        error: fileSetError,
-      },
+      label: "Dataset Type (ex. Typing, Writing, Talking, etc.)",
+      type: "text",
+      inputValue: datasetType,
+      setInputValue: setDatasetType,
+      error: datasetTypeError,
+    },
     {
       label: "Description",
       type: "text-area",
@@ -168,6 +224,35 @@ const CreateSubset = ({ dataset, createViewInactive, triggerRender }: any) => {
       error: descriptionError,
     },
   ]
+
+  const handleSubmit = () => {
+    const payload = {
+      owner: userId,
+      entity_id: "ORG8466MS8EOVO8RR9H02ASA7",
+      name: name,
+      description: description,
+      subset_info: formState,
+      dataset_type: datasetType,
+    }
+    let ret = false
+    if(!name){
+      setNameError("Name is required")
+      ret = true
+    }
+    if(!description){
+      setDescriptionError("Description is required")
+      ret = true
+    }
+    if(!datasetType){
+      setDatasetTypeError("Dataset Type is required")
+      ret = true
+    }
+    if(ret){
+      return
+    }
+    const createSubset = DatasetAPI.createDatastoreSubset(payload)
+    console.log("createSubset: ", createSubset)
+  }
 
   const handleCreate = async () => {
     //add this to .then() of the api call
@@ -194,9 +279,7 @@ const CreateSubset = ({ dataset, createViewInactive, triggerRender }: any) => {
         }, 3000)
       })
       .then(() => {
-        createViewInactive()
-        triggerRender()
-        handleReset()
+        nav(-1)
       })
 
       .catch((err) => {
@@ -218,7 +301,7 @@ const CreateSubset = ({ dataset, createViewInactive, triggerRender }: any) => {
     LabelStudioAPI.initializeLabelStudioProject(payload)
       .then((res: any) => {
         console.log("res: ", res)
-        if(selectedFiles.length > 0){
+        if (selectedFiles.length > 0) {
           syncLsFiles(subset)
         }
       })
@@ -226,20 +309,18 @@ const CreateSubset = ({ dataset, createViewInactive, triggerRender }: any) => {
   }
 
   const syncLsFiles = (subset: any) => {
-    
-      const payload: ILabelSubset = {
-        subset_id: subset.subset_id,
-        dataset_id: dataset.dataset_id,
-        entity_id: dataset.entity_id,
-      }
-      console.log("syncLSFiles payload: ", payload)
-      
-      LabelStudioAPI.syncLabelStudioFiles(payload, fileSetId)
+    const payload: ILabelSubset = {
+      subset_id: subset.subset_id,
+      dataset_id: dataset.dataset_id,
+      entity_id: dataset.entity_id,
+    }
+    console.log("syncLSFiles payload: ", payload)
+
+    LabelStudioAPI.syncLabelStudioFiles(payload, fileSetId)
       .then((res: any) => {
         console.log("syncLSFiles res: ", res)
       })
       .catch((err: any) => console.error(err))
-    
   }
 
   const handleChangeSelect = (type: string) => {
@@ -249,6 +330,7 @@ const CreateSubset = ({ dataset, createViewInactive, triggerRender }: any) => {
   const handleFileChange = (e: any) => {
     setSelectedFiles(e.target.files)
   }
+  
 
   return (
     <SContainer>
@@ -279,22 +361,44 @@ const CreateSubset = ({ dataset, createViewInactive, triggerRender }: any) => {
         )
       })}
 
-      <SInnerContainer>
-        <SIcon icon={faUpload} />
-        <SInput
-          name="files"
-          type="file"
-          ref={inputFile}
-          onChange={handleFileChange}
-          multiple
+      <SFormSection>
+        Use AOLME Datastore
+        <Checkbox checked={isDatastoreFiles} onClick={toggleFileSource} />
+      </SFormSection>
+
+      <SFormSection>
+        Upload Files to Datastore
+        <Checkbox checked={isUploadFiles} onClick={toggleFileSource} />
+      </SFormSection>
+
+      {isUploadFiles ? (
+        <SInnerContainer>
+          <SIcon icon={faUpload} />
+          <SInput
+            name="files"
+            type="file"
+            ref={inputFile}
+            onChange={handleFileChange}
+            multiple
+          />
+        </SInnerContainer>
+      ) : (
+        <SelectionForm
+          selectionFormProps={mainSelectionFormProps}
+          formState={formState}
+          handleChange={handleChange}
+          formOptions={formOptions}
+          formDisabled={formDisabled}
+          handleReset={handleReset}
+          /* handleSubmit={handleSubmit} */
         />
-      </SInnerContainer>
+      )}
 
       <SButtonContainer>
-        <SButton onClick={handleCreate} type="button">
+        <SButton onClick={handleSubmit} type="submit">
           {"Save Changes"}
         </SButton>
-        <SButton onClick={createViewInactive} type="button">
+        <SButton onClick={() => nav(-1)} type="button">
           {"Cancel"}
         </SButton>
       </SButtonContainer>
@@ -303,3 +407,23 @@ const CreateSubset = ({ dataset, createViewInactive, triggerRender }: any) => {
 }
 
 export default CreateSubset
+
+export const loader = async () => {
+  const selectedDataset = JSON.parse(
+    localStorage.getItem("selectedDataset") as any,
+  )
+  //const datastoreEntities = await DatasetAPI.getGroupEntities()
+
+  //console.log("dataStoreEntites: ", datastoreEntities)
+
+  const groups = await DatastoreAPI.getGroups()
+
+  return {
+    datastoreGroups: groups,
+    selectedDataset,
+  }
+}
+function dispatch(arg0: { type: string; datasetId: string }) {
+  throw new Error("Function not implemented.")
+}
+

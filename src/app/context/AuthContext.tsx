@@ -54,6 +54,7 @@ export default function AuthProvider({ children }: any) {
   }
 
   async function login(payload: PayloadLogin) {
+    console.log('pp: ', payload)
     UserAPI.login(payload)
       .then((result: any) => {
         const { username, userId } = result

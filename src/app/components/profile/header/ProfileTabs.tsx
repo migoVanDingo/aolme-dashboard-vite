@@ -38,8 +38,6 @@ const SIcon = styled(FontAwesomeIcon)``
 
 const RepoTabs = ({ activeTab, setActiveTab, tabs}: any) => {
   
-  const username = useSelector((state: any) => state.username)
-  const nav = useNavigate()
 
   const [highlightedTab, setHighlightedTab] = React.useState<string>(activeTab)
 

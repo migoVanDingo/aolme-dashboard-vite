@@ -8,11 +8,11 @@ export class ProcessAPI {
         const data = {
             project_name: projectName
         }
-        return Requests.doPost(data ,'/subprocess/label-studio')
+        return Requests.doPost(data ,'/subprocess/label-studio', import.meta.env.VITE_BACKEND_PORT)
         
     }
 
     public static async launchJupyterNotebook(data: any){
-        return Requests.doPost(data ,'/subprocess/jupyter')
+        return Requests.doPost(data ,'/subprocess/jupyter', import.meta.env.VITE_BACKEND_PORT)
     }
 }

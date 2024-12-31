@@ -17,11 +17,11 @@ import { ICreateRepository } from "../utility/interface/repository"
 
 const SContainer = styled(SFlexCol)`
   width: 650px;
-  height: calc(100vh - ${({ theme }) => theme.header.height});
+
   align-items: baseline;
   padding: 40px 10px;
   
-
+  color: ${({ theme }) => theme.color.color_8};
   &.loading {
     align-items: center;
     justify-content: center;
@@ -31,8 +31,8 @@ const SContainer = styled(SFlexCol)`
 
 const CreateRepositoryV2 = ({ }: any) => {
     
-  const userId = useSelector((state: any) => state.userId)
-  const username = useSelector((state: any) => state.username)
+  const userId = useSelector((state: any) => state.user.storeUserId)
+  const username = useSelector((state: any) => state.user.storeUsername)
 
   const [isLoading, setLoading] = useState<boolean>(false)
   const [repoOwner, setRepoOwner] = useState<string>(username)
@@ -57,6 +57,11 @@ const CreateRepositoryV2 = ({ }: any) => {
 
     return init()
   }, [repoId]);
+
+
+  useEffect(() => {
+    console.log("userIdsss: ", userId)
+  }, [userId]);
 
 
   const createRepository = () => {
@@ -91,34 +96,12 @@ const CreateRepositoryV2 = ({ }: any) => {
     
   }
 
-  const handleCloneRepo = () => {
-    const payload = {
-      owner: userId,
-      entity_id: userId,
-      github_url: githubUrl
-    }
 
-    setLoading(true)
-    RepoAPI.cloneGithubRepo(payload)
-    .then((res: any) => {
-      console.log("Clone Response: ", res)
-      setRepoId(res.repo_id)
-    })
-    .catch((err: any) => console.error(err))
-  }
 
   return (
     <SContainer className={isLoading ? "loading" : ""}>
       {!isLoading ? (
         <>
-       {/*  <TextInput
-        setName={setGithubUrl}
-        name={githubUrl}
-        label={"Clone Github Repository URL"}
-      />
-      <SButton type="button" onClick={handleCloneRepo} innerHtml={"Clone"} /> */}
-
-
           <Heading heading={"Create Repository"} size={"md"} />
           <Message
             text={"Required fields are marked with an asterisk (*)."}

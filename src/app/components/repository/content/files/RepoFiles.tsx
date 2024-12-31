@@ -1,12 +1,9 @@
 import {
   faBookBookmark,
-  faBullseye,
-  faCubes,
   faFile,
   faHardDrive,
   faListCheck,
-  faPencil,
-  faRetweet,
+  faRetweet
 } from "@fortawesome/free-solid-svg-icons"
 import { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
@@ -18,8 +15,6 @@ import { SFlexCol } from "../../../common/containers/FlexContainers"
 import BranchContent from "./BranchContent"
 import FilesMenu from "./FilesMenu"
 import FilesUpdate from "./FilesUpdate"
-import QuickUpload from "./QuickUpload"
-import { icon } from "@fortawesome/fontawesome-svg-core"
 
 const SContainer = styled(SFlexCol)`
   grid-area: files;
@@ -127,8 +122,8 @@ const RepoFiles = ({ repoId /* , repoFiles */ }: any) => {
   const [files, setFiles] = useState<any[]>([])
   const [show, setShow] = useState<boolean>(false)
 
-  const repoEntity = useSelector((state: any) => state.repoEntity)
-  const userId = useSelector((state: any) => state.userId)
+  const repoEntity = useSelector((state: any) => state.repo.storeRepoEntityntity)
+  const userId = useSelector((state: any) => state.user.storeUserId)
 
   const handleClose = () => setShow(false)
   const handleShow = () => {

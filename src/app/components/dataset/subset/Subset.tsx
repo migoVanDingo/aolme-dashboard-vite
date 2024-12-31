@@ -1,22 +1,17 @@
-import React, { useState } from "react"
-import styled from "styled-components"
-import {
-  SFlexCol,
-  SFlexRow,
-  SFlexRowWrap,
-} from "../../common/containers/FlexContainers"
-import EmptySubsets from "./EmptySubsets"
-import CreateSubset from "./CreateSubset"
-import SubsetCard from "./SubsetCard"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAdd } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { useState } from "react"
+import styled from "styled-components"
+import { SFlexCol, SFlexRow } from "../../common/containers/FlexContainers"
+import CreateSubset from "./CreateSubset"
+import EmptySubsets from "./EmptySubsets"
+import SubsetCard from "./SubsetCard"
+import { useNavigate, useRouteLoaderData } from "react-router-dom"
 
 const SContainer = styled(SFlexCol)`
   padding: 0;
   width: 1000px;
   border-radius: ${({ theme }) => theme.container.borderRadius.lg};
-
-  
 
   padding: 20px;
   gap: 20px;
@@ -70,8 +65,6 @@ const SSubsetHeading = styled(SFlexRow)`
   align-items: center;
   margin-bottom: 0px;
   margin-right: auto;
-  
-
 `
 
 const SHeading = styled(SFlexCol)`
@@ -79,7 +72,6 @@ const SHeading = styled(SFlexCol)`
   align-items: center;
   padding: 0 10px;
   box-sizing: border-box;
-
 `
 const SPara = styled.p`
   font-size: 1rem;
@@ -101,63 +93,61 @@ const Subset = ({
   hoverOnButton,
   hoverOffButton,
 }: any) => {
+
+  const nav = useNavigate()
+
+  const { orgName } = useRouteLoaderData("org") as { orgName: string }
+
   const [isHoverNew, setHoverNew] = useState<boolean>(false)
   const hoverOn = () => setHoverNew(true)
   const hoverOff = () => setHoverNew(false)
 
-
-
-  if (isNewSubsetActive) {
-    return (
-      <SContainer className={""}>
-        <CreateSubset
-          dataset={dataset}
-          createViewInactive={createViewInactive}
-          triggerRender={triggerRender}
-        />
-      </SContainer>
-    )
-  } else {
-    return (
-      <SContainer className={!isNewSubsetActive ? "active" : ""}>
-        <SHeading>
-          <SSubsetHeading>
-            <SDsHeading>{"Subsets"}</SDsHeading>
-            <SButton
-              className={isHoverButton ? "hover subset" : "subset"}
-              onClick={createViewActive}
-              onMouseOver={hoverOnButton}
-              onMouseLeave={hoverOffButton}
-            >
-              <SIcon className={isHoverButton ? "hover" : ""} icon={faAdd} />
-              Create Subset
-            </SButton>
-          </SSubsetHeading>
-          <SPara>{"Simply put, subsets are sets of files. A dataset can be made up of one or more subsets.  Create a subset to group files together.  For example, if you are annotating video, you may want to upload a few videos and existing annotations for that video. This is the perfect case for a subset!"}</SPara>
-
-        </SHeading>
-
-        {subsets.length > 0 ? (
-          subsets.map((subset: any) => {
-            return (
-              <SubsetCard
-                key={subset.subset_id}
-                subset={subset}
-                dataset={dataset}
-              />
-            )
-          })
-        ) : (
-          <EmptySubsets
-            hover={isHoverNew}
-            hoverOn={hoverOn}
-            hoverOff={hoverOff}
-            handleCreateNew={createViewActive}
-          />
-        )}
-      </SContainer>
-    )
+  const handleAddSubset = () => {
+    nav("/organization/"+orgName+"/datasets/"+dataset.name+"/subset")
   }
+
+  return (
+    <SContainer className={!isNewSubsetActive ? "active" : ""}>
+      <SHeading>
+        <SSubsetHeading>
+          <SDsHeading>{"Subsets"}</SDsHeading>
+          <SButton
+            className={isHoverButton ? "hover subset" : "subset"}
+            onClick={handleAddSubset}
+            onMouseOver={hoverOnButton}
+            onMouseLeave={hoverOffButton}
+          >
+            <SIcon className={isHoverButton ? "hover" : ""} icon={faAdd} />
+            Add Subset
+          </SButton>
+        </SSubsetHeading>
+        <SPara>
+          {
+            "Simply put, subsets are sets of files. A dataset can be made up of one or more subsets.  Create a subset to group files together.  For example, if you are annotating video, you may want to upload a few videos and existing annotations for that video. This is the perfect case for a subset!"
+          }
+        </SPara>
+      </SHeading>
+
+      {subsets && subsets.length > 0 ? (
+        subsets.map((subset: any) => {
+          return (
+            <SubsetCard
+              key={subset.subset_id}
+              subset={subset}
+              dataset={dataset}
+            />
+          )
+        })
+      ) : (
+        <EmptySubsets
+          hover={isHoverNew}
+          hoverOn={hoverOn}
+          hoverOff={hoverOff}
+          handleCreateNew={createViewActive}
+        />
+      )}
+    </SContainer>
+  )
 }
 
 export default Subset

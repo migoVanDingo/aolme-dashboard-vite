@@ -63,7 +63,7 @@ const link1 = "connected to "
 const link2 = "www.yumama.com"
 
 const RepoTitle = ({ owner, projectName, entityName }: any) => {
-  const repoEntity = useSelector((state: any) => state.repoEntity)
+  const repoEntity = useSelector((state: any) => state.repo.storeRepoEntityntity)
   const nav = useNavigate()
 
   const handleGoToEntity = () => {

@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
-import { SFlexCol, SFlexRow } from '../../../common/containers/FlexContainers'
-import { SButton } from '../../../common/styled'
+import { faFile, faFolder } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { RepoAPI } from '../../../../api/RepoAPI'
+import styled from 'styled-components'
+import { useGithubDirectory } from '../../../../hooks/useGithubDirectory'
+import { SFlexCol, SFlexRow } from '../../../common/containers/FlexContainers'
 import TextInput from '../../../common/inputs/text/TextInput'
 import LoadingSpinner from '../../../common/loading/LoadingSpinner'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFile, faFolder } from '@fortawesome/free-solid-svg-icons'
+import { SButton } from '../../../common/styled'
 
 const SContainer = styled(SFlexCol)`
    
@@ -45,53 +45,15 @@ const SItemRow = styled(SFlexRow)`
 `
 
 const RepoDirectory = () => {
-  const userId = useSelector((state: any) => state.userId)
-  const repoId = useSelector((state: any) => state.repoId)
+   const userId = useSelector((state: any) => state.user.storeUserId)
+  const repoId = useSelector((state: any) => state.repo.storeRepoId)
+  const repoContent = useSelector((state: any) => state.repo.storeRepoContent)
   const [githubUrl, setGithubUrl] = useState<string>("")
   const [isLoading, setLoading] = useState<boolean>(false)
-
-  const [repoContent, setRepoContent] = useState<any>({})
-
-  useEffect(() => {
-
-    const init = () => {
-      getRepoConent(repoId)
-    }
-
-    return init()
-  }, [repoId]);
-
-  const getRepoConent = (repoId: string) => {
-    setLoading(true)
-    RepoAPI.getDirectoryContents(repoId)
-    .then((res: any) => {
-      console.log("Repo Content: ", res.data)
-      setRepoContent(res.data)
-
-      setLoading(false)
-    })
-    .catch((err: any) => console)
-  }
   
 
-  const handleCloneRepo = () => {
-    console.log("Cloning Repo")
-    const payload = {
-      user_id: userId,
-      entity_id: userId,
-      github_url: githubUrl,
-      repo_id: repoId
-    }
-    console.log("Cloning Repo")
+  const { handleCloneRepo } = useGithubDirectory()
 
-    setLoading(true)
-    RepoAPI.cloneGithubRepo(payload)
-    .then((res: any) => {
-      console.log("Clone Response: ", res)
-      setLoading(false)
-    })
-    .catch((err: any) => console.error(err))
-  }
 
   if(isLoading){
     return (
@@ -101,6 +63,7 @@ const RepoDirectory = () => {
     )
   } else {
 
+    //If a github repo is cloned, the repoContent will be populated; else there will be a text input to add repo link to clone
     if(repoContent && repoContent["contents"] && repoContent["contents"].length > 0){
       return (
         <SContainer className={"not-empty"}>

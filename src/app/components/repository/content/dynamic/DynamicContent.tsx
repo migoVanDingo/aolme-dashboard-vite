@@ -15,7 +15,7 @@ import RepoViewDataset from "../files/RepoViewDataset"
 
 const DynamicContent = ({ menuOption, repoEntity, repoId }: any) => {
 
-  const userId = useSelector((state: any) => state.userId)
+  const userId = useSelector((state: any) => state.user.storeUserId)
   const [selectedContent, setSelectedContent] = useState<any>(null)
   const [selectedId, setSelectedId] = useState<any>("")
 

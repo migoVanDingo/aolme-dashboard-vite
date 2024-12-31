@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react"
-import { SContent, SUserCol, SUserRow } from "../../styled/SOrganization"
-import { SFlexCol, SFlexRow } from "../../common/containers/FlexContainers"
+import { useEffect, useState } from "react"
+import { useRouteLoaderData } from "react-router-dom"
 import styled from "styled-components"
-import ListCard from "../../common/cards/ListCard"
-import AddRepo from "./AddRepo"
+import { SFlexCol, SFlexRow } from "../../common/containers/FlexContainers"
 import RepoCard from "../../profile/repo/RepoCard"
 import DashboardHeader from "../dataset/header/DashboardHeader"
+import AddRepo from "./AddRepo"
 
 const SContainer = styled(SFlexCol)`
   width: 100%;
-  height: calc(calc(100% - 50px) - - ${({ theme }) => theme.header.height});
+  min-height: calc(100vh - 100px);
   gap: 10px;
   grid-area: content;
   box-sizing: border-box;
@@ -63,7 +62,10 @@ const SDashedBox = styled(SFlexRow)`
 `
 
 const OrgRepos = ({ repoList, trigger, edit, setEdit }: any) => {
-  const [repos, setRepos] = useState<any>([])
+
+  const { loaderOrgRepos } = useRouteLoaderData("org") as any
+
+  const [repos, setRepos] = useState<any>(loaderOrgRepos)
   const [hover, setHover] = useState<boolean>(false)
 
   const [createNew, setCreateNew] = useState<boolean>(false)

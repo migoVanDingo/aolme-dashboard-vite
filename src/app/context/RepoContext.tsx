@@ -8,7 +8,7 @@ import { ModulesAPI } from "../api/ModulesAPI"
 import { useDispatch, useSelector } from "react-redux"
 
 const RepoContext = React.createContext<any | null | undefined>("")
-export function useRepo() {
+export function useRepo(loaderRepo: string) {
   return useContext(RepoContext)
 }
 

@@ -11,10 +11,10 @@ import RepoViewNotebook from '../files/RepoViewNotebook'
 const RepoNotebook = ({}: any) => {
   const dispatch = useDispatch()
 
-  const repoId = useSelector((state: any) => state.repoId)
-  const repoEntity = useSelector((state: any) => state.repoEntity)
-  const userId = useSelector((state: any) => state.userId)
-  const repoFiles = useSelector((state: any) => state.repoFiles)
+  const repoId = useSelector((state: any) => state.repo.storeRepoId)
+  const repoEntity = useSelector((state: any) => state.repo.storeRepoEntityntity)
+  const userId = useSelector((state: any) => state.user.storeUserId)
+  const repoFiles = useSelector((state: any) => state.repo.storeRepoFiles)
 
   
   const [notebooks, setNotebooks] = useState<any[]>([])

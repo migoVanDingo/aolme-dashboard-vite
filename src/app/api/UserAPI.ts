@@ -3,29 +3,30 @@ import { EditUser, PayloadCreateUser, PayloadLogin } from "../utility/interface/
 import { Requests } from "./Requests"
 export class UserAPI {
 
-    public static async createUser(payload: PayloadCreateUser) {
-        return await Requests.doPost(payload, "/api/user")
+    public static createUser(payload: PayloadCreateUser) {
+        return Requests.doPost(payload, "/api/user", import.meta.env.VITE_BACKEND_PORT)
     }
 
-    public static async createOrgUser(payload: PayloadCreateUser, orgId: string) {
-        return await Requests.doPost(payload, "/api/user?entity_id="+orgId+"&entity_type=organization")
+    public static createOrgUser(payload: PayloadCreateUser, orgId: string) {
+        return Requests.doPost(payload, "/api/user?entity_id="+orgId+"&entity_type=organization", import.meta.env.VITE_BACKEND_PORT)
     }
 
-    public static async getUserByUsername(username: string){
-        return await Requests.doGet('/api/user?username='+username)
-
-    }
-
-    public static async getUserById(userId: string){
-        return await Requests.doGet('/api/user/'+userId)
+    public static getUserByUsername(username: string){
+        return Requests.doGet('/api/user?username='+username, import.meta.env.VITE_BACKEND_PORT)
 
     }
 
-    public static async updateUser(payload: EditUser, userId: string){
-        return await Requests.doPatch(payload, '/api/user/'+userId)
+    public static getUserById(userId: string){
+        return Requests.doGet('/api/user/'+userId, import.meta.env.VITE_BACKEND_PORT)
+
     }
 
-    public static async login(payload: PayloadLogin){
-        return await Requests.doPost(payload, "/api/user/login")
+    public static updateUser(payload: EditUser, userId: string){
+        return Requests.doPatch(payload, '/api/user/'+userId, import.meta.env.VITE_BACKEND_PORT)
+    }
+
+    public static login(payload: PayloadLogin){
+        return Requests.doPost(payload, "/api/user/login", import.meta.env.VITE_BACKEND_PORT)
+        //return Requests.testPost()
     }
 }

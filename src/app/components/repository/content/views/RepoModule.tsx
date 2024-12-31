@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const RepoModule = ({modules}: any) => {
   const dispatch = useDispatch()
-  const repoId = useSelector((state: any) => state.repoId)
+  const repoId = useSelector((state: any) => state.repo.storeRepoId)
 
   
   const [content, setContent] = useState<any[]>([])
