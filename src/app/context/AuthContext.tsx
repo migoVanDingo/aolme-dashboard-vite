@@ -45,6 +45,7 @@ export default function AuthProvider({ children }: any) {
     console.log("processed: ", payload)
     UserAPI.createUser(payload)
       .then((result: any) => {
+        console.log("AuthContext.tsx -- signUp() result: ", result.data)
         console.log(result.data)
         return result.data
       })

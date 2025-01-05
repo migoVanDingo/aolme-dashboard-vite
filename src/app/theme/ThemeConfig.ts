@@ -31,6 +31,9 @@ export const light = {
             height:"360px",
             border: "1px solid #bdbdbd",
             borderRadius: "12px"  
+        },
+        nav: {
+            height: "60px",
         }
     },
     accent:{
@@ -121,6 +124,9 @@ export const dark = {
             height:"360px",
             border: "1px solid #8a8a8a",
             borderRadius: "12px" 
+        },
+        nav: {
+            height: "60px",
         }
     },
     accent:{
@@ -221,6 +227,9 @@ export const dark_grey_1 = {
             height:"360px",
             border: "1px solid #8a8a8a",
             borderRadius: "12px" 
+        },
+        nav: {
+            height: "60px",
         }
     },
     accent:{
@@ -320,6 +329,9 @@ export const light_grey_1 = {
             height:"360px",
             border: "1px solid #8a8a8a",
             borderRadius: "12px" 
+        },
+        nav: {
+            height: "60px",
         }
     },
     accent:{

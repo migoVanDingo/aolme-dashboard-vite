@@ -6,7 +6,7 @@ export const SContainer = styled(SFlexCol)`
   align-items: baseline;
   gap: 5px;
   position: relative;
-  margin: 15px 0;
+  margin: 15px 0 5px 0;
 `
 
 export const STextInput = styled.input`

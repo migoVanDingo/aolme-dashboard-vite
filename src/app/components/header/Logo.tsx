@@ -23,7 +23,7 @@ const Logo = () => {
   const navigate = useNavigate()
 
   const handleClick = () => {
-    navigate('/profile')
+    navigate('/profile/projects')
   }
 
   return (

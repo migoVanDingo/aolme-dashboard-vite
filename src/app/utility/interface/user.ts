@@ -2,10 +2,6 @@ export interface PayloadCreateUser {
     username: string
     email: string
     password?: string
-    roles?:string
-    entity_id?: string
-    entity_type?: string
-    created_by?: string
     
 }
 

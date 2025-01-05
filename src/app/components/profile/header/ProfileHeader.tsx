@@ -17,9 +17,7 @@ const SContainer = styled(SFlexRow)`
 `
 
 export const ProfileHeader = ({ activeTab, setActiveTab, tabs }: any) => {
-
-
-    
+  
   return (
     <SContainer>
         <ProfileTabs setActiveTab={setActiveTab} activeTab={activeTab} tabs={tabs}/>

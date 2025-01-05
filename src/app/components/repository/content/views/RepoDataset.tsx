@@ -5,7 +5,7 @@ import {
   setRepoItems,
   setRepoSubsets
 } from "../../../../actions"
-import { DatasetAPI } from "../../../../api/DatasetAPI"
+import { DatasetAPI } from "../../../../api/DatasetAPI__OLD"
 import { RepoAPI } from "../../../../api/RepoAPI"
 import LoadingSpinner from "../../../common/loading/LoadingSpinner"
 import EmptyContentMenu from "../dynamic/EmptyContentMenu"

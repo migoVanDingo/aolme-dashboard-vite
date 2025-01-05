@@ -5,7 +5,7 @@ import { SUserRow } from "../../styled/SOrganization"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faX } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate, useRouteLoaderData } from "react-router-dom"
-import { useDatastore } from "../../../hooks/useDatastore"
+import { useDatastore } from "../../../hooks/useDatastore__OLD"
 import { useSelector } from "react-redux"
 
 const SContainer = styled(SFlexCol)`

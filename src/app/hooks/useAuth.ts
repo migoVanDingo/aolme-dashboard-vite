@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux"
 import { UserAPI } from "../api/UserAPI"
-import { PayloadLogin } from "../utility/interface/user"
+import { PayloadCreateUser, PayloadLogin } from "../utility/interface/user"
 import { setStoreUserId, setStoreUsername } from "../store/slices/user"
 import { useNavigate } from "react-router-dom"
 
@@ -11,9 +11,9 @@ export const useAuth = () => {
   async function login(payload: PayloadLogin) {
     const response = await UserAPI.login(payload)
     console.log('useAuth.ts -- login() -- response: ', response)
-    const { username, userId } = response
+    const { username, user_id } = response
 
-    localStorage.setItem("userId", userId)
+    localStorage.setItem("userId", user_id)
     localStorage.setItem("username", username)
     nav("/profile")
 
@@ -34,5 +34,18 @@ export const useAuth = () => {
           }) */
   }
 
-  return { login }
+  async function register(payload: PayloadCreateUser) {
+      console.log("Request register: ", payload)
+      UserAPI.createUser(payload)
+        .then((result: any) => {
+          console.log("AuthContext.tsx -- signUp() result: ", result.data)
+          console.log(result.data)
+          return result.data
+        })
+        .catch((err: any) => {
+          console.error("AuthContext.tsx -- signUp() Error:", err)
+        })
+    }
+
+  return { login, register }
 }

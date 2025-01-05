@@ -5,11 +5,11 @@ import { setStoreEmail, setStoreUserId, setStoreUsername } from "../store/slices
 
 
 
-export const useProfile = (uid: string) => {
+export const useProfile = (uid: string, loaderActiveTab: string) => {
   //State Hooks
 
   const [userId, setUserId] = useState<string | null>(uid)
-  const [activeTab, setActiveTab] = useState<string>("Repositories")
+  const [activeTab, setActiveTab] = useState<string>(loaderActiveTab)
   const [userOrgs, setUserOrgs] = useState<any>([])
   const [userRepos, setUserRepos] = useState<any>([])
   const [repoContent, setRepoContent] = useState<any>("PERSONAL")
@@ -20,7 +20,6 @@ export const useProfile = (uid: string) => {
 
   useEffect(() => {
     const init = () => {
-      console.log("useProfile.ts -- useEffect() -- uid: ", uid)
       if(uid)
       {
         getUserData(uid)
@@ -38,7 +37,7 @@ export const useProfile = (uid: string) => {
   //Data functions
   const getUserData = async (uid: string) => {
     const user = await UserAPI.getUserById(uid)
-
+    console.log("useProfile.ts -- getUserData() -- user: ", user)
 
     
     dispatch(setStoreUserId(uid))
@@ -46,12 +45,6 @@ export const useProfile = (uid: string) => {
     dispatch(setStoreEmail(user.email))
 
     //dispatch(setStoreUserId(uid))
-  }
-
- 
-  //Handler Functions
-  const handleEditProfile = () => {
-    console.log("EDIT PROFILE")
   }
 
   return {
@@ -64,6 +57,5 @@ export const useProfile = (uid: string) => {
     setRepoContent,
     orgContent,
     setOrgContent,
-    handleEditProfile,
   }
 }

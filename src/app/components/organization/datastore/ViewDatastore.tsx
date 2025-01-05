@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 import DatastoreSubsetList from "./DatastoreSubsetList"
 import { DatastoreAPI } from "../../../api/DatastoreAPI"
-import { useDatastore } from "../../../hooks/useDatastore"
+import { useDatastore } from "../../../hooks/useDatastore__OLD"
 import { Outlet } from "react-router-dom"
 
 const SContainer = styled(SFlexCol)`

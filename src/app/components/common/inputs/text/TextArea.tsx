@@ -7,10 +7,12 @@ const SContainer = styled(SFlexCol)`
   gap: 5px;
   position: relative;
   margin: 15px 0;
+  width: 100%;
+
 `
 
 const STextArea = styled.textarea`
-  width: 500px;
+  width: 100%;
   height: 200px;
   border-radius: ${({theme}) => theme.container.borderRadius.md};
   padding: 7px;
@@ -23,7 +25,7 @@ const STextArea = styled.textarea`
 
 const SLabel = styled.label`
   margin: 0;
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 200;
 `
 const TextArea = ({ description, setDescription }: any) => {

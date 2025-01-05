@@ -34,23 +34,26 @@ const STab = styled(SFlexRow)`
   }
 `
 
-const SIcon = styled(FontAwesomeIcon)``
+const SIcon = styled(FontAwesomeIcon)`
+  position: relative;
+  top: 2px;
+`
 
 const RepoTabs = ({ activeTab, setActiveTab, tabs}: any) => {
   
+  const nav = useNavigate()
 
-  const [highlightedTab, setHighlightedTab] = React.useState<string>(activeTab)
+  const [highlightedTab, setHighlightedTab] = React.useState<string>("")
 
   useEffect(() => {
     const init = () => {
    
-      if(activeTab === ""){
-        setHighlightedTab("Repositories")
-      }
+      setHighlightedTab(activeTab)
+
     }
 
     return init()
-  }, []);
+  }, [activeTab]);
 
 
 
@@ -58,8 +61,14 @@ const RepoTabs = ({ activeTab, setActiveTab, tabs}: any) => {
 
   const handleClickTab = (tab: any) => {
 
-    setActiveTab(tab)
-    setHighlightedTab(tab)
+    // Set localstorage active tab
+    localStorage.setItem("activeTab", tab.id)
+
+    // Set active tab
+    setActiveTab(tab.id)
+
+    // Navigate to tab.path
+    nav(tab.path)
   }
 
   return (
@@ -69,8 +78,8 @@ const RepoTabs = ({ activeTab, setActiveTab, tabs}: any) => {
           return (
             <STab
               key={index}
-              className={highlightedTab === tab.title ? "active" : ""}
-              onClick={() => handleClickTab(tab.title)}
+              className={highlightedTab === tab.id ? "active" : ""}
+              onClick={() => handleClickTab(tab)}
         
             >
               <SIcon icon={tab.icon} />

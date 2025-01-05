@@ -1,11 +1,10 @@
-export interface ICreateRepository {
-    owner: string
+export interface ICreateProject {
+    user_id: string
     entity_id: string
     entity_type: string
     name: string   
     description: string
     is_public: boolean
-    created_by: string
 }
 
 export interface IAddRepoItem {

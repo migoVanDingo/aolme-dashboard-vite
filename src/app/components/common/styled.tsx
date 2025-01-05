@@ -7,7 +7,7 @@ export const SButton = styled(Button)`
   border: none;
   border-radius: ${({ theme }) => theme.container.borderRadius.sm};
 
-  background-color: ${({ theme }) => theme.color.color_2};
+  background-color: ${({ theme }) => theme.color.color_2_5};
   color: ${({ theme }) => theme.color.color_6};
   box-shadow: 2px 2px 8px ${({ theme }) => theme.color.shadow.dark};
   margin-top: 10px;

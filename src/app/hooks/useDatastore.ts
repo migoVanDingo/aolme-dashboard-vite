@@ -1,39 +1,32 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
+import { DatastoreAPI } from "../api/DatastoreAPI";
 
-export const useDatastore = (datastoreId: string, subsets: any) => {
+export const useDatastore = (userId: string) => {
 
-    const [subsetRows, setSubsetRows] = useState<any[]>([])
+    const [datastoreList, setDatastoreList] = useState<any[]>([])
+    const [selectedDatastore, setSelectedDatastore] = useState<string>("")
 
     useEffect(() => {
         const init = () => {
-            if(subsets && subsets.length > 0){
-                setSubsetRows(handleProcessSubsetName(subsets))
-            }
+            userId && userId !== "" && getDatastores()
         }
+
         return init()
-    }, [subsets]);
+    }, [userId]);
 
-    const handleProcessSubsetName = (subsetList: any) => {
-        return subsetList.map((subset: any) => {
-            const entityStrings = subset.name.split("_")
-            let entityObj = {}
-            entityStrings.forEach((entity: string, index: number) => {
-                const field = entity.split(":")
-                entityObj = {
-                    ...entityObj,
-                    [field[0]]: field[1]
-                }
-            })
-            return {
-                ...entityObj,
-                subsetId: subset.ds_subset_id,
-                type: subset.type
-            }
-        })
+    const getDatastores = async () => {
+        const datastores = await DatastoreAPI.getDatastoreList({ user_id: userId })
+        console.log("useDatastore.ts -- getDatastores() -- datastores: ", datastores)
+        setDatastoreList(datastores)
 
+        if(selectedDatastore === null && datastores.length > 0){
+            setSelectedDatastore(datastores[0])
+        }
     }
 
-    return { subsetRows }
-    
+    return {
+        datastoreList,
+        selectedDatastore,
+        setSelectedDatastore
+    }
 }
-

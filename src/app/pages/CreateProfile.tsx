@@ -6,7 +6,7 @@ import Button from "../components/common/buttons/Button"
 import { hashed } from "../utility/hash"
 import { FormCreateProfile, PayloadCreateUser } from "../utility/interface/user"
 import { UserAPI } from "../api/UserAPI"
-import { useAuth } from "../context/AuthContext"
+import { useAuth } from "../hooks/useAuth"
 import { useNavigate } from "react-router-dom"
 
 const SContainer = styled(SFlexCol)`
@@ -52,7 +52,7 @@ const CreateProfile = () => {
 
   const [loading, setLoading] = useState<boolean>(false)
 
-  const { register } = useAuth()
+  const { register } = useAuth() 
   const nav = useNavigate()
 
   const formInputs: FormCreateProfile[] = [
@@ -114,7 +114,7 @@ const CreateProfile = () => {
       setVerifyError("Passwords don't match")
       err = true
     }
-
+    console.log("SHould be good to go")
     if (!err) {
       setLoading(true)
       const payload: PayloadCreateUser = {

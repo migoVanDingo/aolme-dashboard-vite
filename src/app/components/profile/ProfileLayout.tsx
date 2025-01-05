@@ -1,16 +1,18 @@
-import styled, { useTheme } from "styled-components"
-import { ProfileHeader } from "./header/ProfileHeader"
-import Card from "../common/cards/Card"
-import UsernameTag from "../common/UsernameTag"
-import Button from "../common/buttons/Button"
-import { Outlet, useLoaderData, useRouteLoaderData } from "react-router-dom"
+import {
+  Outlet,
+  useLoaderData,
+  useLocation,
+  useRouteLoaderData,
+} from "react-router-dom"
+import styled from "styled-components"
+
 import { useProfile } from "../../hooks/useProfile"
 import { headerTabs } from "./Constant"
-import avatar from "../../../assets/lucy-photo.jpg"
+import { ProfileHeader } from "./header/ProfileHeader"
 
 const SProfileContainer = styled.div`
   width: 100%;
-  height: 100%;
+  height: calc(100% - ${({ theme }) => theme.header.height});
   display: grid;
   grid-template-rows: 35px auto;
   grid-template-areas:
@@ -19,36 +21,10 @@ const SProfileContainer = styled.div`
 
   position: relative;
   background-color: ${({ theme }) => theme.color.color_2};
-`
 
-const SContainer = styled.div`
-  width: 75%;
-  display: grid;
-  grid-template-columns: [left]1fr [col2] 4fr [right];
-  grid-template-rows: [top]60px [row2] 200px [row3] 200px [row4] auto[end];
-  grid-template-areas:
-    "profile list"
-    "profile list"
-    "view list"
-    "view list";
+  box-sizing: border-box;
+  padding-bottom: 20px;
 
-  grid-gap: 40px;
-
-  position: relative;
-  margin: 40px auto 0;
-  height: 100%;
-`
-const SItemContainer = styled.div`
-border: 1px solid red;
-  width: 100%;
-  overflow-y: auto;
-  grid-area: list;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 70px auto;
-  grid-template-areas:
-    "tabs"
-    "content";
 `
 
 const ProfileLayout = () => {
@@ -57,8 +33,14 @@ const ProfileLayout = () => {
     username: string
   }
 
-  const theme = useTheme()
-  const { activeTab, setActiveTab, handleEditProfile } = useProfile(userId)
+  const location = useLocation()
+  const pathSegments = location.pathname.split("/")
+  const segment = pathSegments[pathSegments.length - 1]
+
+  const { activeTab, setActiveTab } = useProfile(
+    userId,
+    segment,
+  )
 
   return (
     <SProfileContainer>
@@ -67,24 +49,16 @@ const ProfileLayout = () => {
         setActiveTab={setActiveTab}
         tabs={headerTabs}
       />
-      <SContainer>
-        <Card
-          cardStyle={theme.profile.card}
-          imageSrc={avatar}
-          username={username}
-        >
-          <UsernameTag username={username} />
-          <Button
-            handleClick={handleEditProfile}
-            className={"edit-profile"}
-            innerHtml={"Edit Profile"}
-          />
-        </Card>
-        
-        
-      </SContainer>
+
+      <Outlet context={{ username, userId }} />
     </SProfileContainer>
   )
 }
 
 export default ProfileLayout
+
+export const loader = () => {
+  
+
+  return null
+}

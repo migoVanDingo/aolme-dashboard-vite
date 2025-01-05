@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
 import styled from "styled-components"
-import { DatasetAPI } from "../../../api/DatasetAPI"
+import { DatasetAPI } from "../../../api/DatasetAPI__OLD"
 import {
   ICreateLabelStudioProject,
   LabelStudioAPI,

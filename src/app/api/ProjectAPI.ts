@@ -1,33 +1,39 @@
-import { ICreateProject } from "../utility/interface/project"
-import { Requests } from "./Requests"
+import Constant from "../utility/constant";
+import { ICreateProject } from "../utility/interface/repository";
+import { Requests } from "./Requests";
 
-export class ProjectAPI {
-  public static async createProject(
-    projectName: string,
-    projectDescription: string = "",
-    projectOwner: string
-  ) {
-    const project: ICreateProject = {
-      name: projectName,
-      description: projectDescription,
-      owner: projectOwner,
-      created_by: "migo",
-      last_updated_by: "migo",
+export default class ProjectApi {
+  public static createProject(payload: ICreateProject){
+    return Requests.doPost(payload, "/api/project", Constant.PROJECT_SERVICE_PORT)
+  }
+
+  public static getProject(args: any){
+    let queryStr = "?"
+    // for each arg field add to the query string
+    for (let key in args){
+      if(args.hasOwnProperty(key)){
+        queryStr += key + "=" + args[key] + "&"
+      }
     }
 
-    const response = await Requests.doPost(project, "/repo/project/create", import.meta.env.VITE_BACKEND_PORT)
-    return response
+    // remove the last character
+    queryStr = queryStr.slice(0, -1)
+    console.log('queryStr:', queryStr)
+    return Requests.doGet('/api/project' + queryStr, Constant.PROJECT_SERVICE_PORT)
   }
 
-  public static async getProjectList() {
-    return await Requests.doGet("/repo/project/list", import.meta.env.VITE_BACKEND_PORT)
+  public static getProjectList(args: any){
+    let queryStr = "?"
+    // for each arg field add to the query string
+    for (let key in args){
+      if(args.hasOwnProperty(key)){
+        queryStr += key + "=" + args[key] + "&"
+      }
+    }
+
+    // remove the last character
+    queryStr = queryStr.slice(0, -1)
+
+    return Requests.doGet('/api/project/all' + queryStr, Constant.PROJECT_SERVICE_PORT)
   }
-
-  public static async getProjectById(projectId: string) {
-    return await Requests.doGet("/repo/project/" + projectId, import.meta.env.VITE_BACKEND_PORT)
-  }
-
-  /*  const deleteProject = (projectId: string) => {
-
-    } */
 }

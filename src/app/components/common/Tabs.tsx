@@ -14,7 +14,7 @@ const SContainer = styled(SFlexRow)`
   margin-left: 0;
   box-sizing: border-box;
 
-  border-bottom: 1px solid ${({ theme }) => theme.color.color_5};
+
 `
 const STab = styled(SFlexRow)`
   box-sizing: content-box;
@@ -82,7 +82,7 @@ const Tabs = ({ tabs, activeTab, setContent }: any) => {
             <STab
               key={index}
               onClick={() => handleClick(index, tab.type)}
-              className={tab.type === "NEW" ? "create-new" : tab.type === activeTab ? "active" : ""}
+              className={tab.className}
             >
               <SIcon
                 className={active == index ? "active" : ""}

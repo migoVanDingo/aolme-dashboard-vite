@@ -7,7 +7,7 @@ import RepoReadMe from "../components/repository/content/readme/RepoReadMe"
 import { RepoHeader } from "../components/repository/header/RepoHeader"
 import { useRepo } from "../hooks/useRepo"
 import { RepoAPI } from "../api/RepoAPI"
-import { DatasetAPI } from "../api/DatasetAPI"
+import { DatasetAPI } from "../api/DatasetAPI__OLD"
 
 const SContainer = styled(SFlexCol)`
   width: 100%;

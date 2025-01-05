@@ -49,9 +49,9 @@ interface FormLogin {
 }
 
 const Login = ({ userId }: any) => {
-  const [email, setUsername] = useState<string>("")
+  const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
-  const [emailError, setUsernameError] = useState<string>("")
+  const [emailError, setEmailError] = useState<string>("")
   const [passwordError, setPasswordError] = useState<string>("")
   const [loading, setLoading] = useState<boolean>(false)
 
@@ -67,7 +67,7 @@ const Login = ({ userId }: any) => {
       label: "Username/Email",
       type: "text",
       inputValue: email,
-      setInputValue: setUsername,
+      setInputValue: setEmail,
       error: emailError,
     },
     {
@@ -84,7 +84,7 @@ const Login = ({ userId }: any) => {
     
 
     if (email === "") {
-      setUsernameError("Mandatory field")
+      setEmailError("Mandatory field")
       err = true
     }
 

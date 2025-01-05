@@ -24,7 +24,7 @@ import { ProfileHeader } from "../components/profile/header/ProfileHeader"
 import ProfileOrgListModule from "../components/profile/org/ProfileOrgListModule"
 import RepoProfileContent from "../components/profile/repo/RepoProfileContent"
 import { useProfile } from "../hooks/useProfile"
-import CreateRepositoryV2 from "./CreateRepositoryV2"
+import CreateRepositoryV2 from "./CreateProject"
 
 const SProfileContainer = styled.div`
   width: 100%;
@@ -185,7 +185,7 @@ const Profile = ({}: any) => {
               activeTab={repoContent}
             />
             
-            {repoContent === "PERSONAL" ? (
+            {repoContent === "PERSONAL" && userRepos ? (
               <RepoProfileContent userRepos={userRepos} />
             ) : repoContent === "PUBLIC" ? (
               <ActivityProfileContent />
@@ -195,7 +195,7 @@ const Profile = ({}: any) => {
               ""
             )}
           </SItemContainer>
-        ) : activeTab === "Organizations" ? (
+        ) : activeTab === "Organizations" && userOrgs ? (
           userOrgs.length > 0 && (
             <SItemContainer>
               <Tabs
@@ -224,14 +224,16 @@ const Profile = ({}: any) => {
 export default Profile
 
 export const loader = async () => {
-  const userRepos = await RepoAPI.getRepoByOwner(
+  /* const userRepos = await RepoAPI.getRepoByOwner(
     localStorage.getItem("userId") as string,
   )
 
   const userOrgs = await EntityUserAPI.getEntityListByUserId(localStorage.getItem("userId") as string)
+*/
 
   return {
-    userRepos,
-    userOrgs,
-  }
+    userRepos: null,
+    userOrgs: null,
+  } 
+ 
 }

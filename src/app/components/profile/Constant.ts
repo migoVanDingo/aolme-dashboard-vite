@@ -23,28 +23,38 @@ export const repoTabs = [
   
   export const headerTabs = [
     {
-      title: "Repositories",
-      callback: () => console.log("Repositories"),
+      title: "Projects",
+      id: "projects",
+      callback: () => console.log("Projects"),
       icon: faDatabase,
+      path: "/profile/projects",
     },
     {
-      title: "Datasets",
-      callback: () => console.log("Resources"),
+      title: "Datastores",
+      id: "datastores",
+      callback: () => console.log("Datastores"),
       icon: faServer,
+      path: "/profile/datastores",
     },
     {
-      title: "Organizations",
-      callback: () => console.log("Organizations"),
+      title: "Teams",
+      id: "teams",
+      callback: () => console.log("Teams"),
       icon: faPeopleGroup,
+      path: "/profile/teams",
     },
     {
       title: "Resources",
+      id: "resources",
       callback: () => console.log("Resources"),
       icon: faBriefcase,
+      path: "/profile/resources",
     },
     {
       title: "Settings",
+      id: "settings",
       callback: () => console.log("Settings"),
       icon: faGear,
+      path: "/profile/settings",
     },
   ]
