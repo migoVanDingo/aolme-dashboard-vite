@@ -31,6 +31,7 @@ import { loader as ProjectLoader } from "./app/components/project/ProjectLayout"
 import { loader as ProfileProjectsLoader } from "./app/components/profile/tabs/projects/ProjectList"
 import { loader as ProDatastoreDashLoader } from "./app/components/profile/tabs/datastores/ProDatastoresDash"
 import { loader as CreateDatastoreLoader } from "./app/pages/CreateDatastore"
+import { loader as ProfileCreateDatasetLoader } from "./app/pages/ProfileCreateDataset"
 import RootLayout, { loader as RootLoader } from "./app/pages/RootLayout"
 import CreateSubset from "./app/components/dataset/subset/CreateSubset"
 import DatastoreDashboard from "./app/components/organization/datastore/DatastoreDashboard"
@@ -56,6 +57,7 @@ import ProjSettingsLayout from "./app/components/project/settings/ProjSettingsLa
 import Routes from "./constants/routes"
 import ProDatastoresDash from "./app/components/profile/tabs/datastores/ProDatastoresDash"
 import CreateDatastore from "./app/pages/CreateDatastore"
+import ProfileCreateDataset from "./app/pages/ProfileCreateDataset"
 
 const mantineTheme = createTheme({
   /** Put your mantine theme override here */
@@ -132,7 +134,16 @@ const router = createBrowserRouter([
             loader: CreateDatastoreLoader,
             action: () => null,
             id: "profile-datastore-create",
+          },
+          {
+            path: Routes.PROFILE_DATASET_CREATE,
+            element: <ProfileCreateDataset />,
+            loader: ProfileCreateDatasetLoader,
+            action: () => null,
+            id: "profile-dataset-create",
           }
+
+          
         ],
       },
       {

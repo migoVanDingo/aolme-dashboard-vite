@@ -4,6 +4,8 @@ import { SFlexCol, SFlexRow } from "../../../common/containers/FlexContainers"
 import CreateButton from "../../../common/buttons/CreateButton"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { useDataset } from "../../../../hooks/useDataset"
+import { useNavigate } from "react-router-dom"
+import Routes from "../../../../../constants/routes"
 
 const SContainer = styled.div`
   grid-area: set;
@@ -83,9 +85,15 @@ const SRowCell = styled(SFlexRow)`
   align-items: center;
 `
 
-const ProDatasetComponent = ({ datasetList, selectedDataset, setSelectedDataset }: any) => {
+const ProDatasetComponent = ({ datasetList, selectedDataset, setSelectedDataset, selectedDatastore }: any) => {
+
+    const nav = useNavigate()
     
-    
+
+    const handleClick = () => {
+        localStorage.setItem("selectedDatastore", selectedDatastore)
+        nav(Routes.PROFILE_DATASET_CREATE)
+      }
 
 
   return (
@@ -93,9 +101,11 @@ const ProDatasetComponent = ({ datasetList, selectedDataset, setSelectedDataset 
       <SHeader>
         <SHeading>Dataset</SHeading>{" "}
         <CreateButton
-          className={"create-new sm"}
+          className={selectedDatastore !== "" ? "create-new sm" : "inactive sm"}
           innerHtml={"New Dataset"}
           icon={faPlus}
+
+          handleClick={selectedDatastore !== "" ? handleClick : () => {}}
         />{" "}
       </SHeader>
 

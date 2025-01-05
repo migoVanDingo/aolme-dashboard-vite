@@ -64,12 +64,13 @@ const SDesc = styled(SFlexCol)`
 `
 
 const ProfDatastoresDash = () => {
-  const { userId } = useLoaderData() as {
+  const { userId, datastoreId } = useLoaderData() as {
     userId: string
+    datastoreId: string
   }
 
   const { datastoreList, selectedDatastore, setSelectedDatastore } =
-    useDatastore(userId)
+    useDatastore(userId, datastoreId || "")
 
     
   const { datasetList, selectedDataset, setSelectedDataset } = useDataset(selectedDatastore)
@@ -87,6 +88,7 @@ const ProfDatastoresDash = () => {
         datasetList={datasetList}
         selectedDataset={selectedDataset}
         setSelectedDataset={setSelectedDataset} 
+        selectedDatastore={selectedDatastore} 
       />
       <SDesc>Desc</SDesc>
     </SContainer>
@@ -97,7 +99,9 @@ export default ProfDatastoresDash
 
 export const loader = async () => {
   const userId = localStorage.getItem("userId") as string
+  const datastoreId = localStorage.getItem("datastoreId") as string
   return {
     userId,
+    datastoreId
   }
 }

@@ -34,6 +34,17 @@ const SButton = styled.button`
     font-size: 0.8rem;
   }
 
+  &.inactive {
+    background-color: ${({ theme }) => theme.color.color_2};
+    color: ${({ theme }) => theme.color.color_5};
+ 
+    margin-left: auto;
+
+    &:hover {
+      cursor: not-allowed;
+    }
+  }
+
   &.create-new {
     background-color: ${({ theme }) => theme.accent.color_1_dim};
     color: ${({ theme }) => theme.color.color_7};

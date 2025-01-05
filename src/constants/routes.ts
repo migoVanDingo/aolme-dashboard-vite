@@ -8,6 +8,7 @@ class Routes {
   static PROFILE_SETTINGS = "/profile/settings";
   static PROFILE_PROJECTS_CREATE = "/profile/projects/create";
   static PROFILE_DATASTORE_CREATE = "/profile/datastores/create";
+  static PROFILE_DATASET_CREATE = "/profile/datasets/create";
   static PROJECT_VIEW = "/project/:projectName";
   static PROJECT_FILES = "/project/:projectName/files";
   static PROJECT_DATASETS = "/project/:projectName/datasets";

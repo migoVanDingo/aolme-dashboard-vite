@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 import { DatastoreAPI } from "../api/DatastoreAPI";
 
-export const useDatastore = (userId: string) => {
+export const useDatastore = (userId: string, datastoreId: string) => {
 
     const [datastoreList, setDatastoreList] = useState<any[]>([])
-    const [selectedDatastore, setSelectedDatastore] = useState<string>("")
+    const [selectedDatastore, setSelectedDatastore] = useState<string>(datastoreId || "")
 
     useEffect(() => {
         const init = () => {
@@ -19,7 +19,7 @@ export const useDatastore = (userId: string) => {
         console.log("useDatastore.ts -- getDatastores() -- datastores: ", datastores)
         setDatastoreList(datastores)
 
-        if(selectedDatastore === null && datastores.length > 0){
+        if(selectedDatastore === "" && datastores.length > 0){
             setSelectedDatastore(datastores[0])
         }
     }

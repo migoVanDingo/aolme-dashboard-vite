@@ -19,7 +19,6 @@ const SContainer = styled.div`
 
   border-right: 1px solid ${({ theme }) => theme.color.color_3};
   border-bottom: 1px solid ${({ theme }) => theme.color.color_3};
-
 `
 
 const SHeader = styled(SFlexRow)`
@@ -42,11 +41,11 @@ const SHeading = styled.h1`
 `
 
 const SListContainer = styled(SFlexCol)`
-    grid-area: store-list;
-    width: 100%;
-    height: 100%;
-    overflow-y: hidden;
-    `
+  grid-area: store-list;
+  width: 100%;
+  height: 100%;
+  overflow-y: hidden;
+`
 
 const SList = styled(SFlexCol)`
   width: 100%;
@@ -63,18 +62,27 @@ const SListRow = styled(SFlexRow)`
   background-color: ${({ theme }) => theme.color.color_2};
   border-bottom: 1px solid ${({ theme }) => theme.color.color_3};
   align-items: center;
-  &.table-head {
-    height: 40px;
-  }
-
-  &.active{
-    background-color: ${({ theme }) => theme.accent.color_1};
-  }
-
   &:hover {
     background-color: ${({ theme }) => theme.color.color_3};
     color: ${({ theme }) => theme.color.color_8};
     cursor: pointer;
+  }
+  &.table-head {
+    height: 40px;
+    &:hover {
+        color: ${({ theme }) => theme.color.color_5};
+        background-color: ${({ theme }) => theme.color.color_2};
+        cursor: default;
+    }
+  }
+
+  &.active {
+    background-color: ${({ theme }) => theme.accent.color_1_dim};
+    color: ${({ theme }) => theme.color.color_8};
+    &:hover {
+      background-color: ${({ theme }) => theme.accent.color_1_dim};
+      color: ${({ theme }) => theme.color.color_8};
+    }
   }
 `
 
@@ -89,17 +97,21 @@ const SRowCell = styled(SFlexRow)`
   align-items: center;
 `
 
-const ProStoreComp = ({ datastoreList, selectedDatastore, setSelectedDatastore }: any) => {
- 
-    const nav = useNavigate()
+const ProStoreComp = ({
+  datastoreList,
+  selectedDatastore,
+  setSelectedDatastore,
+}: any) => {
+  const nav = useNavigate()
 
-    const handleSelect = (store: any) => {
-        setSelectedDatastore(store.datastore_id)
-    }
+  const handleSelect = (store: any) => {
+    localStorage.setItem("datastoreId", store.datastore_id)
+    setSelectedDatastore(store.datastore_id)
+  }
 
-    const handleClick = () => {
-        nav(Routes.PROFILE_DATASTORE_CREATE)
-    }
+  const handleClick = () => {
+    nav(Routes.PROFILE_DATASTORE_CREATE)
+  }
 
   return (
     <SContainer>
@@ -109,7 +121,7 @@ const ProStoreComp = ({ datastoreList, selectedDatastore, setSelectedDatastore }
           className={"create-new sm"}
           innerHtml={"New Datastore"}
           icon={faPlus}
-            handleClick={handleClick}
+          handleClick={handleClick}
         />{" "}
       </SHeader>
 
@@ -119,20 +131,26 @@ const ProStoreComp = ({ datastoreList, selectedDatastore, setSelectedDatastore }
 
           <SRowCell>Last Updated</SRowCell>
         </SListRow>
-        
+
         <SList>
-        {datastoreList && datastoreList.length >= 0 ? (
-          datastoreList.map((store: any, index: number) => {
-            return (
-              <SListRow onClick={() => handleSelect(store)} className={selectedDatastore === store.datastore_id ? "active": ""} key={index}>
-                <SRowCell>{store.name}</SRowCell>
-                <SRowCell>{store.updated_at}</SRowCell>
-              </SListRow>
-            )
-          })
-        ) : (
-          <div>No Datastores</div>
-        )}
+          {datastoreList && datastoreList.length >= 0 ? (
+            datastoreList.map((store: any, index: number) => {
+              return (
+                <SListRow
+                  onClick={() => handleSelect(store)}
+                  className={
+                    selectedDatastore === store.datastore_id ? "active" : ""
+                  }
+                  key={index}
+                >
+                  <SRowCell>{store.name}</SRowCell>
+                  <SRowCell>{store.updated_at}</SRowCell>
+                </SListRow>
+              )
+            })
+          ) : (
+            <div>No Datastores</div>
+          )}
         </SList>
       </SListContainer>
     </SContainer>

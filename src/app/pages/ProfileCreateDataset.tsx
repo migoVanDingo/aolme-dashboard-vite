@@ -1,22 +1,19 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { SFlexCol, SFlexRow } from '../components/common/containers/FlexContainers'
-import { useLoaderData, useNavigate, useRouteLoaderData } from 'react-router-dom'
-import Message from '../components/common/Message'
+import { useLoaderData, useNavigate } from 'react-router-dom'
+import { DatasetAPI } from '../api/DatasetAPI'
+import Routes from '../../constants/routes'
 import Heading from '../components/common/Heading'
-import UserDropdown from '../components/common/UserDropdown'
-
-import TextArea from '../components/common/inputs/text/TextArea'
 import TextInput from '../components/common/inputs/text/TextInput'
+import Message from '../components/common/Message'
+import TextArea from '../components/common/inputs/text/TextArea'
 import { SButton } from '../components/common/styled'
 import LoadingSpinner from '../components/common/loading/LoadingSpinner'
-import { DatastoreAPI } from '../api/DatastoreAPI'
-import Routes from '../../constants/routes'
 
 const SContainer = styled(SFlexCol)`
   width: 800px;
   height:calc(calc(100vh - ${({theme}) => theme.header.height}) - ${({theme}) => theme.profile.nav.height});
-
   align-items: baseline;
   padding: 80px 10px;
   margin: auto;
@@ -44,12 +41,12 @@ const SButtonContainer = styled(SFlexRow)`
 `
 
 
-const CreateDatastore = () => {
-
+const ProfileCreateDataset = () => {
     const nav = useNavigate()
 
-    const { userId } = useLoaderData() as {
+    const { userId, datastoreId } = useLoaderData() as {
         userId: string
+        datastoreId: string
     }
     
     // use state for name, description
@@ -66,27 +63,27 @@ const CreateDatastore = () => {
           setNameError("")
           setDatastoreName("")
           setDatastoreDescription("")
-          setTimeout(createDatastore, 1000)
+          setTimeout(createDataset, 1000)
         }
       }
 
 
 
-    const createDatastore = async () => {
-        const dataStore = {
+    const createDataset = async () => {
+        const payload = {
             user_id: userId,
             name: datastoreName,
             description: datastoreDescription,
+            datastore_id: datastoreId
         }
 
-        console.log("Datastore Payload: ", dataStore)
+        console.log("dataset Payload: ", payload)
 
-        DatastoreAPI.createDatastore(dataStore)
+        DatasetAPI.createDataset(payload)
         .then((res: any) => {
-            localStorage.setItem("datastore_id", res.datastore_id)
             nav(Routes.PROFILE_DATASTORES)
         })
-        .catch((err: any) => console.error("CreateDatastore::createDatastore()::Error: ", err))
+        .catch((err: any) => console.error("CreateDataset::::Error: ", err))
     }
 
 
@@ -100,12 +97,12 @@ const CreateDatastore = () => {
     <SContainer className={isLoading ? "loading" : ""}>
       {!isLoading ? (
         <>
-          <Heading heading={"Create Datastore"} size={"md"} />
+          <Heading heading={"Create Dataset"} size={"md"} />
           <SForm>
             <TextInput
               setName={setDatastoreName}
               name={datastoreName}
-              label={"Give your Datastore a Name"}
+              label={"Give your Dataset a Name"}
               size={"lg"}
             />
             {nameError && <Message text={nameError} color={"error"} />}
@@ -133,18 +130,21 @@ const CreateDatastore = () => {
           </SForm>
         </>
       ) : (
-        <LoadingSpinner message={"Initializing Datastore"} />
+        <LoadingSpinner message={"Initializing Dataset"} />
       )}
     </SContainer>
   )
 }
 
-export default CreateDatastore
+export default ProfileCreateDataset
 
 export const loader = () => {
     const userId = localStorage.getItem("userId")
-  
-    return {
-      userId,
-    }
+    const datastoreId = localStorage.getItem("selectedDatastore")
+
+  return {
+    userId,
+    datastoreId
   }
+
+}
