@@ -78,6 +78,7 @@ const router = createBrowserRouter([
         id: "profile",
         children: [
           {
+            
             path: Routes.PROFILE_PROJECTS,
             element: <ProProjectsDash />,
             loader: () => null,

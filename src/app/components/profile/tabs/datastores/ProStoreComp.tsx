@@ -77,10 +77,11 @@ const SListRow = styled(SFlexRow)`
   }
 
   &.active {
-    background-color: ${({ theme }) => theme.accent.color_1_dim};
+    background-color: ${({ theme }) => theme.accent.color.light_blue};
     color: ${({ theme }) => theme.color.color_8};
+    
     &:hover {
-      background-color: ${({ theme }) => theme.accent.color_1_dim};
+      background-color: ${({ theme }) => theme.accent.color.light_blue};
       color: ${({ theme }) => theme.color.color_8};
     }
   }
@@ -89,6 +90,7 @@ const SListRow = styled(SFlexRow)`
 const SRowCell = styled(SFlexRow)`
   width: 100%;
   height: 100%;
+  font-weight: 500;
   padding: 10px;
   font-size: 0.8rem;
   color: inherit;

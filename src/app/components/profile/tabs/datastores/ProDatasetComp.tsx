@@ -18,7 +18,7 @@ const SContainer = styled.div`
     "set-list";
 
   border-right: 1px solid ${({ theme }) => theme.color.color_3};
-  border-bottom: 1px solid ${({ theme }) => theme.color.color_3};
+  box-sizing: border-box;
 
 `
 
@@ -42,11 +42,11 @@ const SHeading = styled.h1`
 `
 
 const SListContainer = styled(SFlexCol)`
-    grid-area: set-list;
-    width: 100%;
-    height: 100%;
-    overflow-y: hidden;
-    `
+  grid-area: set-list;
+  width: 100%;
+  height: 100%;
+  overflow-y: hidden;
+`
 
 const SList = styled(SFlexCol)`
   width: 100%;
@@ -63,14 +63,31 @@ const SListRow = styled(SFlexRow)`
   background-color: ${({ theme }) => theme.color.color_2};
   border-bottom: 1px solid ${({ theme }) => theme.color.color_3};
   align-items: center;
-  &.table-head {
-    height: 40px;
-  }
 
   &:hover {
     background-color: ${({ theme }) => theme.color.color_3};
     color: ${({ theme }) => theme.color.color_8};
     cursor: pointer;
+  }
+
+  &.table-head {
+    height: 40px;
+
+    &:hover {
+      color: ${({ theme }) => theme.color.color_5};
+      background-color: ${({ theme }) => theme.color.color_2};
+      cursor: default;
+    }
+  }
+
+  &.active {
+    background-color: ${({ theme }) => theme.accent.color.light_blue};
+    color: ${({ theme }) => theme.color.color_8};
+
+    &:hover {
+      background-color: ${({ theme }) => theme.accent.color.light_blue};
+      color: ${({ theme }) => theme.color.color_8};
+    }
   }
 `
 
@@ -85,16 +102,22 @@ const SRowCell = styled(SFlexRow)`
   align-items: center;
 `
 
-const ProDatasetComponent = ({ datasetList, selectedDataset, setSelectedDataset, selectedDatastore }: any) => {
+const ProDatasetComponent = ({
+  datasetList,
+  selectedDataset,
+  setSelectedDataset,
+  selectedDatastore,
+}: any) => {
+  const nav = useNavigate()
 
-    const nav = useNavigate()
-    
+  const handleClickCreate = () => {
+    localStorage.setItem("selectedDatastore", selectedDatastore)
+    nav(Routes.PROFILE_DATASET_CREATE)
+  }
 
-    const handleClick = () => {
-        localStorage.setItem("selectedDatastore", selectedDatastore)
-        nav(Routes.PROFILE_DATASET_CREATE)
-      }
-
+  const handleSelect = (dataset: any) => {
+    setSelectedDataset(dataset.dataset_id)
+  }
 
   return (
     <SContainer>
@@ -104,8 +127,7 @@ const ProDatasetComponent = ({ datasetList, selectedDataset, setSelectedDataset,
           className={selectedDatastore !== "" ? "create-new sm" : "inactive sm"}
           innerHtml={"New Dataset"}
           icon={faPlus}
-
-          handleClick={selectedDatastore !== "" ? handleClick : () => {}}
+          handleClick={selectedDatastore !== "" ? handleClickCreate : () => {}}
         />{" "}
       </SHeader>
 
@@ -115,20 +137,24 @@ const ProDatasetComponent = ({ datasetList, selectedDataset, setSelectedDataset,
 
           <SRowCell>Last Updated</SRowCell>
         </SListRow>
-        
+
         <SList>
-        {datasetList && datasetList.length >= 0 ? (
-          datasetList.map((set: any, index:number) => {
-            return (
-              <SListRow key={index}>
-                <SRowCell>{set.name}</SRowCell>
-                <SRowCell>{set.lastUpdated}</SRowCell>
-              </SListRow>
-            )
-          })
-        ) : (
-          <div>No Datasets in this Dataset</div>
-        )}
+          {datasetList && datasetList.length >= 0 ? (
+            datasetList.map((set: any, index: number) => {
+              return (
+                <SListRow
+                  key={set.dataset_id}
+                  onClick={() => handleSelect(set)}
+                  className={selectedDataset === set.dataset_id ? "active" : ""}
+                >
+                  <SRowCell>{set.name}</SRowCell>
+                  <SRowCell>{set.updated_at}</SRowCell>
+                </SListRow>
+              )
+            })
+          ) : (
+            <div>No Datasets in this Dataset</div>
+          )}
         </SList>
       </SListContainer>
     </SContainer>

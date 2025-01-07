@@ -15,7 +15,7 @@ export const useAuth = () => {
 
     localStorage.setItem("userId", user_id)
     localStorage.setItem("username", username)
-    nav("/profile")
+    nav("/profile/projects")
 
     /* .then((result: any) => {
             const { username, userId } = result

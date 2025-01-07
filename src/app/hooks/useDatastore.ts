@@ -14,14 +14,23 @@ export const useDatastore = (userId: string, datastoreId: string) => {
         return init()
     }, [userId]);
 
+    useEffect(() => {
+        const init = () => {
+            console.log('datastoreId', datastoreId)
+            datastoreId && datastoreId !== "" && setSelectedDatastore(datastoreId)
+        }
+
+        return init()
+    }, [datastoreId]);
+
     const getDatastores = async () => {
         const datastores = await DatastoreAPI.getDatastoreList({ user_id: userId })
-        console.log("useDatastore.ts -- getDatastores() -- datastores: ", datastores)
+        // console.log("useDatastore.ts -- getDatastores() -- datastores: ", datastores)
         setDatastoreList(datastores)
 
-        if(selectedDatastore === "" && datastores.length > 0){
-            setSelectedDatastore(datastores[0])
-        }
+        /* if(selectedDatastore === "" && datastores.length > 0){
+            setSelectedDatastore(datastores[0].datastore_id)
+        } */
     }
 
     return {
