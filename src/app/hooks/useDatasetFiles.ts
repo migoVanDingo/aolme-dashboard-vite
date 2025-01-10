@@ -8,6 +8,7 @@ export const useDatasetFiles = (datasetId: string) => {
     useEffect(() => {
         const init = () => {
             datasetId && datasetId !== "" && getDatasetFiles()
+            setDatasetFiles([])
             setSelectedDatasetFile("")
         }
 
@@ -15,9 +16,10 @@ export const useDatasetFiles = (datasetId: string) => {
     }, [datasetId]);
 
     const getDatasetFiles = async () => {
+        console.log("useDatasetFiles.ts -- getDatasetFiles() -- datasetId: ", datasetId)
         const datasetFiles = await DatasetAPI.getDatasetFiles({ dataset_id: datasetId })
 
-        //console.log("useDatasetFiles.ts -- getDatasetFiles() -- datasetFiles: ", datasetFiles)
+        console.log("useDatasetFiles.ts -- getDatasetFiles() -- datasetFiles: ", datasetFiles)
         setDatasetFiles(datasetFiles)
         
         // if(selectedDatasetFile === null && datasetFiles.length > 0){

@@ -15,6 +15,8 @@ export const useAuth = () => {
 
     localStorage.setItem("userId", user_id)
     localStorage.setItem("username", username)
+    dispatch(setStoreUserId(user_id))
+    dispatch(setStoreUsername(username))
     nav("/profile/projects")
 
     /* .then((result: any) => {

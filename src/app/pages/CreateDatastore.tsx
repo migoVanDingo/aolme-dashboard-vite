@@ -12,6 +12,7 @@ import { SButton } from '../components/common/styled'
 import LoadingSpinner from '../components/common/loading/LoadingSpinner'
 import { DatastoreAPI } from '../api/DatastoreAPI'
 import Routes from '../../constants/routes'
+import TextInputComponent from '../components/common/inputs/text/TextInputComponent'
 
 const SContainer = styled(SFlexCol)`
   width: 800px;
@@ -102,11 +103,11 @@ const CreateDatastore = () => {
         <>
           <Heading heading={"Create Datastore"} size={"md"} />
           <SForm>
-            <TextInput
-              setName={setDatastoreName}
-              name={datastoreName}
+            <TextInputComponent
+              setInputValue={setDatastoreName}
+              inputValue={datastoreName}
               label={"Give your Datastore a Name"}
-              size={"lg"}
+           
             />
             {nameError && <Message text={nameError} color={"error"} />}
 

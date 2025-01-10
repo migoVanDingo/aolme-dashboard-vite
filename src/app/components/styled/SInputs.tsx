@@ -10,9 +10,10 @@ export const SContainer = styled(SFlexCol)`
 `
 
 export const STextInput = styled.input`
-  width: 220px;
+  width: 100%;
   height: 30px;
-  border-radius: ${({theme}) => theme.container.borderRadius.md};
+  border-radius: ${({theme}) => theme.container.borderRadius.sm};
+  overflow-x: scroll;
   padding: 0px 7px;
   font-size: 1rem;
   background-color: #dedede;

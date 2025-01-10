@@ -56,10 +56,11 @@ const SButtonContainer = styled(SFlexRow)`
 `
 
 const QuickUploadV2 = ({
-  menuOption,
-  goEmptyContentMenu,
   setUploadFiles,
-  handleFormSubmit
+  handleFormSubmit,
+  reset,
+  inputRef
+
 }: any) => {
 
 
@@ -74,12 +75,13 @@ const QuickUploadV2 = ({
   }
 
   const handleChange = (e: any) => {
+
     setUploadFiles(e.target.files)
   }
 
   const handleCancel = () => {
-    handleReset()
-    goEmptyContentMenu()
+    reset ? reset() : handleReset()
+    
   }
   
 
@@ -88,18 +90,18 @@ const QuickUploadV2 = ({
       <SContainer>
         <FileUpload
           id="ful-form"
-          inputFile={inputFile}
+          inputFile={inputRef ? inputRef : inputFile}
           handleFileChange={handleChange}
         />
       </SContainer>
-      <SButtonContainer>
+      {/* <SButtonContainer>
         <SButton className="small right" onClick={handleCancel}>
           Cancel
         </SButton>
         <SButton className="small right" onClick={handleFormSubmit}>
           Upload
         </SButton>
-      </SButtonContainer>
+      </SButtonContainer> */}
     </SColContainer>
   )
 }

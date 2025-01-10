@@ -9,18 +9,20 @@ import Datetime from "../../../../utility/datetime"
 
 const SContainer = styled(SFlexCol)`
   align-items: baseline;
+  width: 100%;
 `
 const SInnerContainer = styled(SFlexRow)`
   background-color: ${({ theme }) => theme.color.color_1};
   font-size: 1rem;
-  width: 500px;
+  width: 100%;
   height: 45px;
   align-items: center;
   padding: 5px 10px;
   border-radius: ${({ theme }) => theme.container.borderRadius.sm};
   border: 1px solid ${({ theme }) => theme.color.color_3};
   cursor: pointer;
-
+  color: ${({ theme }) => theme.color.color_6};
+  
 
   &:hover {
     background-color: ${({ theme }) => theme.color.color_3};
@@ -31,24 +33,27 @@ const SButtonContainer = styled(SFlexRow)`
   height: 100%;
   padding: 0;
   margin: 0;
+  align-items: center;  
 `
 
 const SIcon = styled(FontAwesomeIcon)`
   border: none;
+  color: ${({ theme }) => theme.color.color_6};
 `
 
 const SInput = styled.input`
   font-size: ${({ theme }) => theme.color.color_2};
   cursor: pointer;
-  width: 3fr;
+  width: 100%;
 
   &::file-selector-button {
     border: none;
     color: ${({ theme }) => theme.color.color_6};
     background-color: transparent;
-    border-right: 2px solid ${({ theme }) => theme.color.color_1};
+    border-right: 2px solid ${({ theme }) => theme.color.color_6};
     height: 100%;
     cursor: pointer;
+
   }
 `
 
@@ -57,7 +62,7 @@ const SButton = styled(Button)`
     height: 30px;
     border: none;
     border-radius: ${({ theme }) => theme.container.borderRadius.sm};
-
+  
     background-color:${({ theme }) => theme.color.color_3};
     color: ${({ theme }) => theme.color.color_6};
     margin-top: 10px;

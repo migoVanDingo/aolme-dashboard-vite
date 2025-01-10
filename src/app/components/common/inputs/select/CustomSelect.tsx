@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { SFlexCol } from "../../containers/FlexContainers"
 
 const SSelect = styled.select`
-  width: 300px;
+  width: 100%;
   height: 35px;
 `
 const SContainer = styled(SFlexCol)`
@@ -43,13 +43,17 @@ const CustomSelect = ({
 
   return (
     <SContainer>
-      <SLabel>{label}</SLabel>
+
+      {
+        label && <SLabel>{label}</SLabel>
+      }
+
 
       <SSelect
         onChange={(e: any) => handleInput(e)}
         value={type}
       >
-        <SOption value=""> Select Stage</SOption>
+        <SOption value=""> Select Option</SOption>
         {options.map((option: string, index: number) => {
           return (
             <SOption key={index} value={option}>

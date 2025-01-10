@@ -2,8 +2,15 @@ import styled from "styled-components"
 import { SFlexCol } from "../../containers/FlexContainers"
 
 const SSelect = styled.select`
-  width: 100%;
-  height: 35px;
+   width: 100%;
+  height: 30px;
+  border-radius: ${({theme}) => theme.container.borderRadius.sm};
+  overflow-x: scroll;
+  padding: 0px;
+  font-size: 0.8rem;
+  background-color: #dedede;
+  font-family: 'Helvetica', sans-serif;
+  font-weight: 500;
 `
 const SContainer = styled(SFlexCol)`
   align-items: baseline;

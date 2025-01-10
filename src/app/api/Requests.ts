@@ -3,10 +3,11 @@ import axios from "axios"
 export class Requests {
   public static async updloadFile(
     formData: any,
+    port: string | number,
     endpoint: string,
     onUploadProgress: any
   ) {
-    return await axios.post("http://localhost:5003" + endpoint, formData, {
+    return await axios.post("http://localhost:" + port + endpoint, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

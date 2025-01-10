@@ -45,6 +45,15 @@ export class DatasetAPI {
 
 
   // Dataset Files
+  public static async uploadFiles(payload: any, onUploadProgress: any) {
+    return Requests.updloadFile(
+      payload,
+      Constant.DATASTORE_SERVICE_PORT,
+      Constant.service.datastore_manager.file_handler.FILE_UPLOAD,
+      onUploadProgress
+    )
+  }
+
   public static async getDatasetFiles(args: any) {
     let queryStr = "?"
     // for each arg field add to the query string
@@ -58,7 +67,7 @@ export class DatasetAPI {
     queryStr = queryStr.slice(0, -1)
 
     return Requests.doGet(
-      "/api/dataset/file/list" + queryStr,
+      "/api/datastore/file/list" + queryStr,
       Constant.DATASTORE_SERVICE_PORT
     )
   }
