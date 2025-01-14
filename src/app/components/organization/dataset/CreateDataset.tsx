@@ -6,17 +6,12 @@ import TextInputComponent from "../../common/inputs/text/TextInputComponent"
 import {
   FormCreateRepo,
   FormEditRepo,
-  ICreateRepository,
 } from "../../../utility/interface/repository"
 import { RepoAPI } from "../../../api/RepoAPI"
 import { IDataset } from "../../../utility/interface/dataset"
 import SelectInput from "../../common/inputs/select/SelectInput"
-import { DatasetAPI } from "../../../api/DatasetAPI__OLD"
-import {
-  setDatasetDescription,
-  setDatasetId,
-  setDatasetName,
-} from "../../../actions"
+import { DatasetAPI } from "../../../api/DatasetAPI"
+
 
 const SContainer = styled(SFlexCol)`
   align-items: baseline;
@@ -114,9 +109,9 @@ const CreateDataset = ({ trigger, hideCreateNew }: any) => {
     DatasetAPI.createDataset(payload)
       .then((res) => {
         console.log("CreateDataset::handleCreate():: Dataset Created: ", res)
-        dispatch(setDatasetId(res.dataset_id))
-        dispatch(setDatasetName(res.name))
-        dispatch(setDatasetDescription(res.description))
+        // dispatch(setDatasetId(res.dataset_id))
+        // dispatch(setDatasetName(res.name))
+        // dispatch(setDatasetDescription(res.description))
         trigger()
       })
       .catch((err) => {

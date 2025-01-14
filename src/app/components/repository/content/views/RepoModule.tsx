@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import EmptyContentMenu from '../dynamic/EmptyContentMenu'
 import RepoViewContent from './RepoViewContent'
-import { setRepoConfig, setRepoItems } from '../../../../actions'
+// import { setRepoConfig, setRepoItems } from '../../../../actions'
 import { ModulesAPI } from '../../../../api/ModulesAPI'
 import { RepoAPI } from '../../../../api/RepoAPI'
 import { useDispatch, useSelector } from 'react-redux'
@@ -56,7 +56,7 @@ const RepoModule = ({modules}: any) => {
         console.log("Repository::init()::getRepoItems::res::", res.data)
         if (filterRepoItems(res.data).length > 0) {
             setItemList(filterRepoItems(res.data))
-            dispatch(setRepoItems(res.data))
+            //dispatch(setRepoItems(res.data))
           
         } else {
             showSelectView()
@@ -78,7 +78,7 @@ const RepoModule = ({modules}: any) => {
         //setDataset(res.data)
         if (res.data !== null) {
       
-          dispatch(setRepoConfig(res.data))
+          //dispatch(setRepoConfig(res.data))
           setContent(res.data)
         }
       })

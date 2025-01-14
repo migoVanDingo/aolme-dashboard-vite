@@ -10,6 +10,7 @@ import Message from '../components/common/Message'
 import TextArea from '../components/common/inputs/text/TextArea'
 import { SButton } from '../components/common/styled'
 import LoadingSpinner from '../components/common/loading/LoadingSpinner'
+import TextInputComponent from '../components/common/inputs/text/TextInputComponent'
 
 const SContainer = styled(SFlexCol)`
   width: 800px;
@@ -50,19 +51,19 @@ const ProfileCreateDataset = () => {
     }
     
     // use state for name, description
-    const [datastoreName, setDatastoreName] = useState<string>("")
-    const [datastoreDescription, setDatastoreDescription] = useState<string>("")
+    const [datasetName, setDatasetName] = useState<string>("")
+    const [datasetDescription, setDatasetDescription] = useState<string>("")
     const [isLoading, setLoading] = useState<boolean>(false)
     const [nameError, setNameError] = useState<string>("")
 
     const handleCreate = async (e: any) => {
-        if (datastoreName === "") {
-          setNameError("** Datastore Name is required")
+        if (datasetName === "") {
+          setNameError("** Dataset Name is required")
         } else {
           setLoading(true)
           setNameError("")
-          setDatastoreName("")
-          setDatastoreDescription("")
+          setDatasetName("")
+          setDatasetDescription("")
           setTimeout(createDataset, 1000)
         }
       }
@@ -72,8 +73,8 @@ const ProfileCreateDataset = () => {
     const createDataset = async () => {
         const payload = {
             user_id: userId,
-            name: datastoreName,
-            description: datastoreDescription,
+            name: datasetName,
+            description: datasetDescription,
             datastore_id: datastoreId
         }
 
@@ -99,19 +100,18 @@ const ProfileCreateDataset = () => {
         <>
           <Heading heading={"Create Dataset"} size={"md"} />
           <SForm>
-            <TextInput
-              setName={setDatastoreName}
-              name={datastoreName}
+            <TextInputComponent
+              setInputValue={setDatasetName}
+              inputValue={datasetName}
               label={"Give your Dataset a Name"}
-              size={"lg"}
             />
             {nameError && <Message text={nameError} color={"error"} />}
 
 
 
             <TextArea
-              description={datastoreDescription}
-              setDescription={setDatastoreDescription}
+              description={datasetDescription}
+              setDescription={setDatasetDescription}
             />
             {/* <FileUpload handleFileChange={handleFileChange} /> */}
 
@@ -119,7 +119,7 @@ const ProfileCreateDataset = () => {
               <SButton
                 type="submit"
                 handleClick={handleCreate}
-                innerHtml={"Create Datastore"}
+                innerHtml={"Create Dataset"}
               />
               <SButton
                 type="button"

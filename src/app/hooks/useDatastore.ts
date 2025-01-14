@@ -5,6 +5,7 @@ export const useDatastore = (userId: string, datastoreId: string) => {
 
     const [datastoreList, setDatastoreList] = useState<any[]>([])
     const [selectedDatastore, setSelectedDatastore] = useState<string>(datastoreId || "")
+    const [datastoreConfig, setDatastoreConfig] = useState<any>({})
 
     useEffect(() => {
         const init = () => {
@@ -17,7 +18,10 @@ export const useDatastore = (userId: string, datastoreId: string) => {
     useEffect(() => {
         const init = () => {
             console.log('datastoreId', datastoreId)
-            datastoreId && datastoreId !== "" && setSelectedDatastore(datastoreId)
+            if(datastoreId && datastoreId !== ""){
+                setSelectedDatastore(datastoreId)
+                getDatastoreConfig(datastoreId)
+            }
         }
 
         return init()
@@ -27,15 +31,18 @@ export const useDatastore = (userId: string, datastoreId: string) => {
         const datastores = await DatastoreAPI.getDatastoreList({ user_id: userId })
         // console.log("useDatastore.ts -- getDatastores() -- datastores: ", datastores)
         setDatastoreList(datastores)
+    }
 
-        /* if(selectedDatastore === "" && datastores.length > 0){
-            setSelectedDatastore(datastores[0].datastore_id)
-        } */
+    const getDatastoreConfig = async (datastoreId: string) => {
+        const config = await DatastoreAPI.getDatastoreConfig(datastoreId)
+        //console.log("useDatastore.ts -- getDatastoreConfig() -- config: ", config)
+        setDatastoreConfig(config.sort((a: any, b: any) => a.order_index - b.order_index))
     }
 
     return {
         datastoreList,
         selectedDatastore,
-        setSelectedDatastore
+        setSelectedDatastore,
+        datastoreConfig
     }
 }

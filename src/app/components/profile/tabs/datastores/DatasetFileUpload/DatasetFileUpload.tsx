@@ -8,8 +8,6 @@ import QuickUploadV2 from "../../../../repository/content/files/QuickUploadV2"
 const SContainer = styled(SFlexCol)`
   width: 100%;
   min-height: 150px;
-  border-radius: ${({ theme }) => theme.container.borderRadius.md};
-  border: 1px solid ${({ theme }) => theme.color.color_3};
   margin: 10px 0;
 `
 

@@ -6,7 +6,7 @@ import UploadDatasetFilesRepo from "../../upload/UploadDatasetFilesRepo"
 import LoadingSpinner from "../../../common/loading/LoadingSpinner"
 import { LabelStudioAPI } from "../../../../api/LabelStudioAPI"
 import Dataset from "../../../../pages/Dataset"
-import { DatasetAPI } from "../../../../api/DatasetAPI__OLD"
+import { DatasetAPI } from "../../../../deprecated/DatasetAPI__OLD"
 import QuickUploadV2 from "./QuickUploadV2"
 
 const SContainer = styled(SFlexCol)`

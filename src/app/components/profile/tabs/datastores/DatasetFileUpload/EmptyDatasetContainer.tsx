@@ -4,6 +4,7 @@ import DatasetFileUpload from "./DatasetFileUpload"
 import DisplayUploadFiles from "./DisplayUploadFiles"
 import { DatasetAPI } from "../../../../../api/DatasetAPI"
 import { useSelector } from "react-redux"
+import DatasetFileAdd from "./DatasetFileAdd"
 
 const SContainer = styled.div`
   display: grid;
@@ -11,7 +12,7 @@ const SContainer = styled.div`
   height: 100%;
   padding: 0 0 10px 0;
 
-  grid-template-rows: 2fr 4fr;
+  grid-template-rows: 2fr 6fr;
   grid-template-areas:
     "top"
     "bottom";
@@ -99,7 +100,7 @@ const EmptyDatasetContainer = ({ selectedItem }: any) => {
     
   }
 
-  const inputFiles = useRef(null)
+  const inputFiles = useRef(null) as any
 
   const handleReset = () => {
     if (inputFiles.current) {
@@ -119,36 +120,27 @@ const EmptyDatasetContainer = ({ selectedItem }: any) => {
         <SHeading>Empty Dataset</SHeading>
         <SPara>
           <li>
-            Raw data files (e.g. video, audio, images, etc.) are stored in the
-            datastore and accessible to any dataset created within the
-            datastore.
+            Add datastore files to this dataset.
           </li>
           <li>
-            All ground truth and annotation files uploaded will be specific to
-            this particular dataset.{" "}
+            Upload files to this dataset.
           </li>
-          <li>
-            So for example you could have a datastore let's call it AOLME Video
-            Datastore. Then you could have two datsets AOLME-Typing and
-            AOLME-Writing. The annotations/ground-truth are specific to the
-            Typing and Writing datasets, but the raw video uploaded can be
-            accessed by either.
-          </li>
+         
         </SPara>
       </SCardTop>
       <SCardBottom>
-        <SSubheading>
+   {/*      <SSubheading>
           Datastore ID: {selectedItem && selectedItem.datastore_id}
         </SSubheading>
         <SSubheading>
           Dataset ID: {selectedItem && selectedItem.dataset_id}
-        </SSubheading>
+        </SSubheading> */}
 
         {!uploadFiles || uploadFiles.length === 0 ? (
-          <DatasetFileUpload
-            setUploadFiles={handleSetUploadFiles}
+          <DatasetFileAdd
+            /* setUploadFiles={handleSetUploadFiles}
             handleReset={handleReset}
-            inputFiles={inputFiles}
+            inputFiles={inputFiles} */
           />
         ) : (
           <DisplayUploadFiles

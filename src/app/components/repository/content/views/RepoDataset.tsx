@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import {
-  setRepoDataset,
-  setRepoItems,
-  setRepoSubsets
-} from "../../../../actions"
-import { DatasetAPI } from "../../../../api/DatasetAPI__OLD"
+
+import { DatasetAPI } from "../../../../api/DatasetAPI"
 import { RepoAPI } from "../../../../api/RepoAPI"
 import LoadingSpinner from "../../../common/loading/LoadingSpinner"
 import EmptyContentMenu from "../dynamic/EmptyContentMenu"
@@ -93,35 +89,35 @@ const RepoDataset = ({}: any) => {
   }
 
   function getDatasets(contentId: string) {
-    DatasetAPI.getDatasetById(contentId)
-      .then((res: any) => {
-        console.log("RepoDataset::init()::getDatasets::res::", res.data)
-        //setDataset(res.data)
-        if (res.data !== null) {
-          getSubsets(res.data["dataset_id"])
-          dispatch(setRepoDataset(res.data))
-          setComponentDataset(res.data)
+    // DatasetAPI.getDatasetById(contentId)
+    //   .then((res: any) => {
+    //     console.log("RepoDataset::init()::getDatasets::res::", res.data)
+    //     //setDataset(res.data)
+    //     if (res.data !== null) {
+    //       getSubsets(res.data["dataset_id"])
+    //       dispatch(setRepoDataset(res.data))
+    //       setComponentDataset(res.data)
           
-        }
-      })
-      .catch((err: any) =>
-        console.error("RepoDataset::init()::getDatasets::error::", err),
-      )
+    //     }
+    //   })
+    //   .catch((err: any) =>
+    //     console.error("RepoDataset::init()::getDatasets::error::", err),
+    //   )
   }
 
   function getSubsets(datasetId: string) {
-    DatasetAPI.getSubsetListByDatasetId(datasetId)
-      .then((res: any) => {
-        console.log("RepoDataset::init()::getSubsets::res::", res.data)
-        //setSubsets(res.data)
-        if (res.data !== null && res.data.length > 0) {
-          dispatch(setRepoSubsets(res.data))
-          setComponentSubsets(res.data)
-        }
-      })
-      .catch((err: any) =>
-        console.error("RepoDataset::init()::getSubsets::error::", err),
-      )
+    // DatasetAPI.getSubsetListByDatasetId(datasetId)
+    //   .then((res: any) => {
+    //     console.log("RepoDataset::init()::getSubsets::res::", res.data)
+    //     //setSubsets(res.data)
+    //     if (res.data !== null && res.data.length > 0) {
+    //       dispatch(setRepoSubsets(res.data))
+    //       setComponentSubsets(res.data)
+    //     }
+    //   })
+    //   .catch((err: any) =>
+    //     console.error("RepoDataset::init()::getSubsets::error::", err),
+    //   )
   }
 
   const handleFormSubmit = () => {
@@ -141,15 +137,15 @@ const RepoDataset = ({}: any) => {
       repo_item_type: "DATASET",
       repo_id: repoId,
     }
-    DatasetAPI.handleInitializeDatasetRepoLabeler(payload, uploadFiles, (e: any) => {
-      setProgress(Math.round((100 * e.loaded) / e.total))
-    } )
-    .then((res: any) => {
-      console.log("handleInitializeDatasetRepoLabeler::res::", res)
-      setIsSelectDatasetView(false)
-      setLoading(false)
-    })
-    .catch((err: any) => console.error("handleInitializeDatasetRepoLabeler::err::", err))
+    // DatasetAPI.handleInitializeDatasetRepoLabeler(payload, uploadFiles, (e: any) => {
+    //   setProgress(Math.round((100 * e.loaded) / e.total))
+    // } )
+    // .then((res: any) => {
+    //   console.log("handleInitializeDatasetRepoLabeler::res::", res)
+    //   setIsSelectDatasetView(false)
+    //   setLoading(false)
+    // })
+    // .catch((err: any) => console.error("handleInitializeDatasetRepoLabeler::err::", err))
   }
 
   

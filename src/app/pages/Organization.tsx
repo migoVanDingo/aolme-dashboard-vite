@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Outlet, useLoaderData, useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import { DatasetAPI } from "../api/DatasetAPI__OLD"
+// import { DatasetAPI } from "../deprecated/DatasetAPI__OLD"
 import EntityUserAPI from "../api/EntityUserAPI"
 import { RepoAPI } from "../api/RepoAPI"
 import {
@@ -346,14 +346,14 @@ export const loader = async () => {
   const orgName = localStorage.getItem("orgName") as string
   const loaderOrgUsers = await EntityUserAPI.getUserListByEntityId(orgId)
   const loaderOrgRepos = await RepoAPI.getRepoByEntity(orgId)
-  const loaderOrgDatasets = await DatasetAPI.getDatasetListByEntity(orgId)
+  // const loaderOrgDatasets = await DatasetAPI.getDatasetListByEntity(orgId)
 
   const data = {
     orgId,
     orgName,
     loaderOrgUsers,
     loaderOrgRepos,
-    loaderOrgDatasets,
+    // loaderOrgDatasets,
   }
 
   return data

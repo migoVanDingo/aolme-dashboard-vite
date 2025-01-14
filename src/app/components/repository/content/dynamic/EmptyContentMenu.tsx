@@ -4,7 +4,7 @@ import { SFlexCol } from "../../../common/containers/FlexContainers"
 import TextArea from "../../../common/inputs/text/TextArea"
 import TextInput from "../../../common/inputs/text/TextInput"
 import QuickUploadV2 from "../files/QuickUploadV2"
-import SelectOrgContentView from "./SelectOrgContentView"
+// import SelectOrgContentView from "./SelectOrgContentView"
 import UploadDatasetFilesRepo from "../../upload/UploadDatasetFilesRepo"
 
 const SContainer = styled(SFlexCol)`
@@ -101,7 +101,7 @@ const EmptyContentMenu = ({
     return menuOption && createHeading()
   }, [menuOption])
 
-  if (createFileMethod === "ORG") {
+/*   if (createFileMethod === "ORG") {
     //Select from org files menu
     return (
       <SelectOrgContentView
@@ -111,7 +111,7 @@ const EmptyContentMenu = ({
         triggerReload={reload}
       />
     )
-  } else if (createFileMethod === "UPLOAD") {
+  } else  */if (createFileMethod === "UPLOAD") {
     //Upload file
     return (
       <UploadDatasetFilesRepo

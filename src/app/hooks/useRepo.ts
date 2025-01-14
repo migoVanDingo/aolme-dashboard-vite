@@ -3,7 +3,7 @@ import { setStoreRepoContent, setStoreRepoDataset, setStoreRepoDescription, setS
 import { useDispatch } from "react-redux"
 import { OrganizationAPI } from "../api/OrganizationAPI"
 import { RepoAPI } from "../api/RepoAPI"
-import { DatasetAPI } from "../api/DatasetAPI__OLD"
+import { DatasetAPI } from "../deprecated/DatasetAPI__OLD"
 
 export const useRepo = (repo: any = null, loaderRepoContent: any = null, loaderDataset: any = null) => {
   const [repoItems, setRepoItems] = useState<any>([])

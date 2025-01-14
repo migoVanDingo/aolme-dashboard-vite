@@ -1,9 +1,9 @@
-import React, { useContext, useState, useEffect } from "react"
-import { UserAPI } from "../api/UserAPI"
+/* import React, { useContext, useState, useEffect } from "react"
+import { UserAPI } from "../../api/UserAPI"
 import { store } from "../store"
 import { setStoreUserEmail, setStoreUserId, setStoreUsername } from "../actions"
-import { PayloadCreateUser, PayloadLogin } from "../utility/interface/user"
-import { hashed } from "../utility/hash"
+import { PayloadCreateUser, PayloadLogin } from "../../utility/interface/user"
+import { hashed } from "../../utility/hash"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
@@ -97,3 +97,4 @@ export default function AuthProvider({ children }: any) {
     </AuthContext.Provider>
   )
 }
+ */

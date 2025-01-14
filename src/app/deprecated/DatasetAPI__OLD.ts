@@ -1,11 +1,11 @@
 import FileUploadService from "../services/FileUploadService"
 import { IDataset } from "../utility/interface/dataset"
-import { Requests } from "./Requests"
+
 
 
 
 export class DatasetAPI {
-  /* This DatasetAPI class also interacts with the Subset and Subset Item backend APIs */
+  /* This DatasetAPI class also interacts with the Subset and Subset Item backend APIs 
 
   //Dataset API
   public static async createDataset(payload: IDataset) {
@@ -119,6 +119,6 @@ export class DatasetAPI {
   public static async createDatastoreSubset(payload: any) {
     return Requests.doPost(payload, "/api/datastore/subset", import.meta.env.VITE_DATASTORE_PORT)
   }
+}*/
+
 }
-
-

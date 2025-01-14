@@ -3,8 +3,6 @@ import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import styled, { ThemeProvider } from "styled-components"
-import { useAuth } from "./app/context/AuthContext"
-import CreateOrganization from "./app/pages/CreateOrganization"
 import CreateRepositoryV2 from "./app/pages/CreateProject"
 import Organization from "./app/pages/Organization"
 import Profile from "./app/pages/Profile"
@@ -212,12 +210,12 @@ const router = createBrowserRouter([
         action: () => null,
         id: "repo",
       },
-      {
+      /* {
         path: Routes.ORGANIZATION_CREATE,
         element: <CreateOrganization />,
         loader: () => null,
         action: () => null,
-      },
+      }, */
       {
         path: Routes.ORGANIZATION,
         element: <Organization />,
@@ -355,29 +353,6 @@ const SButton = styled.button`
 
 function App() {
   const [theme, setTheme] = useState<object>(dark_grey_1)
-
-  const { currentUser } = useAuth()
-  const dispatch = useDispatch()
-
-  function selectTheme(e: any) {
-    switch (e.target.value) {
-      case "dark":
-        setTheme(dark_grey_1)
-        break
-      case "light":
-        setTheme(light_grey_1)
-        break
-
-      default:
-        setTheme(dark_grey_1)
-        break
-    }
-  }
-
-  const handleThemeChange = () => {
-    if (theme === dark_grey_1) setTheme(light_grey_1)
-    else setTheme(dark_grey_1)
-  }
 
   return (
     <MantineProvider theme={mantineTheme}>

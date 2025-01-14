@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../deprecated/context/AuthContext";
 
 export default function PrivateRoute({ children }: any) {
   const { currentUser } = useAuth();

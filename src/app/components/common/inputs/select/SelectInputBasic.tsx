@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { SFlexCol } from "../../containers/FlexContainers"
 
 const SSelect = styled.select`
-   width: 100%;
+  width: 100%;
   height: 30px;
   border-radius: ${({theme}) => theme.container.borderRadius.sm};
   overflow-x: scroll;
@@ -13,6 +13,7 @@ const SSelect = styled.select`
   font-weight: 500;
 `
 const SContainer = styled(SFlexCol)`
+width: 100%;
   align-items: baseline;
   position: relative;
   margin: 15px 0;
@@ -22,8 +23,21 @@ const SLabel = styled.label`
   margin: 5px 0;
   font-size: 0.8rem;
   font-weight: 200;
+  color: ${({ theme }) => theme.color.color_7};
   &.disabled {
     color: ${({ theme }) => theme.color.color_2};
+  }
+
+  &.sm {
+    font-size: 0.7rem;
+  }
+
+  &.md {
+    font-size: 1rem;
+  }
+
+  &.lg {
+    font-size: 1.2rem;
   }
 `
 
@@ -35,10 +49,11 @@ const SelectInputBasic = ({
   defaultValue,
   options,
   disabled,
+  labelSize
 }: any) => {
   return (
     <SContainer>
-      <SLabel className={disabled && "disabled"}>{label}</SLabel>
+      <SLabel className={`${disabled && "disabled"} ${labelSize && labelSize}`}>{label}</SLabel>
 
       <SSelect
         onChange={(e: any) => handleChange(e)}

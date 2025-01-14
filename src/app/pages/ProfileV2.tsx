@@ -12,7 +12,7 @@ import ActivityProfileContent from "../components/profile/activity/ActivityProfi
 import { UserAPI } from "../api/UserAPI"
 import { useLocation, useParams } from "react-router-dom"
 import { connect, useSelector } from "react-redux"
-import { useAuth } from "../context/AuthContext"
+import { useAuth } from "../deprecated/context/AuthContext"
 import ProfileOrgListModule from "../components/profile/org/ProfileOrgListModule"
 import EntityUserAPI from "../api/EntityUserAPI"
 import { ProfileHeader } from "../components/profile/header/ProfileHeader"

@@ -9,6 +9,8 @@ import { useDatastore } from "../../../../hooks/useDatastore"
 import { useDataset } from "../../../../hooks/useDataset"
 import ProDataDashList from "./ProDataDashList"
 import { useDatasetFiles } from "../../../../hooks/useDatasetFiles"
+import { useDispatch } from "react-redux"
+import { setDatastoreConfig } from "../../../../store/slices/datastore"
 
 const SContainer = styled.div`
   grid-area: content;
@@ -78,6 +80,8 @@ const SDesc = styled(SFlexCol)`
 `
 
 const ProfDatastoresDash = () => {
+
+  const dispatch = useDispatch()
   const { userId, datastoreId } = useLoaderData() as {
     userId: string
     datastoreId: string
@@ -94,7 +98,7 @@ const ProfDatastoresDash = () => {
   const defaultBreadCrumb = new Set(["Datastore"])
 
   // Hook to get the datastores
-  const { datastoreList, selectedDatastore, setSelectedDatastore } =
+  const { datastoreList, selectedDatastore, datastoreConfig, setSelectedDatastore } =
     useDatastore(userId, datastoreId || "")
 
   // Hook to get the datasets
@@ -145,8 +149,6 @@ const ProfDatastoresDash = () => {
         )
         const name = dataset[0] && dataset[0].name
 
-        console.log("Dataset", dataset)
-
         let temp = breadCrumb
 
         if (temp && temp.size > 2) {
@@ -161,6 +163,16 @@ const ProfDatastoresDash = () => {
     }
     return init()
   }, [selectedDataset, datasetFiles])
+
+
+  useEffect(() => {
+    const init = () => {
+      if (datastoreConfig !== null) {
+        dispatch(setDatastoreConfig(datastoreConfig))
+      }
+    }
+    return init()
+  }, [datastoreConfig]);
 
   return (
     <SContainer>
