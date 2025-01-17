@@ -6,6 +6,7 @@ export default class Constant {
     public static readonly PROJECT_SERVICE_PORT = "5013"
     public static readonly USER_SERVICE_PORT = "5014"
     public static readonly TEAM_SERVICE_PORT = "5015"
+    public static readonly LABEL_STUDIO_INTEGRATION_SERVICE_PORT = "5016"
 
     public static readonly service = {
 

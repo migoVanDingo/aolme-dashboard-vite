@@ -10,7 +10,8 @@ import { useDataset } from "../../../../hooks/useDataset"
 import ProDataDashList from "./ProDataDashList"
 import { useDatasetFiles } from "../../../../hooks/useDatasetFiles"
 import { useDispatch } from "react-redux"
-import { setDatastoreConfig } from "../../../../store/slices/datastore"
+import { setDatasets, setDatastoreConfig, setDatastoreId, setDatastoreName } from "../../../../store/slices/datastore"
+import { setDatasetId, setDatasetName } from "../../../../store/slices/dataset"
 
 const SContainer = styled.div`
   grid-area: content;
@@ -32,7 +33,7 @@ const SContainer = styled.div`
   position: relative;
   margin: 0px auto 0;
   box-sizing: border-box;
-  height: calc(calc(100vh - ${({ theme }) => theme.header.height}) - ${({ theme }) => theme.profile.nav.height}
+  min-height: calc(calc(100vh - ${({ theme }) => theme.header.height}) - ${({ theme }) => theme.profile.nav.height}
   );
 `
 
@@ -102,7 +103,7 @@ const ProfDatastoresDash = () => {
     useDatastore(userId, datastoreId || "")
 
   // Hook to get the datasets
-  const { datasetList, selectedDataset, setSelectedDataset } =
+  const { datasetList, selectedDataset, setSelectedDataset, handleSetSelected } =
     useDataset(selectedDatastore)
 
   // Hook to get dataset-files
@@ -130,6 +131,11 @@ const ProfDatastoresDash = () => {
         const bc = new Set([...defaultBreadCrumb, name])
         setSelectedItem(store[0])
         setBreadCrumb(bc)
+
+        dispatch(setDatasets(datasetList))
+        dispatch(setDatastoreId(selectedDatastore))
+        dispatch(setDatastoreName(name))
+
       }
     }
 
@@ -159,20 +165,24 @@ const ProfDatastoresDash = () => {
         const bc = new Set([...(temp || []), "Dataset", name])
         setSelectedItem(dataset[0])
         setBreadCrumb(bc)
+
+        
+        dispatch(setDatasetId(selectedDataset))
+        dispatch(setDatasetName(name))
       }
     }
     return init()
   }, [selectedDataset, datasetFiles])
 
 
-  useEffect(() => {
+  /* useEffect(() => {
     const init = () => {
       if (datastoreConfig !== null) {
         dispatch(setDatastoreConfig(datastoreConfig))
       }
     }
     return init()
-  }, [datastoreConfig]);
+  }, [datastoreConfig]); */
 
   return (
     <SContainer>
@@ -184,7 +194,7 @@ const ProfDatastoresDash = () => {
 
       <ProDataDashList
         selectedItem={selectedItem}
-        setSelected={setSelectedDataset}
+        setSelected={handleSetSelected}
         list={list}
         type={type}
         breadCrumb={breadCrumb && [...breadCrumb]}
@@ -193,7 +203,7 @@ const ProfDatastoresDash = () => {
       <ProDatasetComponent
         datasetList={datasetList}
         selectedDataset={selectedDataset}
-        setSelectedDataset={setSelectedDataset}
+        setSelectedDataset={handleSetSelected}
         selectedDatastore={selectedDatastore}
       />
       <SInfoContainer>

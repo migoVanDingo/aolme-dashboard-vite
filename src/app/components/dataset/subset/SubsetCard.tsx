@@ -7,7 +7,7 @@ import { SUserCol, SUserRow } from "../../styled/SOrganization"
 import {
   ICreateLabelStudioProject,
   LabelStudioAPI,
-} from "../../../api/LabelStudioAPI"
+} from "../../../api/labeler/LabelStudioAPI"
 import { useSelector } from "react-redux"
 import { ISyncImportStorage } from "../../../utility/interface/project"
 import FileUploadService from "../../../services/FileUploadService"

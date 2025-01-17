@@ -23,7 +23,7 @@ const SHeading = styled.h1`
 `
 
 const SButtonContainer = styled(SFlexRow)`
-width: 100%;
+  width: 100%;
   gap: 20px;
   padding: 0;
   margin: 0;
@@ -50,7 +50,7 @@ const SButton = styled.button`
     color: ${({ theme }) => theme.color.color_8};
   }
 
-  &.push-right{
+  &.push-right {
     margin-left: auto;
   }
 
@@ -61,7 +61,6 @@ const SButton = styled.button`
     margin-top: 10px;
     cursor: pointer;
   }
-
 `
 
 const DatasetFileGroupSelect = ({ handleSubmit }: any) => {
@@ -71,7 +70,6 @@ const DatasetFileGroupSelect = ({ handleSubmit }: any) => {
   const [formState, setFormState] = useState<any>(
     datastoreConfig && datastoreConfig.length > 0
       ? datastoreConfig.reduce((acc: any, field: any) => {
-          
           acc[field.field_name] = ""
           return acc
         }, {})
@@ -94,6 +92,7 @@ const DatasetFileGroupSelect = ({ handleSubmit }: any) => {
         datastoreConfig.map((field: any, index: number) => {
           return (
             <SelectInputBasic
+              key={index}
               label={field.field_label}
               name={field.field_name}
               handleChange={handleChange}
@@ -109,9 +108,8 @@ const DatasetFileGroupSelect = ({ handleSubmit }: any) => {
         <p>No file groups available</p>
       )}
       <SButtonContainer>
-      <SButton className={"push-right"}>Cancel</SButton>
+        <SButton className={"push-right"}>Cancel</SButton>
         <SButton onClick={() => handleSubmit(formState)}>Submit</SButton>
-        
       </SButtonContainer>
     </SContainer>
   )

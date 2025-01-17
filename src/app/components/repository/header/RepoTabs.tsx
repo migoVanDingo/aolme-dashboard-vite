@@ -22,7 +22,7 @@ import { ProcessAPI } from "../../../api/ProcessAPI"
 import {
   ICreateLabelStudioProject,
   LabelStudioAPI,
-} from "../../../api/LabelStudioAPI"
+} from "../../../api/labeler/LabelStudioAPI"
 
 const SContainer = styled(SFlexRow)`
   grid-area: tabs;

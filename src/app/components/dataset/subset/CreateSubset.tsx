@@ -7,7 +7,7 @@ import { DatasetAPI } from "../../../deprecated/DatasetAPI__OLD"
 import {
   ICreateLabelStudioProject,
   LabelStudioAPI,
-} from "../../../api/LabelStudioAPI"
+} from "../../../api/labeler/LabelStudioAPI"
 import { ICreateSubset, ILabelSubset } from "../../../utility/interface/dataset"
 import { FormCreateRepo } from "../../../utility/interface/repository"
 import { SFlexCol, SFlexRow } from "../../common/containers/FlexContainers"

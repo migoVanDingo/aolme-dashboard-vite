@@ -78,7 +78,6 @@ const EmptyDatasetContainer = ({ selectedItem }: any) => {
   const userId = useSelector((state: any) => state.user.storeUserId)
 
   const handleSubmit = async () => {
-   
     const data = new FormData()
     uploadFiles.forEach((file: any) => {
       data.append("file", file)
@@ -97,7 +96,6 @@ const EmptyDatasetContainer = ({ selectedItem }: any) => {
     })
 
     console.log("Upload Response:", upload)
-    
   }
 
   const inputFiles = useRef(null) as any
@@ -119,17 +117,12 @@ const EmptyDatasetContainer = ({ selectedItem }: any) => {
       <SCardTop>
         <SHeading>Empty Dataset</SHeading>
         <SPara>
-          <li>
-            Add datastore files to this dataset.
-          </li>
-          <li>
-            Upload files to this dataset.
-          </li>
-         
+          <li>Add datastore files to this dataset.</li>
+          <li>Upload files to this dataset.</li>
         </SPara>
       </SCardTop>
       <SCardBottom>
-   {/*      <SSubheading>
+        {/*      <SSubheading>
           Datastore ID: {selectedItem && selectedItem.datastore_id}
         </SSubheading>
         <SSubheading>
@@ -138,7 +131,7 @@ const EmptyDatasetContainer = ({ selectedItem }: any) => {
 
         {!uploadFiles || uploadFiles.length === 0 ? (
           <DatasetFileAdd
-            /* setUploadFiles={handleSetUploadFiles}
+          /* setUploadFiles={handleSetUploadFiles}
             handleReset={handleReset}
             inputFiles={inputFiles} */
           />

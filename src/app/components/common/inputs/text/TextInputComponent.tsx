@@ -29,6 +29,20 @@ const SLabel = styled.label`
   margin: 5px 0;
   font-size: 0.8rem;
   font-weight: 200;
+  color: ${({ theme }) => theme.color.color_5};
+
+  &.sm {
+    font-size: 0.7rem;
+  }
+
+  &.md {
+    font-size: 0.9rem;
+    font-weight: 300;
+  }
+
+  &.lg {
+    font-size: 1.1rem;
+  }
 `
 
 const SError = styled.p`
@@ -58,6 +72,7 @@ const TextInputComponent = ({
   inputType,
   setInputValue,
   label,
+  labelSize,
   selectOptions,
   setOptions,
   error,
@@ -68,7 +83,7 @@ const TextInputComponent = ({
 
   return (
     <SContainer>
-      <SLabel>{label}</SLabel>
+      <SLabel className={labelSize && labelSize}>{label}</SLabel>
       {inputType === "select" ? (
         <SelectInput
           defaultValue={inputValue}

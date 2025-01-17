@@ -15,6 +15,11 @@ export const useDataset = (datastoreId: string) => {
         return init()
     }, [datastoreId]);
 
+    const handleSetSelected = (datasetId: string) => {
+        localStorage.setItem("datasetId", datasetId)
+        setSelectedDataset(datasetId)
+    }
+
     const getDatasets = async () => {
         const datasets = await DatasetAPI.getDatasetList({ datastore_id: datastoreId })
 
@@ -29,6 +34,7 @@ export const useDataset = (datastoreId: string) => {
     return {
         datasetList,
         selectedDataset,
-        setSelectedDataset
+        setSelectedDataset,
+        handleSetSelected
     }
 }

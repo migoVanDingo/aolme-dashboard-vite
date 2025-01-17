@@ -1,12 +1,18 @@
 import React, { useEffect } from "react"
 import styled from "styled-components"
 import { SFlexRow } from "../../../../common/containers/FlexContainers"
+import LoadingSpinner from "../../../../common/loading/LoadingSpinner"
+import { PayloadAddFilesToDataset } from "../../../../../api/payload/PayloadAddFilesToDataset"
+import { DatasetAPI } from "../../../../../api/DatasetAPI"
+import { useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import Routes from "../../../../../../constants/routes"
 
 const SContainer = styled.div`
   display: grid;
   width: 100%;
   height: 100%;
-  grid-template-rows: 2fr 6fr;
+  grid-template-rows: 80px auto;
   grid-template-areas:
     "top"
     "bottom";
@@ -18,7 +24,7 @@ const SHeader = styled(SFlexRow)`
   padding: 15px 25px 15px;
   margin: 0;
   align-items: baseline;
-  justify-content: space-between;
+  gap: 20px;
   background-color: ${({ theme }) => theme.color.color_2};
   border-top-right-radius: ${({ theme }) => theme.container.borderRadius.lg};
   border-top-left-radius: ${({ theme }) => theme.container.borderRadius.lg};
@@ -62,8 +68,8 @@ const SButton = styled.button`
     color: ${({ theme }) => theme.color.color_8};
     box-shadow: 2px 2px 2px ${({ theme }) => theme.color.color_1};
   }
-  
-  &.remove{
+
+  &.remove {
     background-color: #b10000;
     color: ${({ theme }) => theme.color.color_8};
     box-shadow: 2px 2px 2px ${({ theme }) => theme.color.color_1};
@@ -82,6 +88,7 @@ const SList = styled.ul`
   width: 100%;
   height: 100%;
   overflow-y: auto;
+  grid-area: bottom;
 `
 const SListItem = styled.li`
   width: 100%;
@@ -133,41 +140,90 @@ const SButtonContainer = styled(SFlexRow)`
   padding: 35px;
   margin: 0;
   box-sizing: border-box;
-
 `
 
 const DatasetFileGroupList = ({ sets, handleToggle }: any) => {
-    const [formSets, setFormSets] = React.useState<any>([]);
-  
-    // Sync formSets with sets prop
-    useEffect(() => {
-      if (sets) {
-        setFormSets(sets.map((set: any) => ({ ...set, selected: set.selected || false })));
-      }
-    }, [sets]);
-  
-    // Toggle selected state
-    const toggleSets = (setId: string) => {
-      setFormSets((prevSets: any) =>
-        prevSets.map((set: any) =>
-          set.setId === setId ? { ...set, selected: !set.selected } : set
-        )
-      );
-    };
-  
-    // Handle submit
-    const handleSubmit = () => {
-      const selectedSets = formSets.filter((set: any) => set.selected);
-      console.log("Submitting:", selectedSets);
-    };
-  
+  const nav = useNavigate()
+
+  const [formSets, setFormSets] = React.useState<any>([])
+  const [toggleAll, setToggleAll] = React.useState<boolean>(false)
+  const [loading, setLoading] = React.useState<boolean>(false)
+
+  // Sync formSets with sets prop
+  useEffect(() => {
+    if (sets) {
+      setFormSets(
+        sets.map((set: any) => ({ ...set, selected: set.selected || false })),
+      )
+    }
+  }, [sets])
+
+  const handleToggleAll = () => {
+    const newToggleAll = !toggleAll
+    setToggleAll(newToggleAll)
+    setFormSets((prevSets: any) =>
+      prevSets.map((set: any) => ({ ...set, selected: newToggleAll })),
+    )
+  }
+
+  // Toggle selected state
+  const toggleSets = (setId: string) => {
+    setFormSets((prevSets: any) =>
+      prevSets.map((set: any) =>
+        set.setId === setId ? { ...set, selected: !set.selected } : set,
+      ),
+    )
+  }
+
+  // Handle submit
+  const handleSubmit = () => {
+    const userId = localStorage.getItem("userId")
+    const datasetId = localStorage.getItem("datasetId")
+
+    if (!userId || !datasetId) {
+      console.error(
+        "CLS: DatasetFileGroupList --- FN: handleSubmit ---",
+        "userId or datasetId not found",
+      )
+      window.alert("userId or datasetId not found")
+      return
+    }
+
+    const selectedSets = formSets.filter((set: any) => set.selected)
+    const payload = PayloadAddFilesToDataset(userId, datasetId, selectedSets)
+    setLoading(true)
+    console.log("payload", payload)
+    DatasetAPI.addFilesToDatasetFromDatastore(payload)
+      .then((res: any) => {
+        localStorage.setItem("datasetId", datasetId)
+        nav(Routes.PROFILE_DATASTORES)
+        setLoading(false)
+      })
+      .catch((err: any) => {
+        console.error("CLS: DatasetFileGroupList --- FN: handleSubmit ---", err)
+        setLoading(false)
+      })
+  }
+
+  if (loading) {
+    return <LoadingSpinner message={"Adding Files to Dataset"} />
+  } else
     return (
       <SContainer>
         <SHeader>
           <SHeading>Select to Add to Dataset</SHeading>
-          <SButton onClick={handleToggle}>Back to Search</SButton>
+
+          <SButton className={"push-right"} onClick={handleToggle}>
+            Back to Search
+          </SButton>
+          <SButton
+            className={!toggleAll ? "submit" : "remove"}
+            onClick={handleToggleAll}
+          >
+            {!toggleAll ? "Add All" : "Remove All"}
+          </SButton>
         </SHeader>
-  
+
         <SList>
           <SListItem>
             <SItemCell className={"sm"}>{"#"}</SItemCell>
@@ -181,19 +237,23 @@ const DatasetFileGroupList = ({ sets, handleToggle }: any) => {
               <SItemCell className={"lg"}>{set.setName}</SItemCell>
               <SItemCell className={"md"}>{set.numFiles}</SItemCell>
               <SItemCell className={"md"}>
-                <SButton className={`${set.selected ? "remove" : "submit"} ${"sm"}`} onClick={() => toggleSets(set.setId)}>
+                <SButton
+                  className={`${set.selected ? "remove" : "submit"} ${"sm"}`}
+                  onClick={() => toggleSets(set.setId)}
+                >
                   {set.selected ? "Remove" : "Add"}
                 </SButton>
               </SItemCell>
             </SListItem>
           ))}
           <SButtonContainer>
-          <SButton className={"push-right"}  onClick={handleSubmit}>Add To Dataset</SButton>
+            <SButton className={"push-right"} onClick={handleSubmit}>
+              Add To Dataset
+            </SButton>
           </SButtonContainer>
         </SList>
       </SContainer>
-    );
-  };
-  
-  export default DatasetFileGroupList;
-  
+    )
+}
+
+export default DatasetFileGroupList
