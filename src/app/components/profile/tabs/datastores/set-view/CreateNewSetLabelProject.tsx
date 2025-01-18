@@ -8,6 +8,7 @@ import TextInputComponent from "../../../../common/inputs/text/TextInputComponen
 import SelectInputBasic from "../../../../common/inputs/select/SelectInputBasic"
 import LoadingSpinner from "../../../../common/loading/LoadingSpinner"
 import { useSelector } from "react-redux"
+import { PayloadCreateLabelProject } from "../../../../../api/labeler/payload/PayloadCreateLabelProject"
 
 const SContainer = styled.div`
   display: grid;
@@ -118,6 +119,7 @@ const CreateNewSetLabelProject = ({ scrollTop, fileSet, setMetadata }: any) => {
 
     const userId = useSelector((state: any) => state.user.storeUserId)
     const datasetId = useSelector((state: any) => state.dataset.datasetId)
+    const datastoreId = useSelector((state: any) => state.datastore.storeDatastoreId)
  
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
@@ -161,7 +163,11 @@ const CreateNewSetLabelProject = ({ scrollTop, fileSet, setMetadata }: any) => {
         scrollTop()
     }
 
+    const payload = PayloadCreateLabelProject({userId, datasetId, datastoreId, fileSet, metadata: setMetadata, projectInfo: formState})
+
     
+
+
   }
 
   const isTemplateSelected = formState.template !== "Make a Selection"
