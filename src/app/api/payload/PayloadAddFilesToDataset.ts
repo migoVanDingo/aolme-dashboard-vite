@@ -1,7 +1,7 @@
 interface IInput {
   setId: string
   setName: string
-  numFiles?: number
+  num_files?: number
   selected?: boolean
   type: string
 }

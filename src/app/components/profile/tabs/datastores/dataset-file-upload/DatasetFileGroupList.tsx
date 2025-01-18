@@ -235,7 +235,7 @@ const DatasetFileGroupList = ({ sets, handleToggle }: any) => {
             <SListItem key={index}>
               <SItemCell className={"sm"}>{index + 1}</SItemCell>
               <SItemCell className={"lg"}>{set.setName}</SItemCell>
-              <SItemCell className={"md"}>{set.numFiles}</SItemCell>
+              <SItemCell className={"md"}>{set.num_files}</SItemCell>
               <SItemCell className={"md"}>
                 <SButton
                   className={`${set.selected ? "remove" : "submit"} ${"sm"}`}

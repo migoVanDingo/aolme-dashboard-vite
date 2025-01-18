@@ -9,6 +9,8 @@ import SelectInputBasic from "../../../../common/inputs/select/SelectInputBasic"
 import LoadingSpinner from "../../../../common/loading/LoadingSpinner"
 import { useSelector } from "react-redux"
 import { PayloadCreateLabelProject } from "../../../../../api/labeler/payload/PayloadCreateLabelProject"
+import { LabelStudioAPI } from "../../../../../api/labeler/LabelStudioAPI"
+import { JobAPI } from "../../../../../api/job/JobAPI"
 
 const SContainer = styled.div`
   display: grid;
@@ -125,9 +127,10 @@ const CreateNewSetLabelProject = ({ scrollTop, fileSet, setMetadata }: any) => {
   const [error, setError] = useState("")
   const [formState, setFormState] = useState({
     template: "Make a Selection",
-    projectName: "",
+    project_name: "",
     description: "",
     instructions: "",
+    type:"",
     fps: 0,
     labels: [""], // Start with one label
   })
@@ -155,18 +158,26 @@ const CreateNewSetLabelProject = ({ scrollTop, fileSet, setMetadata }: any) => {
     handleInputChange("template", e.target.value)
   }
 
+  const handleChangeType = (e: any) => {
+    handleInputChange("type", e.target.value)
+  }
+
   const handleSubmit = () => {
     
     setError("")
-    if(formState.template === "Make a Selection" && formState.projectName === ""){
+    if(formState.template === "Make a Selection" && formState.project_name === ""){
         setError("You must select a template or provide a project name")
         scrollTop()
     }
 
-    const payload = PayloadCreateLabelProject({userId, datasetId, datastoreId, fileSet, metadata: setMetadata, projectInfo: formState})
+    const payload = PayloadCreateLabelProject({userId, datasetId, datastoreId, fileSet, metadata: setMetadata, project_info: formState})
+    console.log('Payload:', payload)
 
-    
-
+    // JobAPI.initJob(payload)
+    // .then((res: any) => {
+    //     console.log(res)
+    // })
+    // .catch((err: any) => console.error("F:CreateNewSetLabelProject.tsx::::FN:handleSubmit",err))
 
   }
 
@@ -208,13 +219,26 @@ const CreateNewSetLabelProject = ({ scrollTop, fileSet, setMetadata }: any) => {
               <TextInputComponent
                 label={"Name of New Project Template"}
                 labelSize={"md"}
-                inputValue={formState.projectName}
+                inputValue={formState.project_name}
                 setInputValue={(value: any) =>
-                  handleInputChange("projectName", value)
+                  handleInputChange("project_name", value)
                 }
               />
 
               <SDivider />
+
+              <SelectInputBasic
+            label={"Data Type (Video, Image, Audio etc.)"}
+            handleChange={handleChangeType}
+            value={formState.type ? formState.type : "Make a Selection"}
+            options={[
+              "Make a Selection",
+              "video",
+              "audio",
+              "image",
+              "other"
+            ]}
+          />
 
               <TextInputComponent
                 inputType={"text"}

@@ -169,7 +169,7 @@ const DatasetFileSetList = ({ list, sets, handleViewProjects }: any) => {
             return (
               <SFileRow>
                 <SFileCell className={"lg"}>{fileSet.set_name}</SFileCell>
-                <SFileCell className={"sm"}>{fileSet.numFiles}</SFileCell>
+                <SFileCell className={"sm"}>{fileSet.num_files}</SFileCell>
                 <SFileCell className={"sm"}>
                   {
                     list.filter(

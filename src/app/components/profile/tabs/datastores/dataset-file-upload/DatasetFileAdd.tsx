@@ -53,14 +53,14 @@ const DatasetFileAdd = ({}: any) => {
       const setId = metadata.set_id
       const type = file.file_type
 
-      let numFiles = metadata.total_in_set
-      //remove leading 0 in numFiles
-      if (numFiles[0] === "0") {
-        numFiles = numFiles.slice(1)
+      let num_files = metadata.total_in_set
+      //remove leading 0 in num_files
+      if (num_files[0] === "0") {
+        num_files = num_files.slice(1)
       }
-      numFiles = parseInt(numFiles)
+      num_files = parseInt(num_files)
 
-      return JSON.stringify({ setId, setName, numFiles, type })
+      return JSON.stringify({ setId, setName, num_files, type })
     })
 
     //Sets consist of unique set_name, for each set there are multiple files so this cuts down on the result list presented to the user. Each of these are unique, objects so comparing them by JSON string is necessary, hence this complicated line of code.

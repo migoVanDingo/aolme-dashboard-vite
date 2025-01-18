@@ -39,7 +39,7 @@ const DatasetFiles = ({ list, selectedItem }: any) => {
           return JSON.stringify({
             set_id: JSON.parse(item.metadata).set_id,
             set_name: JSON.parse(item.metadata).set_name,
-            numFiles: JSON.parse(item.metadata).total_in_set.replace(/^0+/, ""),
+            num_files: JSON.parse(item.metadata).total_in_set.replace(/^0+/, ""),
           })
         }),
       ),

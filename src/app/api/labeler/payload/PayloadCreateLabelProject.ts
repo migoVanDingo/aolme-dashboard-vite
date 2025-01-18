@@ -6,7 +6,7 @@ interface IInput {
     datasetId: string
     datastoreId: string
     metadata: any
-    projectInfo: any
+    project_info: any
 }
 
 export interface IPayloadCreateLabelProject {
@@ -24,7 +24,7 @@ export const PayloadCreateLabelProject = ({
     datastoreId,
     fileSet,
     metadata,
-    projectInfo
+    project_info
 }: IInput): IPayloadCreateLabelProject => {
     const payload = {
         job_name: "LABEL_PROJECT_INITIALIZATION",
@@ -32,27 +32,8 @@ export const PayloadCreateLabelProject = ({
         dataset_id: datasetId,
         datastore_id: datastoreId,
         set_id: fileSet["set_id"],
-        project_info: {
-            name: projectInfo["projectName"],
-            description: projectInfo["description"],
-            instructions: projectInfo["instructions"],
-            fps: projectInfo["fps"],
-            labels: projectInfo["labels"]
-        },
-        metadata: {
-            cohort: metadata["cohort"],
-            level: metadata["level"],
-            school: metadata["school"],
-            date: metadata["date"],
-            group_name: metadata["group_name"],
-            facilitator: metadata["facilitator"],
-            quality: metadata["quality"],
-            num_files: parseInt(fileSet["numFiles"]),
-            set_id: fileSet["set_id"],
-            set_name: fileSet["set_name"],
-        }
-        
-
+        ...project_info,
+        ...metadata
     }
 
     return payload
