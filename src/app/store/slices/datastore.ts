@@ -5,7 +5,7 @@ const initialState = {
     storeDatastoreName: "",
     storeDatastoreDescription: "",
     storeDatastoreDatasets: [],
-    storeDatastoreConfig: [],
+    storeDatastoreConfig: {},
 }
 
 export const datastoreSlice = createSlice({

@@ -5,10 +5,19 @@ import EmptyDatasetContainer from "./dataset-file-upload/EmptyDatasetContainer"
 import DatasetFileSetList from "./DatasetFileSetList"
 import SetLabelProjectView from "./set-view/SetView"
 import SetView from "./set-view/SetView"
+import LoadingSpinner from "../../../common/loading/LoadingSpinner"
+import { SFlexCol } from "../../../common/containers/FlexContainers"
 
 const SContainer = styled.div`
   width: 100%;
   height: 100%;
+`
+
+const SLoadingContainer = styled(SFlexCol)`
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
 `
 
 const DatasetFiles = ({ list, selectedItem }: any) => {
@@ -39,7 +48,10 @@ const DatasetFiles = ({ list, selectedItem }: any) => {
           return JSON.stringify({
             set_id: JSON.parse(item.metadata).set_id,
             set_name: JSON.parse(item.metadata).set_name,
-            num_files: JSON.parse(item.metadata).total_in_set.replace(/^0+/, ""),
+            num_files: JSON.parse(item.metadata).total_in_set.replace(
+              /^0+/,
+              "",
+            ),
           })
         }),
       ),
@@ -74,20 +86,27 @@ const DatasetFiles = ({ list, selectedItem }: any) => {
           fileSet={projectSetView}
           scrollTop={scrollTop}
           scrollableRef={scrollableRef}
+          selectedItem={selectedItem}
         />
       </SContainer>
+    )
+  } else if (!list || list.length === 0) {
+    return <EmptyDatasetContainer selectedItem={selectedItem} />
+  } else if (!uniqueSets || uniqueSets.length === 0) {
+    return (
+      <SLoadingContainer>
+        <LoadingSpinner message={"Loading"} />
+      </SLoadingContainer>
     )
   } else {
     return (
       <SContainer>
-        {list && list.length > 0 && uniqueSets && uniqueSets.length > 0 ? (
+        {list && list.length > 0 && uniqueSets && uniqueSets.length > 0 && (
           <DatasetFileSetList
             list={list}
             sets={uniqueSets}
             handleViewProjects={handleViewProjects}
           />
-        ) : (
-          <EmptyDatasetContainer selectedItem={selectedItem} />
         )}
       </SContainer>
     )

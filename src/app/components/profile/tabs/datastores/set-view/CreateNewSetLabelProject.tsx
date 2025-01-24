@@ -102,35 +102,43 @@ const SButton = styled.button`
 `
 
 const SLoadingContainer = styled(SFlexCol)`
-    width: 100%;
-    height: 100%;
-    align-items: center;
-
-    `
+  width: 100%;
+  height: 100%;
+  align-items: center;
+`
 
 const SError = styled.p`
-    color: #cc0505;
-    background-color: ${({ theme }) => theme.color.color_1};
-    padding: 10px;
-    border-radius: ${({ theme }) => theme.container.borderRadius.sm};
-    box-shadow: 2px 2px 2px ${({ theme }) => theme.color.color_1};
-    margin-top: 10px;
-    `
+  color: #cc0505;
+  background-color: ${({ theme }) => theme.color.color_1};
+  padding: 10px;
+  border-radius: ${({ theme }) => theme.container.borderRadius.sm};
+  box-shadow: 2px 2px 2px ${({ theme }) => theme.color.color_1};
+  margin-top: 10px;
+`
 
-const CreateNewSetLabelProject = ({ scrollTop, fileSet, setMetadata }: any) => {
+const CreateNewSetLabelProject = ({
+  scrollTop,
+  fileSet,
+  setMetadata,
+  config,
+  handlSetViewOption,
+}: any) => {
+  const userId = useSelector((state: any) => state.user.storeUserId)
+  const datasetId = useSelector((state: any) => state.dataset.datasetId)
+  const datastoreId = useSelector(
+    (state: any) => state.datastore.storeDatastoreId,
+  )
 
-    const userId = useSelector((state: any) => state.user.storeUserId)
-    const datasetId = useSelector((state: any) => state.dataset.datasetId)
-    const datastoreId = useSelector((state: any) => state.datastore.storeDatastoreId)
- 
+  const [intervalId, setIntervalId] = useState<any>(null)
   const [loading, setLoading] = useState(false)
+  const [loadingMessage, setLoadingMessage] = useState("")
   const [error, setError] = useState("")
   const [formState, setFormState] = useState({
     template: "Make a Selection",
     project_name: "",
     description: "",
     instructions: "",
-    type:"",
+    type: "",
     fps: 0,
     labels: [""], // Start with one label
   })
@@ -163,31 +171,98 @@ const CreateNewSetLabelProject = ({ scrollTop, fileSet, setMetadata }: any) => {
   }
 
   const handleSubmit = () => {
-    
     setError("")
-    if(formState.template === "Make a Selection" && formState.project_name === ""){
-        setError("You must select a template or provide a project name")
-        scrollTop()
+    if (
+      formState.template === "Make a Selection" &&
+      formState.project_name === ""
+    ) {
+      setError("You must select a template or provide a project name")
+      scrollTop()
     }
 
-    const payload = PayloadCreateLabelProject({userId, datasetId, datastoreId, fileSet, metadata: setMetadata, project_info: formState})
-    console.log('Payload:', payload)
+    const config_order = config.map((c: any) => {
+      return {
+        field_name: c.field_name,
+        order_index: c.order_index,
+        field_type: c.field_type,
+      }
+    })
 
-    // JobAPI.initJob(payload)
-    // .then((res: any) => {
-    //     console.log(res)
-    // })
-    // .catch((err: any) => console.error("F:CreateNewSetLabelProject.tsx::::FN:handleSubmit",err))
+    const payload = PayloadCreateLabelProject({
+      userId,
+      datasetId,
+      datastoreId,
+      fileSet,
+      metadata: setMetadata,
+      project_info: formState,
+      config_order,
+    })
+    console.log("Payload:", payload)
+    setLoadingMessage("Initializing Labeling Project")
+    setLoading(true)
+    JobAPI.initJob(payload)
+      .then((res: any) => {
+        console.log("response", res)
 
+        handlePolling(res.job_id)
+      })
+      .catch((err: any) =>
+        console.error("F:CreateNewSetLabelProject.tsx::::FN:handleSubmit", err),
+      )
+  }
+
+  const handlePolling = (jobId: string) => {
+    setIntervalId(setInterval(() => handleCheckStatus(jobId), 1000))
+  }
+
+  const handleCheckStatus = (jobId: string) => {
+    JobAPI.pollJobStatus(jobId)
+      .then((res: any) => {
+        console.log(res)
+        if (res.data.status === "COMPLETED") {
+          console.log("COMPLETED --- response: ", res)
+          clearInterval(intervalId)
+          setLoading(false)
+          handlSetViewOption("VIEW")
+        } else if (res.data.status === "FAILED") {
+          clearInterval(intervalId)
+          setLoading(false)
+          console.log('FAILED --- response: ', res)
+          window.alert(
+            "Failed to create labeling project, check logs and db for job_id: " +
+              jobId,
+          )
+          console.error(
+            "Failed to create labeling project, check logs and db for job_id: " +
+              jobId,
+          )
+        } else if (res.data.status === "IN_PROGRESS") {
+          console.log("IN_PROGRESS --- response: ", res)
+          if (res.data.last_stage_completed !== "")
+            setLoadingMessage(
+              "Finishing task: " + res.data.last_stage_completed,
+            )
+          else
+            setLoadingMessage(
+              "Initializing Labeling Project. This may take a while...",
+            )
+        }
+      })
+      .catch((err: any) =>
+        console.error(
+          "F:CreateNewSetLabelProject.tsx::::FN:handlePolling",
+          err,
+        ),
+      )
   }
 
   const isTemplateSelected = formState.template !== "Make a Selection"
 
   if (loading) {
     return (
-    <SLoadingContainer>
-        <LoadingSpinner message={"Initializing Labeling Project"} />
-    </SLoadingContainer>
+      <SLoadingContainer>
+        <LoadingSpinner message={loadingMessage} />
+      </SLoadingContainer>
     )
   } else {
     return (
@@ -197,10 +272,8 @@ const CreateNewSetLabelProject = ({ scrollTop, fileSet, setMetadata }: any) => {
         </SHeader>
 
         <SForm>
-            {
-                error && error !== "" && <SError>{error}</SError>
-            }
-   
+          {error && error !== "" && <SError>{error}</SError>}
+
           <SelectInputBasic
             label={"Select from Template"}
             handleChange={handleChangeTemplate}
@@ -228,26 +301,24 @@ const CreateNewSetLabelProject = ({ scrollTop, fileSet, setMetadata }: any) => {
               <SDivider />
 
               <SelectInputBasic
-            label={"Data Type (Video, Image, Audio etc.)"}
-            handleChange={handleChangeType}
-            value={formState.type ? formState.type : "Make a Selection"}
-            options={[
-              "Make a Selection",
-              "video",
-              "audio",
-              "image",
-              "other"
-            ]}
-          />
+                label={"Data Type (Video, Image, Audio etc.)"}
+                handleChange={handleChangeType}
+                value={formState.type ? formState.type : "Make a Selection"}
+                options={[
+                  "Make a Selection",
+                  "video",
+                  "audio",
+                  "image",
+                  "other",
+                ]}
+              />
 
               <TextInputComponent
                 inputType={"text"}
                 label={"Frames Per Second (Enter integer value e.g. 30)"}
                 labelSize={"md"}
                 inputValue={formState.fps}
-                setInputValue={(value: any) =>
-                  handleInputChange("fps", value)
-                }
+                setInputValue={(value: any) => handleInputChange("fps", value)}
               />
 
               <TextInputComponent

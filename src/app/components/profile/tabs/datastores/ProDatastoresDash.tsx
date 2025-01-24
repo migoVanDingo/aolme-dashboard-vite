@@ -83,9 +83,8 @@ const SDesc = styled(SFlexCol)`
 const ProfDatastoresDash = () => {
 
   const dispatch = useDispatch()
-  const { userId, datastoreId } = useLoaderData() as {
+  const { userId } = useLoaderData() as {
     userId: string
-    datastoreId: string
   }
 
   const [selectedItem, setSelectedItem] = useState<any>(null)
@@ -100,7 +99,7 @@ const ProfDatastoresDash = () => {
 
   // Hook to get the datastores
   const { datastoreList, selectedDatastore, datastoreConfig, setSelectedDatastore } =
-    useDatastore(userId, datastoreId || "")
+    useDatastore(userId)
 
   // Hook to get the datasets
   const { datasetList, selectedDataset, setSelectedDataset, handleSetSelected } =
@@ -175,14 +174,14 @@ const ProfDatastoresDash = () => {
   }, [selectedDataset, datasetFiles])
 
 
-  /* useEffect(() => {
+  useEffect(() => {
     const init = () => {
-      if (datastoreConfig !== null) {
+      if (datastoreConfig) {
         dispatch(setDatastoreConfig(datastoreConfig))
       }
     }
     return init()
-  }, [datastoreConfig]); */
+  }, [datastoreConfig]);
 
   return (
     <SContainer>

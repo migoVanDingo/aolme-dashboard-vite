@@ -3,12 +3,12 @@ import { DatastoreAPI } from "../api/DatastoreAPI";
 import { useDispatch } from "react-redux";
 import { setDatastoreConfig } from "../store/slices/datastore";
 
-export const useDatastore = (userId: string, datastoreId: string) => {
+export const useDatastore = (userId: string) => {
 
     const dispatch = useDispatch()
 
     const [datastoreList, setDatastoreList] = useState<any[]>([])
-    const [selectedDatastore, setSelectedDatastore] = useState<string>(datastoreId || "")
+    const [selectedDatastore, setSelectedDatastore] = useState<string>("")
     const [datastoreConfig, setHookDatastoreConfig] = useState<any>({})
 
     useEffect(() => {
@@ -21,15 +21,15 @@ export const useDatastore = (userId: string, datastoreId: string) => {
 
     useEffect(() => {
         const init = () => {
-            console.log('datastoreId', datastoreId)
-            if(datastoreId && datastoreId !== ""){
-                setSelectedDatastore(datastoreId)
-                getDatastoreConfig(datastoreId)
+            console.log('selectedDatastore', selectedDatastore)
+            if(selectedDatastore && selectedDatastore !== ""){
+                setSelectedDatastore(selectedDatastore)
+                getDatastoreConfig(selectedDatastore)
             }
         }
 
         return init()
-    }, [datastoreId]);
+    }, [selectedDatastore]);
 
     const getDatastores = async () => {
         const datastores = await DatastoreAPI.getDatastoreList({ user_id: userId })

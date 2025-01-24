@@ -145,12 +145,12 @@ const DatasetFileSetList = ({ list, sets, handleViewProjects }: any) => {
   return (
     <SContainer>
       <SHeader>
-        <SHeading>{!toggleFileForm ? "File Sets" : "Add Files"}</SHeading>
+        <SHeading>{!toggleFileForm ? "Sessions in Dataset" : "Add Session"}</SHeading>
         <SButton
           className={`push-right ${!toggleFileForm ? "submit" : "remove"}`}
           onClick={!toggleFileForm ? toggleSelect : toggleView}
         >
-          {!toggleFileForm ? "Add Files" : "Back to View"}
+          {!toggleFileForm ? "Add Session" : "Back to View"}
         </SButton>
       </SHeader>
 
@@ -159,11 +159,11 @@ const DatasetFileSetList = ({ list, sets, handleViewProjects }: any) => {
       ) : (
         <SFileList>
           <SFileRow>
-            <SFileCell className={"lg"}>{"File Name"}</SFileCell>
+            <SFileCell className={"lg"}>{"Session Name"}</SFileCell>
             <SFileCell className={"sm"}>{"# Files"}</SFileCell>
             <SFileCell className={"sm"}>{"Type"}</SFileCell>
 
-            <SFileCell className={"md right"}>{"Labeler"}</SFileCell>
+            <SFileCell className={"md right"}>{"Label Projects"}</SFileCell>
           </SFileRow>
           {sets.map((fileSet: any) => {
             return (

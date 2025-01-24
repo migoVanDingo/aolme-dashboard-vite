@@ -1,4 +1,6 @@
+import Constant from "../../utility/constant"
 import { ILabelSubset } from "../../utility/interface/dataset"
+import { RequestUtils } from "../../utility/requestUtils"
 import { Requests } from "../Requests"
 import { IPayloadCreateLabelProject } from "./payload/PayloadCreateLabelProject"
 
@@ -14,11 +16,28 @@ import { IPayloadCreateLabelProject } from "./payload/PayloadCreateLabelProject"
 } */
 
 export class LabelStudioAPI {
-
-  public static async initLabelProject(payload: IPayloadCreateLabelProject){
-    return await Requests.doPost(payload, "/api/label_studio/project", import.meta.env.LABEL_STUDIO_INTEGRATION_SERVICE_PORT)
+  public static async initLabelProject(payload: IPayloadCreateLabelProject) {
+    return await Requests.doPost(
+      payload,
+      "/api/label_studio/project",
+      import.meta.env.LABEL_STUDIO_INTEGRATION_SERVICE_PORT
+    )
   }
 
+  public static async getLabelProjectList(args: any) {
+  
+    return Requests.doGet(
+      "/api/label-project/list" + RequestUtils.formatQueryParams(args),
+      Constant.LABEL_STUDIO_INTEGRATION_SERVICE_PORT
+    )
+  }
+
+  public static async launchLabeler(projectId: string) {
+    return Requests.doGet(
+      "/api/label-project/launch?project_id=" + projectId,
+      Constant.LABEL_STUDIO_INTEGRATION_SERVICE_PORT
+    )
+  }
 
   /* public static async initializeLabelStudioProject(
     payload: ICreateLabelStudioProject
