@@ -28,8 +28,16 @@ export class UserAPI {
         return Requests.doPatch(payload, '/api/user/'+userId, Constant.USER_SERVICE_PORT)
     }
 
+    public static register(payload: PayloadCreateUser){
+        return Requests.doPost(payload, "/api/user/register", Constant.USER_SERVICE_PORT)
+    }
+
     public static login(payload: PayloadLogin){
         return Requests.doPost(payload, "/api/user/login", Constant.USER_SERVICE_PORT)
         //return Requests.testPost()
+    }
+
+    public static verifyEmail(token: string){
+        return Requests.doGet('/api/user/account/verify?token='+token, Constant.USER_SERVICE_PORT)
     }
 }

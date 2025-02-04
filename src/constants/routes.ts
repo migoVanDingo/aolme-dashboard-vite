@@ -33,6 +33,7 @@ class Routes {
   static ORG_MODULES = "/organization/:orgName/modules";
   static ORG_SETTINGS = "/organization/:orgName/settings";
   static LOGIN = "/login";
+  static VERIFY_EMAIL = "/user/account/verify";
 }
 
 export default Routes;

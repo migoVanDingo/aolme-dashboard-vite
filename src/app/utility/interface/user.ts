@@ -1,7 +1,8 @@
 export interface PayloadCreateUser {
     username: string
     email: string
-    password?: string
+    password: string
+    ip?: string
     
 }
 
@@ -9,6 +10,12 @@ export interface PayloadLogin {
     email: string,
     password: string
 }
+
+export interface PayloadVerifyEmail {
+    token: string
+    user_id: string
+}
+
 
 export interface FormCreateProfile {
     label: string

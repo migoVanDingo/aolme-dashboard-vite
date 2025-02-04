@@ -227,7 +227,7 @@ const CreateNewSetLabelProject = ({
         } else if (res.data.status === "FAILED") {
           clearInterval(intervalId)
           setLoading(false)
-          console.log('FAILED --- response: ', res)
+          console.log("FAILED --- response: ", res)
           window.alert(
             "Failed to create labeling project, check logs and db for job_id: " +
               jobId,

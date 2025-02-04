@@ -1,16 +1,42 @@
 import { useDispatch } from "react-redux"
 import { UserAPI } from "../api/UserAPI"
-import { PayloadCreateUser, PayloadLogin } from "../utility/interface/user"
+import { PayloadCreateUser, PayloadLogin, PayloadVerifyEmail } from "../utility/interface/user"
 import { setStoreUserId, setStoreUsername } from "../store/slices/user"
 import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
 
 export const useAuth = () => {
   const dispatch = useDispatch()
   const nav = useNavigate()
+  
+  const [ipAddress, setIpAddress] = useState<string>("");
+
+  useEffect(() => {
+    const init = () => {
+      fetchIpAddress();
+    }
+
+    return init();
+  }, []);
+
+  const fetchIpAddress = async () => {
+    try {
+      const response = await fetch("https://api.ipify.org?format=json");
+      const data = await response.json();
+      setIpAddress(data.ip);
+    } catch (error) {
+      console.error("Error fetching IP address:", error);
+    }
+  };
+
 
   async function login(payload: PayloadLogin) {
     const response = await UserAPI.login(payload)
     console.log('useAuth.ts -- login() -- response: ', response)
+
+    if (response.status === "FAILED") {
+      return { status: "FAILED", message: response.error }
+    }
     const { username, user_id } = response
 
     localStorage.setItem("userId", user_id)
@@ -19,35 +45,24 @@ export const useAuth = () => {
     dispatch(setStoreUsername(username))
     nav("/profile/projects")
 
-    /* .then((result: any) => {
-            const { username, userId } = result
-            console.log("useAuth.ts -- login() result: ", result)
-            localStorage.setItem("userId", userId)
-            localStorage.setItem("username", username)
-            //localStorage.setItem("email", email)
-            dispatch(setStoreUserId(userId))
-            dispatch(setStoreUsername(username))
-            //dispatch(setStoreUserEmail(email))
-
-            nav("/profile")
-          })
-          .catch((err: any) => {
-            console.error("useAuth.ts -- login() Error: ", err)
-          }) */
   }
 
   async function register(payload: PayloadCreateUser) {
       console.log("Request register: ", payload)
-      UserAPI.createUser(payload)
-        .then((result: any) => {
-          console.log("AuthContext.tsx -- signUp() result: ", result.data)
-          console.log(result.data)
-          return result.data
-        })
-        .catch((err: any) => {
-          console.error("AuthContext.tsx -- signUp() Error:", err)
-        })
+
+      let registerPayload = {
+        ...payload,
+        ip:""
+      }
+
+      if(ipAddress){
+        registerPayload.ip = ipAddress;
+      }
+      
+      return await UserAPI.register(registerPayload)
     }
+
+    
 
   return { login, register }
 }

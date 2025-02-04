@@ -1,16 +1,11 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
+import { connect } from "react-redux"
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { SFlexCol } from "../components/common/containers/FlexContainers"
 import TextInputComponent from "../components/common/inputs/text/TextInputComponent"
-import Button from "../components/common/buttons/Button"
-import { hashed } from "../utility/hash"
-import { PayloadCreateUser, PayloadLogin } from "../utility/interface/user"
-import { UserAPI } from "../api/UserAPI"
-import { store } from "../store"
-import { setStoreUserEmail, setStoreUserId, setStoreUsername } from "../actions"
-import { connect, useDispatch, useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
 import { useAuth } from "../hooks/useAuth"
+import { PayloadLogin } from "../utility/interface/user"
 
 const SContainer = styled(SFlexCol)`
   align-items: baseline;
@@ -102,7 +97,13 @@ const Login = ({ userId }: any) => {
       }
       console.log("payload: ", payload)
       //AuthContext
-      login(payload)
+      const response = await login(payload) as any
+      console.log("status: ", response.status)
+      console.log("message: ", response.message)
+      if(response.status === "FAILED"){
+        console.log("error: ", response.message)
+        setEmailError(response.message)
+      }
      
     } else console.log("errors")
   }

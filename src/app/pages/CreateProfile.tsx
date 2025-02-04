@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { SFlexCol } from "../components/common/containers/FlexContainers"
 import TextInputComponent from "../components/common/inputs/text/TextInputComponent"
@@ -8,6 +8,9 @@ import { FormCreateProfile, PayloadCreateUser } from "../utility/interface/user"
 import { UserAPI } from "../api/UserAPI"
 import { useAuth } from "../hooks/useAuth"
 import { useNavigate } from "react-router-dom"
+import { Input } from "../utility/input"
+import { JobAPI } from "../api/job/JobAPI"
+import LoadingSpinner from "../components/common/loading/LoadingSpinner"
 
 const SContainer = styled(SFlexCol)`
   align-items: baseline;
@@ -36,8 +39,11 @@ const SButton = styled.button`
     color: ${({ theme }) => theme.color.color_8};
   }
 `
-
-
+const SLoadingContainer = styled(SFlexCol)`
+  width: 100%;
+  height: 100%;
+  align-items: center;
+`
 
 const CreateProfile = () => {
   const [username, setUsername] = useState<string>("")
@@ -50,9 +56,13 @@ const CreateProfile = () => {
   const [passwordError, setPasswordError] = useState<string>("")
   const [verifyError, setVerifyError] = useState<string>("")
 
-  const [loading, setLoading] = useState<boolean>(false)
+  const [intervalId, setIntervalId] = useState<any>(null)
 
-  const { register } = useAuth() 
+  const [loading, setLoading] = useState<boolean>(false)
+  const [loadingMessage, setLoadingMessage] = useState("")
+  const [lock, setLock] = useState<boolean>(true)
+
+  const { register } = useAuth()
   const nav = useNavigate()
 
   const formInputs: FormCreateProfile[] = [
@@ -86,6 +96,20 @@ const CreateProfile = () => {
     },
   ]
 
+  useEffect(() => {
+    const init = () => {
+      if (intervalId && !lock){
+        clearInterval(intervalId)
+        setTimeout(() => {
+          
+          nav("/login")
+        }, 3000)
+      }
+    }
+
+    return init()
+  }, [intervalId, lock]);
+
   const handleCreateProfile = async () => {
     let err = false
     console.log("create profile")
@@ -93,16 +117,31 @@ const CreateProfile = () => {
     if (username === "") {
       setUsernameError("Mandatory field")
       err = true
+    } else if (Input.hasHarmfulCharacters(username)) {
+      setUsernameError("Invalid characters")
+      err = true
     }
 
     if (email === "") {
       setEmailError("Mandatory field")
       err = true
+    } else if (Input.hasHarmfulCharacters(email)) {
+      setEmailError("Invalid characters")
+      err = true
+    } else if (!Input.isValidEmail(email)) {
+      setEmailError("Invalid email")
+      err = true
     }
 
-    if (password === "") {
-      setPasswordError("Mandatory Field")
+    if (password == "") {
+      setPasswordError("Password is a mandatory field")
       err = true
+    } else {
+      const { isError, errorList } = Input.verifyPassword(password) as any
+      if (isError) {
+        setPasswordError(errorList.join(",\n "))
+        err = true
+      }
     }
 
     if (verifyPw === "") {
@@ -114,8 +153,9 @@ const CreateProfile = () => {
       setVerifyError("Passwords don't match")
       err = true
     }
-    console.log("SHould be good to go")
+
     if (!err) {
+      setLoadingMessage("Creating User Account")
       setLoading(true)
       const payload: PayloadCreateUser = {
         username,
@@ -125,37 +165,82 @@ const CreateProfile = () => {
 
       //AuthContext
       const newUser = register(payload)
-      .then((result: any) => {
-        console.log("CreateProfile.tsx handleCreateProfile(): ", result)
-        nav("/login")
-      })
-      .catch((err: any) => console.error(err))
-      
+        .then((res: any) => {
+          if (res) {
+            console.log("res: ", res)
+            handlePolling(res.data)
+          }
+        })
+        .catch((err: any) => console.error(err))
     } else console.log("errors")
   }
 
-  return (
-    <SContainer>
-      <SHeading>Create Profile</SHeading>
+  const handlePolling = (jobId: string) => {
+    setIntervalId(setInterval(() => handleCheckStatus(jobId), 1000))
+    
+  }
 
-      {formInputs.map((input: FormCreateProfile, index: number) => {
-        return (
-          <TextInputComponent
-            key={index}
-            inputValue={input.inputValue}
-            inputType={input.type}
-            setInputValue={input.setInputValue}
-            label={input.label}
-            error={input.error}
-          />
-        )
-      })}
+  const handleCheckStatus = (jobId: string) => {
+    JobAPI.pollJobStatus(jobId)
+      .then((res: any) => {
+        console.log(res.data.status)
+        if (res.data.status === "COMPLETED") {
+          setLoadingMessage("User Account Created. Redirecting to Login")
+          console.log("COMPLETED --- response: ", res)
+          setLock(false)
+          setLoading(false)
+          
+          
+        } else if (res.data.status === "FAILED") {
+          clearInterval(intervalId)
+          setLoading(false)
+          console.log("FAILED --- response: ", res)
+          window.alert(
+            "Failed to register user, check logs and db for job_id: " + jobId,
+          )
+          console.error(
+            "Failed to register user, check logs and db for job_id: " + jobId,
+          )
+        } 
+      })
+      .catch((err: any) =>
+        console.error(
+          "F:CreateNewSetLabelProject.tsx::::FN:handlePolling",
+          err,
+        ),
+      )
+  }
 
-      <SButton onClick={handleCreateProfile} type="button">
-        {"Create Profile"}
-      </SButton>
-    </SContainer>
-  )
+  if (loading) {
+    return (
+      <SLoadingContainer>
+        <LoadingSpinner message={loadingMessage} />
+      </SLoadingContainer>
+    )
+  } else {
+    return (
+      <SContainer>
+        <SHeading>Create Profile</SHeading>
+
+        {formInputs.map((input: FormCreateProfile, index: number) => {
+          return (
+            <TextInputComponent
+              key={index}
+              inputValue={input.inputValue}
+              inputType={input.type}
+              setInputValue={input.setInputValue}
+              label={input.label}
+              error={input.error}
+            />
+          )
+        })}
+
+        <SButton onClick={handleCreateProfile} type="button">
+          {"Create Profile"}
+        </SButton>
+      </SContainer>
+    )
+  }
 }
 
 export default CreateProfile

@@ -56,6 +56,7 @@ import Routes from "./constants/routes"
 import ProDatastoresDash from "./app/components/profile/tabs/datastores/ProDatastoresDash"
 import CreateDatastore from "./app/pages/CreateDatastore"
 import ProfileCreateDataset from "./app/pages/ProfileCreateDataset"
+import VerifyEmail from "./app/pages/VerifyEmail"
 
 const mantineTheme = createTheme({
   /** Put your mantine theme override here */
@@ -196,6 +197,13 @@ const router = createBrowserRouter([
         loader: () => null,
         action: () => null,
         id: "signup",
+      },
+      {
+        path: Routes.VERIFY_EMAIL,
+        element: <VerifyEmail />,
+        loader: () => null,
+        action: () => null,
+        id: "verify-email",
       },
       {
         path: Routes.SETTINGS,
