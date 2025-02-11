@@ -14,10 +14,7 @@ const SContainer = styled.div`
   gap: 15px;
   box-sizing: border-box;
   display: grid;
-  grid-template-rows: 40px calc(
-      calc(calc(100vh - 40px) - ${({ theme }) => theme.profile.nav.height}) -
-        ${({ theme }) => theme.header.height}
-    );
+  grid-template-rows: 40px calc(calc(calc(100vh - 40px) - ${({ theme }) => theme.profile.nav.height}) - ${({ theme }) => theme.header.height});
   grid-template-areas:
     "breadcrumb"
     "itemlist";

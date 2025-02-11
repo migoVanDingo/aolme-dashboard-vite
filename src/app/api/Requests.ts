@@ -20,6 +20,7 @@ export class Requests {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": "Bearer " + sessionStorage.getItem("access_token"),
         },
         body: JSON.stringify({
           username: "testy",
@@ -40,8 +41,10 @@ export class Requests {
     try {
       const response = await fetch("http://localhost:" + port + endpoint, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": "Bearer " + sessionStorage.getItem("access_token"),
         },
         body: JSON.stringify(data),
       })
@@ -50,7 +53,9 @@ export class Requests {
         throw new Error("Network response was not ok")
       }
 
-      return await response.json()
+      const res = await response.json()
+      sessionStorage.setItem("access_token", res.access_token)
+      return res
     } catch (error) {
       console.error("POST ERROR: ", error)
       throw error // Re-throw the error to handle it outside this function if needed
@@ -61,8 +66,10 @@ export class Requests {
     try {
       const response = await fetch("http://localhost:" + port + endpoint, {
         method: "GET",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": "Bearer " + sessionStorage.getItem("access_token"),
         },
       })
       if (!response.ok) {
@@ -80,6 +87,7 @@ export class Requests {
     return await axios.patch("http://localhost:" + port + endpoint, formData, {
       headers: {
         "Content-Type": "application/json",
+        "Authorization": "Bearer " + sessionStorage.getItem("access_token"),
       },
     })
   }
@@ -88,6 +96,7 @@ export class Requests {
     return await axios.put("http://localhost:" + port + endpoint, formData, {
       headers: {
         "Content-Type": "application/json",
+        "Authorization": "Bearer " + sessionStorage.getItem("access_token"),
       },
     })
   }

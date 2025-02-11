@@ -93,8 +93,8 @@ const ListCard = ({ data }: any) => {
 
     dispatch(setStoreOrgId(organization_id))
     dispatch(setStoreOrgName(organization_name))
-    localStorage.setItem("orgId", organization_id)
-    localStorage.setItem("orgName", organization_name)
+    sessionStorage.setItem("orgId", organization_id)
+    sessionStorage.setItem("orgName", organization_name)
     navigate("/organization/"+name+"/users")
   }
 

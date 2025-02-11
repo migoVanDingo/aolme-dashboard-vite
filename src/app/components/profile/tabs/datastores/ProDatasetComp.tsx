@@ -111,7 +111,7 @@ const ProDatasetComponent = ({
   const nav = useNavigate()
 
   const handleClickCreate = () => {
-    localStorage.setItem("selectedDatastore", selectedDatastore)
+    sessionStorage.setItem("selectedDatastore", selectedDatastore)
     nav(Routes.PROFILE_DATASET_CREATE)
   }
 

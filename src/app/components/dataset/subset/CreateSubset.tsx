@@ -410,7 +410,7 @@ export default CreateSubset
 
 export const loader = async () => {
   const selectedDataset = JSON.parse(
-    localStorage.getItem("selectedDataset") as any,
+    sessionStorage.getItem("selectedDataset") as any,
   )
   //const datastoreEntities = await DatasetAPI.getGroupEntities()
 

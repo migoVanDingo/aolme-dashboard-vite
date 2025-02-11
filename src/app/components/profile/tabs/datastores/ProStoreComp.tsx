@@ -107,7 +107,7 @@ const ProStoreComp = ({
   const nav = useNavigate()
 
   const handleSelect = (store: any) => {
-    localStorage.setItem("datastoreId", store.datastore_id)
+    sessionStorage.setItem("datastoreId", store.datastore_id)
     setSelectedDatastore(store.datastore_id)
   }
 

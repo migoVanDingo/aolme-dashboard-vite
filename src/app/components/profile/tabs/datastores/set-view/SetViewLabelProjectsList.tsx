@@ -160,7 +160,7 @@ const SetViewLabelProjectsList = ({ list }: any) => {
           </SFileRow>
           {list.map((project: any) => {
             return (
-              <SFileRow>
+              <SFileRow key={project.label_project_id}>
                 <SFileCell className={"lg"}>{project.set_name}</SFileCell>
                 <SFileCell className={"md"}>{project.project_name}</SFileCell>
                 

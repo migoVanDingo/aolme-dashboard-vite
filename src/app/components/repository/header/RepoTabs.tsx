@@ -187,7 +187,7 @@ const RepoTabs = ({ activeTab, setHighlightedTab, name }: any) => {
   ]
 
   const handleClickTab = (tab: any) => {
-    localStorage.setItem("activeProjectTab", tab.id)
+    sessionStorage.setItem("activeProjectTab", tab.id)
     setHighlightedTab(tab.id)
     nav(tab.path.replace(":projectName", name))
   }

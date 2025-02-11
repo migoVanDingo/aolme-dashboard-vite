@@ -13,7 +13,7 @@ export const useDatastore = (userId: string) => {
 
     useEffect(() => {
         const init = () => {
-            userId && userId !== "" && getDatastores()
+            userId && userId !== "" && getDatastores(userId)
         }
 
         return init()
@@ -31,9 +31,9 @@ export const useDatastore = (userId: string) => {
         return init()
     }, [selectedDatastore]);
 
-    const getDatastores = async () => {
+    const getDatastores = async (userId: string) => {
         const datastores = await DatastoreAPI.getDatastoreList({ user_id: userId })
-        // console.log("useDatastore.ts -- getDatastores() -- datastores: ", datastores)
+        console.log("useDatastore.ts -- getDatastores() -- datastores: ", datastores)
         setDatastoreList(datastores)
         setSelectedDatastore(datastores[0].datastore_id)
     }

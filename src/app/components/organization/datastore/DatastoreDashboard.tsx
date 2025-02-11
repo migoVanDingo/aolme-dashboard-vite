@@ -70,7 +70,7 @@ const DatastoreDashboard = () => {
 export default DatastoreDashboard
 
 export const loader = async () => {
-    const orgId = localStorage.getItem("orgId") as string
+    const orgId = sessionStorage.getItem("orgId") as string
     const orgDatastoreList = await DatastoreAPI.getOrgDatastoreList(orgId)
     
     return {

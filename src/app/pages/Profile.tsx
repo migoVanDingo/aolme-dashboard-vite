@@ -225,10 +225,10 @@ export default Profile
 
 export const loader = async () => {
   /* const userRepos = await RepoAPI.getRepoByOwner(
-    localStorage.getItem("userId") as string,
+    sessionStorage.getItem("userId") as string,
   )
 
-  const userOrgs = await EntityUserAPI.getEntityListByUserId(localStorage.getItem("userId") as string)
+  const userOrgs = await EntityUserAPI.getEntityListByUserId(sessionStorage.getItem("userId") as string)
 */
 
   return {

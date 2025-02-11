@@ -101,9 +101,20 @@ const ProfDatastoresDash = () => {
   const { datastoreList, selectedDatastore, datastoreConfig, setSelectedDatastore } =
     useDatastore(userId)
 
+    const [currentDatastore, setCurrentDatastore] = useState<string>("")
+    useEffect(() => {
+      const init = () => {
+        if (selectedDatastore !== "") {
+          setCurrentDatastore(selectedDatastore)
+        }
+      }
+
+      return init()
+    }, [selectedDatastore]);
+
   // Hook to get the datasets
   const { datasetList, selectedDataset, setSelectedDataset, handleSetSelected } =
-    useDataset(selectedDatastore)
+    useDataset(currentDatastore)
 
   // Hook to get dataset-files
   const { datasetFiles, selectedDatasetFile, setSelectedDatasetFile } = useDatasetFiles(selectedDataset)
@@ -112,8 +123,7 @@ const ProfDatastoresDash = () => {
   useEffect(() => {
     const init = () => {
       if (
-        selectedDatastore !== null &&
-        datasetList.length > 0 &&
+        selectedDatastore !== "" &&
         datastoreList.length > 0
       ) {
         // console.log('selectedDatastore', selectedDatastore)
@@ -220,8 +230,8 @@ const ProfDatastoresDash = () => {
 export default ProfDatastoresDash
 
 export const loader = async () => {
-  const userId = localStorage.getItem("userId") as string
-  const datastoreId = localStorage.getItem("datastoreId") as string
+  const userId = sessionStorage.getItem("userId") as string
+  const datastoreId = sessionStorage.getItem("datastoreId") as string
   return {
     userId,
     datastoreId,

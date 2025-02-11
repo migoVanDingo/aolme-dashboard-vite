@@ -139,8 +139,8 @@ const ProfileCreateDataset = () => {
 export default ProfileCreateDataset
 
 export const loader = () => {
-    const userId = localStorage.getItem("userId")
-    const datastoreId = localStorage.getItem("selectedDatastore")
+    const userId = sessionStorage.getItem("userId")
+    const datastoreId = sessionStorage.getItem("selectedDatastore")
 
   return {
     userId,

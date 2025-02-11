@@ -100,7 +100,7 @@ const RepoCard = ({ repo }: any) => {
 
   const handleSelectRepo = () => {
 
-    localStorage.setItem("currentRepo", JSON.stringify(repo))
+    sessionStorage.setItem("currentRepo", JSON.stringify(repo))
     navigate(`/repository/${repo.name}`)
 
   }

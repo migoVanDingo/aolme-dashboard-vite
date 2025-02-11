@@ -91,7 +91,7 @@ const DatasetCard = ({ dataset, selectDataset }: any) => {
 
   const handleSelectDataset = () => {
     dispatch(setDatasetId(dataset.dataset_id))
-    localStorage.setItem("selectedDataset", JSON.stringify(dataset))
+    sessionStorage.setItem("selectedDataset", JSON.stringify(dataset))
     
     nav("/organization/"+orgName+"/datasets/"+dataset.name,)
   }

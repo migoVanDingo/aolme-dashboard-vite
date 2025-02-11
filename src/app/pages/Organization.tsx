@@ -342,8 +342,8 @@ export default Organization
 
 export const loader = async () => {
 
-  const orgId = localStorage.getItem("orgId") as string
-  const orgName = localStorage.getItem("orgName") as string
+  const orgId = sessionStorage.getItem("orgId") as string
+  const orgName = sessionStorage.getItem("orgName") as string
   const loaderOrgUsers = await EntityUserAPI.getUserListByEntityId(orgId)
   const loaderOrgRepos = await RepoAPI.getRepoByEntity(orgId)
   // const loaderOrgDatasets = await DatasetAPI.getDatasetListByEntity(orgId)

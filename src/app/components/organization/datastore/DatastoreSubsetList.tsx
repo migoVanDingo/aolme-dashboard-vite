@@ -164,7 +164,7 @@ const DatastoreSubsetList = ({}: any) => {
   const handleViewSubsetDetails = (subset: any) => {
     console.log(`Viewing subset details for ${subset}`)
 
-    localStorage.setItem("currentSubset", JSON.stringify(subset))
+    sessionStorage.setItem("currentSubset", JSON.stringify(subset))
     console.log("path: ", "organization/" + orgName + "/datastore/" + currentDatastore.name + "/subset/" + subset.subsetId)
 
     nav("/organization/" + orgName + "/datastore/" + currentDatastore.name + "/subset/" + subset.subsetId)

@@ -14,10 +14,14 @@ import LoadingSpinner from "../components/common/loading/LoadingSpinner"
 
 const SContainer = styled(SFlexCol)`
   align-items: baseline;
+  background-color: ${({ theme }) => theme.color.color_2};
+  min-height: 100vh;
+  padding: 0 30rem;
 `
 const SHeading = styled.p`
   font-size: 2rem;
   font-weight: 700;
+  color: ${({ theme }) => theme.color.color_6};
 `
 const SButton = styled.button`
   width: 150px;

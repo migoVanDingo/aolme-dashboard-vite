@@ -86,7 +86,7 @@ const CreateProject = ({}: any) => {
 
     ProjectApi.createProject(project)
       .then((res: any) => {
-        localStorage.setItem("project_id", res.project_id)
+        sessionStorage.setItem("project_id", res.project_id)
         nav(`/project/${res.name}`)
       })
       .catch((err: any) => console.error(err))
@@ -163,8 +163,8 @@ const CreateProject = ({}: any) => {
 export default CreateProject
 
 export const loader = () => {
-  const userId = localStorage.getItem("userId")
-  const username = localStorage.getItem("username")
+  const userId = sessionStorage.getItem("userId")
+  const username = sessionStorage.getItem("username")
 
   return {
     userId,

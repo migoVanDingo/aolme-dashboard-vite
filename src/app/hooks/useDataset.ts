@@ -16,14 +16,14 @@ export const useDataset = (datastoreId: string) => {
     }, [datastoreId]);
 
     const handleSetSelected = (datasetId: string) => {
-        localStorage.setItem("datasetId", datasetId)
+        sessionStorage.setItem("datasetId", datasetId)
         setSelectedDataset(datasetId)
     }
 
     const getDatasets = async () => {
         const datasets = await DatasetAPI.getDatasetList({ datastore_id: datastoreId })
 
-        //console.log("useDataset.ts -- getDatasets() -- datasets: ", datasets)
+        console.log("useDataset.ts -- getDatasets() -- datasets: ", datasets)
         setDatasetList(datasets)
         
         // if(selectedDataset === null && datasets.length > 0){

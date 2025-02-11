@@ -62,7 +62,7 @@ const RepoTabs = ({ activeTab, setActiveTab, tabs}: any) => {
   const handleClickTab = (tab: any) => {
 
     // Set localstorage active tab
-    localStorage.setItem("activeTab", tab.id)
+    sessionStorage.setItem("activeTab", tab.id)
 
     // Set active tab
     setActiveTab(tab.id)

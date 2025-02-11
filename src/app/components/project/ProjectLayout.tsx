@@ -47,10 +47,10 @@ const ProjectLayout = () => {
 export default ProjectLayout
 
 export const loader = async () => {
-  const project_id = localStorage.getItem("project_id") as string
-  const username = localStorage.getItem("username") as string
-  const user_id = localStorage.getItem("userId") as string
-  let loaderActiveTab = localStorage.getItem("activeProjectTab") as string
+  const project_id = sessionStorage.getItem("project_id") as string
+  const username = sessionStorage.getItem("username") as string
+  const user_id = sessionStorage.getItem("userId") as string
+  let loaderActiveTab = sessionStorage.getItem("activeProjectTab") as string
   if (loaderActiveTab === "null" || loaderActiveTab === "" || !loaderActiveTab) {
     loaderActiveTab = "files"
   }

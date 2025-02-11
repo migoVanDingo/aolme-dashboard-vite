@@ -54,7 +54,7 @@ const ProjectList = ({}: any) => {
 export default ProjectList
 
 export const loader = async () => {
-  const userId = localStorage.getItem("userId") as string
+  const userId = sessionStorage.getItem("userId") as string
   // Use ProjectAPI to get projects by user
   const projectList = await ProjectApi.getProjectList({ entity_id: userId })
 

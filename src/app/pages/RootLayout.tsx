@@ -17,8 +17,8 @@ const RootLayout = () => {
   export default RootLayout
 
   export const loader = () => {
-    const uid = localStorage.getItem("userId")
-    const username = localStorage.getItem("username")
+    const uid = sessionStorage.getItem("userId")
+    const username = sessionStorage.getItem("username")
 
     console.log('RootLayout.tsx -- loader() -- uid: ', uid)
 

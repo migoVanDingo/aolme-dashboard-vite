@@ -37,10 +37,12 @@ export const useAuth = () => {
     if (response.status === "FAILED") {
       return { status: "FAILED", message: response.error }
     }
-    const { username, user_id } = response
+    const { username, user_id } = response.user
+    sessionStorage.setItem("access_token", response.access_token)
 
-    localStorage.setItem("userId", user_id)
-    localStorage.setItem("username", username)
+    sessionStorage.setItem("userId", user_id)
+    sessionStorage.setItem("username", username)
+
     dispatch(setStoreUserId(user_id))
     dispatch(setStoreUsername(username))
     nav("/profile/projects")

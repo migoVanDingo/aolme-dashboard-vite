@@ -177,8 +177,8 @@ const DatasetFileGroupList = ({ sets, handleToggle }: any) => {
 
   // Handle submit
   const handleSubmit = () => {
-    const userId = localStorage.getItem("userId")
-    const datasetId = localStorage.getItem("datasetId")
+    const userId = sessionStorage.getItem("userId")
+    const datasetId = sessionStorage.getItem("datasetId")
 
     if (!userId || !datasetId) {
       console.error(
@@ -195,7 +195,7 @@ const DatasetFileGroupList = ({ sets, handleToggle }: any) => {
     console.log("payload", payload)
     DatasetAPI.addFilesToDatasetFromDatastore(payload)
       .then((res: any) => {
-        localStorage.setItem("datasetId", datasetId)
+        sessionStorage.setItem("datasetId", datasetId)
         nav(Routes.PROFILE_DATASTORES)
         setLoading(false)
       })

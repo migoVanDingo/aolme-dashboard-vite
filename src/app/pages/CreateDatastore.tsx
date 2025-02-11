@@ -84,7 +84,7 @@ const CreateDatastore = () => {
 
         DatastoreAPI.createDatastore(dataStore)
         .then((res: any) => {
-            localStorage.setItem("datastore_id", res.datastore_id)
+            sessionStorage.setItem("datastore_id", res.datastore_id)
             nav(Routes.PROFILE_DATASTORES)
         })
         .catch((err: any) => console.error("CreateDatastore::createDatastore()::Error: ", err))
@@ -143,7 +143,7 @@ const CreateDatastore = () => {
 export default CreateDatastore
 
 export const loader = () => {
-    const userId = localStorage.getItem("userId")
+    const userId = sessionStorage.getItem("userId")
   
     return {
       userId,

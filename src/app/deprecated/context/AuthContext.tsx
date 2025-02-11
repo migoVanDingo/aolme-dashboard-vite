@@ -23,8 +23,8 @@ export default function AuthProvider({ children }: any) {
 
   useEffect(() => {
     const getUser = () => {
-      let userId = localStorage.getItem("userId")
-      let username = localStorage.getItem("username")
+      let userId = sessionStorage.getItem("userId")
+      let username = sessionStorage.getItem("username")
 
       console.log("AuthContext::User found: ", userId, username)
 
@@ -60,9 +60,9 @@ export default function AuthProvider({ children }: any) {
       .then((result: any) => {
         const { username, userId } = result
         console.log("AuthContext.tsx -- login() result: ", result.data)
-        localStorage.setItem("userId", userId)
-        localStorage.setItem("username", username)
-        //localStorage.setItem("email", email)
+        sessionStorage.setItem("userId", userId)
+        sessionStorage.setItem("username", username)
+        //sessionStorage.setItem("email", email)
         dispatch(setStoreUserId(userId))
         dispatch(setStoreUsername(username))
         //dispatch(setStoreUserEmail(email))

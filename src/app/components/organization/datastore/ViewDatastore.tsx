@@ -150,7 +150,7 @@ const ViewDatastore = () => {
 export default ViewDatastore
 
 export const loader = async () => {
-  const currentDatastore = JSON.parse(localStorage.getItem("currentDatastore") as any)
+  const currentDatastore = JSON.parse(sessionStorage.getItem("currentDatastore") as any)
   
     
   const subsets = await DatastoreAPI.getSubsetList(

@@ -57,6 +57,7 @@ import ProDatastoresDash from "./app/components/profile/tabs/datastores/ProDatas
 import CreateDatastore from "./app/pages/CreateDatastore"
 import ProfileCreateDataset from "./app/pages/ProfileCreateDataset"
 import VerifyEmail from "./app/pages/VerifyEmail"
+import ProtectedRoute from "./app/components/routes/ProtectedRoute"
 
 const mantineTheme = createTheme({
   /** Put your mantine theme override here */
@@ -65,263 +66,271 @@ const mantineTheme = createTheme({
 const router = createBrowserRouter([
   {
     path: Routes.ROOT,
-    element: <RootLayout />,
-    loader: RootLoader,
-    id: "root",
+    element: <ProtectedRoute />,
     children: [
       {
-        path: Routes.PROFILE,
-        element: <ProfileLayout />,
-        loader: ProfileLoader,
-        action: () => null,
-        id: "profile",
+        path: Routes.ROOT,
+        element: <RootLayout />,
+        loader: RootLoader,
+        id: "root",
         children: [
           {
-            
-            path: Routes.PROFILE_PROJECTS,
-            element: <ProProjectsDash />,
-            loader: () => null,
+            path: Routes.PROFILE,
+            element: <ProfileLayout />,
+            loader: ProfileLoader,
             action: () => null,
-            id: "profile-projects",
+            id: "profile",
             children: [
               {
+                
                 path: Routes.PROFILE_PROJECTS,
-                element: <ProjectList />,
-                loader: ProfileProjectsLoader,
-                action: () => null,
-                id: "projects-list",
-              },
-            ],
-          },
-          {
-            path: Routes.PROFILE_DATASTORES,
-            element: <ProDatastoresDash />,
-            loader: ProDatastoreDashLoader,
-            action: () => null,
-            id: "profile-datastores",
-          },
-          {
-            path: Routes.PROFILE_TEAMS,
-            element: <ProTeamsDash />,
-            loader: () => null,
-            action: () => null,
-            id: "profile-teams",
-          },
-          {
-            path: Routes.PROFILE_RESOURCES,
-            element: <ProResourcesDash />,
-            loader: () => null,
-            action: () => null,
-            id: "profile-resources",
-          },
-          {
-            path: Routes.PROFILE_SETTINGS,
-            element: <ProSettingsDash />,
-            loader: () => null,
-            action: () => null,
-            id: "profile-settings",
-          },
-          {
-            path: Routes.PROFILE_PROJECTS_CREATE,
-            element: <CreateProject />,
-            loader: CreateProjectLoader,
-            action: () => null,
-            id: "profile-projects-create",
-          },
-          {
-            path: Routes.PROFILE_DATASTORE_CREATE,
-            element: <CreateDatastore />,
-            loader: CreateDatastoreLoader,
-            action: () => null,
-            id: "profile-datastore-create",
-          },
-          {
-            path: Routes.PROFILE_DATASET_CREATE,
-            element: <ProfileCreateDataset />,
-            loader: ProfileCreateDatasetLoader,
-            action: () => null,
-            id: "profile-dataset-create",
-          }
-
-          
-        ],
-      },
-      {
-        path: Routes.PROJECT_VIEW,
-        element: <ProjectLayout />,
-        loader: ProjectLoader,
-        action: () => null,
-        id: "project-view",
-        children: [
-          {
-            path: Routes.PROJECT_FILES,
-            element: <ProjFilesLayout />,
-            loader: () => null,
-            action: () => null,
-          },
-          {
-            path: Routes.PROJECT_DATASETS,
-            element: <ProjDatasetLayout />,
-            loader: () => null,
-            action: () => null,
-          },
-          {
-            path: Routes.PROJECT_PIPELINES,
-            element: <ProjPipelinesLayout />,
-            loader: () => null,
-            action: () => null,
-          },
-          {
-            path: Routes.PROJECT_RESULTS,
-            element: <ProjResultsLayout />,
-            loader: () => null,
-            action: () => null,
-          },
-          {
-            path: Routes.PROJECT_DISCUSSION,
-            element: <ProjDiscussionLayout />,
-            loader: () => null,
-            action: () => null,
-          },
-          {
-            path: Routes.PROJECT_SETTINGS,
-            element: <ProjSettingsLayout />,
-            loader: () => null,
-            action: () => null,
-          },
-        ],
-      },
-      {
-        path: Routes.SIGNUP,
-        element: <CreateProfile />,
-        loader: () => null,
-        action: () => null,
-        id: "signup",
-      },
-      {
-        path: Routes.VERIFY_EMAIL,
-        element: <VerifyEmail />,
-        loader: () => null,
-        action: () => null,
-        id: "verify-email",
-      },
-      {
-        path: Routes.SETTINGS,
-        element: <Settings />,
-        loader: () => null,
-        action: () => null,
-      },
-      {
-        path: Routes.REPOSITORY,
-        element: <Repository />,
-        loader: RepoLoader,
-        action: () => null,
-        id: "repo",
-      },
-      /* {
-        path: Routes.ORGANIZATION_CREATE,
-        element: <CreateOrganization />,
-        loader: () => null,
-        action: () => null,
-      }, */
-      {
-        path: Routes.ORGANIZATION,
-        element: <Organization />,
-        loader: OrgLoader,
-        action: () => null,
-        id: "org",
-        children: [
-          {
-            path: Routes.ORG_DATASET,
-            element: <OrgDataset />,
-            loader: () => null,
-            action: () => null,
-            id: "org-dataset",
-          },
-          {
-            path: Routes.ORG_DATASET_VIEW,
-            element: <ViewDataset />,
-            loader: ViewDatasetLoader,
-            action: () => null,
-            id: "org-dataset-view",
-          },
-          {
-            path: Routes.ORG_DATASET_CREATE_SUBSET,
-            element: <CreateSubset />,
-            loader: CreateSubsetLoader,
-            action: () => null,
-            id: "org-dataset-create-subset",
-          },
-          //Datastore
-          {
-            path: Routes.ORG_DATASTORE_DASHBOARD,
-            element: <DatastoreDashboard />,
-            loader: DatastoreDashboardLoader,
-            action: () => null,
-            id: "org-datastore-dashboard",
-          },
-          {
-            path: Routes.ORG_DATASTORE_VIEW,
-            element: <ViewDatastore />,
-            loader: ViewDatastoreLoader,
-            action: () => null,
-            id: "org-datastore-view",
-            children: [
-              {
-                path: Routes.ORG_DATASTORE_VIEW_LIST,
-                element: <DatastoreSubsetList />,
+                element: <ProProjectsDash />,
                 loader: () => null,
                 action: () => null,
-                id: "org-datastore-view-list",
+                id: "profile-projects",
+                children: [
+                  {
+                    path: Routes.PROFILE_PROJECTS,
+                    element: <ProjectList />,
+                    loader: ProfileProjectsLoader,
+                    action: () => null,
+                    id: "projects-list",
+                  },
+                ],
               },
               {
-                path: Routes.ORG_DATASTORE_SUBSET_DETAILS,
-                element: <DatastoreSubsetDetails />,
-                loader: DatastoreSubsetDetailsLoader,
+                path: Routes.PROFILE_DATASTORES,
+                element: <ProDatastoresDash />,
+                loader: ProDatastoreDashLoader,
                 action: () => null,
-                id: "org-datastore-subset-details",
+                id: "profile-datastores",
+              },
+              {
+                path: Routes.PROFILE_TEAMS,
+                element: <ProTeamsDash />,
+                loader: () => null,
+                action: () => null,
+                id: "profile-teams",
+              },
+              {
+                path: Routes.PROFILE_RESOURCES,
+                element: <ProResourcesDash />,
+                loader: () => null,
+                action: () => null,
+                id: "profile-resources",
+              },
+              {
+                path: Routes.PROFILE_SETTINGS,
+                element: <ProSettingsDash />,
+                loader: () => null,
+                action: () => null,
+                id: "profile-settings",
+              },
+              {
+                path: Routes.PROFILE_PROJECTS_CREATE,
+                element: <CreateProject />,
+                loader: CreateProjectLoader,
+                action: () => null,
+                id: "profile-projects-create",
+              },
+              {
+                path: Routes.PROFILE_DATASTORE_CREATE,
+                element: <CreateDatastore />,
+                loader: CreateDatastoreLoader,
+                action: () => null,
+                id: "profile-datastore-create",
+              },
+              {
+                path: Routes.PROFILE_DATASET_CREATE,
+                element: <ProfileCreateDataset />,
+                loader: ProfileCreateDatasetLoader,
+                action: () => null,
+                id: "profile-dataset-create",
+              }
+    
+              
+            ],
+          },
+          {
+            path: Routes.PROJECT_VIEW,
+            element: <ProjectLayout />,
+            loader: ProjectLoader,
+            action: () => null,
+            id: "project-view",
+            children: [
+              {
+                path: Routes.PROJECT_FILES,
+                element: <ProjFilesLayout />,
+                loader: () => null,
+                action: () => null,
+              },
+              {
+                path: Routes.PROJECT_DATASETS,
+                element: <ProjDatasetLayout />,
+                loader: () => null,
+                action: () => null,
+              },
+              {
+                path: Routes.PROJECT_PIPELINES,
+                element: <ProjPipelinesLayout />,
+                loader: () => null,
+                action: () => null,
+              },
+              {
+                path: Routes.PROJECT_RESULTS,
+                element: <ProjResultsLayout />,
+                loader: () => null,
+                action: () => null,
+              },
+              {
+                path: Routes.PROJECT_DISCUSSION,
+                element: <ProjDiscussionLayout />,
+                loader: () => null,
+                action: () => null,
+              },
+              {
+                path: Routes.PROJECT_SETTINGS,
+                element: <ProjSettingsLayout />,
+                loader: () => null,
+                action: () => null,
               },
             ],
           },
-          //Users
+          
           {
-            path: Routes.ORG_USERS,
-            element: <OrgUsers />,
+            path: Routes.VERIFY_EMAIL,
+            element: <VerifyEmail />,
             loader: () => null,
             action: () => null,
-            id: "org-users",
+            id: "verify-email",
           },
           {
-            path: Routes.ORG_REPOS,
-            element: <OrgRepos />,
+            path: Routes.SETTINGS,
+            element: <Settings />,
             loader: () => null,
             action: () => null,
-            id: "org-repos",
           },
           {
-            path: Routes.ORG_MODULES,
-            element: <OrgModules />,
-            loader: () => null,
+            path: Routes.REPOSITORY,
+            element: <Repository />,
+            loader: RepoLoader,
             action: () => null,
-            id: "org-modules",
+            id: "repo",
           },
-          {
-            path: Routes.ORG_SETTINGS,
-            element: <OrgSettings />,
+          /* {
+            path: Routes.ORGANIZATION_CREATE,
+            element: <CreateOrganization />,
             loader: () => null,
             action: () => null,
-            id: "org-settings",
+          }, */
+          {
+            path: Routes.ORGANIZATION,
+            element: <Organization />,
+            loader: OrgLoader,
+            action: () => null,
+            id: "org",
+            children: [
+              {
+                path: Routes.ORG_DATASET,
+                element: <OrgDataset />,
+                loader: () => null,
+                action: () => null,
+                id: "org-dataset",
+              },
+              {
+                path: Routes.ORG_DATASET_VIEW,
+                element: <ViewDataset />,
+                loader: ViewDatasetLoader,
+                action: () => null,
+                id: "org-dataset-view",
+              },
+              {
+                path: Routes.ORG_DATASET_CREATE_SUBSET,
+                element: <CreateSubset />,
+                loader: CreateSubsetLoader,
+                action: () => null,
+                id: "org-dataset-create-subset",
+              },
+              //Datastore
+              {
+                path: Routes.ORG_DATASTORE_DASHBOARD,
+                element: <DatastoreDashboard />,
+                loader: DatastoreDashboardLoader,
+                action: () => null,
+                id: "org-datastore-dashboard",
+              },
+              {
+                path: Routes.ORG_DATASTORE_VIEW,
+                element: <ViewDatastore />,
+                loader: ViewDatastoreLoader,
+                action: () => null,
+                id: "org-datastore-view",
+                children: [
+                  {
+                    path: Routes.ORG_DATASTORE_VIEW_LIST,
+                    element: <DatastoreSubsetList />,
+                    loader: () => null,
+                    action: () => null,
+                    id: "org-datastore-view-list",
+                  },
+                  {
+                    path: Routes.ORG_DATASTORE_SUBSET_DETAILS,
+                    element: <DatastoreSubsetDetails />,
+                    loader: DatastoreSubsetDetailsLoader,
+                    action: () => null,
+                    id: "org-datastore-subset-details",
+                  },
+                ],
+              },
+              //Users
+              {
+                path: Routes.ORG_USERS,
+                element: <OrgUsers />,
+                loader: () => null,
+                action: () => null,
+                id: "org-users",
+              },
+              {
+                path: Routes.ORG_REPOS,
+                element: <OrgRepos />,
+                loader: () => null,
+                action: () => null,
+                id: "org-repos",
+              },
+              {
+                path: Routes.ORG_MODULES,
+                element: <OrgModules />,
+                loader: () => null,
+                action: () => null,
+                id: "org-modules",
+              },
+              {
+                path: Routes.ORG_SETTINGS,
+                element: <OrgSettings />,
+                loader: () => null,
+                action: () => null,
+                id: "org-settings",
+              },
+            ],
           },
         ],
       },
-    ],
+    ]
   },
+  
   {
     path: Routes.LOGIN,
     element: <Login />,
     loader: () => null,
     action: () => null,
     id: "login",
+  },
+  {
+    path: Routes.SIGNUP,
+    element: <CreateProfile />,
+    loader: () => null,
+    action: () => null,
+    id: "signup",
   },
 ])
 

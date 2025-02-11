@@ -165,9 +165,9 @@ const DatasetFileSetList = ({ list, sets, handleViewProjects }: any) => {
 
             <SFileCell className={"md right"}>{"Label Projects"}</SFileCell>
           </SFileRow>
-          {sets.map((fileSet: any) => {
+          {sets.map((fileSet: any, index: number) => {
             return (
-              <SFileRow>
+              <SFileRow key={fileSet.set_name}>
                 <SFileCell className={"lg"}>{fileSet.set_name}</SFileCell>
                 <SFileCell className={"sm"}>{fileSet.num_files}</SFileCell>
                 <SFileCell className={"sm"}>

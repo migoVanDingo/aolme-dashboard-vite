@@ -109,7 +109,7 @@ const DatastoreCard = ({ orgDatastore }: any) => {
 
 
   const handleSelect = () => {
-    localStorage.setItem("currentDatastore", JSON.stringify(datastore))
+    sessionStorage.setItem("currentDatastore", JSON.stringify(datastore))
     nav("/organization/"+orgName+"/datastore/"+datastore.name)
   }
 

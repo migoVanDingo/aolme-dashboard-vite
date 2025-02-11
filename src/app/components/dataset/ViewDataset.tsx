@@ -171,7 +171,7 @@ const ViewDataset = ({ hideView, viewId, repo }: any) => {
 export default ViewDataset
 
 export const loader = async () => {
-  const selectedDataset = JSON.parse(localStorage.getItem("selectedDataset") as any)
+  const selectedDataset = JSON.parse(sessionStorage.getItem("selectedDataset") as any)
   const subsets = await DatasetAPI.getSubsetListByDatasetId(selectedDataset.dataset_id)
 
   console.log('selectedDataset: ', selectedDataset)

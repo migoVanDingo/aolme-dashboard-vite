@@ -57,9 +57,9 @@ const Repository = ({}: any) => {
 export default Repository
 
 export const loader = async () => {
-  const loaderRepo = localStorage.getItem("currentRepo") as string
-  const loaderUsername = localStorage.getItem("username") as string
-  const loaderUserId = localStorage.getItem("userId") as string
+  const loaderRepo = sessionStorage.getItem("currentRepo") as string
+  const loaderUsername = sessionStorage.getItem("username") as string
+  const loaderUserId = sessionStorage.getItem("userId") as string
 
   const getRepoDataset = async () => {
     const repoItems = await RepoAPI.getRepoItems(JSON.parse(loaderRepo).repo_id)

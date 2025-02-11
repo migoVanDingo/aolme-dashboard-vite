@@ -314,9 +314,9 @@ export default DatastoreSubsetDetails
 
 export const loader = async () => {
   const currentDatastore = JSON.parse(
-    localStorage.getItem("currentDatastore") as any,
+    sessionStorage.getItem("currentDatastore") as any,
   )
-  const currentSubset = JSON.parse(localStorage.getItem("currentSubset") as any)
+  const currentSubset = JSON.parse(sessionStorage.getItem("currentSubset") as any)
 
   const subsetItems = await DatastoreAPI.getSubsetItems(currentSubset.subsetId)
 
