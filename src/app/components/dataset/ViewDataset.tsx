@@ -1,11 +1,10 @@
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useEffect, useState } from "react"
+import { useLoaderData, useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import { DatasetAPI } from "../../deprecated/DatasetAPI__OLD"
 import { SFlexCol } from "../common/containers/FlexContainers"
 import Subset from "./subset/Subset"
-import { useLoaderData, useNavigate } from "react-router-dom"
 
 const SContainer = styled(SFlexCol)`
   width: 1100px;
@@ -122,11 +121,11 @@ const ViewDataset = ({ hideView, viewId, repo }: any) => {
   }, [trigger])
 
   const loadSubsets = () => {
-    DatasetAPI.getSubsetListByDatasetId(selectedDataset.dataset_id)
+ /*    DatasetAPI.getSubsetListByDatasetId(selectedDataset.dataset_id)
       .then((res: any) => {
         setSubsets(res)
       })
-      .catch((err: any) => console.log(err))
+      .catch((err: any) => console.log(err)) */
   }
 
   const handleGoBack = () => {
@@ -172,13 +171,13 @@ export default ViewDataset
 
 export const loader = async () => {
   const selectedDataset = JSON.parse(sessionStorage.getItem("selectedDataset") as any)
-  const subsets = await DatasetAPI.getSubsetListByDatasetId(selectedDataset.dataset_id)
+  //const subsets = await DatasetAPI.getSubsetListByDatasetId(selectedDataset.dataset_id)
 
   console.log('selectedDataset: ', selectedDataset)
-  console.log('subsets: ', subsets)
+  //console.log('subsets: ', subsets)
 
   return {
     selectedDataset,
-    selectedSubsets: subsets
+   //selectedSubsets: subsets
   }
 }

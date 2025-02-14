@@ -1,8 +1,3 @@
-import React, { useEffect, useState } from "react"
-import { useLoaderData } from "react-router-dom"
-import styled from "styled-components"
-import { SFlexCol, SFlexRow } from "../../common/containers/FlexContainers"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faCheckCircle,
   faLightbulb,
@@ -12,10 +7,13 @@ import {
   faVideo,
   faX,
 } from "@fortawesome/free-solid-svg-icons"
-import { DatastoreAPI } from "../../../api/DatastoreAPI"
-import { SUserRow } from "../../styled/SOrganization"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { useEffect } from "react"
+import { useLoaderData } from "react-router-dom"
+import styled from "styled-components"
 import { useSubsetItems } from "../../../hooks/useSubsetItems"
-import SubsetItemRow from "../../dataset/subset/SubsetItemRow"
+import { SFlexCol, SFlexRow } from "../../common/containers/FlexContainers"
+import { SUserRow } from "../../styled/SOrganization"
 
 const SContainer = styled(SFlexCol)`
   width: 100%;
@@ -318,13 +316,13 @@ export const loader = async () => {
   )
   const currentSubset = JSON.parse(sessionStorage.getItem("currentSubset") as any)
 
-  const subsetItems = await DatastoreAPI.getSubsetItems(currentSubset.subsetId)
+  //const subsetItems = await DatastoreAPI.getSubsetItems(currentSubset.subsetId)
 
-  console.log("subsetItems: ", subsetItems)
+  //console.log("subsetItems: ", subsetItems)
 
   return {
     currentDatastore,
     currentSubset,
-    subsetItems,
+    //subsetItems,
   }
 }

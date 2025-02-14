@@ -1,12 +1,9 @@
-import React from "react"
-import styled from "styled-components"
-import { SFlexCol, SFlexRowWrap } from "../../common/containers/FlexContainers"
+import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
-import { setRepoId, setStoreOrganizationId, setStoreOrganizationName } from "../../../actions"
+import styled from "styled-components"
 import { OrganizationAPI } from "../../../api/OrganizationAPI"
 import { setStoreOrgId, setStoreOrgName } from "../../../store/slices/organization"
-import { setStoreRepoDescription, setStoreRepoEntity, setStoreRepoId, setStoreRepoName, setStoreRepoOwner } from "../../../store/slices/repository"
+import { SFlexCol, SFlexRowWrap } from "../../common/containers/FlexContainers"
 
 const SContainer = styled(SFlexCol)`
   align-items: flex-start;

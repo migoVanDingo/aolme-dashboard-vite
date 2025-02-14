@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
-import { setStoreRepoContent, setStoreRepoDataset, setStoreRepoDescription, setStoreRepoEntity, setStoreRepoId, setStoreRepoName, setStoreRepoOwner, setStoreRepoSubsets } from "../store/slices/repository"
 import { useDispatch } from "react-redux"
 import { OrganizationAPI } from "../api/OrganizationAPI"
-import { RepoAPI } from "../api/RepoAPI"
-import { DatasetAPI } from "../deprecated/DatasetAPI__OLD"
+import { setStoreRepoContent, setStoreRepoDataset, setStoreRepoDescription, setStoreRepoEntity, setStoreRepoId, setStoreRepoName, setStoreRepoOwner } from "../store/slices/repository"
+
+//DEPRECATED
 
 export const useRepo = (repo: any = null, loaderRepoContent: any = null, loaderDataset: any = null) => {
   const [repoItems, setRepoItems] = useState<any>([])
@@ -70,16 +70,16 @@ export const useRepo = (repo: any = null, loaderRepoContent: any = null, loaderD
 
 
   const getDatasetSubsets = async ( datasetId: string) => {
-    const subsets = await DatasetAPI.getSubsetListByDatasetId(datasetId)
+    /* const subsets = await DatasetAPI.getSubsetListByDatasetId(datasetId)
     setRepoSubsets(subsets)
-    dispatch(setStoreRepoSubsets(subsets))
+    dispatch(setStoreRepoSubsets(subsets)) */
 
 
   }
 
   const getSubsetItems = async (subset: any) => {
-    const subsetItems = await DatasetAPI.getSubsetItemList(subset.subset_id)
-    setRepoSubsetItems(subsetItems)
+    /* const subsetItems = await DatasetAPI.getSubsetItemList(subset.subset_id)
+    setRepoSubsetItems(subsetItems) */
   }
 
   const getRepoEntity = async (entityId: string) => {

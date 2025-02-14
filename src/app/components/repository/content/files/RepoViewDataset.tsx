@@ -1,12 +1,8 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import styled from "styled-components"
 import { SFlexCol } from "../../../common/containers/FlexContainers"
-import SubsetCard from "../../../dataset/subset/SubsetCard"
-import UploadDatasetFilesRepo from "../../upload/UploadDatasetFilesRepo"
 import LoadingSpinner from "../../../common/loading/LoadingSpinner"
-import { LabelStudioAPI } from "../../../../api/labeler/LabelStudioAPI"
-import Dataset from "../../../../pages/Dataset"
-import { DatasetAPI } from "../../../../deprecated/DatasetAPI__OLD"
+import SubsetCard from "../../../dataset/subset/SubsetCard"
 import QuickUploadV2 from "./QuickUploadV2"
 
 const SContainer = styled(SFlexCol)`
@@ -100,7 +96,7 @@ const RepoViewDataset = ({
   } */
 
   const pushFilesToSubset = (payload: any) => {
-    DatasetAPI.pushFilesToSubset(payload, uploadFiles, (e: any) =>
+/*     DatasetAPI.pushFilesToSubset(payload, uploadFiles, (e: any) =>
       setProgress(Math.round((100 * e.loaded) / e.total)),
     )
       .then((res: any) => {
@@ -111,7 +107,7 @@ const RepoViewDataset = ({
       })
       .then((err: any) =>
         console.error("RepoViewDataset::pushFilesToSubset", err),
-      )
+      ) */
   }
 
   if (isLoading) {

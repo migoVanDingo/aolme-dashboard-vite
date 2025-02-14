@@ -1,14 +1,11 @@
-import React, { useState } from "react"
-import styled from "styled-components"
-import { SFlexCol, SFlexRow } from "../../common/containers/FlexContainers"
-import {
-  EditUser,
-  FormEditUser,
-  PayloadCreateUser,
-} from "../../../utility/interface/user"
-import TextInputComponent from "../../common/inputs/text/TextInputComponent"
-import { UserAPI } from "../../../api/UserAPI"
+import { useState } from "react"
 import { useSelector } from "react-redux"
+import styled from "styled-components"
+import {
+  FormEditUser
+} from "../../../utility/interface/user"
+import { SFlexCol, SFlexRow } from "../../common/containers/FlexContainers"
+import TextInputComponent from "../../common/inputs/text/TextInputComponent"
 
 const SContainer = styled(SFlexCol)`
   align-items: baseline;
@@ -101,7 +98,7 @@ const AddUser = ({ trigger, hideCreateNew }: any) => {
     if(email === "") setEmailError("Email is required")
         
 
-    const updatePayload: PayloadCreateUser = {
+   /*  const updatePayload: PayloadCreateUser = {
       username,
       email,
       roles: role,
@@ -122,7 +119,7 @@ const AddUser = ({ trigger, hideCreateNew }: any) => {
       })
 
     if (!err) {
-    }
+    } */
   }
 
   return (

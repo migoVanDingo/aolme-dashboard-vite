@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import styled from "styled-components"
 import { SFlexCol } from "../common/containers/FlexContainers"
-import { DatasetAPI } from "../../deprecated/DatasetAPI__OLD"
-import LabelTimelineComponent from "./LabelTimelineComponent"
-import LabelTimelineMap from "./LabelTimelineMap"
 import Player from "../video-player/Player"
+import LabelTimelineMap from "./LabelTimelineMap"
 
 const SContainer = styled(SFlexCol)`
   width: 100%;
@@ -47,7 +45,7 @@ const ActivityMapMain = ({ subsetId, selectedItem }: any) => {
   }, [subsetId, selectedItem])
 
   const getAnnotationData = async (subsetId: string, filename: string) => {
-    const annotationData =  await DatasetAPI.getAnnotationData(subsetId, selectedItem["name"])
+  /*   const annotationData =  await DatasetAPI.getAnnotationData(subsetId, selectedItem["name"])
       .then((res: any) => {
         const data = res.data[0]
         let annotations = data["annotations"][0]["result"]
@@ -63,7 +61,7 @@ const ActivityMapMain = ({ subsetId, selectedItem }: any) => {
       .catch((err: any) =>
         console.log("ActivityMapMain::getAnnotationData::err::", err),
       )
-      setAnnotationArr(annotationData)
+      setAnnotationArr(annotationData) */
 
   }
 

@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import styled from "styled-components"
-import { SFlexCol, SFlexRow } from "../common/containers/FlexContainers"
-import { DatasetAPI } from "../../deprecated/DatasetAPI__OLD"
-import LabelTimelineComponent from "./LabelTimelineComponent"
-import LabelTimelineMap from "./LabelTimelineMap"
-import Player from "../video-player/Player"
+import { SFlexRow } from "../common/containers/FlexContainers"
+import LoadingSpinner from "../common/loading/LoadingSpinner"
 import ToggleModule from "../common/ToggleModule"
+import Player from "../video-player/Player"
 import ActivityMapHeader from "./ActivityMapHeader"
 import LabelTimelineMapV2 from "./LabelTimelineMapV2"
-import LoadingSpinner from "../common/loading/LoadingSpinner"
 
 const SContainer = styled.div`
   width: 100%;
@@ -275,7 +272,7 @@ const ActivityMapMain = ({ subsetId, selectedItem, fileAnnotations }: any) => {
   }
 
   const getAnnotationData = async (subsetId: string, filename: string) => {
-    const annotationData = await DatasetAPI.getFileAnnotationListByDataset(
+   /*  const annotationData = await DatasetAPI.getFileAnnotationListByDataset(
       subsetId,
       selectedItem["name"],
     )
@@ -294,7 +291,7 @@ const ActivityMapMain = ({ subsetId, selectedItem, fileAnnotations }: any) => {
       .catch((err: any) =>
         console.log("ActivityMapMain::getAnnotationData::err::", err),
       )
-    setAnnotationArr(annotationData)
+    setAnnotationArr(annotationData) */
   }
 
   const filterAnnotationData = (annotation: any) => {

@@ -2,29 +2,12 @@ import {
   faBuilding,
   faEye
 } from "@fortawesome/free-solid-svg-icons"
-import { useEffect } from "react"
-import { useDispatch } from "react-redux"
 import {
   useLoaderData,
   useRouteLoaderData
 } from "react-router-dom"
 import styled, { useTheme } from "styled-components"
-import avatar from "../../assets/lucy-photo.jpg"
-import { setStoreUserId } from "../actions"
-import EntityUserAPI from "../api/EntityUserAPI"
-import { RepoAPI } from "../api/RepoAPI"
-import Tabs from "../components/common/Tabs"
-import UsernameTag from "../components/common/UsernameTag"
-import Button from "../components/common/buttons/Button"
-import Card from "../components/common/cards/Card"
 import { SFlexCol } from "../components/common/containers/FlexContainers"
-import { headerTabs, repoTabs } from "../components/profile/Constant"
-import ActivityProfileContent from "../components/profile/activity/ActivityProfileContent"
-import { ProfileHeader } from "../components/profile/header/ProfileHeader"
-import ProfileOrgListModule from "../components/profile/org/ProfileOrgListModule"
-import RepoProfileContent from "../components/profile/repo/RepoProfileContent"
-import { useProfile } from "../hooks/useProfile"
-import CreateRepositoryV2 from "./CreateProject"
 
 const SProfileContainer = styled.div`
   width: 100%;
@@ -143,7 +126,9 @@ const Profile = ({}: any) => {
   //Hooks
   const theme = useTheme()
 
-  const {
+/*  
+  DEPRECATED
+const {
     userId,
     activeTab,
     setActiveTab,
@@ -152,13 +137,13 @@ const Profile = ({}: any) => {
     orgContent,
     setOrgContent,
     handleEditProfile,
-  } = useProfile(uid)
+  } = useProfile(uid) */
 
 
 
   return (
     <SProfileContainer>
-      <ProfileHeader
+     {/*  <ProfileHeader
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         tabs={headerTabs}
@@ -216,7 +201,7 @@ const Profile = ({}: any) => {
         ) : (
           ""
         )}
-      </SContainer>
+      </SContainer> */}
     </SProfileContainer>
   )
 }

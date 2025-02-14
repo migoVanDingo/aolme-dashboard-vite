@@ -6,7 +6,7 @@ import TextInputComponent from "../../common/inputs/text/TextInputComponent"
 import {
   FormCreateRepo,
   FormEditRepo,
-  ICreateRepository,
+
 } from "../../../utility/interface/repository"
 import { RepoAPI } from "../../../api/RepoAPI"
 
@@ -88,7 +88,7 @@ const AddRepo = ({ trigger, hideCreateNew }: any) => {
   ]
 
   const handleCreateRepo = async () => {
-    const repoPayload: ICreateRepository = {
+    /* const repoPayload: ICreateRepository = {
       owner: owner ? owner : userId,
       entity_id: orgId,
       entity_type: "ORGANIZATION",
@@ -106,7 +106,7 @@ const AddRepo = ({ trigger, hideCreateNew }: any) => {
     })
     .catch((err: any) => console.error(err))
 
-    console.log("repoPayload: ", repoPayload)
+    console.log("repoPayload: ", repoPayload) */
   }
   return (
     <SContainer>

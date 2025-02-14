@@ -1,30 +1,21 @@
 import { faUpload } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useEffect, useRef, useState } from "react"
+import { Checkbox } from "@mantine/core"
+import { useRef, useState } from "react"
 import { useSelector } from "react-redux"
-import styled from "styled-components"
-import { DatasetAPI } from "../../../deprecated/DatasetAPI__OLD"
 import {
-  ICreateLabelStudioProject,
-  LabelStudioAPI,
-} from "../../../api/labeler/LabelStudioAPI"
+  useLoaderData,
+  useNavigate
+} from "react-router-dom"
+import styled from "styled-components"
+import { useSelectGroups } from "../../../hooks/useSelectGroups"
 import { ICreateSubset, ILabelSubset } from "../../../utility/interface/dataset"
 import { FormCreateRepo } from "../../../utility/interface/repository"
 import { SFlexCol, SFlexRow } from "../../common/containers/FlexContainers"
+import SelectionForm from "../../common/form/SelectionForm"
 import SelectInput from "../../common/inputs/select/SelectInput"
 import TextInputComponent from "../../common/inputs/text/TextInputComponent"
-import {
-  useLoaderData,
-  useNavigate,
-  useRouteLoaderData,
-} from "react-router-dom"
-import { Checkbox } from "@mantine/core"
-import { useSelectGroups } from "../../../hooks/useSelectGroups"
 import { mainSelectionFormProps } from "./mainSelectionFormProps"
-import SelectionForm from "../../common/form/SelectionForm"
-import { ac } from "vitest/dist/types-e3c9754d.js"
-import { setDatasetId } from "../../../store/slices/dataset"
-import { DatastoreAPI } from "../../../api/DatastoreAPI"
 
 
 const SContainer = styled(SFlexCol)`
@@ -184,7 +175,7 @@ const CreateSubset = ({}: any) => {
     setIsUploadFiles(!isUploadFiles)
   }
 
-  const inputFile = useRef(null)
+  const inputFile = useRef(null) as any
 
   const handleFileReset = () => {
     if (inputFile.current) {
@@ -250,8 +241,8 @@ const CreateSubset = ({}: any) => {
     if(ret){
       return
     }
-    const createSubset = DatasetAPI.createDatastoreSubset(payload)
-    console.log("createSubset: ", createSubset)
+    /* const createSubset = DatasetAPI.createDatastoreSubset(payload)
+    console.log("createSubset: ", createSubset) */
   }
 
   const handleCreate = async () => {
@@ -266,7 +257,7 @@ const CreateSubset = ({}: any) => {
       is_public: false,
     }
 
-    DatasetAPI.createSubset(payload, selectedFiles, (e: any) => {
+    /* DatasetAPI.createSubset(payload, selectedFiles, (e: any) => {
       setProgress(Math.round((100 * e.loaded) / e.total))
     })
       .then((res: any) => {
@@ -284,11 +275,11 @@ const CreateSubset = ({}: any) => {
 
       .catch((err) => {
         console.error("CreateSubset::handleCreate():: Error: ", err)
-      })
+      }) */
   }
 
   const initializeLabelStudio = (subset: any) => {
-    const payload: ICreateLabelStudioProject = {
+    /* const payload: ICreateLabelStudioProject = {
       name: subset.name,
       description: subset.description,
       owner: dataset.entity_id,
@@ -305,7 +296,7 @@ const CreateSubset = ({}: any) => {
           syncLsFiles(subset)
         }
       })
-      .catch((err: any) => console.error(err))
+      .catch((err: any) => console.error(err)) */
   }
 
   const syncLsFiles = (subset: any) => {
@@ -316,11 +307,11 @@ const CreateSubset = ({}: any) => {
     }
     console.log("syncLSFiles payload: ", payload)
 
-    LabelStudioAPI.syncLabelStudioFiles(payload, fileSetId)
+/*     LabelStudioAPI.syncLabelStudioFiles(payload, fileSetId)
       .then((res: any) => {
         console.log("syncLSFiles res: ", res)
       })
-      .catch((err: any) => console.error(err))
+      .catch((err: any) => console.error(err)) */
   }
 
   const handleChangeSelect = (type: string) => {
@@ -416,10 +407,10 @@ export const loader = async () => {
 
   //console.log("dataStoreEntites: ", datastoreEntities)
 
-  const groups = await DatastoreAPI.getGroups()
+  //const groups = await DatastoreAPI.getGroups()
 
   return {
-    datastoreGroups: groups,
+    //datastoreGroups: groups,
     selectedDataset,
   }
 }

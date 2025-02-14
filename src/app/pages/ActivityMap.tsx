@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from "react"
-import styled from "styled-components"
-import { SFlexCol } from "../components/common/containers/FlexContainers"
-import Timeline from "../components/activity-map/Timeline"
+import { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
 import { useParams } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
-import { DatasetAPI } from "../deprecated/DatasetAPI__OLD"
-import ActivityMapSidebar from "../components/activity-map/ActivityMapSidebar"
-import ActivityMapMain from "../components/activity-map/ActivityMapMain"
+import styled from "styled-components"
 import ActivityMapMainV2 from "../components/activity-map/ActivityMapMainV2"
 import ActivityMapSidebarV2 from "../components/activity-map/ActivityMapSidebarV2"
+import { SFlexCol } from "../components/common/containers/FlexContainers"
 
+//DEPRECATED
 const SContainer = styled(SFlexCol)`
   width: 100%;
   height: 100%;
@@ -123,7 +120,7 @@ const ActivityMap = () => {
   }, [subset])
 
   const getSubsetList = (datasetId: string) => {
-    DatasetAPI.getSubsetListByDatasetId(datasetId)
+   /*  DatasetAPI.getSubsetListByDatasetId(datasetId)
       .then((res: any) => {
         if (res.data) {
           //console.log("ActivityMap::getSubsetList::res::", res.data)
@@ -133,11 +130,11 @@ const ActivityMap = () => {
       })
       .catch((err: any) =>
         console.error("ActivityMap::getSubsetList::error::", err),
-      )
+      ) */
   }
 
   const getSubsetItems = (subsetList: string[]) => {
-    DatasetAPI.getSubsetItemList(subset.subset_id)
+   /*  DatasetAPI.getSubsetItemList(subset.subset_id)
       .then((res: any) => {
         if (res.data) {
           //console.log( "ActivityMap::DatasetAPI.getSubsetItemList::res::",res.data)
@@ -149,7 +146,7 @@ const ActivityMap = () => {
           "ActivityMap::DatasetAPI.getSubsetItemList::error::",
           err,
         ),
-      )
+      ) */
   }
 
   const handleSelectItem = (/* itemId: any */ title: string) => {
@@ -160,13 +157,13 @@ const ActivityMap = () => {
     const item = videoObject.filter((item: any) => item.title === title)
     setSelectedItem(item[0])
     if(datasetId){
-      DatasetAPI.getFileAnnotationListByDataset(datasetId, title)
+     /*  DatasetAPI.getFileAnnotationListByDataset(datasetId, title)
       .then((res: any) => {
         setBeastObject(res.data)
       })
       .catch((err: any) =>
         console.error("ActivityMap::handleSelectItem::error::", err),
-      )
+      ) */
     }
     
 

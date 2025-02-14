@@ -1,28 +1,18 @@
-import React from "react"
-import styled from "styled-components"
-import { SFlexRow } from "../../common/containers/FlexContainers"
 import {
-  faFile,
-  faServer,
-  faFlask,
-  faVectorSquare,
-  faCode,
-  faBookBookmark,
-  faComments,
-  faSquarePollVertical,
-  faCodePullRequest,
-  faA,
   faArrowsUpDown,
+  faComments,
+  faFile,
   faGear,
+  faServer,
+  faSquarePollVertical
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { connect, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
+import styled from "styled-components"
 import { ProcessAPI } from "../../../api/ProcessAPI"
-import {
-  ICreateLabelStudioProject,
-  LabelStudioAPI,
-} from "../../../api/labeler/LabelStudioAPI"
+import { SFlexRow } from "../../common/containers/FlexContainers"
+
 
 const SContainer = styled(SFlexRow)`
   grid-area: tabs;
@@ -69,14 +59,16 @@ const RepoTabs = ({ activeTab, setHighlightedTab, name }: any) => {
   const nav = useNavigate()
 
   const initializeLabelStudio = () => {
-    const payload: ICreateLabelStudioProject = {
+/*   
+DEPRECATED
+const payload: ICreateLabelStudioProject = {
       name: repoName,
       description: repoDescription,
       owner: repoEntity,
       created_by: userId,
       repo_id: repoId,
-    }
-    LabelStudioAPI.getLabelStudioProjectByRepoId(repoId)
+    } */
+/*     LabelStudioAPI.getLabelStudioProjectByRepoId(repoId)
       .then((res: any) => {
         console.log("res: ", res)
         if (res.data && res.data.length > 0) {
@@ -90,7 +82,7 @@ const RepoTabs = ({ activeTab, setHighlightedTab, name }: any) => {
             .catch((err: any) => console.error(err))
         }
       })
-      .catch((err: any) => console.error(err))
+      .catch((err: any) => console.error(err)) */
     //window.open('http://localhost:8080/projects/' + projectId + '/data?tab=83','_blank')
     /* LabelStudioAPI.initializeLabelStudioProject(payload)
     .then((res: any) => {

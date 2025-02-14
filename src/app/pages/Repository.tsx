@@ -69,7 +69,7 @@ export const loader = async () => {
         (item: any) => item.type === "DATASET",
       ).file_id
   
-      return await DatasetAPI.getDatasetById(datasetId)
+
     } else {
       return {}
     }

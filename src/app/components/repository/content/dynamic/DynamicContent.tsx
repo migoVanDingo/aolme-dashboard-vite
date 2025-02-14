@@ -1,17 +1,14 @@
-import React, { useEffect, useState } from "react"
-import styled from "styled-components"
-import { DatasetAPI } from "../../../../deprecated/DatasetAPI__OLD"
-import Dataset from "../../../../pages/Dataset"
-import EmptyContentMenu from "./EmptyContentMenu"
-import CreateContentViews from "./CreateContentViews"
+import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
-import Repository from "../../../../pages/Repository"
-import { RepoAPI } from "../../../../api/RepoAPI"
 import { ConfigAPI } from "../../../../api/ConfigAPI"
 import { ModulesAPI } from "../../../../api/ModulesAPI"
 import { NotebookAPI } from "../../../../api/NotebookAPI"
-import ViewRepoSectionContent from "./ViewRepoSectionContent"
+import { RepoAPI } from "../../../../api/RepoAPI"
+import { DatasetAPI } from "../../../../deprecated/DatasetAPI__OLD"
 import RepoViewDataset from "../files/RepoViewDataset"
+import CreateContentViews from "./CreateContentViews"
+import EmptyContentMenu from "./EmptyContentMenu"
+import ViewRepoSectionContent from "./ViewRepoSectionContent"
 
 const DynamicContent = ({ menuOption, repoEntity, repoId }: any) => {
 
@@ -87,7 +84,7 @@ const DynamicContent = ({ menuOption, repoEntity, repoId }: any) => {
   const getDatasets = (contentId: string, lock: any | null = null) => {
 
     if (dataset === null || lock !== null) {
-      DatasetAPI.getDatasetById(contentId)
+    /*   DatasetAPI.getDatasetById(contentId)
         .then((res: any) => {
           console.log("DynamicContent::getDatasets::res::", res.data)
           setDataset(res.data)
@@ -97,13 +94,13 @@ const DynamicContent = ({ menuOption, repoEntity, repoId }: any) => {
         })
         .catch((err: any) =>
           console.error("DynamicContent::getDatasets::error::", err),
-        )
+        ) */
     }
   }
 
   const getSubsets = (datasetId: string, lock: any | null = null) => {
     if (subsets === null || lock !== null) {
-      DatasetAPI.getSubsetListByDatasetId(datasetId)
+    /*   DatasetAPI.getSubsetListByDatasetId(datasetId)
         .then((res: any) => {
           console.log("DynamicContent::getSubsets::res::", res.data)
           setSubsets(res.data)
@@ -112,7 +109,7 @@ const DynamicContent = ({ menuOption, repoEntity, repoId }: any) => {
         })
         .catch((err: any) =>
           console.error("DynamicContent::getSubsets::error::", err),
-        )
+        ) */
     }
   }
 
@@ -289,14 +286,14 @@ const DynamicContent = ({ menuOption, repoEntity, repoId }: any) => {
 
     switch (menuOption) {
       case "DATASET":
-        DatasetAPI.getDatasetListByEntity(entityId)
+       /*  DatasetAPI.getDatasetListByEntity(entityId)
           .then((res: any) => {
             console.log("DynamicContent::getDatasets::res::", res)
             setContentList(res.data)
           })
           .catch((err: any) =>
             console.error("DynamicContent::getDatasets::error::", err),
-          )
+          ) */
         break
 
       case "CONFIG":

@@ -17,7 +17,7 @@ const SContainer = styled(SFlexCol)`
 
 
 function Player({ currentTime, path, layout }: any) {
-  const videoRef = useRef(null)
+  const videoRef = useRef(null) as any
 
   const [height, setHeight] = React.useState(0);
   const [width, setWidth] = React.useState(0);  

@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../../deprecated/context/AuthContext";
 
 export default function PrivateRoute({ children }: any) {
+/* 
+DEPRECATED
   const { currentUser } = useAuth();
   
-  return currentUser ? children : <Navigate to="/login" />;
+  return currentUser ? children : <Navigate to="/login" />; */
 }

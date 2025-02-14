@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { useLoaderData } from 'react-router-dom'
 import styled from 'styled-components'
 import { SFlexCol } from '../../common/containers/FlexContainers'
 import DashboardHeader from '../dataset/header/DashboardHeader'
-import { DatastoreAPI } from '../../../api/DatastoreAPI'
 import DatastoreList from './DatastoreList'
-import { useLoaderData } from 'react-router-dom'
 
 const SContainer = styled(SFlexCol)`
     width: 100%;
@@ -71,9 +70,9 @@ export default DatastoreDashboard
 
 export const loader = async () => {
     const orgId = sessionStorage.getItem("orgId") as string
-    const orgDatastoreList = await DatastoreAPI.getOrgDatastoreList(orgId)
+   //const orgDatastoreList = await DatastoreAPI.getOrgDatastoreList(orgId)
     
     return {
-        orgDatastoreList
+        //orgDatastoreList
     }
 }

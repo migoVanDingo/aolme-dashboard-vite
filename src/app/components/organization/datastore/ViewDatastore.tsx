@@ -153,13 +153,15 @@ export const loader = async () => {
   const currentDatastore = JSON.parse(sessionStorage.getItem("currentDatastore") as any)
   
     
-  const subsets = await DatastoreAPI.getSubsetList(
+/*  
+DEPRECATED
+const subsets = await DatastoreAPI.getSubsetList(
     currentDatastore.datastore_id,
-  )
+  ) */
 
 
   return {
     currentDatastore,
-    loaderSubsetList: subsets,
+    //loaderSubsetList: subsets,
   }
 }
