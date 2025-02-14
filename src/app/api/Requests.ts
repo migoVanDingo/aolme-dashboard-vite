@@ -7,7 +7,7 @@ export class Requests {
     endpoint: string,
     onUploadProgress: any
   ) {
-    return await axios.post("http://127.0.0.1:" + port + endpoint, formData, {
+    return await axios.post("http://localhost:" + port + endpoint, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -16,7 +16,7 @@ export class Requests {
   }
   public static async testPost() {
     try {
-      const response = await fetch("http://127.0.0.1:5003/echo", {
+      const response = await fetch("http://localhost:5003/echo", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,7 +39,7 @@ export class Requests {
 
   public static async doPost(data: any, endpoint: string, port: string) {
     try {
-      const response = await fetch("http://127.0.0.1:" + port + endpoint, {
+      const response = await fetch("http://localhost:" + port + endpoint, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -64,7 +64,7 @@ export class Requests {
 
   public static async doLogin(data: any, endpoint: string, port: string) {
     try {
-      const response = await fetch("http://127.0.0.1:" + port + endpoint, {
+      const response = await fetch("http://localhost:" + port + endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -85,7 +85,7 @@ export class Requests {
 
   public static async doGet(endpoint: string, port: string) {
     try {
-      const response = await fetch("http://127.0.0.1:" + port + endpoint, {
+      const response = await fetch("http://localhost:" + port + endpoint, {
         method: "GET",
         credentials: "include",
         headers: {
@@ -105,7 +105,7 @@ export class Requests {
   }
 
   public static async doPatch(formData: any, endpoint: string, port: string) {
-    return await axios.patch("http://127.0.0.1:" + port + endpoint, formData, {
+    return await axios.patch("http://localhost:" + port + endpoint, formData, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer " + sessionStorage.getItem("access_token"),
@@ -114,7 +114,7 @@ export class Requests {
   }
 
   public static async doPut(formData: any, endpoint: string, port: string) {
-    return await axios.put("http://127.0.0.1:" + port + endpoint, formData, {
+    return await axios.put("http://localhost:" + port + endpoint, formData, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer " + sessionStorage.getItem("access_token"),
@@ -123,6 +123,6 @@ export class Requests {
   }
 
   public static async doDelete(endpoint: string, port: string) {
-    return await axios.delete("http://127.0.0.1:" + port + endpoint)
+    return await axios.delete("http://localhost:" + port + endpoint)
   }
 }
