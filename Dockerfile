@@ -20,7 +20,7 @@ WORKDIR /app
 RUN npm install -g serve
 
 # Copy built files from build stage
-COPY --from=build /app/dist /app
+COPY --from=build /app/build /app
 
 # Expose port 5173
 EXPOSE 5173
