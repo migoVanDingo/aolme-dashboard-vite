@@ -1,7 +1,6 @@
 # Use Node.js as the base image
 FROM node:18-alpine AS build
 
-# Set working directory
 WORKDIR /app
 
 # Install dependencies
@@ -12,19 +11,19 @@ RUN npm install --frozen-lockfile
 COPY . .
 RUN npm run build
 
-# Use a lightweight Node.js server to serve the build
-FROM node:18-alpine AS serve
+# Use a lightweight server to serve the frontend
+FROM node:18-alpine
 
 WORKDIR /app
 
-# Install a lightweight static server
+# Install `serve` to serve the built frontend
 RUN npm install -g serve
 
-# Copy built files from the previous stage
-COPY --from=build /app/dist /app/dist
+# Copy built files from build stage
+COPY --from=build /app/dist /app
 
-# Expose the correct port for serving
-EXPOSE 3000
+# Expose port 5173
+EXPOSE 5173
 
-# Serve the static files
-CMD ["serve", "-s", "dist", "-l", "3000"]
+# Start the frontend using `serve`
+CMD ["serve", "-s", ".", "-l", "5173"]
