@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { useRouteLoaderData } from "react-router-dom"
 import styled from "styled-components"
-import { DatasetAPI } from "../../../deprecated/DatasetAPI__OLD"
 import {
   SFlexCol,
   SFlexRowWrap
@@ -87,14 +86,14 @@ const DatasetDashboard = () => {
   }
 
   const loadDatasets = () => {
-    DatasetAPI.getDatasetListByEntity(orgId ? orgId : userId)
+/*     DatasetAPI.getDatasetListByEntity(orgId ? orgId : userId)
       .then((res: any) => {
         console.log("Datasets: ", res.data)
         setDatasets(res.data)
       })
       .catch((err: any) => {
         console.log(err)
-      })
+      }) */
   }
 
   const handleSelectDataset = (datasetId: string) => {

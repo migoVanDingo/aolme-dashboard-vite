@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react"
-import { EditUser, FormEditUser } from "../../../utility/interface/user"
+import { useDispatch } from "react-redux"
 import styled from "styled-components"
+import { UserAPI } from "../../../api/UserAPI"
+import { EditUser, FormEditUser } from "../../../utility/interface/user"
 import { SFlexCol, SFlexRow } from "../../common/containers/FlexContainers"
 import TextInputComponent from "../../common/inputs/text/TextInputComponent"
-import SelectInput from "../../common/inputs/select/SelectInput"
-import { UserAPI } from "../../../api/UserAPI"
-import { useDispatch } from "react-redux"
-import { setStoreUserEmail, setStoreUsername } from "../../../actions"
 
 const SButtonContainer = styled(SFlexRow)`
   gap: 20px;

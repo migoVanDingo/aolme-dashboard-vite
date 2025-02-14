@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { SFlexCol, SFlexRow } from "../../../common/containers/FlexContainers"
-import SelectOrgContentView from "./SelectOrgContentView"
+
 
 const SContainer = styled(SFlexCol)`
   height: 100%;
@@ -79,14 +79,15 @@ const CreateContentViews = ({
   return (
     <>
       {createMethod === "ORG" ? (
-        <SelectOrgContentView
+       /*  <SelectOrgContentView
           menuOption={menuOption}
           selectedId={selectedId}
           contentList={contentList}
           handleChange={handleChange}
           handleSelectContent={handleSelectContent}
           goEmptyContentMenu={goEmptyContentMenu}
-        />
+        /> */
+        <></>
       ) : createMethod === "UPLOAD" ? (
         <></>
       ) : createMethod === "URL" ? (
