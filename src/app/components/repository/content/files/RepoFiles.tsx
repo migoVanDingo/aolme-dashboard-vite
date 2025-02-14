@@ -9,7 +9,6 @@ import { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
 import styled from "styled-components"
 import { FilesAPI } from "../../../../api/FileAPI"
-import FileUploadService from "../../../../services/FileUploadService"
 import IModule from "../../../../utility/interface/module"
 import { SFlexCol } from "../../../common/containers/FlexContainers"
 import BranchContent from "./BranchContent"
@@ -160,7 +159,7 @@ const RepoFiles = ({ repoId /* , repoFiles */ }: any) => {
     }
   }
 
-  const inputFile = useRef(null)
+  const inputFile = useRef(null) as any
 
   const handleReset = () => {
     if (inputFile.current) {
@@ -202,7 +201,9 @@ const RepoFiles = ({ repoId /* , repoFiles */ }: any) => {
 
   const addFiles = async (e: any, payload: IModule) => {
 
-    FileUploadService.fileUpload(
+/*    
+    DEPRECATED
+FileUploadService.fileUpload(
       selectedFiles,
       payload,
       (e: any) => {
@@ -218,7 +219,7 @@ const RepoFiles = ({ repoId /* , repoFiles */ }: any) => {
       })
       .catch((err: any) => {
         console.log("error: ", err)
-      })
+      }) */
   }
 
   const handleTriggerRender = () => {

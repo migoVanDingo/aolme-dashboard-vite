@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import { ProjectAPI } from "../api/ProjectAPI"
 import Heading from "../components/common/Heading"
 import Message from "../components/common/Message"
 import UserDropdown from "../components/common/UserDropdown"
@@ -12,7 +11,6 @@ import TextArea from "../components/common/inputs/text/TextArea"
 import TextInput from "../components/common/inputs/text/TextInput"
 import LoadingSpinner from "../components/common/loading/LoadingSpinner"
 import { SButton } from "../components/common/styled"
-import UploadService from "../services/FileUploadService"
 
 const SContainer = styled(SFlexCol)`
   width: 650px;
@@ -68,7 +66,9 @@ const CreateRepository = ({ userId }: any) => {
   }
 
   const createProject = async (e: any) => {
-    const response = await ProjectAPI.createProject(
+   /*  
+   DEPRECATED
+   const response = await ProjectAPI.createProject(
       projectName,
       projectDescription,
       projectOwner,
@@ -87,7 +87,7 @@ const CreateRepository = ({ userId }: any) => {
           navigate("/project/" + res.data["project_id"])
         }
       })
-      .catch((err: any) => console.error("foc: ", err))
+      .catch((err: any) => console.error("foc: ", err)) */
     // const fulResponse = UploadService.handleFileUpload(selectedFiles, null ,response.id, (e: any) => {
     //   setProgress(Math.round((100 * e.loaded) / e.total))
     // })

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react"
-import styled from "styled-components"
-import { SFlexCol, SFlexRow } from "../../../common/containers/FlexContainers"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUpload, faX } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { useEffect, useState } from "react"
+import styled from "styled-components"
+import { SFlexRow } from "../../../common/containers/FlexContainers"
 import FileUpload from "../../../common/inputs/file-upload/FileUpload"
 
 const SContainer = styled(SFlexRow)`

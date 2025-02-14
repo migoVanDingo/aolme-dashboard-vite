@@ -1,18 +1,16 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
+import { useLoaderData, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { SFlexCol, SFlexRow } from '../components/common/containers/FlexContainers'
-import { useLoaderData, useNavigate, useRouteLoaderData } from 'react-router-dom'
-import Message from '../components/common/Message'
 import Heading from '../components/common/Heading'
-import UserDropdown from '../components/common/UserDropdown'
+import Message from '../components/common/Message'
 
-import TextArea from '../components/common/inputs/text/TextArea'
-import TextInput from '../components/common/inputs/text/TextInput'
-import { SButton } from '../components/common/styled'
-import LoadingSpinner from '../components/common/loading/LoadingSpinner'
-import { DatastoreAPI } from '../api/DatastoreAPI'
 import Routes from '../../constants/routes'
+import { DatastoreAPI } from '../api/DatastoreAPI'
+import TextArea from '../components/common/inputs/text/TextArea'
 import TextInputComponent from '../components/common/inputs/text/TextInputComponent'
+import LoadingSpinner from '../components/common/loading/LoadingSpinner'
+import { SButton } from '../components/common/styled'
 
 const SContainer = styled(SFlexCol)`
   width: 800px;

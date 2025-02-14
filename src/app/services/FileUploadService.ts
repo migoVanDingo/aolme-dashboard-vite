@@ -1,4 +1,4 @@
-import axios from "axios"
+/* import axios from "axios"
 import { FormDataClient } from "./http-common"
 import { ICreateProject, ISyncImportStorage } from "../utility/interface/project"
 import { Requests } from "../api/Requests"
@@ -52,7 +52,7 @@ const handleFileUpload = async (files: any[], data: ISyncImportStorage, fileSetI
   formData.append("project_description", description)
   formData.append("project_owner", owner)
 
-  console.log("from data: ", formData) */
+  console.log("from data: ", formData) 
 
 
   return await axios.post("http://localhost:5000/files/"+fileSetId, formData, {
@@ -111,14 +111,15 @@ const getCsvTest = () => {
 
 const getFiles = () => {
   return http.get("/files");
-}; */
+}; 
 
 export default {
   upload,
   handleFileUpload,
   fileUpload,
   doFu
-  /* getFiles,
+  getFiles,
   convertCsv,
-  getCsvTest */
+  getCsvTest 
 }
+ */

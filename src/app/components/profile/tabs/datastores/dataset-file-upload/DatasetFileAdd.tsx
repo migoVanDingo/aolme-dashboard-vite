@@ -1,10 +1,9 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import styled from "styled-components"
-import { SFlexCol } from "../../../../common/containers/FlexContainers"
-import DatasetFileUpload from "./DatasetFileUpload"
-import DatasetFileGroupSelect from "./DatasetFileGroupSelect"
 import { DatastoreAPI } from "../../../../../api/DatastoreAPI"
+import { SFlexCol } from "../../../../common/containers/FlexContainers"
 import DatasetFileGroupList from "./DatasetFileGroupList"
+import DatasetFileGroupSelect from "./DatasetFileGroupSelect"
 
 const SContainer = styled(SFlexCol)`
   width: 100%;

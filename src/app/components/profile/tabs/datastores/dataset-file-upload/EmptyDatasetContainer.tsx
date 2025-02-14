@@ -1,10 +1,9 @@
-import React, { useRef, useState } from "react"
-import styled from "styled-components"
-import DatasetFileUpload from "./DatasetFileUpload"
-import DisplayUploadFiles from "./DisplayUploadFiles"
-import { DatasetAPI } from "../../../../../api/DatasetAPI"
+import { useRef, useState } from "react"
 import { useSelector } from "react-redux"
+import styled from "styled-components"
+import { DatasetAPI } from "../../../../../api/DatasetAPI"
 import DatasetFileAdd from "./DatasetFileAdd"
+import DisplayUploadFiles from "./DisplayUploadFiles"
 
 const SContainer = styled.div`
   display: grid;

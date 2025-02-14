@@ -64,7 +64,7 @@ const QuickUploadV2 = ({
 }: any) => {
 
 
-  const inputFile = useRef(null)
+  const inputFile = useRef(null) as any
 
   const handleReset = () => {
     if (inputFile.current) {

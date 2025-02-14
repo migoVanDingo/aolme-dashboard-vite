@@ -2,8 +2,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useState } from "react"
 import { useSelector } from "react-redux"
 import styled from "styled-components"
-import UploadService from "../../../services/FileUploadService"
-import { ISyncImportStorage } from "../../../utility/interface/project"
 import { SFlexCol, SFlexRow } from "../../common/containers/FlexContainers"
 import DatasetDashboard from "./DatasetDashboard"
 
@@ -90,7 +88,9 @@ const OrgDataset = () => {
   }
 
   const uploadFiles = () => {
-    const data: ISyncImportStorage = {
+/*     
+    DEPRECATED
+const data: ISyncImportStorage = {
       title: "Kelly",
       description: "Typing",
       repoId: repoId,
@@ -111,7 +111,7 @@ const OrgDataset = () => {
       })
       .catch((err) => {
         console.log(err)
-      })
+      }) */
   }
   return (
     <SContainer>

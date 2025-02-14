@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
 import { useLoaderData, useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import { RepoAPI } from "../api/RepoAPI"
+import ProjectApi from "../api/ProjectAPI"
 import Heading from "../components/common/Heading"
 import Message from "../components/common/Message"
 import UserDropdown from "../components/common/UserDropdown"
@@ -16,7 +15,6 @@ import CheckboxInput from "../components/common/inputs/toggle/CheckboxInput"
 import LoadingSpinner from "../components/common/loading/LoadingSpinner"
 import { SButton } from "../components/common/styled"
 import { ICreateProject } from "../utility/interface/repository"
-import ProjectApi from "../api/ProjectAPI"
 
 const SContainer = styled(SFlexCol)`
   width: 800px;

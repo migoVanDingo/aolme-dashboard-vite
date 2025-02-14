@@ -1,12 +1,10 @@
 import React, { useEffect, useRef } from "react"
 import styled from "styled-components"
-import FileUpload from "../../../common/inputs/file-upload/FileUpload"
+import { SFlexCol } from "../../../common/containers/FlexContainers"
+import LoadingSpinner from "../../../common/loading/LoadingSpinner"
 import EmptyDatasetContainer from "./dataset-file-upload/EmptyDatasetContainer"
 import DatasetFileSetList from "./DatasetFileSetList"
-import SetLabelProjectView from "./set-view/SetView"
 import SetView from "./set-view/SetView"
-import LoadingSpinner from "../../../common/loading/LoadingSpinner"
-import { SFlexCol } from "../../../common/containers/FlexContainers"
 
 const SContainer = styled.div`
   width: 100%;

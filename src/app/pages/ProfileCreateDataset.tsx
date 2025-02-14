@@ -1,16 +1,15 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import { SFlexCol, SFlexRow } from '../components/common/containers/FlexContainers'
+import { useState } from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
-import { DatasetAPI } from '../api/DatasetAPI'
+import styled from 'styled-components'
 import Routes from '../../constants/routes'
+import { DatasetAPI } from '../api/DatasetAPI'
+import { SFlexCol, SFlexRow } from '../components/common/containers/FlexContainers'
 import Heading from '../components/common/Heading'
-import TextInput from '../components/common/inputs/text/TextInput'
-import Message from '../components/common/Message'
 import TextArea from '../components/common/inputs/text/TextArea'
-import { SButton } from '../components/common/styled'
-import LoadingSpinner from '../components/common/loading/LoadingSpinner'
 import TextInputComponent from '../components/common/inputs/text/TextInputComponent'
+import LoadingSpinner from '../components/common/loading/LoadingSpinner'
+import Message from '../components/common/Message'
+import { SButton } from '../components/common/styled'
 
 const SContainer = styled(SFlexCol)`
   width: 800px;

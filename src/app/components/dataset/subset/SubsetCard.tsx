@@ -1,18 +1,10 @@
-import React, { useEffect, useState } from "react"
-import styled from "styled-components"
-import { SFlexCol, SFlexRow } from "../../common/containers/FlexContainers"
-import { DatasetAPI } from "../../../deprecated/DatasetAPI__OLD"
-import SubsetItemRow from "./SubsetItemRow"
-import { SUserCol, SUserRow } from "../../styled/SOrganization"
-import {
-  ICreateLabelStudioProject,
-  LabelStudioAPI,
-} from "../../../api/labeler/LabelStudioAPI"
-import { useSelector } from "react-redux"
-import { ISyncImportStorage } from "../../../utility/interface/project"
-import FileUploadService from "../../../services/FileUploadService"
-import { ILabelSubset } from "../../../utility/interface/dataset"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import styled from "styled-components"
+import { DatasetAPI } from "../../../deprecated/DatasetAPI__OLD"
+import { SFlexCol, SFlexRow } from "../../common/containers/FlexContainers"
+import { SUserRow } from "../../styled/SOrganization"
+import SubsetItemRow from "./SubsetItemRow"
 
 const SContainer = styled(SFlexCol)`
   width: 100%;
@@ -134,6 +126,8 @@ const SubsetCard = ({
   useEffect(() => {
     const init = () => {
       //console.log("SubsetCard::subset::", subset)
+      /*
+      DEPRECATED      
       DatasetAPI.getSubsetItemList(subset.subset_id)
         .then((res: any) => {
           //console.log("SubsetCard::DatasetAPI.getSubsetItemList::res::", res)
@@ -145,7 +139,7 @@ const SubsetCard = ({
             "SubsetCard::DatasetAPI.getSubsetItemList::error::",
             err,
           ),
-        )
+        ) */
     }
     return subset && init()
   }, [subset])

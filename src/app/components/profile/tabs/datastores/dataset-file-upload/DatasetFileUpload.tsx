@@ -1,8 +1,5 @@
-import React from "react"
 import styled from "styled-components"
 import { SFlexCol, SFlexRow } from "../../../../common/containers/FlexContainers"
-import FileUpload from "../../../../common/inputs/file-upload/FileUpload"
-import QuickUpload from "../../../../repository/content/files/QuickUpload"
 import QuickUploadV2 from "../../../../repository/content/files/QuickUploadV2"
 
 const SContainer = styled(SFlexCol)`
