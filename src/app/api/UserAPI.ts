@@ -33,7 +33,7 @@ export class UserAPI {
     }
 
     public static login(payload: PayloadLogin){
-        return Requests.doPost(payload, "/api/user/login", Constant.USER_SERVICE_PORT)
+        return Requests.doLogin(payload, "/api/user/login", Constant.USER_SERVICE_PORT)
         //return Requests.testPost()
     }
 

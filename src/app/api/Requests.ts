@@ -62,6 +62,27 @@ export class Requests {
     }
   }
 
+  public static async doLogin(data: any, endpoint: string, port: string) {
+    try {
+      const response = await fetch("http://localhost:" + port + endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok")
+      }
+
+      return await response.json()
+    } catch (error) {
+      console.error("POST ERROR: ", error)
+      throw error // Re-throw the error to handle it outside this function if needed
+    }
+  }
+
   public static async doGet(endpoint: string, port: string) {
     try {
       const response = await fetch("http://localhost:" + port + endpoint, {
