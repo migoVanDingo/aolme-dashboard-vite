@@ -1,5 +1,7 @@
+# Use Node.js as the base image
 FROM node:18-alpine AS build
 
+# Set working directory
 WORKDIR /app
 
 # Install dependencies
@@ -10,15 +12,19 @@ RUN npm install --frozen-lockfile
 COPY . .
 RUN npm run build
 
-# Serve the build with a lightweight web server
-FROM nginx:alpine
+# Use a lightweight Node.js server to serve the build
+FROM node:18-alpine AS serve
 
-# Copy built files from build stage to nginx
-COPY --from=build /app/build /usr/share/nginx/html
+WORKDIR /app
 
-# Copy custom nginx configuration
-COPY nginx.conf /etc/nginx/nginx.conf
+# Install a lightweight static server
+RUN npm install -g serve
 
-# Expose port 5173 and start Nginx
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# Copy built files from the previous stage
+COPY --from=build /app/dist /app/dist
+
+# Expose the correct port for serving
+EXPOSE 3000
+
+# Serve the static files
+CMD ["serve", "-s", "dist", "-l", "3000"]
