@@ -101,13 +101,8 @@ const Login = ({ userId }: any) => {
       }
       console.log("payload: ", payload)
       //AuthContext
-      const response = await login(payload) as any
-      console.log("status: ", response.status)
-      console.log("message: ", response.message)
-      if(response.status === "FAILED"){
-        console.log("error: ", response.message)
-        setEmailError(response.message)
-      }
+      await login(payload) as any
+      
      
     } else console.log("errors")
   }
