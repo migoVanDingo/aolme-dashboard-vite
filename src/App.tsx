@@ -180,13 +180,7 @@ const router = createBrowserRouter([
             ],
           },
           
-          {
-            path: Routes.VERIFY_EMAIL,
-            element: <VerifyEmail />,
-            loader: () => null,
-            action: () => null,
-            id: "verify-email",
-          },
+
           {
             path: Routes.SETTINGS,
             element: <Settings />,
@@ -299,6 +293,13 @@ const router = createBrowserRouter([
         ],
       },
     ]
+  },
+  {
+    path: Routes.VERIFY_EMAIL,
+    element: <VerifyEmail />,
+    loader: () => null,
+    action: () => null,
+    id: "verify-email",
   },
   
   {

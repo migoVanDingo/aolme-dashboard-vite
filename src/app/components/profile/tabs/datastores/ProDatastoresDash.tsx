@@ -153,7 +153,7 @@ const ProfDatastoresDash = () => {
 
   useEffect(() => {
     const init = () => {
-      if (selectedDataset !== null) {
+      if (selectedDataset !== "") {
         // console.log('selectedDataset', selectedDataset)
         setType("Dataset")
 

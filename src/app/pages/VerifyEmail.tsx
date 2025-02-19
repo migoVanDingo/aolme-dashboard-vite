@@ -40,7 +40,10 @@ const VerifyEmail = () => {
   useEffect(() => {
     const init = () => {
       if (token !== null && token !== "") {
+        console.log('VerifyEmail.tsx "token" is not null')
+        setTimeout(() => {
         handleVerifyEmail(token)
+        }, 2000)
       }
     }
 
@@ -53,6 +56,7 @@ const VerifyEmail = () => {
         if (result.status === "SUCCESS") {
           setToggle("SUCCESS")
           setTimeout(() => {
+            console.log('REDIRECTING TO LOGIN')
             nav("/login")
           }, 3000)
         }

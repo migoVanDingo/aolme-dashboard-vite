@@ -34,6 +34,7 @@ const DatasetFiles = ({ list, selectedItem }: any) => {
   const parseList = (list: any[]) => {
     // List is populated in the root component for the route. ProDatastoresDash.
     // This function parses that list, extracts the data and generates the file sets from the individual files.
+    list = list.filter((item: any) => item.file_type === "video")
     list = list.sort(
       (a: any, b: any) =>
         new Date(JSON.parse(a.metadata).date).getTime() -
@@ -43,14 +44,17 @@ const DatasetFiles = ({ list, selectedItem }: any) => {
     const sets = Array.from(
       new Set(
         list.map((item: any) => {
-          return JSON.stringify({
-            set_id: JSON.parse(item.metadata).set_id,
-            set_name: JSON.parse(item.metadata).set_name,
-            num_files: JSON.parse(item.metadata).total_in_set.replace(
-              /^0+/,
-              "",
-            ),
-          })
+          const metadata = JSON.parse(item.metadata)
+
+            return JSON.stringify({
+              set_id: metadata.set_id,
+              set_name: metadata.set_name,
+              num_files: metadata.total_in_set.replace(
+                /^0+/,
+                "",
+              ),
+            })
+          
         }),
       ),
     ).map((str: any) => JSON.parse(str))

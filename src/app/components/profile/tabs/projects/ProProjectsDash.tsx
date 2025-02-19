@@ -27,7 +27,8 @@ const SContainer = styled.div`
 
   position: relative;
   margin: 40px auto 0;
-  min-height: calc(100% - ${({ theme }) => theme.profile.nav.height});
+  min-height: calc(100vh - ${({ theme }) => theme.profile.nav.height});
+  
 `
 
 const SProfileContainer = styled.div`
