@@ -128,11 +128,11 @@ const payload: ICreateLabelStudioProject = {
 
   const tabs = [
     {
-      title: "Files",
-      callback: () => console.log("FILES"),
+      title: "Dashboard",
+      callback: () => console.log("DASHBOARD"),
       icon: faFile,
-      path: "/project/:projectName/files",
-      id: "files",
+      path: "/project/:projectName/dashboard",
+      id: "dashboarr",
     },
     {
       title: "Datasets",

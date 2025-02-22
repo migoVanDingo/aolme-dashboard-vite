@@ -41,6 +41,7 @@ import Settings from "./app/pages/Settings"
 import VerifyEmail from "./app/pages/VerifyEmail"
 import { dark_grey_1 } from "./app/theme/ThemeConfig"
 import Routes from "./constants/routes"
+import ProjDashboard from "./app/components/project/dashboard/ProjDashboard"
 
 const mantineTheme = createTheme({
   /** Put your mantine theme override here */
@@ -141,6 +142,12 @@ const router = createBrowserRouter([
             action: () => null,
             id: "project-view",
             children: [
+              {
+                path: Routes.PROJECT_DASHBOARD,
+                element: <ProjDashboard />,
+                loader: () => null,
+                action: () => null,
+              },
               {
                 path: Routes.PROJECT_FILES,
                 element: <ProjFilesLayout />,

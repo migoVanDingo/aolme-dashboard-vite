@@ -16,6 +16,7 @@ class Routes {
   static PROJECT_RESULTS = "/project/:projectName/results";
   static PROJECT_DISCUSSION = "/project/:projectName/discussion";
   static PROJECT_SETTINGS = "/project/:projectName/settings";
+  static PROJECT_DASHBOARD = "/project/:projectName/dashboard";
   static SIGNUP = "/signup";
   static SETTINGS = "/settings";
   static REPOSITORY = "/repository/:repoName";

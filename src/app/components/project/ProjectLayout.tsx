@@ -1,10 +1,12 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { SFlexCol } from "../common/containers/FlexContainers"
 import styled from "styled-components"
 import { RepoHeader } from "../repository/header/RepoHeader"
 import ProjectAPI from "../../api/ProjectAPI"
 import { Outlet, useLoaderData, useLocation } from "react-router-dom"
 import TeamAPI from "../../api/TeamAPI"
+import { useDispatch } from "react-redux"
+import { setProjectDescription, setProjectId, setProjectName } from "../../store/slices/project"
 
 const SContainer = styled(SFlexCol)`
   width: 100%;
@@ -12,7 +14,7 @@ const SContainer = styled(SFlexCol)`
   box-sizing: border-box;
   background-color: ${({ theme }) => theme.color.color_2};
   color: ${({ theme }) => theme.color.color_8};
-  padding-bottom: 100px;
+  padding-bottom: 0px;
 `
 
 const ProjectLayout = () => {
@@ -21,6 +23,24 @@ const ProjectLayout = () => {
     username: string
     entityName: string
     loaderActiveTab: string
+  }
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    const init = () => {
+      if(project) {
+        dispatchProject(project)
+      }
+    }
+
+    return init()
+  }, [project]);
+
+  const dispatchProject = (project: any) => {
+    dispatch(setProjectId(project.id))
+    dispatch(setProjectDescription(project.description))
+    dispatch(setProjectName(project.name))
   }
 
   const location = useLocation()

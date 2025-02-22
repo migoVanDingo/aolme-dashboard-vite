@@ -15,16 +15,19 @@ import CheckboxInput from "../components/common/inputs/toggle/CheckboxInput"
 import LoadingSpinner from "../components/common/loading/LoadingSpinner"
 import { SButton } from "../components/common/styled"
 import { ICreateProject } from "../utility/interface/repository"
+import TextInputComponent from "../components/common/inputs/text/TextInputComponent"
 
 const SContainer = styled(SFlexCol)`
   width: 800px;
+  height:calc(calc(100vh - ${({theme}) => theme.header.height}) - ${({theme}) => theme.profile.nav.height});
 
   align-items: baseline;
   padding: 80px 10px;
   margin: auto;
-  grid-area: header / content;
+  grid-area: content;
 
   color: ${({ theme }) => theme.color.color_8};
+  background-color: ${({ theme }) => theme.color.color_2};
   &.loading {
     align-items: center;
     justify-content: center;
@@ -73,6 +76,10 @@ const CreateProject = ({}: any) => {
   }, [projectId])
 
   const createProject = () => {
+
+    console.log("name:" + projectName)
+    console.log("description:" + projectDescription)
+
     const project: ICreateProject = {
       user_id: userId,
       entity_type: "USER",
@@ -117,12 +124,13 @@ const CreateProject = ({}: any) => {
             users={[projectOwner]}
           />
           <SForm>
-            <TextInput
-              setName={setProjectName}
-              name={projectName}
+          <TextInputComponent
+              setInputValue={setProjectName}
+              inputValue={projectName}
               label={"Give your Project a Name"}
-              size={"lg"}
+           
             />
+
             {nameError && <Message text={nameError} color={"error"} />}
 
             <CheckboxInput

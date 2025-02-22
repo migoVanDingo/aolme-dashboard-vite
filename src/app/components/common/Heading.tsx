@@ -7,7 +7,7 @@ interface IStyledHeading {
 
 const SHeading = styled.p<IStyledHeading>`
 
-    font-weight: 600;
+    font-weight: 200;
     color: ${({theme}) => theme.color.color_6};
     margin: 0;
     

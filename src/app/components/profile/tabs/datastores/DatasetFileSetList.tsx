@@ -108,14 +108,14 @@ const SFileCell = styled.p`
   width: 200px;
 
   &.sm {
-    width: 50px;
+    width: 40px;
   }
 
   &.md {
-    width: 150px;
+    width: 130px;
   }
   &.lg {
-    width: 350px;
+    width: 280px;
   }
 
   &.right {
@@ -145,12 +145,12 @@ const DatasetFileSetList = ({ list, sets, handleViewProjects }: any) => {
   return (
     <SContainer>
       <SHeader>
-        <SHeading>{!toggleFileForm ? "Sessions in Dataset" : "Add Session"}</SHeading>
+        <SHeading>{!toggleFileForm ? "Subsets in Dataset" : "Add Session"}</SHeading>
         <SButton
           className={`push-right ${!toggleFileForm ? "submit" : "remove"}`}
           onClick={!toggleFileForm ? toggleSelect : toggleView}
         >
-          {!toggleFileForm ? "Add Session" : "Back to View"}
+          {!toggleFileForm ? "Add Subset" : "Back to View"}
         </SButton>
       </SHeader>
 
@@ -159,8 +159,8 @@ const DatasetFileSetList = ({ list, sets, handleViewProjects }: any) => {
       ) : (
         <SFileList>
           <SFileRow>
-            <SFileCell className={"lg"}>{"Session Name"}</SFileCell>
-            <SFileCell className={"sm"}>{"# Files"}</SFileCell>
+            <SFileCell className={"lg"}>{"Subset Name"}</SFileCell>
+            <SFileCell className={"md"}>{"Data Files"}</SFileCell>
             <SFileCell className={"sm"}>{"Type"}</SFileCell>
 
             <SFileCell className={"md right"}>{"Label Projects"}</SFileCell>
@@ -169,7 +169,7 @@ const DatasetFileSetList = ({ list, sets, handleViewProjects }: any) => {
             return (
               <SFileRow key={fileSet.set_name}>
                 <SFileCell className={"lg"}>{fileSet.set_name}</SFileCell>
-                <SFileCell className={"sm"}>{fileSet.num_files}</SFileCell>
+                <SFileCell className={"md"}>{fileSet.num_files}</SFileCell>
                 <SFileCell className={"sm"}>
                   {
                     list.filter(

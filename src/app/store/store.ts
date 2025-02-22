@@ -4,6 +4,7 @@ import { userSlice } from "./slices/user";
 import { orgSlice } from "./slices/organization";
 import { datasetSlice } from "./slices/dataset";
 import { datastoreSlice } from "./slices/datastore";
+import { projectSlice } from "./slices/project";
 
 export default configureStore({
     reducer: {
@@ -13,6 +14,7 @@ export default configureStore({
         org: orgSlice.reducer,
         dataset: datasetSlice.reducer,
         datastore: datastoreSlice.reducer,
+        project: projectSlice.reducer,
 
     }
 })
