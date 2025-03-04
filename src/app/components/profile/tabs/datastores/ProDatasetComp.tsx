@@ -124,7 +124,7 @@ const ProDatasetComponent = ({
       <SHeader>
         <SHeading>Dataset</SHeading>{" "}
         <CreateButton
-          className={selectedDatastore !== "" ? "create-new sm" : "inactive sm"}
+          className={selectedDatastore !== "" ? "create-new md" : "inactive md"}
           innerHtml={"New Dataset"}
           icon={faPlus}
           handleClick={selectedDatastore !== "" ? handleClickCreate : () => {}}

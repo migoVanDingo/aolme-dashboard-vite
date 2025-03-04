@@ -4,6 +4,7 @@ import { PayloadCreateUser, PayloadLogin, PayloadVerifyEmail } from "../utility/
 import { setStoreUserId, setStoreUsername } from "../store/slices/user"
 import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
+import { s } from "vitest/dist/types-e3c9754d.js"
 
 export const useAuth = () => {
   const dispatch = useDispatch()
@@ -28,6 +29,13 @@ export const useAuth = () => {
       console.error("Error fetching IP address:", error);
     }
   };
+
+
+  async function getAccessToken(){
+    const accessToken = await UserAPI.getAccessToken()
+    console.log('useAuth.ts -- getAccessToken() -- accessToken: ', accessToken)
+    sessionStorage.setItem("access_token", accessToken.access_token)
+  }
 
 
   async function login(payload: PayloadLogin) {
@@ -66,5 +74,5 @@ export const useAuth = () => {
 
     
 
-  return { login, register }
+  return { login, register, getAccessToken }
 }

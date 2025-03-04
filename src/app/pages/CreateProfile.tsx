@@ -11,27 +11,46 @@ import { useNavigate } from "react-router-dom"
 import { Input } from "../utility/input"
 import { JobAPI } from "../api/job/JobAPI"
 import LoadingSpinner from "../components/common/loading/LoadingSpinner"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faGithub } from "@fortawesome/free-brands-svg-icons"
 
 const SContainer = styled(SFlexCol)`
-  align-items: baseline;
+  
   background-color: ${({ theme }) => theme.color.color_2};
   min-height: 100vh;
-  padding: 0 30rem;
+  padding-top: 3rem;
 `
+
+const SFormContainer = styled(SFlexCol)`
+  border: 1px solid ${({ theme }) => theme.color.color_3};
+  padding: 2rem;
+  width: 400px;
+  border-radius: ${({ theme }) => theme.container.borderRadius.lg};
+`
+
+const SLoginFormContainer = styled(SFlexCol)`
+  width: 100%;
+  padding-bottom: 2rem;
+
+  &:first-child {
+    border-bottom: 1px solid ${({ theme }) => theme.color.color_3};
+  }
+`
+
 const SHeading = styled.p`
   font-size: 2rem;
   font-weight: 700;
   color: ${({ theme }) => theme.color.color_6};
 `
 const SButton = styled.button`
-  width: 150px;
+  width:100%;
   height: 40px;
   border: none;
   border-radius: ${({ theme }) => theme.container.borderRadius.sm};
 
-  background-color: ${({ theme }) => theme.color.color_2};
+  background-color: ${({ theme }) => theme.color.color_2_5};
   color: ${({ theme }) => theme.color.color_6};
-  box-shadow: 2px 2px 8px ${({ theme }) => theme.color.shadow.dark};
+  box-shadow: 2px 2px 5px ${({ theme }) => theme.color.shadow.dark};
   margin-top: 10px;
   cursor: pointer;
   &:hover {
@@ -47,6 +66,9 @@ const SLoadingContainer = styled(SFlexCol)`
   width: 100%;
   height: 100%;
   align-items: center;
+`
+const SIcon = styled(FontAwesomeIcon)`
+  font-size: 1rem;
 `
 
 const CreateProfile = () => {
@@ -102,17 +124,16 @@ const CreateProfile = () => {
 
   useEffect(() => {
     const init = () => {
-      if (intervalId && !lock){
+      if (intervalId && !lock) {
         clearInterval(intervalId)
         setTimeout(() => {
-          
           nav("/login")
         }, 3000)
       }
     }
 
     return init()
-  }, [intervalId, lock]);
+  }, [intervalId, lock])
 
   const handleCreateProfile = async () => {
     let err = false
@@ -181,7 +202,6 @@ const CreateProfile = () => {
 
   const handlePolling = (jobId: string) => {
     setIntervalId(setInterval(() => handleCheckStatus(jobId), 1000))
-    
   }
 
   const handleCheckStatus = (jobId: string) => {
@@ -193,8 +213,6 @@ const CreateProfile = () => {
           console.log("COMPLETED --- response: ", res)
           setLock(false)
           setLoading(false)
-          
-          
         } else if (res.data.status === "FAILED") {
           clearInterval(intervalId)
           setLoading(false)
@@ -205,7 +223,7 @@ const CreateProfile = () => {
           console.error(
             "Failed to register user, check logs and db for job_id: " + jobId,
           )
-        } 
+        }
       })
       .catch((err: any) =>
         console.error(
@@ -214,6 +232,10 @@ const CreateProfile = () => {
         ),
       )
   }
+
+  const signupWithGithub = () => {
+    window.location.href = "http://localhost:5014/api/github/signup"; // Redirect to GitHub login
+  };
 
   if (loading) {
     return (
@@ -224,24 +246,34 @@ const CreateProfile = () => {
   } else {
     return (
       <SContainer>
-        <SHeading>Create Profile</SHeading>
+        <SFormContainer>
+          <SLoginFormContainer>
+            <SHeading>Create Profile</SHeading>
 
-        {formInputs.map((input: FormCreateProfile, index: number) => {
-          return (
-            <TextInputComponent
-              key={index}
-              inputValue={input.inputValue}
-              inputType={input.type}
-              setInputValue={input.setInputValue}
-              label={input.label}
-              error={input.error}
-            />
-          )
-        })}
+            {formInputs.map((input: FormCreateProfile, index: number) => {
+              return (
+                <TextInputComponent
+                  key={index}
+                  inputValue={input.inputValue}
+                  inputType={input.type}
+                  setInputValue={input.setInputValue}
+                  label={input.label}
+                  error={input.error}
+                />
+              )
+            })}
 
-        <SButton onClick={handleCreateProfile} type="button">
-          {"Create Profile"}
-        </SButton>
+            <SButton onClick={handleCreateProfile} type="button">
+              {"Create Profile"}
+            </SButton>
+          </SLoginFormContainer>
+          <SLoginFormContainer>
+                  <SHeading>Or</SHeading>
+                  <SButton onClick={signupWithGithub} type="button">
+                      Sign Up with Github <SIcon icon={faGithub} />
+                    </SButton>
+                  </SLoginFormContainer>
+        </SFormContainer>
       </SContainer>
     )
   }

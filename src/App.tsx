@@ -42,6 +42,7 @@ import VerifyEmail from "./app/pages/VerifyEmail"
 import { dark_grey_1 } from "./app/theme/ThemeConfig"
 import Routes from "./constants/routes"
 import ProjDashboard from "./app/components/project/dashboard/ProjDashboard"
+import HandleGithubLogin from "./app/pages/HandleGithubLogin"
 
 const mantineTheme = createTheme({
   /** Put your mantine theme override here */
@@ -323,6 +324,13 @@ const router = createBrowserRouter([
     action: () => null,
     id: "signup",
   },
+  {
+    path: Routes.HANDLE_GITHUB_LOGIN,
+    element: <HandleGithubLogin />,
+    loader: () => null,
+    action: () => null,
+    id: "handle-github-login",
+  }
 ])
 
 const SBody = styled.div`

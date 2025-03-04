@@ -10,6 +10,7 @@ const SContainer = styled.div`
     border-radius: ${({ theme }) => theme.container.borderRadius.md};
     grid-area: project-info;
     padding: 1rem;
+    box-sizing: border-box;
 
     
 

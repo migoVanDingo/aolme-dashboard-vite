@@ -34,6 +34,18 @@ const SButton = styled.button`
     font-size: 0.8rem;
   }
 
+  &.md {
+    width: 150px;
+    height: 30px;
+    font-size: 0.9rem;
+  }
+
+  &.lg {
+    width: 180px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
   &.inactive {
     background-color: ${({ theme }) => theme.color.color_2};
     color: ${({ theme }) => theme.color.color_5};
@@ -45,12 +57,33 @@ const SButton = styled.button`
     }
   }
 
+  &.view {
+    background-color: ${({ theme }) => theme.color.color_2_5};
+    color: ${({ theme }) => theme.color.color_7};
+    border: 1px solid ${({ theme }) => theme.color.color_4};
+    box-sizing: border-box;
+    height: 40px;
+
+    &:hover {
+      cursor: pointer;
+      color: ${({ theme }) => theme.color.color_9};
+      border: 1px solid ${({ theme }) => theme.color.color_9};
+    }
+  }
+
+  &.push-right {
+    margin-left: auto;
+  }
+
   &.create-new {
     background-color: ${({ theme }) => theme.accent.color_1_dim};
     color: ${({ theme }) => theme.color.color_7};
     font-weight: 500;
     box-shadow: 1px 2px 4px ${({ theme }) => theme.color.shadow.dark};
     margin-left: auto;
+    box-sizing: border-box;
+
+    height: 40px;
 
     &:hover {
       cursor: pointer;

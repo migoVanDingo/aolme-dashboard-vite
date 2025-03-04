@@ -95,7 +95,7 @@ const Card2 = ({ project }: any) => {
   const handleSelectProject = () => {
 
     sessionStorage.setItem("project_id", project.project_id)
-    navigate(`/project/${project.name}`)
+    navigate(`/project/${project.name}/dashboard`)
 
   }
 

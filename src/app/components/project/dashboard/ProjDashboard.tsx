@@ -15,6 +15,7 @@ const SContainer = styled(SFlexCol)`
   min-height: calc(calc(100vh - ${({ theme }) => theme.header.height}) - 125px);
   background-color: ${({ theme }) => theme.color.color_2};
   padding: 40px;
+
   
 `
 
@@ -22,16 +23,16 @@ const SDashModuleContainer = styled.div`
   display: grid;
   width: 100%;
   height: 100%;
-  gap: 10px;
+  gap: 15px;
 
-  grid-template-columns: repeat(7, minmax(0, 250px));
-  grid-template-rows: repeat(7, auto);
+  grid-template-columns: repeat(7, minmax(0px, 250px));
+  grid-template-rows: repeat(7,  minmax(0px, auto));
   box-sizing: border-box;
 
   grid-template-areas:
-    "project-info  project-info project-info results results results results"
-    "pipeline  pipeline pipeline results results results results"
-    "pipeline pipeline pipeline results results results results"
+    "project-info  project-info project-info project-info results results results"
+    "pipeline pipeline pipeline pipeline results results results"
+    "dataset dataset dataset dataset discussion discussion discussion"
     "dataset dataset dataset dataset discussion discussion discussion"
     "dataset dataset dataset dataset discussion discussion discussion";
 `

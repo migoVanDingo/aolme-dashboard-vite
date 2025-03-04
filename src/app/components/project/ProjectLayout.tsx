@@ -7,6 +7,7 @@ import { Outlet, useLoaderData, useLocation } from "react-router-dom"
 import TeamAPI from "../../api/TeamAPI"
 import { useDispatch } from "react-redux"
 import { setProjectDescription, setProjectId, setProjectName } from "../../store/slices/project"
+import LoadingSpinner from "../common/loading/LoadingSpinner"
 
 const SContainer = styled(SFlexCol)`
   width: 100%;
@@ -15,6 +16,7 @@ const SContainer = styled(SFlexCol)`
   background-color: ${({ theme }) => theme.color.color_2};
   color: ${({ theme }) => theme.color.color_8};
   padding-bottom: 0px;
+
 `
 
 const ProjectLayout = () => {
@@ -25,6 +27,11 @@ const ProjectLayout = () => {
     loaderActiveTab: string
   }
 
+
+  const location = useLocation()
+  const pathSegments = location.pathname.split("/")
+  const segment = pathSegments[pathSegments.length - 1].replaceAll("%20", " ")
+
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -32,6 +39,8 @@ const ProjectLayout = () => {
       if(project) {
         dispatchProject(project)
       }
+
+    
     }
 
     return init()
@@ -43,26 +52,30 @@ const ProjectLayout = () => {
     dispatch(setProjectName(project.name))
   }
 
-  const location = useLocation()
-  const pathSegments = location.pathname.split("/")
-  const segment = pathSegments[pathSegments.length - 1]
 
 
-  const [highlightedTab, setHighlightedTab] = React.useState<string>(segment !== project.name ? segment : "files")
+  const [highlightedTab, setHighlightedTab] = React.useState<string>(segment !== project.name ? segment : "dashboard")
 
-  return (
-    <SContainer>
-      <RepoHeader
-        owner={username}
-        projectName={project.name}
-        entityName={entityName}
-        activeTab={highlightedTab}
-        setHighlightedTab={setHighlightedTab}
-      />
-      <Outlet />
-    </SContainer>
-  )
-}
+  if(highlightedTab && username && entityName && project) {
+    return (
+      <SContainer>
+        <RepoHeader
+          owner={username}
+          projectName={project.name}
+          entityName={entityName}
+          activeTab={highlightedTab}
+          setHighlightedTab={setHighlightedTab}
+        />
+        <Outlet />
+      </SContainer>
+    )} else {
+      return (
+        <SContainer>
+          <LoadingSpinner message={"Loading"}/>
+        </SContainer>
+      )
+    }
+  }
 
 export default ProjectLayout
 

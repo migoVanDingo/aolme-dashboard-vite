@@ -40,4 +40,12 @@ export class UserAPI {
     public static verifyEmail(token: string){
         return Requests.doGet('/api/user/account/verify?token='+token, Constant.USER_SERVICE_PORT)
     }
+
+    public static loginWithGithub(){
+        window.location.href = "http://localhost:5014/api/github/login";
+    }
+
+    public static getAccessToken(){
+        return Requests.doGet('/api/auth/access_token', Constant.USER_SERVICE_PORT)
+    }
 }

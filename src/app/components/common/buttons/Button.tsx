@@ -4,7 +4,7 @@ import styled from "styled-components"
 
 
 const SButton = styled.button`
-
+    color: ${({ theme }) => theme.color.color_1};
     &.edit-profile {
         width: 80%;
         height: 25px;

@@ -8,6 +8,7 @@ const SContainer = styled(SFlexRow)`
     
     padding: 20px 0px;
     gap: 5px;
+    color: ${({ theme }) => theme.color.color_5};
 `
 
 const SIcon = styled(FontAwesomeIcon)`

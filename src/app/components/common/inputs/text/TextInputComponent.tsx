@@ -13,14 +13,15 @@ const SContainer = styled(SFlexCol)`
 
 const STextInput = styled.input`
   width: 100%;
-  height: 35px;
+  height: 45px;
   border-radius: ${({ theme }) => theme.container.borderRadius.sm};
+  background-color: ${({ theme }) => theme.color.color_2};
   padding: 4px 7px;
   font-size: 1rem;
-  background-color: #dedede;
+  color: ${({ theme }) => theme.color.color_7};
   font-family: "Helvetica", sans-serif;
   font-weight: 500;
-  border: none;
+  border: 1px solid ${({ theme }) => theme.color.color_4};
   box-sizing: border-box;
   margin: 0;
 `
@@ -28,7 +29,7 @@ const STextInput = styled.input`
 const SLabel = styled.label`
   margin: 5px 0;
   font-size: 0.8rem;
-  font-weight: 200;
+  font-weight: 400;
   color: ${({ theme }) => theme.color.color_5};
 
   &.sm {

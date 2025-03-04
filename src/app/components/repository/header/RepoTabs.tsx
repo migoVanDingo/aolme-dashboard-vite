@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { ProcessAPI } from "../../../api/ProcessAPI"
 import { SFlexRow } from "../../common/containers/FlexContainers"
+import Routes from "../../../../constants/routes"
 
 
 const SContainer = styled(SFlexRow)`
@@ -131,49 +132,50 @@ const payload: ICreateLabelStudioProject = {
       title: "Dashboard",
       callback: () => console.log("DASHBOARD"),
       icon: faFile,
-      path: "/project/:projectName/dashboard",
-      id: "dashboarr",
+      path: Routes.PROJECT_DASHBOARD,
+      id: "dashboard",
     },
     {
-      title: "Datasets",
+      title: "Project Files",
+      callback: () => console.log("PROJECT FILES"),
+      icon: faFile,
+      path: "/project/:projectName/files",
+      id: "files"
+    },
+    {
+      title: "Dataset",
       callback: () => console.log("DATASETS"),
       icon: faServer,
-      path: "/project/:projectName/datasets",
-      id: "datasets",
+      path: Routes.PROJECT_DATASETS,
+      id: "dataset",
     },
     {
       title: "Pipelines",
       callback: () => console.log("PIPELINES"),
       icon: faArrowsUpDown,
-      path: "/project/:projectName/pipelines",
+      path: Routes.PROJECT_PIPELINES,
       id: "pipelines",
     },
-    /* {
-      title: "Pull Requests",
-      callback: () => console.log("PULL REQUESTS"),
-      icon: faCodePullRequest,
-      path: "/project/:projectName/files",
-      id: "files"
-    }, */
+
     {
       title: "Results",
       callback: () => console.log("RESULTS"),
       icon: faSquarePollVertical,
-      path: "/project/:projectName/results",
+      path: Routes.PROJECT_RESULTS,
       id: "results",
     },
     {
       title: "Discussion",
       callback: () => console.log("DISCUSSION"),
       icon: faComments,
-      path: "/project/:projectName/discussion",
+      path: Routes.PROJECT_DISCUSSION,
       id: "discussion",
     },
     {
       title: "Settings",
       callback: () => console.log("SETTINGS"),
       icon: faGear,
-      path: "/project/:projectName/settings",
+      path: Routes.PROJECT_SETTINGS,
       id: "settings",
     },
   ]

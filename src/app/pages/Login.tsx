@@ -6,27 +6,46 @@ import { SFlexCol } from "../components/common/containers/FlexContainers"
 import TextInputComponent from "../components/common/inputs/text/TextInputComponent"
 import { useAuth } from "../hooks/useAuth"
 import { PayloadLogin } from "../utility/interface/user"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import {faGithub} from "@fortawesome/free-brands-svg-icons"
+import { UserAPI } from "../api/UserAPI"
 
 const SContainer = styled(SFlexCol)`
-  align-items: baseline;
+  align-items: center;
   background-color: ${({ theme }) => theme.color.color_2};
   min-height: 100vh;
-  padding: 0 30rem;
+  padding: 120px;
 `
+const SFormContainer = styled(SFlexCol)`
+  border: 2px solid ${({ theme }) => theme.color.color_3};
+  padding: 2rem;
+  width: 400px;
+  border-radius: ${({ theme }) => theme.container.borderRadius.lg};
+`
+
+const SLoginFormContainer = styled(SFlexCol)`
+  width: 100%;
+  padding-bottom: 2rem;
+
+  &:first-child {
+    border-bottom: 1px solid ${({ theme }) => theme.color.color_3};
+  }
+`
+
 const SHeading = styled.p`
   font-size: 2rem;
   font-weight: 700;
   color: ${({ theme }) => theme.color.color_6};
 `
 const SButton = styled.button`
-  width: 150px;
+  width: 100%;
   height: 40px;
-  border: none;
+  border: 1px solid ${({ theme }) => theme.color.color_3};
   border-radius: ${({ theme }) => theme.container.borderRadius.sm};
 
-  background-color: ${({ theme }) => theme.color.color_2};
+  background-color: ${({ theme }) => theme.color.color_2_5};
   color: ${({ theme }) => theme.color.color_6};
-  box-shadow: 2px 2px 8px ${({ theme }) => theme.color.shadow.dark};
+  box-shadow: 2px 2px 5px ${({ theme }) => theme.color.shadow.dark};
   margin-top: 10px;
   cursor: pointer;
   &:hover {
@@ -37,6 +56,10 @@ const SButton = styled.button`
     background-color: ${({ theme }) => theme.color.color_6};
     color: ${({ theme }) => theme.color.color_8};
   }
+`
+
+const SIcon = styled(FontAwesomeIcon)`
+  font-size: 1rem;
 `
 
 interface FormLogin {
@@ -63,7 +86,7 @@ const Login = ({ userId }: any) => {
 
   const formInputs: FormLogin[] = [
     {
-      label: "Username/Email",
+      label: "Email",
       type: "text",
       inputValue: email,
       setInputValue: setEmail,
@@ -80,7 +103,6 @@ const Login = ({ userId }: any) => {
 
   const handleLogin = async () => {
     let err = false
-    
 
     if (email === "") {
       setEmailError("Mandatory field")
@@ -101,32 +123,46 @@ const Login = ({ userId }: any) => {
       }
       console.log("payload: ", payload)
       //AuthContext
-      await login(payload) as any
-      
-     
+      ;(await login(payload)) as any
     } else console.log("errors")
   }
 
+  const loginWithGitHub = () => {
+    console.log('login with github')
+    UserAPI.loginWithGithub() // Redirect to GitHub login
+  };
+
   return (
     <SContainer>
-      <SHeading>Login</SHeading>
+      <SFormContainer>
+        <SLoginFormContainer>
+          <SHeading>Login</SHeading>
 
-      {formInputs.map((input: FormLogin, index: number) => {
-        return (
-          <TextInputComponent
-            key={index}
-            inputValue={input.inputValue}
-            inputType={input.type}
-            setInputValue={input.setInputValue}
-            label={input.label}
-            error={input.error}
-          />
-        )
-      })}
+          {formInputs.map((input: FormLogin, index: number) => {
+            return (
+              <TextInputComponent
+                key={index}
+                inputValue={input.inputValue}
+                inputType={input.type}
+                setInputValue={input.setInputValue}
+                label={input.label}
+                error={input.error}
+              />
+            )
+          })}
 
-      <SButton onClick={handleLogin} type="button">
-        {"Login"}
-      </SButton>
+          <SButton onClick={handleLogin} type="button">
+            {"Login"}
+          </SButton>
+        </SLoginFormContainer>
+
+        <SLoginFormContainer>
+        <SHeading>Or</SHeading>
+        <SButton onClick={loginWithGitHub} type="button">
+            Login with Github <SIcon icon={faGithub} />
+          </SButton>
+        </SLoginFormContainer>
+      </SFormContainer>
     </SContainer>
   )
 }

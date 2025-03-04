@@ -1,5 +1,7 @@
 class Routes {
   static ROOT = "/";
+
+
   static PROFILE = "/profile";
   static PROFILE_PROJECTS = "/profile/projects";
   static PROFILE_DATASTORES = "/profile/datastores";
@@ -9,14 +11,19 @@ class Routes {
   static PROFILE_PROJECTS_CREATE = "/profile/projects/create";
   static PROFILE_DATASTORE_CREATE = "/profile/datastores/create";
   static PROFILE_DATASET_CREATE = "/profile/datasets/create";
+
+
   static PROJECT_VIEW = "/project/:projectName";
   static PROJECT_FILES = "/project/:projectName/files";
-  static PROJECT_DATASETS = "/project/:projectName/datasets";
+  static PROJECT_DATASETS = "/project/:projectName/dataset";
   static PROJECT_PIPELINES = "/project/:projectName/pipelines";
   static PROJECT_RESULTS = "/project/:projectName/results";
   static PROJECT_DISCUSSION = "/project/:projectName/discussion";
   static PROJECT_SETTINGS = "/project/:projectName/settings";
   static PROJECT_DASHBOARD = "/project/:projectName/dashboard";
+  
+
+  
   static SIGNUP = "/signup";
   static SETTINGS = "/settings";
   static REPOSITORY = "/repository/:repoName";
@@ -35,6 +42,8 @@ class Routes {
   static ORG_SETTINGS = "/organization/:orgName/settings";
   static LOGIN = "/login";
   static VERIFY_EMAIL = "/user/account/verify";
+
+  static HANDLE_GITHUB_LOGIN = "/handler/login";
 }
 
 export default Routes;

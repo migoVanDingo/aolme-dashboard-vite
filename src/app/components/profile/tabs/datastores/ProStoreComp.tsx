@@ -120,7 +120,7 @@ const ProStoreComp = ({
       <SHeader>
         <SHeading>Datastore</SHeading>{" "}
         <CreateButton
-          className={"create-new sm"}
+          className={"create-new md"}
           innerHtml={"New Datastore"}
           icon={faPlus}
           handleClick={handleClick}

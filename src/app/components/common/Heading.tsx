@@ -11,7 +11,7 @@ const SHeading = styled.p<IStyledHeading>`
     color: ${({theme}) => theme.color.color_6};
     margin: 0;
     
-
+    
     
     &.xl {
         font-size: 3rem;
