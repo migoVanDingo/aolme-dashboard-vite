@@ -37,6 +37,12 @@ export const useAuth = () => {
     sessionStorage.setItem("access_token", accessToken.access_token)
   }
 
+  async function getGithubToken() {
+    const githubToken = await UserAPI.getGithubToken()
+    console.log('useAuth.ts -- getGithubToken() -- githubToken: ', githubToken)
+    sessionStorage.setItem("github_token", githubToken.access_token)
+  }
+
 
   async function login(payload: PayloadLogin) {
     const response = await UserAPI.login(payload)
@@ -74,5 +80,5 @@ export const useAuth = () => {
 
     
 
-  return { login, register, getAccessToken }
+  return { login, register, getAccessToken, getGithubToken }
 }

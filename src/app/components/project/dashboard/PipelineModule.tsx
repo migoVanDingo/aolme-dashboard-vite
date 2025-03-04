@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import FilesModule from "../files/FilesModule"
+import FilesModule from "../files/FilesModuleEmptyState"
 import ProjectInfoModule from "./ProjectInfoModule"
 import { SFlexRow } from "../../common/containers/FlexContainers"
 import Heading from "../../common/Heading"

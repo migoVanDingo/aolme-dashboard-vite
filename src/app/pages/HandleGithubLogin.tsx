@@ -27,13 +27,14 @@ const HandleGithubLogin = () => {
 
   const [userId, setUserId] = React.useState(user_id)
 
-  const { getAccessToken } = useAuth()
+  const { getAccessToken, getGithubToken } = useAuth()
 
   useEffect(() => {
     const init = () => {
       if (userId) {
         // Get Access Token
         getAccessToken()
+        getGithubToken()
         getUser(userId)
       }
     }

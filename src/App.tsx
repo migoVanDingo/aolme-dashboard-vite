@@ -37,12 +37,17 @@ import Organization, { loader as OrgLoader } from "./app/pages/Organization"
 import ProfileCreateDataset, { loader as ProfileCreateDatasetLoader } from "./app/pages/ProfileCreateDataset"
 import Repository, { loader as RepoLoader } from "./app/pages/Repository"
 import RootLayout, { loader as RootLoader } from "./app/pages/RootLayout"
+import { loader as ProjectFilesLoader } from "./app/components/project/files/ProjFilesLayout"
 import Settings from "./app/pages/Settings"
 import VerifyEmail from "./app/pages/VerifyEmail"
 import { dark_grey_1 } from "./app/theme/ThemeConfig"
 import Routes from "./constants/routes"
 import ProjDashboard from "./app/components/project/dashboard/ProjDashboard"
 import HandleGithubLogin from "./app/pages/HandleGithubLogin"
+import FilesModuleEmptyState from "./app/components/project/files/FilesModuleEmptyState"
+import FilesModuleClone from "./app/components/project/files/FilesModuleClone"
+import FilesModuleUpload from "./app/components/project/files/FilesModuleUpload"
+import FilesModuleView from "./app/components/project/files/FilesModuleView"
 
 const mantineTheme = createTheme({
   /** Put your mantine theme override here */
@@ -152,8 +157,10 @@ const router = createBrowserRouter([
               {
                 path: Routes.PROJECT_FILES,
                 element: <ProjFilesLayout />,
-                loader: () => null,
+                loader: ProjectFilesLoader,
                 action: () => null,
+                id: "project-files-layout",
+               
               },
               {
                 path: Routes.PROJECT_DATASETS,

@@ -14,13 +14,15 @@ class Routes {
 
 
   static PROJECT_VIEW = "/project/:projectName";
-  static PROJECT_FILES = "/project/:projectName/files";
   static PROJECT_DATASETS = "/project/:projectName/dataset";
   static PROJECT_PIPELINES = "/project/:projectName/pipelines";
   static PROJECT_RESULTS = "/project/:projectName/results";
   static PROJECT_DISCUSSION = "/project/:projectName/discussion";
   static PROJECT_SETTINGS = "/project/:projectName/settings";
   static PROJECT_DASHBOARD = "/project/:projectName/dashboard";
+  static PROJECT_FILES = "/project/:projectName/files";
+
+  
   
 
   

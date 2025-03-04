@@ -48,4 +48,8 @@ export class UserAPI {
     public static getAccessToken(){
         return Requests.doGet('/api/auth/access_token', Constant.USER_SERVICE_PORT)
     }
+
+    public static getGithubToken(){
+        return Requests.doGet('/api/auth/github_token', Constant.USER_SERVICE_PORT)
+    }
 }
