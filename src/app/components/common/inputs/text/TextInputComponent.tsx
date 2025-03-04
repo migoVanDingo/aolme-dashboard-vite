@@ -24,6 +24,11 @@ const STextInput = styled.input`
   border: 1px solid ${({ theme }) => theme.color.color_4};
   box-sizing: border-box;
   margin: 0;
+
+  &.dark {
+    background-color: ${({ theme }) => theme.color.color_2_5};
+    color: ${({ theme }) => theme.color.color_8};
+  }
 `
 
 const SLabel = styled.label`
@@ -76,7 +81,8 @@ const TextInputComponent = ({
   labelSize,
   selectOptions,
   setOptions,
-  error,
+  error, 
+  inputStyles
 }: any) => {
   const handleInput = (e: any) => {
     setInputValue(e.target.value)
@@ -96,6 +102,7 @@ const TextInputComponent = ({
         <STextArea  onChange={handleInput} value={inputValue} />
       ) : (
         <STextInput
+          className={inputStyles ? inputStyles : ""}
           type={inputType}
           onChange={handleInput}
           value={inputValue}

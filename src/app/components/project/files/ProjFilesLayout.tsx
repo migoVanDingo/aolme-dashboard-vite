@@ -22,7 +22,7 @@ const SContainer = styled.div`
     grid-template-rows: 1fr;
     grid-template-areas:
     "description files toolbar";
-    gap: 1rem;
+    gap: 1.5rem;
 ` 
 
 const heading = "Description"
@@ -31,7 +31,7 @@ const text = "Deserunt non ullamco cupidatat reprehenderit elit tempor. Culpa ad
 
 const ProjFilesLayout = () => {
 
-  const { projectFiles } = useLoaderData() as { projectFiles: any[] }
+  const { projectFiles, github_token } = useLoaderData() as { projectFiles: any[], github_token: string }
   const [descriptionHeading, setDescriptionHeading] = React.useState<string>(heading)
   const [descriptionText, setDescriptionText] = React.useState<string>(text)
   const [filesModule, setFilesModule] = React.useState<any>(projectFiles.length === 0 ? "EMPTY" : "VIEW")
@@ -48,7 +48,7 @@ const ProjFilesLayout = () => {
         { filesModule === "EMPTY" && <FilesModuleEmptyState setFilesModule={handleSetFilesModule}/> }
         { filesModule === "VIEW" && <FilesModuleView/> }
         { filesModule === "UPLOAD" && <FilesModuleUpload/> }
-        { filesModule === "CLONE" && <FilesModuleClone/> }
+        { filesModule === "CLONE" && <FilesModuleClone token={github_token}/> }
         <ProjToolbar gridArea={"toolbar"}/>
     </SContainer>
   )
@@ -57,7 +57,11 @@ const ProjFilesLayout = () => {
 export default ProjFilesLayout
 
 export const loader = () => {
+
+  const github_token = localStorage.getItem("github_token") || ""
+
   return {
-    projectFiles: []
+    projectFiles: [],
+    github_token,
   }
 }

@@ -12,7 +12,7 @@ const SContainer = styled(SFlexCol)<{gridArea: string}>`
     grid-area: ${(props: any) => props.gridArea || ''};
     background-color: ${({theme}) => theme.color.color_2_5};
     border-radius: ${({theme}) => theme.container.borderRadius.md};
-    box-shadow: 1px 2px 8px ${({ theme }) => theme.color.shadow.dark};
+    box-shadow: 2px 2px 8px ${({ theme }) => theme.color.shadow.dark};
     
     `
 
