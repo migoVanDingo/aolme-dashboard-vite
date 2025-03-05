@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { SFlexCol, SFlexRow } from '../../../../common/containers/FlexContainers'
 import { LabelStudioAPI } from '../../../../../api/labeler/LabelStudioAPI'
+import { Constant } from '../../../../../../constants/Constant'
 
 const SContainer = styled.div`
     grid-area: bottom;
