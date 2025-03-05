@@ -140,7 +140,7 @@ const SetViewLabelProjectsList = ({ list }: any) => {
       console.error("Failed to launch Labeler: ", response)
     }
 
-    if(false){
+    if(Constant.REMOTE_ENV){
       const url = response.url
       window.open(url, "_blank")
     }
