@@ -2,7 +2,7 @@ import React from "react"
 import styled, { keyframes } from "styled-components"
 import { SFlexCol } from "../containers/FlexContainers"
 
-const SLoadingContainer = styled(SFlexCol)`
+const SLoadingContainer = styled(SFlexCol)<{ backgroundColor?: string}>`
   
   width: 500px;
   height: 350px;
@@ -12,6 +12,21 @@ const SLoadingContainer = styled(SFlexCol)`
   
   padding-top: 50px;
   box-sizing: border-box;
+
+  &.fit{
+    width: 100%;
+    height: 100%;
+    padding-bottom: 4rem;
+    padding-top: 0;
+
+  }
+
+  &.color_2_5{
+    background-color: ${({ theme }) => theme.color.color_2_5};
+  }
+
+
+
 `
 
 const SLoadingHeading = styled.p`
@@ -62,9 +77,9 @@ const SSpinner = styled.div`
   }
 `
 
-const LoadingSpinner = ({ message }: any) => {
+const LoadingSpinner = ({ message, styles }: any) => {
   return (
-    <SLoadingContainer>
+    <SLoadingContainer className={styles}>
       <SLoadingHeading>{message}</SLoadingHeading>
       <SSpinner className="lds-ring">
         <div></div>

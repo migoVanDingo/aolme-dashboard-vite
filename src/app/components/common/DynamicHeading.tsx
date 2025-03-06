@@ -53,6 +53,18 @@ const SHeading = styled.p<IStyledHeading>`
         color: ${({theme}) => theme.accent.color_1_dim};
     }
 
+    &.p-1 {
+        padding: 1rem;
+    }
+
+    &.p-2 {
+        padding: 2rem;
+    }
+
+    &.p-3 {
+        padding: 3rem;
+    }
+
    
 `
 
