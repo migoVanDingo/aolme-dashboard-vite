@@ -7,6 +7,10 @@ import { useDisclosure } from "@mantine/hooks"
 import { Modal } from "@mantine/core"
 import DynamicHeading from "../../common/DynamicHeading"
 import LoadingSpinner from "../../common/loading/LoadingSpinner"
+import { useSelector } from "react-redux"
+import { PayloadCloneRepoProject } from "../../../api/payload/PayloadCloneRepoProject"
+import { JobAPI } from "../../../api/job/JobAPI"
+import ProjectApi from "../../../api/ProjectAPI"
 
 const SContainer = styled(SFlexCol)`
   width: 100%;
@@ -91,9 +95,13 @@ const GithubReposList = ({ repos }: any) => {
   const [selectedRepo, setSelectedRepo] = React.useState<number>(0)
   const [opened, { open, close }] = useDisclosure(false)
   const [loading, setLoading] = React.useState(false)
+  const [loadingMessage, setLoadingMessage] = React.useState("Cloning Github Repo")
 
   const [repoName, setRepoName] = React.useState("")
   const theme = useTheme()
+
+  const projectId = useSelector((state: any) => state.project.projectId)
+  const userId = useSelector((state: any) => state.user.storeUserId)
     
 
   const handleSelectRepo = (repo: any) => {
@@ -105,6 +113,29 @@ const GithubReposList = ({ repos }: any) => {
   const handleConfirm = () => {
     console.log("Cloning repo:", selectedRepo)
     setLoading(true)
+    const repo = repos.find((repo: any) => repo.id === selectedRepo)
+    const payload = PayloadCloneRepoProject({
+        projectId,
+        userId,
+        cloneUrl: repo.clone_url,
+        id: repo.id,
+    })
+    console.log("PayloadCloneRepoProject:", payload)
+
+    // Call API to create Job
+    ProjectApi.cloneRepoProject(payload)
+    .then((response: any) => {
+        setLoadingMessage("Cloning successful, finishing up")
+        setTimeout(() => {
+            console.log("Clone Response: ", response)
+            setLoading(false)
+            close()
+            //nav()
+        }
+        , 2000)
+    })
+    .catch((error: any) => {})
+
   }
 
   useEffect(() => {
@@ -142,7 +173,7 @@ const GithubReposList = ({ repos }: any) => {
         </SButtonContainer>
           </SModalMod>
           ) : (
-            <><LoadingSpinner styles={"fit color_2_5"} message={"Cloning Github Repo"}/></>
+            <><LoadingSpinner styles={"fit color_2_5"} message={loadingMessage}/></>
           )
         }
 

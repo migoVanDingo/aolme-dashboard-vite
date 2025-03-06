@@ -36,4 +36,9 @@ export default class ProjectApi {
 
     return Requests.doGet('/api/project/all' + queryStr, Constant.PROJECT_SERVICE_PORT)
   }
+
+  public static cloneRepoProject(payload: any){
+    return Requests.doPost(payload, "/api/project/clone", Constant.PROJECT_SERVICE_PORT)
+  }
+
 }

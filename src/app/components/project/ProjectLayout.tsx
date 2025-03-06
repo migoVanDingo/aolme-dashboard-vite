@@ -47,7 +47,7 @@ const ProjectLayout = () => {
   }, [project]);
 
   const dispatchProject = (project: any) => {
-    dispatch(setProjectId(project.id))
+    dispatch(setProjectId(project.project_id))
     dispatch(setProjectDescription(project.description))
     dispatch(setProjectName(project.name))
   }

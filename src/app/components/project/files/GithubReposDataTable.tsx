@@ -8,7 +8,7 @@ const STable = styled(SFlexCol)`
 const STableRow = styled(SFlexRow)`
   width: 100%;
   flex: 1;
-  padding: 5px 1rem;
+  padding: 0.8rem 1rem;
   box-sizing: border-box;
 
   &.br-md {
