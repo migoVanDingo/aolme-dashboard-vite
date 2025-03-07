@@ -31,10 +31,10 @@ const text = "Deserunt non ullamco cupidatat reprehenderit elit tempor. Culpa ad
 
 const ProjFilesLayout = () => {
 
-  const { projectFiles, github_token } = useLoaderData() as { projectFiles: any[], github_token: string }
+  const { projectFiles, github_token, loaderFilesModule } = useLoaderData() as { projectFiles: any[], github_token: string, loaderFilesModule: string }
   const [descriptionHeading, setDescriptionHeading] = React.useState<string>(heading)
   const [descriptionText, setDescriptionText] = React.useState<string>(text)
-  const [filesModule, setFilesModule] = React.useState<any>(projectFiles.length === 0 ? "EMPTY" : "VIEW")
+  const [filesModule, setFilesModule] = React.useState<any>(loaderFilesModule)
 
   const handleSetFilesModule = (module: string) => {
     setFilesModule(module)
@@ -60,8 +60,13 @@ export const loader = () => {
 
   const github_token = localStorage.getItem("github_token") || ""
 
+  const projectFiles: any = []
+  const loaderFilesModule = projectFiles.length === 0 ? "EMPTY" : "VIEW"
+
+  console.log('loaderFilesModule:', loaderFilesModule)
   return {
-    projectFiles: [],
+    projectFiles: projectFiles,
     github_token,
+    loaderFilesModule
   }
 }

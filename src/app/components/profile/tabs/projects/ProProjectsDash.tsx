@@ -9,6 +9,7 @@ import UsernameTag from "../../../common/UsernameTag"
 import Button from "../../../common/buttons/Button"
 import { SFlexCol } from "../../../common/containers/FlexContainers"
 import ProjectApi from "../../../../api/ProjectAPI"
+import image from "../../../../../assets/lucy-photo.jpg"
 
 const SContainer = styled.div`
   grid-area: content;
@@ -84,7 +85,7 @@ const ProProjectsDash = () => {
       <SProfileContainer>
         <Card
           cardStyle={theme.profile.card}
-          imageSrc={""}
+          imageSrc={image}
           username={username}
         >
           <UsernameTag username={username} />
