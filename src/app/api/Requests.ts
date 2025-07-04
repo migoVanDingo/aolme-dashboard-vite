@@ -14,6 +14,8 @@ export class Requests {
       onUploadProgress,
     })
   }
+
+  
   public static async testPost() {
     try {
       const response = await fetch("http://localhost:5003/echo", {

@@ -134,7 +134,7 @@ const GithubReposList = ({ repos }: any) => {
         }
         , 2000)
     })
-    .catch((error: any) => {})
+    .catch((error: any) => {console.error("Error cloning repo:", error)})
 
   }
 

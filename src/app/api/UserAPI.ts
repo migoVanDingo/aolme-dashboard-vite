@@ -56,4 +56,8 @@ export class UserAPI {
     public static getGithubUserRepos(){
         return Requests.doGet('/api/github/repos', Constant.USER_SERVICE_PORT)
     }
+
+    public static loginWithGoogle(){
+        window.location.href = "http://localhost:5014/api/google/login";
+    }
 }

@@ -7,8 +7,10 @@ import TextInputComponent from "../components/common/inputs/text/TextInputCompon
 import { useAuth } from "../hooks/useAuth"
 import { PayloadLogin } from "../utility/interface/user"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import {faGithub} from "@fortawesome/free-brands-svg-icons"
+import {faGithub, faGoogle} from "@fortawesome/free-brands-svg-icons"
 import { UserAPI } from "../api/UserAPI"
+import { GithubAuthProvider, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth"
+import { auth } from "../services/firebase"
 
 const SContainer = styled(SFlexCol)`
   align-items: center;
@@ -127,10 +129,45 @@ const Login = ({ userId }: any) => {
     } else console.log("errors")
   }
 
-  const loginWithGitHub = () => {
-    console.log('login with github')
-    UserAPI.loginWithGithub() // Redirect to GitHub login
+  const handleGithubLogin = async () => {
+  const provider = new GithubAuthProvider();
+
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+    const idToken = await user.getIdToken();
+
+    console.log("GitHub user:", user);
+    console.log("Firebase ID Token:", idToken);
+
+    // send token to FastAPI backend if needed
+  } catch (err) {
+    console.error("GitHub login error", err);
+  }
+};
+  const handleGoogleLogin = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      console.log("Google Login Success:", result.user);
+      const idToken = await result.user.getIdToken();
+      console.log("ID Token:", idToken);
+    } catch (err) {
+      console.error("Google Login Error", err);
+    }
   };
+
+  const handleEmailLogin = async () => {
+    try {
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      console.log("Email Login Success:", result.user);
+      const idToken = await result.user.getIdToken();
+      console.log("ID Token:", idToken);
+    } catch (err) {
+      console.error("Email Login Error", err);
+    }
+  };
+
 
   return (
     <SContainer>
@@ -151,15 +188,19 @@ const Login = ({ userId }: any) => {
             )
           })}
 
-          <SButton onClick={handleLogin} type="button">
+          <SButton onClick={handleEmailLogin} type="button">
             {"Login"}
           </SButton>
         </SLoginFormContainer>
 
         <SLoginFormContainer>
         <SHeading>Or</SHeading>
-        <SButton onClick={loginWithGitHub} type="button">
+        <SButton onClick={handleGithubLogin} type="button">
             Login with Github <SIcon icon={faGithub} />
+          </SButton>
+
+          <SButton onClick={handleGoogleLogin} type="button">
+            Login with Google <SIcon icon={faGoogle} />
           </SButton>
         </SLoginFormContainer>
       </SFormContainer>
